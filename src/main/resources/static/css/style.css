@@ -1,0 +1,54 @@
+body
+{
+    background: #34495e;
+}
+
+.push-right
+{
+    float: right;
+}
+
+.margin-btn{
+    margin: 15px;
+}
+
+.b{
+    font-weight: bold;
+}
+
+.wh {
+    color: white;
+}
+
+.bl {
+    color: black;
+}
+
+.dark {
+    color: #3a3a3a;
+}
+
+.center-content{
+    margin-top: 150px;
+}
+
+.divider{
+    background: #2c3e50;
+    padding: 2px;
+}
+
+.center{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 10%);
+}
+
+.top-25{
+    transform: translate(0%, 25%);
+}
+
+.centerblockcontent
+{
+    background: #2c3e50;
+    padding-left: 15px;
+}

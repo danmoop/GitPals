@@ -15,3 +15,7 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+
+out/production/resources/static/* linguist-vendored
+src/main/resources/static/* linguist-vendored
