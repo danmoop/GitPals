@@ -1,3 +1,6 @@
 # GitPals
 Application for finding people to work together with on different projects
-**Java, Spring, MongoDB**
+
+This project uses **Java, Spring, MongoDB**
+
+![image](gallery/main.png)
