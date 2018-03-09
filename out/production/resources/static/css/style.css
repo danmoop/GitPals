@@ -52,3 +52,20 @@ body
     background: #2c3e50;
     padding-left: 15px;
 }
+
+.navigation
+{
+    background: #2c3e50;
+}
+
+.dark-bg{
+    background: #21314a;
+}
+
+.green-bg{
+    background: #1ABC9C;
+}
+
+.blue-bg{
+    background: #3498db;
+}

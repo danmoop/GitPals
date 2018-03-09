@@ -1,24 +1,30 @@
 package com.moople.gitpals.MainApplication.Model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Map;
 
 @Document(collection = "users")
 public class User
 {
+    @Id
+    private String id;
+
     private String username;
     private String GithubAccountLink;
     private String country;
-    private List<String> languagesKnows;
+    private Map<String, Boolean> languagesKnows;
 
-    public User(String username, String GithubAccountLink, String country, List<String> languagesKnows)
+    public User(String username, String GithubAccountLink, String country, Map<String, Boolean> languagesKnows)
     {
         this.username = username;
         this.GithubAccountLink = GithubAccountLink;
         this.country = country;
         this.languagesKnows = languagesKnows;
     }
+
+    public User(){}
 
     public String getUsername()
     {
@@ -50,14 +56,14 @@ public class User
         this.country = country;
     }
 
-    public List<String> getLanguagesKnows()
+    public Map<String, Boolean> getLanguagesKnows()
     {
         return languagesKnows;
     }
 
     public void addLanguage(String language)
     {
-        languagesKnows.add(language);
+        languagesKnows.put(language, true);
     }
 
     public void deleteLanguage(String language)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - Dashboard</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/flat-ui.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/flat-ui.js"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
+    <div class="center">
+        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank" th:href="${'https://github.com/' + GithubUserName}">[[${GithubUserName}]]'s dashboard</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+    </div>
+</nav>
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+
+    <div class="container">
+        <div class="green-bg">
+            <p class="wh" style="font-size: 30px;"><b th:inline="text" id="userName">[[${GithubUserName}]]</b></p>
+            <p class="wh" th:inline="text"><b>[[${GithubUser.userAuthentication.details.email}]]</b></p>
+
+            <div class="blue-bg">
+                <h3 class="wh" style="padding: 15px;"><b>Select technologies you know</b></h3>
+                <form id="technologies" th:action="@{/updateUser}" th:object="${userObject}" method="post" style="padding: 25px;">
+
+                    <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock">
+                        <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
+                    </div>
+
+                    <br/>
+
+                    <input type="hidden" id="userNameInput" th:field="*{username}"/>
+
+                    <input onclick="submitChanges();" class="btn btn-primary b" type="submit" value="Save changes"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script src="js/jquery.js"></script>
+<script src="js/dashboardScript.js"></script>
+
+</body>
+</html>
