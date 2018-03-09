@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,39 +27,14 @@ public class UserController
 
         Map<String, Boolean> allTechs = userFromDB.getLanguagesKnows();
 
-
-      /*  for(int i = 0; i < techs.size(); i++)
+        for (Map.Entry<String, Boolean> entry : allTechs.entrySet())
         {
-            for(int q = 0; q < allTechs.size(); q++)
-            {
-                if(techs.get(i).equals(allTechs.keySet().toArray()[q]))
-                {
-                    System.out.println(allTechs.keySet().toArray()[q]);
+            allTechs.put(entry.getKey(), false);
+        }
 
-                    allTechs.put(String.valueOf(allTechs.keySet().toArray()[q]), true);
-                }
-
-                else if(!allTechs.keySet().toArray()[q].equals(techs.get(i)))
-                    allTechs.put(String.valueOf(allTechs.keySet().toArray()[q]), false);
-
-            }
-        }*/
-
-        for(int i = 0; i < allTechs.size(); i++)
-        {
-            for(int q = 0; q < techs.size(); q++)
-            {
-                if(allTechs.keySet().toArray()[i].equals(techs.get(q)))
-                    allTechs.put(String.valueOf(allTechs.keySet().toArray()[i]), true);
-
-                else
-                {
-                    if(q == techs.size())
-                    {
-                        allTechs.put(String.valueOf(allTechs.keySet().toArray()[i]), false);
-                    }
-                }
-            }
+        for (Iterator<String> i = techs.iterator(); i.hasNext();) {
+            String item = i.next();
+            allTechs.put(item, true);
         }
 
         userInterface.save(userFromDB);
