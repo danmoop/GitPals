@@ -14,14 +14,18 @@ public class User
     private String username;
     private String GithubAccountLink;
     private String country;
+    private String info;
     private Map<String, Boolean> languagesKnows;
+    private Object githubUser;
 
-    public User(String username, String GithubAccountLink, String country, Map<String, Boolean> languagesKnows)
+    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows)
     {
         this.username = username;
         this.GithubAccountLink = GithubAccountLink;
         this.country = country;
+        this.info = info;
         this.languagesKnows = languagesKnows;
+
     }
 
     public User(){}
@@ -29,6 +33,29 @@ public class User
     public String getUsername()
     {
         return username;
+    }
+
+    public void setLanguagesKnows(Map<String, Boolean> languagesKnows)
+    {
+        this.languagesKnows = languagesKnows;
+    }
+
+    public String getInfo()
+    {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public Object getGithubUser()
+    {
+        return githubUser;
+    }
+
+    public void setGithubUser(Object githubUser) {
+        this.githubUser = githubUser;
     }
 
     public void setUsername(String username)

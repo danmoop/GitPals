@@ -1,8 +1,8 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.mongodb.util.JSON;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.userInterface;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +52,8 @@ public class IndexController
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                "None",
+                                "Not set",
+                                "None yet",
                                 langs
                         )
                 );

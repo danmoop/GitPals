@@ -24,29 +24,46 @@
         <div class="green-bg">
             <p class="wh" style="font-size: 30px;"><b th:inline="text" id="userName">[[${GithubUserName}]]</b></p>
             <p class="wh" th:inline="text"><b>[[${GithubUser.userAuthentication.details.email}]]</b></p>
+            <u><a class="dark b" id="githubLink" th:href="${'https://github.com/' + GithubUserName}" target="_blank">Github repository</a></u>
 
-            <div class="blue-bg">
-                <h3 class="wh" style="padding: 15px;"><b>Select technologies you know</b></h3>
-                <form id="technologies" th:action="@{/updateUser}" th:object="${userObject}" method="post" style="padding: 25px;">
+            <hr class="divider"/>
 
-                    <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock">
-                        <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
-                    </div>
+            <h3 class="wh" style="padding: 15px;"><b>Information</b></h3>
+            <form th:action="@{/updateUserCountry}" method="post">
+                <div class="container" style="padding: 20px;" >
+                    <span class="wh b">Country</span>
+                    <input th:name="countryInput" type="text" class="form-control input-lg" placeholder="Where are you from?" th:value="${dbUser.country}"/> <br/>
 
-                    <br/>
+                    <span class="wh b">Some info about you</span>
+                    <input th:name="infoInput" type="text" class="form-control input-lg" placeholder="Some information about yourself" th:value="${dbUser.info}"/> <br/>
 
-                    <input type="hidden" id="userNameInput" th:field="*{username}"/>
+                    <input type="submit" class="btn btn-inverse b" value="Submit"/>
+                </div>
+            </form>
 
-                    <input onclick="submitChanges();" class="btn btn-primary b" type="submit" value="Save changes"/>
-                </form>
-            </div>
         </div>
+
+        <div class="blue-bg">
+            <h3 class="wh" style="padding: 15px;"><b>Select technologies you know</b></h3>
+            <form id="technologies" th:action="@{/updateUser}" th:object="${userObject}" method="post" style="padding: 25px;">
+
+                <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock">
+                    <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
+                </div>
+
+                <br/>
+
+                <input type="hidden" id="userNameInput" th:field="*{username}"/>
+
+                <input onclick="submitChanges();" class="btn btn-primary b" type="submit" value="Save changes"/>
+            </form>
+        </div>
+
     </div>
 
 </section>
 
 <script src="js/jquery.js"></script>
-<script src="js/dashboardScript.js"></script>
 
 </body>
 </html>
