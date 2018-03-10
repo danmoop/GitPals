@@ -32,5 +32,17 @@
         </div>
     </section>
 
+
+    <ul class="pr-list text-center">
+        <li class="pr-item" th:each="project: ${allTheProjects}">
+            <header>
+                <h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6>
+            </header>
+
+            <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+            <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
+        </li>
+    </ul>
+
 </body>
 </html>

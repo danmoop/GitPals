@@ -3,8 +3,56 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:inline="text">Gitpals - [[${UserObject.username}]]</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
+
+
+<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
+    <div class="center">
+        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank" th:href="${'https://github.com/' + UserObject.username}">[[${UserObject.username}]]'s dashboard</a></b></h6>
+    </div>
+</nav>
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+
+    <div class="container">
+        <div class="green-bg">
+            <p class="wh" style="font-size: 30px;"><b th:inline="text" id="userName">[[${UserObject.username}]]</b></p>
+            <u><a class="dark b" id="githubLink" th:href="${'https://github.com/' + UserObject.username}" target="_blank">Github repository</a></u>
+
+            <hr class="divider"/>
+
+            <h3 class="wh" style="padding: 15px;"><b>Information</b></h3>
+                <div class="container" style="padding: 20px;" >
+                    <span class="wh b">Country</span>
+                    <span type="text" class="form-control input-lg push-left" placeholder="Where are you from?" th:inline="text">[[${UserObject.country}]]</span> <br/>
+
+
+
+                    <span class="wh b" th:inline="text">Information about [[${UserObject.username}]]</span>
+                    <span type="text" class="form-control input-lg" placeholder="Some information about yourself" th:inline="text">[[${UserObject.info}]]</span> <br/>
+                </div>
+
+        </div>
+
+        <div class="blue-bg">
+            <h3 class="wh" style="padding: 15px;" th:inline="text"><b>Technologies [[${UserObject.username}]] knows</b></h3>
+
+                <div style="text-align: left; margin-left: 20px;">
+                    <div th:each="tech: ${UserObject.languagesKnows}" id="techBlock">
+                        <input onclick="return false;" class="largeCheckbox" type="checkbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
+                    </div>
+                </div>
+
+                <br/>
+        </div>
+    </div>
+
+</section>
 
 </body>
 </html>

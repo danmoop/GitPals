@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Map;
 
 @Document(collection = "users")
@@ -16,15 +17,16 @@ public class User
     private String country;
     private String info;
     private Map<String, Boolean> languagesKnows;
-    private Object githubUser;
+    private List<Project> projects;
 
-    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows)
+    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows, List<Project> projects)
     {
         this.username = username;
         this.GithubAccountLink = GithubAccountLink;
         this.country = country;
         this.info = info;
         this.languagesKnows = languagesKnows;
+        this.projects = projects;
 
     }
 
@@ -49,15 +51,6 @@ public class User
         this.info = info;
     }
 
-    public Object getGithubUser()
-    {
-        return githubUser;
-    }
-
-    public void setGithubUser(Object githubUser) {
-        this.githubUser = githubUser;
-    }
-
     public void setUsername(String username)
     {
         this.username = username;
@@ -66,6 +59,16 @@ public class User
     public String getGithubAccountLink()
     {
         return GithubAccountLink;
+    }
+
+    public List<Project> getProjects()
+    {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects)
+    {
+        this.projects = projects;
     }
 
     public void setGithubAccountLink(String githubAccountLink)
@@ -96,5 +99,10 @@ public class User
     public void deleteLanguage(String language)
     {
         languagesKnows.remove(language);
+    }
+
+    public void addProject(Project project)
+    {
+        projects.add(project);
     }
 }

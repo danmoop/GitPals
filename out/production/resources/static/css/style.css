@@ -80,3 +80,42 @@ body
 #githubLink:hover{
     color: white;
 }
+
+.border-dark{
+    border: 5px solid #2c3e50;
+}
+
+.pr-list{
+    margin: 3rem auto 0;
+    max-width: 100rem;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding-top: 1.25rem;
+}
+
+.pr-item{
+    width: calc(20% - 1.5rem);
+    background-color: #192538;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 #293d5c;
+    margin: 0 0.75rem 2.25rem;
+    overflow: hidden;
+    -webkit-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+.pr-title{
+    background: #3498db;
+    padding: 10px;
+}
+
+.text-align-none{
+    text-align: left;
+}
+
+.largeCheckbox{
+    width: 19px;
+    height: 19px;
+}

@@ -1,7 +1,9 @@
 package com.moople.gitpals.MainApplication.Controller;
 
 import com.mongodb.util.JSON;
+import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.projectInterface;
 import com.moople.gitpals.MainApplication.Service.userInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,9 @@ public class IndexController
 
     @Autowired
     userInterface userInterface;
+
+    @Autowired
+    projectInterface projectInterface;
 
     @GetMapping("/")
     public ModelAndView indexPage(Principal user, Model model)
@@ -54,11 +60,28 @@ public class IndexController
                                 "https://github.com/" + user.getName(),
                                 "Not set",
                                 "None yet",
-                                langs
+                                langs,
+                                new ArrayList<>()
                         )
                 );
             }
+
+            User user1 = userInterface.findByUsername(user.getName());
+
+            for(int i = 0; i < user1.getProjects().size(); i++)
+            {
+                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i).getTitle());
+
+                if(project1 != null)
+                {
+                    project1.setAuthor(user1);
+
+                    projectInterface.save(project1);
+                }
+            }
         }
+
+        model.addAttribute("allTheProjects", projectInterface.findAll());
 
         return new ModelAndView("sections/index");
     }
@@ -75,6 +98,21 @@ public class IndexController
             model.addAttribute("userObject", new User());
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
+
+            User user1 = userInterface.findByUsername(user.getName());
+
+            for(int i = 0; i < user1.getProjects().size(); i++)
+            {
+                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i).getTitle());
+
+                if(project1 != null)
+                {
+                    project1.setAuthor(user1);
+
+                    projectInterface.save(project1);
+                }
+            }
+
             return new ModelAndView("sections/dashboard");
         }
     }

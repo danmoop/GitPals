@@ -32,10 +32,10 @@
             <form th:action="@{/updateUserCountry}" method="post">
                 <div class="container" style="padding: 20px;" >
                     <span class="wh b">Country</span>
-                    <input th:name="countryInput" type="text" class="form-control input-lg" placeholder="Where are you from?" th:value="${dbUser.country}"/> <br/>
+                    <input th:if="${dbUser != null}" th:name="countryInput" type="text" class="form-control input-lg" placeholder="Where are you from?" th:value="${dbUser.country}"/> <br/>
 
                     <span class="wh b">Some info about you</span>
-                    <input th:name="infoInput" type="text" class="form-control input-lg" placeholder="Some information about yourself" th:value="${dbUser.info}"/> <br/>
+                    <input th:if="${dbUser != null}" th:name="infoInput" type="text" class="form-control input-lg" placeholder="Some information about yourself" th:value="${dbUser.info}"/> <br/>
 
                     <input type="submit" class="btn btn-inverse b" value="Submit"/>
                 </div>
@@ -47,16 +47,22 @@
             <h3 class="wh" style="padding: 15px;"><b>Select technologies you know</b></h3>
             <form id="technologies" th:action="@{/updateUser}" th:object="${userObject}" method="post" style="padding: 25px;">
 
-                <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock">
-                    <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
+                <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock" style="text-align: left;">
+                    <input class="largeCheckbox" type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
                 </div>
 
                 <br/>
 
                 <input type="hidden" id="userNameInput" th:field="*{username}"/>
 
-                <input onclick="submitChanges();" class="btn btn-primary b" type="submit" value="Save changes"/>
+                <input onclick="submitChanges();" class="btn btn-inverse b text-center" type="submit" value="Save changes"/>
             </form>
+
+            <hr class="divider"/>
+
+            <h3 class="wh" style="padding: 15px;"><b>Submit your project here!</b></h3>
+
+            <a href="/submitProject" class="btn btn-inverse b" style="margin-bottom: 50px;">Let's get started!</a>
         </div>
 
     </div>

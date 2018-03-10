@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - project submit form</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/flat-ui.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation">
+    <div>
+        <button class="btn btn-info margin-btn"><b>About</b></button>
+        <a href="/login" th:if="${UserObject.name == null}"><button class="btn btn-primary margin-btn"><b>Login using Github</b></button></a>
+        <a href="/dashboard" th:if="${UserObject.name != null}"><button class="btn btn-primary margin-btn"><b>My dashboard</b></button></a>
+        <a href="/logout" th:if="${UserObject.name != null}"><button class="btn btn-danger margin-btn"><b>Log Out</b></button></a>
+        <!--<button class="btn btn-primary margin-btn"><b>Donate</b></button> NOT YET FOR THIS ONE-->
+    </div>
+    <div class="center">
+        <h6 class="wh" th:inline="text">Submit your project, <b><a class="wh" target="_blank" th:href="${'https://github.com/' + UserObject.name}">[[${UserObject.name}]]!</a></b> <img style="margin-left: 10px;" th:src="${UserObject.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+    </div>
+</nav>
+
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+    <div class="container">
+        <h3 class="wh">Submit your project!</h3>
+        <p class="wh b">
+            Give some information about your project.
+            What is this project?
+            What technologies does it use?
+            Describe your knowledge and mention what you expect to get from the audience.
+        </p>
+        
+        <hr class="divider"/>
+
+        <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
+            <input type="text" th:field="*{title}" class="form-control input-lg" placeholder="Project title" required="required"/><br/>
+            <textarea type="text" th:field="*{description}" class="form-control input-lg" placeholder="Project description" required="required"></textarea><br/>
+            <input type="text" th:field="*{githubProjectLink}" class="form-control input-lg" placeholder="Project github link" required="required"/><br/>
+
+            <p class="wh b">Select technologies you require for your project</p>
+
+            <div>
+                <div th:each="tech: ${projects}" style="text-align: left;">
+                    <input class="largeCheckbox" type="checkbox" th:name="techInput" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
+                </div>
+            </div>
+
+            <br/>
+
+            <input type="submit" class="btn btn-primary b" value="Submit" style="margin-bottom: 30px;"/>
+        </form>
+        
+    </div>
+</section>
+
+</body>
+</html>
