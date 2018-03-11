@@ -38,6 +38,7 @@ public class IndexController
         {
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
+            model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
 
             if(userInterface.findByUsername(user.getName()) == null)
             {
@@ -59,8 +60,10 @@ public class IndexController
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
                                 "Not set",
-                                "None yet",
+                                "Not set",
                                 langs,
+                                new ArrayList<>(),
+                                new ArrayList<>(),
                                 new ArrayList<>()
                         )
                 );

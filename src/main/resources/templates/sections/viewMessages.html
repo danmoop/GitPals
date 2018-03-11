@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Gitpals - View messages</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
+    <div class="center">
+        <h6 class="wh" th:inline="text">Your message box</h6>
+    </div>
+</nav>
+
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+    <div class="container">
+        <hr class="divider"/>
+    </div>
+</section>
+
+<h3 th:if="${#lists.size(UserObject.messages) == 0}" class="wh text-center">You have no messages yet</h3>
+<h4 class="wh text-center"><a href="/sendMessage">Send a message to someone</a></h4>
+
+<div class="container">
+    <div th:each="message: ${UserObject.messages}">
+        <li class="pr-item" style="width: 100%;">
+            <header class="text-center"><h6 class="wh pr-title"><b th:inline="text">A message by <a th:href="${'/users/' + message.author.username}" class="wh"><u>[[${message.author.username}]]</u></a></b></h6></header>
+            <p class="wh text-center" th:inline="text" style="margin: 10px;"><b>[[${message.content}]]</b></p>
+        </li>
+    </div>
+</div>
+
+</body>
+</html>

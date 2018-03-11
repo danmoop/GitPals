@@ -104,6 +104,7 @@ body
     overflow: hidden;
     -webkit-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
+    list-style: none;
 }
 
 .pr-title{

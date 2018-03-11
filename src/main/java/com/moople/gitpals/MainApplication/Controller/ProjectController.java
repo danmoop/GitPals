@@ -7,10 +7,7 @@ import com.moople.gitpals.MainApplication.Service.userInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -72,7 +69,8 @@ public class ProjectController
                 project.getDescription(),
                 project.getGithubProjectLink(),
                 userInterface.findByUsername(user.getName()),
-                requirements
+                requirements,
+                new ArrayList<>()
         );
 
         User userInDB = userInterface.findByUsername(user.getName());
@@ -83,5 +81,105 @@ public class ProjectController
         projectInterface.save(userProject);
 
         return new ModelAndView("redirect:/dashboard");
+    }
+
+    @GetMapping("/projects/{projectname}")
+    public ModelAndView projectPage(@PathVariable String projectname, Model model, Principal user)
+    {
+        Project project = projectInterface.findByTitle(projectname);
+
+        if(project == null)
+            return new ModelAndView("redirect:/");
+        else
+        {
+            model.addAttribute("AuthorObject", project.getAuthor());
+            model.addAttribute("projectObject", project);
+            model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
+            model.addAttribute("usersApplied", project.getUsersSubmitted());
+
+            return new ModelAndView("sections/projectViewPage");
+        }
+    }
+
+    @PostMapping("/applyForProject")
+    public ModelAndView applyForProject(@RequestParam("linkInput") String link, Principal user)
+    {
+        User userForApply = userInterface.findByUsername(user.getName());
+        Project project = projectInterface.findByTitle(link);
+
+
+        if(project.getUsersSubmitted().size() == 0)
+        {
+            User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
+
+            project.addAppliedUser(userForApply);
+            userForApply2.addProjectAppliedTo(project);
+
+            projectInterface.save(project);
+            userInterface.save(userForApply2);
+        }
+
+        else
+        {
+            for(int i = 0; i < project.getUsersSubmitted().size(); i++)
+            {
+                if(userForApply.getUsername().equals(project.getUsersSubmitted().get(i).getUsername()))
+                {
+                    userForApply.deleteProjectAppliedTo(project);
+
+                    User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
+
+                    project.deleteAppliedUser(userForApply2);
+
+                    Project project2 = projectInterface.findByTitle(project.getTitle());
+
+                    userInterface.save(userForApply2);
+                    projectInterface.save(project2);
+
+                    break;
+                }
+                else
+                {
+                    userForApply.addProjectAppliedTo(project);
+
+                    User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
+
+                    project.addAppliedUser(userForApply2);
+
+                    Project project2 = projectInterface.findByTitle(project.getTitle());
+
+                    userInterface.save(userForApply2);
+                    projectInterface.save(project2);
+                }
+            }
+        }
+
+        return new ModelAndView("redirect:/projects/" + link);
+    }
+
+    @PostMapping("/unapplyForProject")
+    public ModelAndView unapplyForProject(@RequestParam("linkInput") String link, Principal user)
+    {
+        Project projectDB = projectInterface.findByTitle(link);
+        User userDB = userInterface.findByUsername(user.getName());
+
+        for(int i = 0; i < projectDB.getUsersSubmitted().size(); i++)
+        {
+            if(userDB.getUsername().equals(projectDB.getUsersSubmitted().get(i).getUsername()))
+            {
+                User thatUser = projectDB.getUsersSubmitted().get(i);
+
+                projectDB.deleteAppliedUser(thatUser);
+                thatUser.deleteProjectAppliedTo(projectDB);
+
+
+                projectInterface.save(projectDB);
+                userInterface.save(thatUser);
+
+                break;
+            }
+        }
+
+        return new ModelAndView("redirect:/projects/" + link);
     }
 }

@@ -19,7 +19,10 @@
         </div>
         <div class="center">
             <h6 class="wh" th:if="${GithubUserName == null}"><b>Hello, Guest</b></h6>
-            <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" th:href="${'https://github.com/' + GithubUserName}">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+            <div class="row">
+                <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" th:href="${'https://github.com/' + GithubUserName}">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+                <a href="/messages" class="wh b" th:if="${GithubUserName != null}" style="transform: translate(20%, 15%); font-size: 20px;" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
+            </div>
         </div>
     </nav>
 
@@ -32,16 +35,16 @@
         </div>
     </section>
 
-
     <ul class="pr-list text-center">
-        <li class="pr-item" th:each="project: ${allTheProjects}">
-            <header>
-                <h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6>
-            </header>
+        <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
+            <li class="pr-item">
+                <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
+                <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+                <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
+            </li>
+        </a>
 
-            <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
-            <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
-        </li>
+        <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}">No projects submitted yet</h6>
     </ul>
 
 </body>

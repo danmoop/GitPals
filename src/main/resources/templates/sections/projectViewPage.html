@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:inline="text">GitPals - [[${projectObject.title}]]</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
+    <div class="center">
+        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank" th:href="${'https://github.com/' + AuthorObject.username}">Explore [[${AuthorObject.username}]]'s Github profile</a></b></h6>
+    </div>
+</nav>
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <div class="container">
+        <h3 class="wh" th:inline="text">[[${projectObject.title}]]</h3>
+        <hr class="divider"/>
+        <a th:href="${'/users/' + AuthorObject.username}" th:inline="text" class="wh"><b>Author</b> - [[${AuthorObject.username}]]</a>
+        <p th:inline="text" class="wh">[[${projectObject.description}]]</p>
+        <p th:inline="text" class="wh"><b>This project requires: </b>[[${projectObject.requirements}]]</p>
+        <a th:href="${'https://' + projectObject.githubProjectLink}" class="wh b" target="_blank">Project Github repository</a>
+
+        <hr class="divider"/>
+
+        <h4 class="wh">Users applied for this project:</h4>
+        <a class="wh" th:inline="text" th:if="${#lists.size(usersApplied) != 0}" th:each="user: ${usersApplied}" th:href="${'/users/' + user.username}">[[${user.username}]]<br/></a>
+        <p class="wh" th:if="${#lists.size(usersApplied) == 0}">Nobody applied for this project yet</p>
+
+        <br/>
+
+        <form th:action="@{/applyForProject}" method="post">
+            <input type="submit" class="btn btn-primary b" value="Apply"/>
+            <input type="hidden" th:name="linkInput" th:value="${projectObject.title}"/>
+        </form>
+
+        <br/>
+
+        <form th:action="@{/unapplyForProject}" method="post">
+            <input type="submit" class="btn btn-primary b" value="Unapply"/>
+            <input type="hidden" th:name="linkInput" th:value="${projectObject.title}"/>
+        </form>
+
+        <br/>
+        
+    </div>
+</section>
+
+</body>
+</html>

@@ -18,8 +18,10 @@ public class User
     private String info;
     private Map<String, Boolean> languagesKnows;
     private List<Project> projects;
+    private List<Project> appliedTo;
+    private List<Message> messages;
 
-    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows, List<Project> projects)
+    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows, List<Project> projects, List<Project> appliedTo, List<Message> messages)
     {
         this.username = username;
         this.GithubAccountLink = GithubAccountLink;
@@ -27,7 +29,8 @@ public class User
         this.info = info;
         this.languagesKnows = languagesKnows;
         this.projects = projects;
-
+        this.appliedTo = appliedTo;
+        this.messages = messages;
     }
 
     public User(){}
@@ -64,6 +67,16 @@ public class User
     public List<Project> getProjects()
     {
         return projects;
+    }
+
+    public List<Project> getAppliedTo()
+    {
+        return appliedTo;
+    }
+
+    public List<Message> getMessages()
+    {
+        return messages;
     }
 
     public void setProjects(List<Project> projects)
@@ -104,5 +117,20 @@ public class User
     public void addProject(Project project)
     {
         projects.add(project);
+    }
+
+    public void addProjectAppliedTo(Project project)
+    {
+        appliedTo.add(project);
+    }
+
+    public void deleteProjectAppliedTo(Project project)
+    {
+        appliedTo.remove(project);
+    }
+
+    public void sendMessage(Message message)
+    {
+        messages.add(message);
     }
 }
