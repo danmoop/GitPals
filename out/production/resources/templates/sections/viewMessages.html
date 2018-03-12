@@ -31,6 +31,12 @@
         <li class="pr-item" style="width: 100%;">
             <header class="text-center"><h6 class="wh pr-title"><b th:inline="text">A message by <a th:href="${'/users/' + message.author.username}" class="wh"><u>[[${message.author.username}]]</u></a></b></h6></header>
             <p class="wh text-center" th:inline="text" style="margin: 10px;"><b>[[${message.content}]]</b></p>
+
+            <form th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
+                <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
+                <input type="hidden" th:value="${message.author.username}" th:name="messageAuthorInput" />
+                <input type="submit" class="btn btn-danger wh b" value="Delete message"/>
+            </form>
         </li>
     </div>
 </div>

@@ -133,4 +133,9 @@ public class User
     {
         messages.add(message);
     }
+
+    public void deleteMessage(Message message)
+    {
+        messages.remove(message);
+    }
 }

@@ -149,4 +149,10 @@ public class IndexController
         httpSession.invalidate();
         return new ModelAndView("redirect:/");
     }
+
+    @GetMapping("/about")
+    public ModelAndView aboutPage()
+    {
+        return new ModelAndView("sections/aboutPage");
+    }
 }

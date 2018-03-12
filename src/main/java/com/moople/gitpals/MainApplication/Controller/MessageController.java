@@ -53,4 +53,23 @@ public class MessageController
 
         return new ModelAndView("redirect:/");
     }
+
+    @PostMapping("/deleteMessage")
+    public ModelAndView messageDeleted(@RequestParam("messageContentInput") String content, @RequestParam("messageAuthorInput") String author, Principal user)
+    {
+        User userDB = userInteface.findByUsername(user.getName());
+
+        for(int i = 0; i < userDB.getMessages().size(); i++)
+        {
+            if(userDB.getMessages().get(i).getContent().equals(content) &&
+                    userDB.getMessages().get(i).getAuthor().getUsername().equals(author))
+            {
+                userDB.deleteMessage(userDB.getMessages().get(i));
+            }
+        }
+
+        userInteface.save(userDB);
+
+        return new ModelAndView("redirect:/messages");
+    }
 }

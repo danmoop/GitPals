@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation">
         <div>
-            <button class="btn btn-info margin-btn"><b>About</b></button>
+            <a href="/about" class="btn btn-info margin-btn"><b>About</b></a>
             <a href="/login" th:if="${GithubUserName == null}"><button class="btn btn-primary margin-btn"><b>Login using Github</b></button></a>
             <a href="/dashboard" th:if="${GithubUserName != null}"><button class="btn btn-primary margin-btn"><b>My dashboard</b></button></a>
             <a href="/logout" th:if="${GithubUserName != null}"><button class="btn btn-danger margin-btn"><b>Log Out</b></button></a>
