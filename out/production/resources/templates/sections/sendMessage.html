@@ -25,9 +25,9 @@
 
 <div class="container text-center">
     <form th:action="@{/messageSent}" method="post">
-        <input type="text" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName"/><br/>
-        <textarea type="text" class="form-control input-lg" placeholder="Message" th:name="Content"></textarea><br/>
-        <input type="submit" class="btn btn-primary b" value="Send"/>
+        <input type="text" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required"/><br/>
+        <textarea type="text" class="form-control input-lg" placeholder="Message" th:name="Content" required="required"></textarea><br/>
+        <input type="submit" class="btn btn-primary b" value="Send" onclick="alert('Message sent!');"/>
     </form>
 </div>
 

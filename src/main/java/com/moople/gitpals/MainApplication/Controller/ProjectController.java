@@ -89,10 +89,14 @@ public class ProjectController
         Project project = projectInterface.findByTitle(projectname);
 
         if(project == null)
-            return new ModelAndView("redirect:/");
+        {
+            return new ModelAndView("error/projectDeleted");
+        }
+
         else
         {
             model.addAttribute("AuthorObject", project.getAuthor());
+            model.addAttribute("userPrincipal", user.getName());
             model.addAttribute("projectObject", project);
             model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
             model.addAttribute("usersApplied", project.getUsersSubmitted());
@@ -181,5 +185,40 @@ public class ProjectController
         }
 
         return new ModelAndView("redirect:/projects/" + link);
+    }
+
+    @PostMapping("/deleteProject")
+    public ModelAndView projectDeleted(@RequestParam("projectName") String projectName, @RequestParam("logged_user_name") String logged_user_name)
+    {
+        User userDB = userInterface.findByUsername(logged_user_name);
+        Project project = projectInterface.findByTitle(projectName);
+
+        List<User> allUsers = userInterface.findAll();
+
+        if(userDB.getUsername().equals(project.getAuthor().getUsername()))
+        {
+            projectInterface.delete(project);
+
+            for(int i = 0; i < allUsers.size(); i++)
+            {
+                for(int r = 0; r < allUsers.get(i).getAppliedTo().size(); r++)
+                {
+                    if(project.getTitle().equals(allUsers.get(i).getAppliedTo().get(r).getTitle()))
+                    {
+                        allUsers.get(i).deleteProjectAppliedTo(allUsers.get(i).getAppliedTo().get(r));
+                    }
+                }
+
+                userInterface.save(allUsers.get(i));
+            }
+
+            return new ModelAndView("redirect:/");
+
+        }
+
+        else
+        {
+            return new ModelAndView("error/siteBroken");
+        }
     }
 }

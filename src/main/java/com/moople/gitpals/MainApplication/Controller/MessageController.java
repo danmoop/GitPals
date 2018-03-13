@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.security.Principal;
 
 @Controller
@@ -18,6 +21,9 @@ public class MessageController
 {
     @Autowired
     userInterface userInteface;
+
+    ScriptEngineManager factory = new ScriptEngineManager();
+    ScriptEngine JS = factory.getEngineByName("JavaScript");
 
     @GetMapping("/messages")
     public ModelAndView messages(Principal user, Model model)
@@ -36,11 +42,11 @@ public class MessageController
     }
 
     @PostMapping("/messageSent")
-    public ModelAndView messageSent(@RequestParam("RecipientName") String username, @RequestParam("Content") String content)
+    public ModelAndView messageSent(Model model, @RequestParam("RecipientName") String username, @RequestParam("Content") String content)
     {
         User recipient = userInteface.findByUsername(username);
 
-        if(!recipient.getUsername().equals("null"))
+        if(recipient != null)
         {
             Message message = new Message(recipient,content);
 
@@ -49,9 +55,17 @@ public class MessageController
             recipient2.sendMessage(message);
 
             userInteface.save(recipient2);
+
+            return new ModelAndView("redirect:/");
         }
 
-        return new ModelAndView("redirect:/");
+        else
+        {
+            model.addAttribute("wrongRecipient", username);
+
+            return new ModelAndView("error/recipientNotFound");
+        }
+
     }
 
     @PostMapping("/deleteMessage")

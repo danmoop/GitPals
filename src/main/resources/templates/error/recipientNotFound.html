@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - Recipient not found</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+    <div class="container">
+        <h3 class="wh" th:inline="text">Recipient <u>[[${wrongRecipient}]]</u> not found</h3>
+        <p class="wh b" th:inline="text">That means <u>[[${wrongRecipient}]]</u> has never used GitPals</p>
+        <hr class="divider"/>
+    </div>
+</section>
+
+
+</body>
+</html>

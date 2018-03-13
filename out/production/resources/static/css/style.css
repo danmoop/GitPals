@@ -105,6 +105,7 @@ body
     -webkit-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
     list-style: none;
+    border: 5px solid #192538;
 }
 
 .pr-title{
@@ -119,4 +120,13 @@ body
 .largeCheckbox{
     width: 19px;
     height: 19px;
+}
+
+.transparent{
+    border: none;
+    background: transparent;
+}
+
+.red{
+    color: #e74c3c;
 }
