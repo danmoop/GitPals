@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>GitPals - 404</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/sad_github.png"/>GitPals</h1></a>
+    <div class="container">
+        <h1 class="wh">404</h1>
+        <h3 class="wh" th:inline="text">User <u>[[${user_name}]]</u> not found</h3>
+        <p class="wh b" th:inline="text">That means <u>[[${user_name}]]</u> has never used GitPals</p>
+        <hr class="divider"/>
+    </div>
+</section>
+
+</body>
+</html>

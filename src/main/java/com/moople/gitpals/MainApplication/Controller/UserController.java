@@ -23,9 +23,20 @@ public class UserController
     @GetMapping("/users/{username}")
     public ModelAndView findUser(@PathVariable String username, Model model)
     {
-        model.addAttribute("UserObject", userInterface.findByUsername(username));
+        User user = userInterface.findByUsername(username);
 
-        return new ModelAndView("sections/userDashboard");
+        if(user != null)
+        {
+            model.addAttribute("UserObject", userInterface.findByUsername(username));
+
+            return new ModelAndView("sections/userDashboard");
+        }
+
+        else
+        {
+            model.addAttribute("user_name", username);
+            return new ModelAndView("error/userNotFound");
+        }
     }
 
     @PostMapping("/updateUser")

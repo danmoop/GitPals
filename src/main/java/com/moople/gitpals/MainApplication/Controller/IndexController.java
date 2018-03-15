@@ -46,7 +46,9 @@ public class IndexController
                         "Python", "Machine learning", "Deep learning", "Ionic",
                         "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
                         "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-                        "C", "GLSL", "OpenGL", "HTML5" };
+                        "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
+                        "Game modding", "Other"
+                };
 
                 Map<String, Boolean> langs = new HashMap<>();
 
@@ -92,7 +94,7 @@ public class IndexController
     @GetMapping("/dashboard")
     public ModelAndView dashboardPage(Principal user, Model model)
     {
-        if(user.getName().equals("null"))
+        if(user == null)
             return new ModelAndView("redirect:/");
 
         else

@@ -11,7 +11,6 @@ public class Project
     @Id
     private String id;
 
-
     private String title;
     private String description;
     private String githubProjectLink;

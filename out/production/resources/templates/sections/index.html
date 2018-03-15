@@ -32,20 +32,23 @@
             <h3 class="wh">Find a team for development and become a better developer while contributing and working together!</h3>
             <h6 class="wh b">Choose any project your requirements match and start your path in cooperative development</h6>
             <hr class="divider"/>
+            <h6 class="wh b" th:inline="text">Total projects for apply: [[${#lists.size(allTheProjects)}]]</h6>
+
         </div>
+
+        <ul class="pr-list text-center">
+            <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
+                <li class="pr-item">
+                    <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
+                    <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+                    <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
+                </li>
+            </a>
+
+            <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
+        </ul>
+
     </section>
-
-    <ul class="pr-list text-center">
-        <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
-            <li class="pr-item">
-                <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
-                <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
-            </li>
-        </a>
-
-        <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}">No projects published yet</h6>
-    </ul>
 
 </body>
 </html>

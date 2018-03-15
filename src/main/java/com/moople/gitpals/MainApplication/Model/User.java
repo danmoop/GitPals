@@ -129,6 +129,11 @@ public class User
         appliedTo.remove(project);
     }
 
+    public void deleteProject(Project project)
+    {
+        projects.remove(project);
+    }
+
     public void sendMessage(Message message)
     {
         messages.add(message);

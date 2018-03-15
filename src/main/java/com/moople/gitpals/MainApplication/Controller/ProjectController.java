@@ -36,7 +36,9 @@ public class ProjectController
                     "Python", "Machine learning", "Deep learning", "Ionic",
                     "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
                     "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-                    "C", "GLSL", "OpenGL", "HTML5" };
+                    "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
+                    "Game modding", "Other"
+            };
 
             Map<String, Boolean> techs = new HashMap<>();
 
@@ -188,28 +190,34 @@ public class ProjectController
     }
 
     @PostMapping("/deleteProject")
-    public ModelAndView projectDeleted(@RequestParam("projectName") String projectName, @RequestParam("logged_user_name") String logged_user_name)
+    public ModelAndView projectDeleted(Principal user, @RequestParam("projectName") String projectName, @RequestParam("logged_user_name") String logged_user_name)
     {
         User userDB = userInterface.findByUsername(logged_user_name);
         Project project = projectInterface.findByTitle(projectName);
-
-        List<User> allUsers = userInterface.findAll();
 
         if(userDB.getUsername().equals(project.getAuthor().getUsername()))
         {
             projectInterface.delete(project);
 
-            for(int i = 0; i < allUsers.size(); i++)
+            for(int r = 0; r < userDB.getAppliedTo().size(); r++)
             {
-                for(int r = 0; r < allUsers.get(i).getAppliedTo().size(); r++)
+                if(project.getTitle().equals(userDB.getAppliedTo().get(r).getTitle()))
                 {
-                    if(project.getTitle().equals(allUsers.get(i).getAppliedTo().get(r).getTitle()))
-                    {
-                        allUsers.get(i).deleteProjectAppliedTo(allUsers.get(i).getAppliedTo().get(r));
-                    }
+                    userDB.deleteProjectAppliedTo(userDB.getAppliedTo().get(r));
                 }
+            }
 
-                userInterface.save(allUsers.get(i));
+            userInterface.save(userDB);
+
+
+            for(int q = 0; q < userDB.getProjects().size(); q++)
+            {
+                if(project.getTitle().equals(userDB.getProjects().get(q).getTitle()))
+                {
+                    userDB.deleteProject(userDB.getProjects().get(q));
+
+                    userInterface.save(userDB);
+                }
             }
 
             return new ModelAndView("redirect:/");

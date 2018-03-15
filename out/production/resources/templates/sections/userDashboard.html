@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title th:inline="text">Gitpals - [[${UserObject.username}]]</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/flat-ui.css" />
@@ -12,17 +13,40 @@
 
 <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
     <div class="center">
-        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank" th:href="${'https://github.com/' + UserObject.username}">[[${UserObject.username}]]'s dashboard</a></b></h6>
+        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank">[[${UserObject.username}]]'s dashboard</a></b></h6>
     </div>
 </nav>
 
 <section class="center-content text-center">
     <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
 
+    <hr class="divider" style="width: 50%;"/>
+
+    <div class="container">
+        <div class="blue-bg">
+            <div class="container">
+                <br/>
+                <h3 class="wh" th:inline="text">Send [[${UserObject.username}]] a message</h3>
+
+                <form th:action="@{/messageSent}" method="post">
+                    <input type="text" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
+                    <textarea type="text" class="form-control input-lg" placeholder="Message" th:name="Content" required="required"></textarea><br/>
+                    <input type="submit" class="btn btn-danger b" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
     <div class="container">
         <div class="green-bg">
+
             <p class="wh" style="font-size: 30px;"><b th:inline="text" id="userName">[[${UserObject.username}]]</b></p>
             <u><a class="dark b" id="githubLink" th:href="${'https://github.com/' + UserObject.username}" target="_blank">Github profile</a></u>
+            <br/><br/>
+
+            <h5 class="text-center" th:inline="text"><a href="/sendMessage" class="wh">Send a message to <u>[[${UserObject.username}]]</u></a></h5>
 
             <hr class="divider"/>
 
@@ -49,9 +73,9 @@
                     </li>
                 </a>
 
-                <h6 th:if="${#lists.size(UserObject.appliedTo) == 0}" class="wh" th:inline="text">[[${UserObject.username}]] hasn't applied to any project yet</h6>
             </ul>
-
+            <h6 th:if="${#lists.size(UserObject.appliedTo) == 0}" class="wh" th:inline="text">[[${UserObject.username}]] hasn't applied to any project yet</h6>
+            <br/>
         </div>
 
         <div class="blue-bg">

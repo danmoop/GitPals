@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>GitPals - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -13,7 +14,7 @@
 
 <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
     <div class="center">
-        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank" th:href="${'https://github.com/' + GithubUserName}">[[${GithubUserName}]]'s dashboard</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank">[[${GithubUserName}]]'s dashboard</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
     </div>
 </nav>
 
