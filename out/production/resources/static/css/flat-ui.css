@@ -1287,19 +1287,6 @@ label {
   outline: 0;
   box-shadow: none;
 }
-.form-control[disabled],
-.form-control[readonly],
-fieldset[disabled] .form-control,
-.select2-search input[type="text"][disabled],
-.select2-search input[type="text"][readonly],
-fieldset[disabled] .select2-search input[type="text"] {
-  background-color: #f4f6f6;
-  border-color: #d5dbdb;
-  color: #d5dbdb;
-  cursor: default;
-  opacity: 0.7;
-  filter: alpha(opacity=70);
-}
 .form-control.flat,
 .select2-search input[type="text"].flat {
   border-color: transparent;

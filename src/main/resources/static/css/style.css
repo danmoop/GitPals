@@ -132,6 +132,14 @@ body
     color: #e74c3c;
 }
 
+.blue{
+    color: #3498db;
+}
+
+.green{
+    color: #2ecc71;
+}
+
 a:hover{
     color: #e7e7e7;
 }

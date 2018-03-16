@@ -26,7 +26,7 @@
         <div class="blue-bg">
             <div class="container">
                 <br/>
-                <h3 class="wh" th:inline="text">Send [[${UserObject.username}]] a message</h3>
+                <h3 class="wh" th:inline="text">Send <u>[[${UserObject.username}]]</u> a message</h3>
 
                 <form th:action="@{/messageSent}" method="post">
                     <input type="text" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
@@ -53,12 +53,12 @@
             <h3 class="wh" style="padding: 15px;"><b>Information</b></h3>
                 <div class="container" style="padding: 20px;" >
                     <span class="wh b">Country</span>
-                    <span type="text" class="form-control input-lg push-left" placeholder="Where are you from?" th:inline="text">[[${UserObject.country}]]</span> <br/>
 
-
+                    <input type="text" class="form-control input-lg push-left" readonly="readonly" th:placeholder="${UserObject.username + ' has not set country yet'}" th:value="${UserObject.country}"/>
 
                     <span class="wh b" th:inline="text">Information about [[${UserObject.username}]]</span>
-                    <span type="text" class="form-control input-lg" placeholder="Some information about yourself" th:inline="text">[[${UserObject.info}]]</span> <br/>
+                    <!--<span type="text" class="form-control input-lg" placeholder="Some information about yourself" th:inline="text">[[${UserObject.info}]]</span> <br/>-->
+                    <textarea type="text" class="form-control input-lg" th:placeholder="${UserObject.username} + ' has not given any information yet'" th:inline="text" rows="10" readonly="readonly">[[${UserObject.info}]]</textarea> <br/>
                 </div>
 
             <hr class="divider"/>

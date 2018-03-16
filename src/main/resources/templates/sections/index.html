@@ -20,7 +20,7 @@
         <div class="center">
             <h6 class="wh" th:if="${GithubUserName == null}"><b>Hello, Guest</b></h6>
             <div class="row">
-                <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" th:href="${'https://github.com/' + GithubUserName}">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+                <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" th:href="${'users/' + GithubUserName}">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
                 <a href="/messages" class="wh b" th:if="${GithubUserName != null}" style="transform: translate(20%, 15%); font-size: 20px;" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
             </div>
         </div>

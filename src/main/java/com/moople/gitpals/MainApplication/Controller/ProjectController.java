@@ -59,30 +59,40 @@ public class ProjectController
     @PostMapping("/projectSubmitted")
     public ModelAndView projectSubmitted(Principal user, @ModelAttribute Project project, @RequestParam("techInput") List<String> techs)
     {
-        List<String> requirements = new ArrayList<>();
+        Project project1 = projectInterface.findByTitle(project.getTitle());
 
-        for(String tech : techs)
+        if(project1 == null)
         {
-            requirements.add(tech);
+            List<String> requirements = new ArrayList<>();
+
+            for(String tech : techs)
+            {
+                requirements.add(tech);
+            }
+
+            Project userProject = new Project(
+                    project.getTitle(),
+                    project.getDescription(),
+                    project.getGithubProjectLink(),
+                    userInterface.findByUsername(user.getName()),
+                    requirements,
+                    new ArrayList<>()
+            );
+
+            User userInDB = userInterface.findByUsername(user.getName());
+
+            userInDB.addProject(userProject);
+
+            userInterface.save(userInDB);
+            projectInterface.save(userProject);
+
+            return new ModelAndView("redirect:/dashboard");
         }
 
-        Project userProject = new Project(
-                project.getTitle(),
-                project.getDescription(),
-                project.getGithubProjectLink(),
-                userInterface.findByUsername(user.getName()),
-                requirements,
-                new ArrayList<>()
-        );
-
-        User userInDB = userInterface.findByUsername(user.getName());
-
-        userInDB.addProject(userProject);
-
-        userInterface.save(userInDB);
-        projectInterface.save(userProject);
-
-        return new ModelAndView("redirect:/dashboard");
+        else
+        {
+            return new ModelAndView("error/projectExists");
+        }
     }
 
     @GetMapping("/projects/{projectname}")

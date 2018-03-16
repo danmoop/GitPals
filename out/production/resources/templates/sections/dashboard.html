@@ -36,7 +36,7 @@
                     <input th:if="${dbUser != null}" th:name="countryInput" type="text" class="form-control input-lg" placeholder="Where are you from?" th:value="${dbUser.country}"/> <br/>
 
                     <span class="wh b">Some info about you</span>
-                    <input th:if="${dbUser != null}" th:name="infoInput" type="text" class="form-control input-lg" placeholder="Some information about yourself" th:value="${dbUser.info}"/> <br/>
+                    <textarea th:if="${dbUser != null}" th:name="infoInput" type="text" class="form-control input-lg" placeholder="Some information about yourself" th:inline="text" rows="10">[[${dbUser.info}]]</textarea> <br/>
 
                     <input type="submit" class="btn btn-inverse b" value="Submit"/>
                 </div>
