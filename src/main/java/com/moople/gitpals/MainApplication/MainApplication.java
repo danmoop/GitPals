@@ -9,7 +9,6 @@ public class MainApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MainApplication.class, args);
-		MongoClient mongoClient = new MongoClient("mongodb://danmoop_admin:hackingtheinternet@ds215759.mlab.com:15759/gitpals", 15759);
 	}
 
 }
