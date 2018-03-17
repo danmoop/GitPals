@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="Gitpals_main" target="1.8" />
+      <module name="Gitpals_test" target="1.8" />
       <module name="MainApplication_main" target="1.8" />
       <module name="MainApplication_test" target="1.8" />
     </bytecodeTargetLevel>
