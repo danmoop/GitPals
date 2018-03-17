@@ -25,12 +25,12 @@ repositories {
 
 dependencies {
 	compile 'org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE'
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	//compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
+	//testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 	testCompile('org.springframework.security:spring-security-test')
 }
