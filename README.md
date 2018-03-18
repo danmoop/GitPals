@@ -13,6 +13,12 @@ This project uses **Java, Spring, MongoDB**
 Thank you for deciding to contribute! Download GitPals to your PC. You need to have MongoDB installed on your pc.
 Open project in any IDE (I use Intellij IDEA). Then open Console Prompt and type in: mongod --dbpath=path_to_db (for example: mongod --dbpath=C:\GitPals\DB). 
 
+[Video Guide](https://youtu.be/JbvxJyXmOEM)
+
+**address - localhost:1337**
+
+**MongoDB port - default 27017**
+
 **Until you don't run mongo database, web page will return error**
 
 Executing file - GitPals/src/main/java/com/moople/gitpals/MainApplication.java
