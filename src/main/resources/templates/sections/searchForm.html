@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - Search form</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/flat-ui.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <div class="container">
+        <h3 class="wh b">Search</h3>
+        <hr class="divider"/>
+
+        <form th:action="@{/findUser}" method="post">
+            <p class="wh b">Find user</p>
+            <input type="text" th:name="user_name" class="form-control" placeholder="Username"/><br/>
+            <input type="submit" class="btn btn-success b" value="Find"/>
+        </form>
+
+        <hr class="divider"/>
+
+        <form th:action="@{/findProject}" method="post">
+            <p class="wh b">Find project</p>
+            <input type="text" th:name="project_name" class="form-control" placeholder="Project name"/><br/>
+            <input type="submit" class="btn btn-success b" value="Find"/>
+        </form>
+
+    </div>
+</section>
+
+</body>
+</html>

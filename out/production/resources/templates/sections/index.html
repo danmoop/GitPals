@@ -24,6 +24,12 @@
                 <a href="/messages" class="wh b" th:if="${GithubUserName != null}" style="transform: translate(20%, 15%); font-size: 20px;" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
             </div>
         </div>
+
+        <div class="push-right">
+            <div class="container">
+                <a href="/search" class="btn btn-success b">Search</a>
+            </div>
+        </div>
     </nav>
 
     <section class="center-content text-center">
@@ -46,7 +52,7 @@
                     </div>
 
                     <br/>
-                    <button class="btn btn-info">Sort</button>
+                    <button class="btn btn-info b">Sort</button>
                 </form>
 
                 <hr class="divider"/>

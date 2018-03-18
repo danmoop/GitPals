@@ -143,3 +143,11 @@ body
 a:hover{
     color: #e7e7e7;
 }
+
+.fz-30{
+    font-size: 30px;
+}
+
+.fz-25{
+    font-size: 25px;
+}
