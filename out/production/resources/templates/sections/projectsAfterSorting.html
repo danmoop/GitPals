@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - Projects</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/flat-ui.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <h3 class="wh b">Projects according to your choice</h3>
+    <hr class="divider"/>
+    <ul class="pr-list text-center">
+        <a th:each="project: ${matchProjects}" th:href="${'/projects/' + project.title}">
+            <li class="pr-item">
+                <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
+                <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+                <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
+            </li>
+        </a>
+    </ul>
+
+    <h4 class="wh" th:if="${#lists.size(matchProjects) == 0}" style="margin-right: 2.5%;">Not found</h4>
+
+</section>
+
+</body>
+</html>

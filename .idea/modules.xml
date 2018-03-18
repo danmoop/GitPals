@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gitpals.iml" filepath="$PROJECT_DIR$/.idea/modules/Gitpals.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gitpals_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Gitpals_main.iml" group="Gitpals" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gitpals_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Gitpals_test.iml" group="Gitpals" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitPals.iml" filepath="$PROJECT_DIR$/.idea/modules/GitPals.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitPals_main.iml" filepath="$PROJECT_DIR$/.idea/modules/GitPals_main.iml" group="GitPals" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitPals_test.iml" filepath="$PROJECT_DIR$/.idea/modules/GitPals_test.iml" group="GitPals" />
     </modules>
   </component>
 </project>

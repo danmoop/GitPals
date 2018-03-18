@@ -34,28 +34,31 @@ public class IndexController
     @GetMapping("/")
     public ModelAndView indexPage(Principal user, Model model)
     {
+        String technologies[] = { "Web design", "Mobile design", "Java", "C++",
+                "Python", "Machine learning", "Deep learning", "Ionic",
+                "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
+                "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
+                "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
+                "Game modding", "Other"
+        };
+
+        Map<String, Boolean> langs = new HashMap<>();
+
+        for(int i = 0; i < technologies.length; i++)
+        {
+            langs.put(technologies[i], false);
+        }
+
         if(user != null)
         {
+
+
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
             model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
 
             if(userInterface.findByUsername(user.getName()) == null)
             {
-                String technologies[] = { "Web design", "Mobile design", "Java", "C++",
-                        "Python", "Machine learning", "Deep learning", "Ionic",
-                        "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
-                        "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-                        "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
-                        "Game modding", "Other"
-                };
-
-                Map<String, Boolean> langs = new HashMap<>();
-
-                for(int i = 0; i < technologies.length; i++)
-                {
-                    langs.put(technologies[i], false);
-                }
 
                 userInterface.save(
                         new User(
@@ -86,6 +89,7 @@ public class IndexController
             }
         }
 
+        model.addAttribute("projectTechs", langs);
         model.addAttribute("allTheProjects", projectInterface.findAll());
 
         return new ModelAndView("sections/index");

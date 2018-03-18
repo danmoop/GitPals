@@ -239,4 +239,27 @@ public class ProjectController
             return new ModelAndView("error/siteBroken");
         }
     }
+
+    @PostMapping("/sortProjects")
+    public ModelAndView projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)
+    {
+        List<Project> allProjects = projectInterface.findAll();
+
+        List<Project> matchProjects = new ArrayList<>();
+
+        for(int i = 0; i < allProjects.size(); i++)
+        {
+            for(int r = 0; r < allProjects.get(i).getRequirements().size(); r++)
+            {
+                if(data.contains(allProjects.get(i).getRequirements().get(r)))
+                {
+                    matchProjects.add(allProjects.get(i));
+                }
+            }
+        }
+
+        model.addAttribute("matchProjects", matchProjects);
+
+        return new ModelAndView("sections/projectsAfterSorting");
+    }
 }

@@ -2,9 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffd0e332-3852-470d-a6c9-3f3a339a5600" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/MainApplication.class" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/static/js/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController$SecurityConfig.class" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController$SecurityConfig.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/MainApplication.class" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/MainApplication.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/resources/application.properties" afterPath="$PROJECT_DIR$/out/production/resources/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/index.html" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/modules/Gitpals.iml" afterPath="$PROJECT_DIR$/.idea/modules/GitPals.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/modules/Gitpals_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/GitPals_main.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/modules/Gitpals_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/GitPals_test.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -29,21 +45,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
-              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="projectDeleted.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+            <state relative-caret-position="195">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="19" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -62,53 +68,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
+      <file leaf-file-name="IndexController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state relative-caret-position="-484">
+              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainApplication.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="flat-ui.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/flat-ui.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28336">
-              <caret line="1288" column="1" lean-forward="false" selection-start-line="1288" selection-start-column="1" selection-end-line="1288" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="goodProjDescription.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/guide/goodProjDescription.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+            <state relative-caret-position="5">
+              <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="66" selection-end-column="13" />
               <folding>
-                <element signature="n#style#0;n#ul#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userNotFound.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/userNotFound.html">
+      <file leaf-file-name="projectsAfterSorting.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="371">
+              <caret line="25" column="4" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProjectController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="423">
+              <caret line="260" column="27" lean-forward="false" selection-start-line="260" selection-start-column="27" selection-end-line="260" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -117,18 +123,8 @@
       <file leaf-file-name="projectSubmitForm.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="59" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3058">
-              <caret line="139" column="19" lean-forward="false" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="19" />
+            <state relative-caret-position="223">
+              <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -141,16 +137,13 @@
       <list>
         <option value="Interface" />
         <option value="JavaFXApplication" />
-        <option value="HTML File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lists</find>
-      <find>You have</find>
-      <find>form-</find>
       <find>Message</find>
       <find>pr-item</find>
       <find>description</find>
@@ -178,6 +171,9 @@
       <find>Information about</find>
       <find>.form-control[readonly]</find>
       <find>mongo</find>
+      <find>Total project</find>
+      <find>projects</find>
+      <find>projectsubmitform</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -202,14 +198,14 @@
         <entry>
           <key>
             <ExternalProjectPojo>
-              <option name="name" value="Gitpals" />
+              <option name="name" value="GitPals" />
               <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value="Gitpals" />
+                <option name="name" value="GitPals" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
             </list>
@@ -223,7 +219,7 @@
           <value>
             <list>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by root project 'Gitpals'. [incubating]" />
+                <option name="description" value="Displays the components produced by root project 'GitPals'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="components" />
               </ExternalTaskPojo>
@@ -237,7 +233,7 @@
                 <option name="name" value="cleanEclipseClasspath" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of root project 'Gitpals'." />
+                <option name="description" value="Displays the sub-projects of root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="projects" />
               </ExternalTaskPojo>
@@ -252,12 +248,12 @@
                 <option name="name" value="classes" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in root project 'Gitpals'. [incubating]" />
+                <option name="description" value="Displays the dependent components of components in root project 'GitPals'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependentComponents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in root project 'Gitpals'." />
+                <option name="description" value="Displays all buildscript dependencies declared in root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="buildEnvironment" />
               </ExternalTaskPojo>
@@ -291,7 +287,7 @@
                 <option name="name" value="jar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of root project 'Gitpals'. [incubating]" />
+                <option name="description" value="Displays the configuration model of root project 'GitPals'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="model" />
               </ExternalTaskPojo>
@@ -301,7 +297,7 @@
                 <option name="name" value="processResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from root project 'Gitpals'." />
+                <option name="description" value="Displays the tasks runnable from root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="tasks" />
               </ExternalTaskPojo>
@@ -320,7 +316,7 @@
                 <option name="name" value="test" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the dependency management declared in root project 'Gitpals'." />
+                <option name="description" value="Displays the dependency management declared in root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencyManagement" />
               </ExternalTaskPojo>
@@ -340,7 +336,7 @@
                 <option name="name" value="compileJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in root project 'Gitpals'." />
+                <option name="description" value="Displays the insight into a specific dependency in root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencyInsight" />
               </ExternalTaskPojo>
@@ -365,7 +361,7 @@
                 <option name="name" value="compileTestJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in root project 'Gitpals'." />
+                <option name="description" value="Displays all dependencies declared in root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencies" />
               </ExternalTaskPojo>
@@ -409,7 +405,7 @@
                 <option name="name" value="eclipseProject" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of root project 'Gitpals'." />
+                <option name="description" value="Displays the properties of root project 'GitPals'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="properties" />
               </ExternalTaskPojo>
@@ -420,7 +416,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="3042556028166" />
+        <entry key="$PROJECT_DIR$" value="3042587084749" />
         <entry key="$PROJECT_DIR$/build.gradle" value="1332020454" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="3442123891" />
       </map>
@@ -455,7 +451,7 @@
                   </entry>
                 </map>
               </option>
-              <option name="name" value="Gitpals" />
+              <option name="name" value="GitPals" />
               <option name="projectBuildClasspath">
                 <list>
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-3.5.1-all/42vjebfdws9pjts3l4bouoq0p/gradle-3.5.1/src/announce" />
@@ -614,14 +610,12 @@
         <option value="$PROJECT_DIR$/src/main/resources/applicaiton.yaml" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/sections.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/updateUserModel.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/js/dashboardScript.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/GithubUser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/usedNotFound.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" />
@@ -631,9 +625,7 @@
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/sendMessage.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/projectExists.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/css/style.css" />
@@ -646,7 +638,13 @@
         <option value="$PROJECT_DIR$/src/main/resources/static/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/js/index.js" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" />
       </list>
     </option>
   </component>
@@ -674,54 +672,104 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Gitpals" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Gitpals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="Gitpals" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Gitpals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Gitpals" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Gitpals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="Gitpals" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Gitpals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Gitpals" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Gitpals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="MainApplication" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="MainApplication" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GitPals" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="sections" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15722656" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
@@ -754,7 +802,7 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Gitpals_main" />
+      <module name="GitPals_main" />
       <envs />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -857,13 +905,14 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3401507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3401507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -874,13 +923,12 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.22150883" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.22150883" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938644" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -893,20 +941,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="76" lean-forward="false" selection-start-line="4" selection-start-column="76" selection-end-line="4" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -969,13 +1003,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/register/register.html" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/sections.html" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="30" lean-forward="false" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/updateUserModel.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/GithubUser.java" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/dashboardScript.js">
@@ -1035,13 +1062,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="88" column="42" lean-forward="false" selection-start-line="88" selection-start-column="28" selection-end-line="88" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="383">
@@ -1084,24 +1104,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="14" column="77" lean-forward="false" selection-start-line="14" selection-start-column="77" selection-end-line="14" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2046">
-          <caret line="93" column="59" lean-forward="false" selection-start-line="93" selection-start-column="59" selection-end-line="93" selection-end-column="59" />
         </state>
       </provider>
     </entry>
@@ -1130,23 +1136,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="66">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1158,6 +1154,14 @@
             <element signature="n#style#0;n#hr#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#form#0;n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1174,7 +1178,7 @@
         <state relative-caret-position="704">
           <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
           <folding>
-            <element signature="n#style#0;n#ul#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1187,14 +1191,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="59" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3058">
@@ -1203,18 +1199,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state relative-caret-position="66">
+          <caret line="3" column="68" lean-forward="true" selection-start-line="3" selection-start-column="68" selection-end-line="3" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="44">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="19" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-484">
+          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="260" column="27" lean-forward="false" selection-start-line="260" selection-start-column="27" selection-end-line="260" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5">
+          <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="66" selection-end-column="13" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="25" column="4" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
           <folding />
         </state>
       </provider>
