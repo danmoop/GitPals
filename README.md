@@ -9,7 +9,7 @@ This project uses **Java, Spring, MongoDB**
 ![image](gallery/project1.png)
 ![image](gallery/messages.png)
 
-#Contributing:
+# Contributing:
 Thank you for deciding to contribute! Download GitPals to your PC. You need to have MongoDB installed on your pc.
 Open project in any IDE (I use Intellij IDEA). Then open Console Prompt and type in: mongod --dbpath=path_to_db (for example: mongod --dbpath=C:\GitPals\DB). 
 
