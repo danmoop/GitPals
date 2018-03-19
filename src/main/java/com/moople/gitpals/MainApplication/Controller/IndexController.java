@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller;
 
 import com.mongodb.util.JSON;
+import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.projectInterface;
@@ -12,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -160,5 +163,30 @@ public class IndexController
     public ModelAndView aboutPage()
     {
         return new ModelAndView("sections/aboutPage");
+    }
+
+    @GetMapping("/bugReport")
+    public ModelAndView bugReport()
+    {
+        return new ModelAndView("sections/bugReport");
+    }
+
+    @PostMapping("/reportBug")
+    public ModelAndView bugReported(@RequestParam("bug_description") String message, Principal user)
+    {
+        User admin = userInterface.findByUsername("danmoop");
+
+        User author = userInterface.findByUsername(user.getName());
+
+        Message msg = new Message(
+                author,
+                message
+        );
+
+        admin.sendMessage(msg);
+
+        userInterface.save(admin);
+
+        return new ModelAndView("redirect:/");
     }
 }
