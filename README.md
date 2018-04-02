@@ -3,7 +3,7 @@ Application for finding people to work together with on different projects
 
 This project uses **Java, Spring, MongoDB**
 
-<a href="https://igg.me/at/TGp746dUUjs/x/15701845"><img src="https://i.imgur.com/8C7Gf1G.png"></a>
+<!-- <a href="https://igg.me/at/TGp746dUUjs/x/15701845"><img src="https://i.imgur.com/8C7Gf1G.png"></a> -->
 
 
 ![image](gallery/main.png)
