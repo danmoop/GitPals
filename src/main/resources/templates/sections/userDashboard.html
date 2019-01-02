@@ -44,9 +44,6 @@
 
             <p class="wh" style="font-size: 30px;"><b th:inline="text" id="userName">[[${UserObject.username}]]</b></p>
             <u><a class="dark b" id="githubLink" th:href="${'https://github.com/' + UserObject.username}" target="_blank">Github profile</a></u>
-            <br/><br/>
-
-            <h5 class="text-center" th:inline="text"><a href="/sendMessage" class="wh">Send a message to <u>[[${UserObject.username}]]</u></a></h5>
 
             <hr class="divider"/>
 

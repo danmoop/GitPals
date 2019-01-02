@@ -10,7 +10,8 @@
 <body>
 
 <section class="center-content text-center">
-    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <a href="/" th:if="${#lists.size(matchProjects) != 0}"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <a href="/" th:if="${#lists.size(matchProjects) == 0}"><h1 class="wh"><img width="150" height="150" src="../images/sad_github.png"/>GitPals</h1></a>
     <h3 class="wh b">Projects according to your choice</h3>
     <hr class="divider"/>
     <ul class="pr-list text-center">

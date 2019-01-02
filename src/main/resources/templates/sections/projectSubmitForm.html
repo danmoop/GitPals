@@ -19,7 +19,7 @@
         <!--<button class="btn btn-primary margin-btn"><b>Donate</b></button> NOT YET FOR THIS ONE-->
     </div>
     <div class="center">
-        <h6 class="wh" th:inline="text">Submit your project, <b><a class="wh" target="_blank" th:href="${'users/' + UserObject.name}">[[${UserObject.name}]]!</a></b> <img style="margin-left: 10px;" th:src="${UserObject.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+        <h6 class="wh" th:inline="text">Submit your project, <b><a class="wh" target="_blank" href="/dashboard">[[${UserObject.name}]]!</a></b> <img style="margin-left: 10px;" th:src="${UserObject.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
     </div>
 </nav>
 

@@ -14,16 +14,16 @@ public class Project
     private String title;
     private String description;
     private String githubProjectLink;
-    private User author;
+    private String authorName;
     private List<String> requirements;
     private List<User> usersSubmitted;
 
-    public Project(String title, String description, String githubProjectLink, User author, List<String> requirements, List<User> usersSubmitted)
+    public Project(String title, String description, String githubProjectLink, String authorName, List<String> requirements, List<User> usersSubmitted)
     {
         this.title = title;
         this.description = description;
         this.githubProjectLink = githubProjectLink;
-        this.author = author;
+        this.authorName = authorName;
         this.requirements = requirements;
         this.usersSubmitted = usersSubmitted;
     }
@@ -65,14 +65,14 @@ public class Project
         return usersSubmitted;
     }
 
-    public User getAuthor()
+    public String getAuthorName()
     {
-        return author;
+        return authorName;
     }
 
-    public void setAuthor(User author)
+    public void setAuthorName(String authorName)
     {
-        this.author = author;
+        this.authorName = authorName;
     }
 
     public List<String> getRequirements()

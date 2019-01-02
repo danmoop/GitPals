@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.Iterator;
@@ -21,7 +20,7 @@ public class UserController
 
 
     @GetMapping("/users/{username}")
-    public ModelAndView findUser(@PathVariable String username, Model model)
+    public String findUser(@PathVariable String username, Model model)
     {
         User user = userInterface.findByUsername(username);
 
@@ -29,18 +28,18 @@ public class UserController
         {
             model.addAttribute("UserObject", userInterface.findByUsername(username));
 
-            return new ModelAndView("sections/userDashboard");
+            return "sections/userDashboard";
         }
 
         else
         {
             model.addAttribute("user_name", username);
-            return new ModelAndView("error/userNotFound");
+            return "error/userNotFound";
         }
     }
 
     @PostMapping("/updateUser")
-    public ModelAndView updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs)
+    public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs)
     {
 
         User userFromDB = userInterface.findByUsername(user.getName());
@@ -59,11 +58,11 @@ public class UserController
 
         userInterface.save(userFromDB);
 
-        return new ModelAndView("redirect:/dashboard");
+        return "redirect:/dashboard";
     }
 
     @PostMapping("/updateUserCountry")
-    public ModelAndView updateCountry(@RequestParam("countryInput") String country, @RequestParam("infoInput") String info, Principal user)
+    public String updateCountry(@RequestParam("countryInput") String country, @RequestParam("infoInput") String info, Principal user)
     {
         User userInDB = userInterface.findByUsername(user.getName());
 
@@ -72,6 +71,6 @@ public class UserController
 
         userInterface.save(userInDB);
 
-        return new ModelAndView("redirect:/dashboard");
+        return "redirect:/dashboard";
     }
 }

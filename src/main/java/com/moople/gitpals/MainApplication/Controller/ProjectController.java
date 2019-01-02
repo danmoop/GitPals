@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class ProjectController
     projectInterface projectInterface;
 
     @GetMapping("/submitProject")
-    public ModelAndView projectForm(Principal user, Model model)
+    public String projectForm(Principal user, Model model)
     {
 
         if(!user.getName().equals("null"))
@@ -42,39 +41,35 @@ public class ProjectController
 
             Map<String, Boolean> techs = new HashMap<>();
 
-            for(int i = 0; i < technologies.length; i++)
+            for (String technology : technologies)
             {
-                techs.put(technologies[i], false);
+                techs.put(technology, false);
             }
 
             model.addAttribute("UserObject", user);
             model.addAttribute("projects", techs);
             model.addAttribute("projectObject", new Project());
-            return new ModelAndView("sections/projectSubmitForm");
+            return "sections/projectSubmitForm";
         }
         else
-            return new ModelAndView("redirect:/");
+            return "redirect:/";
     }
 
     @PostMapping("/projectSubmitted")
-    public ModelAndView projectSubmitted(Principal user, @ModelAttribute Project project, @RequestParam("techInput") List<String> techs)
+    public String projectSubmitted(Principal user, @ModelAttribute Project project, @RequestParam("techInput") List<String> techs)
     {
         Project project1 = projectInterface.findByTitle(project.getTitle());
 
         if(project1 == null)
         {
-            List<String> requirements = new ArrayList<>();
 
-            for(String tech : techs)
-            {
-                requirements.add(tech);
-            }
+            List<String> requirements = new ArrayList<>(techs);
 
             Project userProject = new Project(
                     project.getTitle(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
-                    userInterface.findByUsername(user.getName()),
+                    userInterface.findByUsername(user.getName()).getUsername(),
                     requirements,
                     new ArrayList<>()
             );
@@ -86,39 +81,39 @@ public class ProjectController
             userInterface.save(userInDB);
             projectInterface.save(userProject);
 
-            return new ModelAndView("redirect:/dashboard");
+            return "redirect:/dashboard";
         }
 
         else
         {
-            return new ModelAndView("error/projectExists");
+            return "error/projectExists";
         }
     }
 
     @GetMapping("/projects/{projectname}")
-    public ModelAndView projectPage(@PathVariable String projectname, Model model, Principal user)
+    public String projectPage(@PathVariable String projectname, Model model, Principal user)
     {
         Project project = projectInterface.findByTitle(projectname);
 
         if(project == null)
         {
-            return new ModelAndView("error/projectDeleted");
+            return "error/projectDeleted";
         }
 
         else
         {
-            model.addAttribute("AuthorObject", project.getAuthor());
-            model.addAttribute("userPrincipal", user.getName());
+            model.addAttribute("AuthorObject", userInterface.findByUsername(project.getAuthorName()));
+            if (user != null) model.addAttribute("userPrincipal", user.getName());
             model.addAttribute("projectObject", project);
-            model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
+            if (user != null) model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
             model.addAttribute("usersApplied", project.getUsersSubmitted());
 
-            return new ModelAndView("sections/projectViewPage");
+            return "sections/projectViewPage";
         }
     }
 
     @PostMapping("/applyForProject")
-    public ModelAndView applyForProject(@RequestParam("linkInput") String link, Principal user)
+    public String applyForProject(@RequestParam("linkInput") String link, Principal user)
     {
         User userForApply = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
@@ -170,11 +165,11 @@ public class ProjectController
             }
         }
 
-        return new ModelAndView("redirect:/projects/" + link);
+        return "redirect:/projects/" + link;
     }
 
     @PostMapping("/unapplyForProject")
-    public ModelAndView unapplyForProject(@RequestParam("linkInput") String link, Principal user)
+    public String unapplyForProject(@RequestParam("linkInput") String link, Principal user)
     {
         Project projectDB = projectInterface.findByTitle(link);
         User userDB = userInterface.findByUsername(user.getName());
@@ -196,16 +191,16 @@ public class ProjectController
             }
         }
 
-        return new ModelAndView("redirect:/projects/" + link);
+        return "redirect:/projects/" + link;
     }
 
     @PostMapping("/deleteProject")
-    public ModelAndView projectDeleted(Principal user, @RequestParam("projectName") String projectName, @RequestParam("logged_user_name") String logged_user_name)
+    public String projectDeleted(Principal user, @RequestParam("projectName") String projectName, @RequestParam("logged_user_name") String logged_user_name)
     {
         User userDB = userInterface.findByUsername(logged_user_name);
         Project project = projectInterface.findByTitle(projectName);
 
-        if(userDB.getUsername().equals(project.getAuthor().getUsername()))
+        if(userDB.getUsername().equals(project.getAuthorName()))
         {
             projectInterface.delete(project);
 
@@ -230,36 +225,33 @@ public class ProjectController
                 }
             }
 
-            return new ModelAndView("redirect:/");
+            return "redirect:/";
 
         }
 
         else
         {
-            return new ModelAndView("error/siteBroken");
+            return "error/siteBroken";
         }
     }
 
     @PostMapping("/sortProjects")
-    public ModelAndView projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)
+    public String projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)
     {
         List<Project> allProjects = projectInterface.findAll();
 
         List<Project> matchProjects = new ArrayList<>();
 
-        for(int i = 0; i < allProjects.size(); i++)
-        {
-            for(int r = 0; r < allProjects.get(i).getRequirements().size(); r++)
-            {
-                if(data.contains(allProjects.get(i).getRequirements().get(r)))
-                {
-                    matchProjects.add(allProjects.get(i));
+        for (Project allProject : allProjects) {
+            for (int r = 0; r < allProject.getRequirements().size(); r++) {
+                if (data.contains(allProject.getRequirements().get(r))) {
+                    matchProjects.add(allProject);
                 }
             }
         }
 
         model.addAttribute("matchProjects", matchProjects);
 
-        return new ModelAndView("sections/projectsAfterSorting");
+        return "sections/projectsAfterSorting";
     }
 }

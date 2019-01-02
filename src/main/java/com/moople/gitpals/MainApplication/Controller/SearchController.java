@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +24,13 @@ public class SearchController
     projectInterface projectInteface;
 
     @GetMapping("/search")
-    public ModelAndView searchPage()
+    public String searchPage()
     {
-        return new ModelAndView("sections/searchForm");
+        return "sections/searchForm";
     }
 
     @PostMapping("/findUser")
-    public ModelAndView foundUsers(@RequestParam("user_name") String username, Model model)
+    public String foundUsers(@RequestParam("user_name") String username, Model model)
     {
         List<User> allUsers = userInteface.findAll();
 
@@ -47,11 +46,11 @@ public class SearchController
 
         model.addAttribute("match_users", matchUsers);
 
-        return new ModelAndView("sections/matchUsers");
+        return "sections/matchUsers";
     }
 
     @PostMapping("/findProject")
-    public ModelAndView foundProjects(@RequestParam("project_name") String projectname, Model model)
+    public String foundProjects(@RequestParam("project_name") String projectname, Model model)
     {
 
         List<Project> allProjects = projectInteface.findAll();
@@ -68,6 +67,6 @@ public class SearchController
 
         model.addAttribute("match_projects", matchProjects);
 
-        return new ModelAndView("sections/matchProjects");
+        return "sections/matchProjects";
     }
 }

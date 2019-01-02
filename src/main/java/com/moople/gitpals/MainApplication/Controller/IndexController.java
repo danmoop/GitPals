@@ -1,6 +1,5 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.mongodb.util.JSON;
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
@@ -11,12 +10,11 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 public class IndexController
 {
 
@@ -35,7 +33,7 @@ public class IndexController
     projectInterface projectInterface;
 
     @GetMapping("/")
-    public ModelAndView indexPage(Principal user, Model model)
+    public String indexPage(Principal user, Model model)
     {
         String technologies[] = { "Web design", "Mobile design", "Java", "C++",
                 "Python", "Machine learning", "Deep learning", "Ionic",
@@ -47,15 +45,12 @@ public class IndexController
 
         Map<String, Boolean> langs = new HashMap<>();
 
-        for(int i = 0; i < technologies.length; i++)
-        {
-            langs.put(technologies[i], false);
+        for (String technology : technologies) {
+            langs.put(technology, false);
         }
 
         if(user != null)
         {
-
-
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
             model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
@@ -85,7 +80,7 @@ public class IndexController
 
                 if(project1 != null)
                 {
-                    project1.setAuthor(user1);
+                    project1.setAuthorName(user1.getUsername());
 
                     projectInterface.save(project1);
                 }
@@ -95,14 +90,14 @@ public class IndexController
         model.addAttribute("projectTechs", langs);
         model.addAttribute("allTheProjects", projectInterface.findAll());
 
-        return new ModelAndView("sections/index");
+        return "sections/index";
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView dashboardPage(Principal user, Model model)
+    public String dashboardPage(Principal user, Model model)
     {
         if(user == null)
-            return new ModelAndView("redirect:/");
+            return "redirect:/";
 
         else
         {
@@ -119,13 +114,13 @@ public class IndexController
 
                 if(project1 != null)
                 {
-                    project1.setAuthor(user1);
+                    project1.setAuthorName(user1.getUsername());
 
                     projectInterface.save(project1);
                 }
             }
 
-            return new ModelAndView("sections/dashboard");
+            return "sections/dashboard";
         }
     }
 
@@ -147,32 +142,31 @@ public class IndexController
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers("/").permitAll().and()
-                    .authorizeRequests()
-                    .anyRequest().authenticated();
+                    .antMatchers("/login").permitAll().and()
+                    .authorizeRequests();
         }
     }
 
     @GetMapping("/logout")
-    public ModelAndView logout(HttpSession httpSession) {
+    public String logout(HttpSession httpSession) {
         httpSession.invalidate();
-        return new ModelAndView("redirect:/");
+        return "redirect:/";
     }
 
     @GetMapping("/about")
-    public ModelAndView aboutPage()
+    public String aboutPage()
     {
-        return new ModelAndView("sections/aboutPage");
+        return "sections/aboutPage";
     }
 
     @GetMapping("/bugReport")
-    public ModelAndView bugReport()
+    public String bugReport()
     {
-        return new ModelAndView("sections/bugReport");
+        return "sections/bugReport";
     }
 
     @PostMapping("/reportBug")
-    public ModelAndView bugReported(@RequestParam("bug_description") String message, Principal user)
+    public String bugReported(@RequestParam("bug_description") String message, Principal user)
     {
         User admin = userInterface.findByUsername("danmoop");
 
@@ -187,6 +181,6 @@ public class IndexController
 
         userInterface.save(admin);
 
-        return new ModelAndView("redirect:/");
+        return "redirect:/";
     }
 }

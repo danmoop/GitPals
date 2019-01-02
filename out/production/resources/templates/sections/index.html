@@ -5,29 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Gitpals - find team for cooperative development</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation">
         <div>
-            <a href="/about" class="btn btn-info margin-btn"><b>About</b></a>
-            <a href="/login" th:if="${GithubUserName == null}"><button class="btn btn-primary margin-btn"><b>Login using Github</b></button></a>
-            <a href="/dashboard" th:if="${GithubUserName != null}"><button class="btn btn-primary margin-btn"><b>My dashboard</b></button></a>
-            <a href="/logout" th:if="${GithubUserName != null}"><button class="btn btn-danger margin-btn"><b>Log Out</b></button></a>
+            <a href="/about" class="btn btn-info"><b class="wh">About</b></a>
+            <a href="/login" th:if="${GithubUserName == null}" class="btn btn-primary"><b class="wh">Login using Github</b></a>
+            <a href="/dashboard" th:if="${GithubUserName != null}" class="btn btn-primary"><b class="wh">My dashboard</b></a>
+            <a href="/logout" th:if="${GithubUserName != null}" class="btn btn-danger"><b>Log Out</b></a>
             <!--<button class="btn btn-primary margin-btn"><b>Donate</b></button> NOT YET FOR THIS ONE-->
         </div>
         <div class="center">
             <h6 class="wh" th:if="${GithubUserName == null}"><b>Hello, Guest</b></h6>
             <div class="row">
-                <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" th:href="${'users/' + GithubUserName}">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+                <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" href="/dashboard">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
                 <a href="/messages" class="wh b" th:if="${GithubUserName != null}" style="transform: translate(20%, 15%); font-size: 20px;" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
             </div>
         </div>
 
         <div class="push-right">
             <div class="container">
-                <a href="/search" class="btn btn-success b">Search</a>
+                <a href="/search" class="mdl-button mdl-js-button mdl-js-ripple-effect b"><b class="wh">Search</b></a>
             </div>
         </div>
     </nav>
@@ -60,7 +63,7 @@
 
         </div>
 
-        <ul class="pr-list text-center">
+        <ul class="pr-list text-center" th:if="${GithubUser != null}">
             <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
                 <li class="pr-item">
                     <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
@@ -71,6 +74,10 @@
 
             <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
         </ul>
+
+        <div th:if="${GithubUser == null}">
+            <h4 style="color: white;"><a href="/login">Login in</a> to view available projects</h4>
+        </div>
 
     </section>
 

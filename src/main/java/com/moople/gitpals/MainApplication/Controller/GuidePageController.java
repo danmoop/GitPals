@@ -8,8 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class GuidePageController
 {
     @GetMapping("/guide/how-to-create-a-good-description-for-my-project")
-    public ModelAndView goodDescriptionGuidwe()
+    public String goodDescriptionGuidwe()
     {
-        return new ModelAndView("guide/goodProjDescription");
+        return "guide/goodProjDescription";
     }
 }
