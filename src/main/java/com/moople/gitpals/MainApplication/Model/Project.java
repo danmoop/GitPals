@@ -16,9 +16,9 @@ public class Project
     private String githubProjectLink;
     private String authorName;
     private List<String> requirements;
-    private List<User> usersSubmitted;
+    private List<String> usersSubmitted;
 
-    public Project(String title, String description, String githubProjectLink, String authorName, List<String> requirements, List<User> usersSubmitted)
+    public Project(String title, String description, String githubProjectLink, String authorName, List<String> requirements, List<String> usersSubmitted)
     {
         this.title = title;
         this.description = description;
@@ -60,7 +60,7 @@ public class Project
         this.githubProjectLink = githubProjectLink;
     }
 
-    public List<User> getUsersSubmitted()
+    public List<String> getUsersSubmitted()
     {
         return usersSubmitted;
     }
@@ -85,12 +85,12 @@ public class Project
         this.requirements = requirements;
     }
 
-    public void addAppliedUser(User user)
+    public void addAppliedUser(String user)
     {
         usersSubmitted.add(user);
     }
 
-    public void deleteAppliedUser(User user)
+    public void deleteAppliedUser(String user)
     {
         usersSubmitted.remove(user);
     }

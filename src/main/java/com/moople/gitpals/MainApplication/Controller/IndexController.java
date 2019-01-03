@@ -76,7 +76,7 @@ public class IndexController
 
             for(int i = 0; i < user1.getProjects().size(); i++)
             {
-                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i).getTitle());
+                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i));
 
                 if(project1 != null)
                 {
@@ -110,7 +110,7 @@ public class IndexController
 
             for(int i = 0; i < user1.getProjects().size(); i++)
             {
-                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i).getTitle());
+                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i));
 
                 if(project1 != null)
                 {
@@ -170,7 +170,7 @@ public class IndexController
     {
         User admin = userInterface.findByUsername("danmoop");
 
-        User author = userInterface.findByUsername(user.getName());
+        String author = user.getName();
 
         Message msg = new Message(
                 author,

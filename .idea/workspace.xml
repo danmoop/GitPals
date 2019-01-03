@@ -2,47 +2,55 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffd0e332-3852-470d-a6c9-3f3a339a5600" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Gitpals_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Gitpals_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/GuidePageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/GuidePageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController$SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController$SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/Message.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/Project.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/aboutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/aboutPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Service/userInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Service/userInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/matchUsers.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/matchUsers.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/projectSubmitForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/projectSubmitForm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/projectsAfterSorting.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/projectsAfterSorting.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/userDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/userDashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/projectViewPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/projectViewPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/viewMessages.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/sections/viewMessages.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.turtle" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.turtle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-0-1365398189167202520.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-0-1365398189167202520.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-0-964562101735502422.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-0-964562101735502422.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-2-1365398189167202520.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-2-1365398189167202520.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-1-1365398189167202520.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-1-1365398189167202520.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-1-964562101735502422.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-1-964562101735502422.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-3-1365398189167202520.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-3-1365398189167202520.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/journal/WiredTigerLog.0000000003" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/sizeStorer.wt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/sizeStorer.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.turtle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTiger.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/WiredTigerLAS.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/_mdb_catalog.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-0-1365398189167202520.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-0-964562101735502422.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-2-1365398189167202520.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/collection-2-964562101735502422.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/diagnostic.data/metrics.2018-03-17T16-23-32Z-00000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/diagnostic.data/metrics.2018-03-17T16-57-21Z-00000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/diagnostic.data/metrics.2018-03-18T07-45-40Z-00000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/diagnostic.data/metrics.2018-06-06T07-23-34Z-00000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/diagnostic.data/metrics.2018-07-11T12-08-15Z-00000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-1-1365398189167202520.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-1-964562101735502422.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-3-1365398189167202520.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-3-964562101735502422.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/index-4-964562101735502422.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/journal/WiredTigerLog.0000000005" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/journal/WiredTigerPreplog.0000000001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/journal/WiredTigerPreplog.0000000002" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/mongod.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/sizeStorer.wt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/db/storage.bson" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/matchUsers.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/matchUsers.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -65,39 +73,40 @@
     <session id="1940595759">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.45" value="1" />
+          <entry key="project.open.time.67" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="5" />
-          <entry key="java" value="10" />
+          <entry key="html" value="8" />
+          <entry key="java" value="18" />
           <entry key="js" value="1" />
           <entry key="properties" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="5" />
-          <entry key="JAVA" value="10" />
+          <entry key="HTML" value="8" />
+          <entry key="JAVA" value="18" />
           <entry key="JavaScript" value="1" />
           <entry key="Properties" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="219" />
-          <entry key="java" value="296" />
+          <entry key="html" value="234" />
+          <entry key="java" value="693" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="219" />
-          <entry key="JAVA" value="296" />
+          <entry key="HTML" value="234" />
+          <entry key="JAVA" value="693" />
         </counts>
       </usages-collector>
     </session>
@@ -110,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1265">
-              <caret line="116" column="62" selection-start-line="116" selection-start-column="62" selection-end-line="116" selection-end-column="62" />
+            <state relative-caret-position="182">
+              <caret line="112" column="90" selection-start-line="112" selection-start-column="90" selection-end-line="112" selection-end-column="90" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,10 +129,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="649">
-              <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="1" />
+            <state relative-caret-position="305">
+              <caret line="76" column="59" selection-start-line="76" selection-start-column="59" selection-end-line="76" selection-end-column="59" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2178">
+              <caret line="69" column="20" lean-forward="true" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -134,8 +155,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="781">
-              <caret line="78" column="36" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
+            <state relative-caret-position="218">
+              <caret line="69" column="132" selection-start-line="69" selection-start-column="132" selection-end-line="69" selection-end-column="132" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#h6#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -146,11 +167,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1147">
-              <caret line="202" column="63" selection-start-line="202" selection-start-column="63" selection-end-line="202" selection-end-column="63" />
+            <state relative-caret-position="182">
+              <caret line="216" column="73" selection-start-line="216" selection-start-column="73" selection-end-line="216" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -159,10 +180,59 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="726">
+              <caret line="37" column="63" selection-start-line="37" selection-start-column="63" selection-end-line="37" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="319">
+              <caret line="38" column="151" selection-start-line="38" selection-start-column="151" selection-end-line="38" selection-end-column="151" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="404">
+              <caret line="132" column="5" lean-forward="true" selection-start-line="132" selection-start-column="5" selection-end-line="132" selection-end-column="5" />
+              <folding>
+                <element signature="e#1900#1901#0" expanded="true" />
+                <element signature="e#1940#1941#0" expanded="true" />
+                <element signature="e#2570#2571#0" expanded="true" />
+                <element signature="e#2607#2608#0" expanded="true" />
+                <element signature="e#2667#2668#0" expanded="true" />
+                <element signature="e#2705#2706#0" expanded="true" />
+                <element signature="e#2903#2904#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1485">
-              <caret line="72" column="48" selection-start-line="72" selection-start-column="48" selection-end-line="72" selection-end-column="48" />
+            <state relative-caret-position="-605">
+              <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+              <folding>
+                <element signature="e#1961#1962#0" expanded="true" />
+                <element signature="e#2001#2002#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -181,13 +251,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Hello</find>
-      <find>SubMit your project</find>
-      <find>.red</find>
-      <find>Information about</find>
-      <find>.form-control[readonly]</find>
-      <find>mongo</find>
-      <find>Total project</find>
       <find>projects</find>
       <find>projectsubmitform</find>
       <find>script</find>
@@ -211,6 +274,13 @@
       <find>ModelAndView</find>
       <find>th:each</find>
       <find>/</find>
+      <find>github</find>
+      <find>project.aut</find>
+      <find>apply</find>
+      <find>getappliedto</find>
+      <find>applied</find>
+      <find>usersSubmitted</find>
+      <find>unapply</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -647,19 +717,13 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/register/register.html" />
         <option value="$PROJECT_DIR$/src/main/resources/applicaiton.yaml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/sections.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/updateUserModel.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/js/dashboardScript.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/GithubUser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/usedNotFound.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/siteBroken.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/sendMessage.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/projectExists.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/guide/goodProjDescription.html" />
@@ -680,19 +744,25 @@
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="7" />
     <option name="y" value="2" />
     <option name="width" value="1918" />
@@ -706,9 +776,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -823,11 +892,12 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546459752825" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546507363608" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15722656" />
@@ -914,7 +984,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7784912" visible="true" weight="0.17518637" />
@@ -926,7 +996,7 @@
       <window_info id="Image Layers" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32938644" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27083334" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.17324561" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -968,20 +1038,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="48" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/function/Predicate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -990,13 +1046,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/usedNotFound.html" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1166">
-          <caret line="132" column="5" selection-start-line="132" selection-start-column="5" selection-end-line="132" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/siteBroken.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -1004,21 +1053,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/sendMessage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
@@ -1086,13 +1121,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/bugReport.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1156,55 +1184,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectSubmitForm.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
           <caret line="21" column="110" selection-start-line="21" selection-start-column="110" selection-end-line="21" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="84" column="24" lean-forward="true" selection-start-line="84" selection-start-column="24" selection-end-line="84" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1319#1320#0" expanded="true" />
-            <element signature="e#1376#1377#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2167">
-          <caret line="69" column="20" lean-forward="true" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#938#939#0" expanded="true" />
-            <element signature="e#994#995#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -1217,8 +1200,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="649">
+        <state relative-caret-position="2145">
           <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2178">
+          <caret line="69" column="20" lean-forward="true" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="76" column="59" selection-start-line="76" selection-start-column="59" selection-end-line="76" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1227,8 +1244,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="781">
-          <caret line="78" column="36" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
+        <state relative-caret-position="218">
+          <caret line="69" column="132" selection-start-line="69" selection-start-column="132" selection-end-line="69" selection-end-column="132" />
           <folding>
             <element signature="n#style#0;n#img#0;n#h6#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1238,29 +1255,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1485">
-          <caret line="72" column="48" selection-start-line="72" selection-start-column="48" selection-end-line="72" selection-end-column="48" />
+        <state relative-caret-position="493">
+          <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1265">
-          <caret line="116" column="62" selection-start-line="116" selection-start-column="62" selection-end-line="116" selection-end-column="62" />
+        <state relative-caret-position="231">
+          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/projectInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="19" lean-forward="true" selection-start-line="4" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="37" column="63" selection-start-line="37" selection-start-column="63" selection-end-line="37" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="38" column="151" selection-start-line="38" selection-start-column="151" selection-end-line="38" selection-end-column="151" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="216" column="73" selection-start-line="216" selection-start-column="73" selection-end-line="216" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1147">
-          <caret line="202" column="63" selection-start-line="202" selection-start-column="63" selection-end-line="202" selection-end-column="63" />
+        <state relative-caret-position="182">
+          <caret line="112" column="90" selection-start-line="112" selection-start-column="90" selection-end-line="112" selection-end-column="90" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="132" column="5" lean-forward="true" selection-start-line="132" selection-start-column="5" selection-end-line="132" selection-end-column="5" />
+          <folding>
+            <element signature="e#1900#1901#0" expanded="true" />
+            <element signature="e#1940#1941#0" expanded="true" />
+            <element signature="e#2570#2571#0" expanded="true" />
+            <element signature="e#2607#2608#0" expanded="true" />
+            <element signature="e#2667#2668#0" expanded="true" />
+            <element signature="e#2705#2706#0" expanded="true" />
+            <element signature="e#2903#2904#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-605">
+          <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <folding>
+            <element signature="e#1961#1962#0" expanded="true" />
+            <element signature="e#2001#2002#0" expanded="true" />
           </folding>
         </state>
       </provider>

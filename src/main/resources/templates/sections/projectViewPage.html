@@ -36,7 +36,7 @@
         <hr class="divider"/>
 
         <h4 class="wh">Users applied for this project:</h4>
-        <a class="wh" th:inline="text" th:if="${#lists.size(usersApplied) != 0}" th:each="user: ${usersApplied}" th:href="${'/users/' + user.username}">[[${user.username}]]<br/></a>
+        <a class="wh" th:inline="text" th:if="${#lists.size(usersApplied) != 0}" th:each="user: ${usersApplied}" th:href="${'/users/' + user}">[[${user}]]<br/></a>
         <p class="wh" th:if="${#lists.size(usersApplied) == 0}">Nobody applied for this project yet</p>
 
         <br/>

@@ -50,7 +50,7 @@
                 <a th:each="project: ${dbUser.appliedTo}" target="_blank" th:href="${'/projects/' + project.title}">
                     <li class="pr-item" style="width: calc(30% - 1.5rem);">
                         <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                        <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+                        <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
                         <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
                     </li>
                 </a>

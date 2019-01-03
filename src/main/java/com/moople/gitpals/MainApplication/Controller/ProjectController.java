@@ -76,12 +76,12 @@ public class ProjectController
 
             User userInDB = userInterface.findByUsername(user.getName());
 
-            userInDB.addProject(userProject);
+            userInDB.addProject(userProject.getTitle());
 
             userInterface.save(userInDB);
             projectInterface.save(userProject);
 
-            return "redirect:/dashboard";
+            return "redirect:/projects/" + userProject.getTitle();
         }
 
         else
@@ -123,8 +123,8 @@ public class ProjectController
         {
             User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
 
-            project.addAppliedUser(userForApply);
-            userForApply2.addProjectAppliedTo(project);
+            project.addAppliedUser(userForApply.getUsername());
+            userForApply2.addProjectAppliedTo(project.getTitle());
 
             projectInterface.save(project);
             userInterface.save(userForApply2);
@@ -134,13 +134,13 @@ public class ProjectController
         {
             for(int i = 0; i < project.getUsersSubmitted().size(); i++)
             {
-                if(userForApply.getUsername().equals(project.getUsersSubmitted().get(i).getUsername()))
+                if(userForApply.getUsername().equals(project.getUsersSubmitted().get(i)))
                 {
-                    userForApply.deleteProjectAppliedTo(project);
+                    userForApply.deleteProjectAppliedTo(project.getTitle());
 
                     User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
 
-                    project.deleteAppliedUser(userForApply2);
+                    project.deleteAppliedUser(userForApply2.getUsername());
 
                     Project project2 = projectInterface.findByTitle(project.getTitle());
 
@@ -151,11 +151,11 @@ public class ProjectController
                 }
                 else
                 {
-                    userForApply.addProjectAppliedTo(project);
+                    userForApply.addProjectAppliedTo(project.getTitle());
 
                     User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
 
-                    project.addAppliedUser(userForApply2);
+                    project.addAppliedUser(userForApply2.getUsername());
 
                     Project project2 = projectInterface.findByTitle(project.getTitle());
 
@@ -172,22 +172,18 @@ public class ProjectController
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user)
     {
         Project projectDB = projectInterface.findByTitle(link);
+
         User userDB = userInterface.findByUsername(user.getName());
 
         for(int i = 0; i < projectDB.getUsersSubmitted().size(); i++)
         {
-            if(userDB.getUsername().equals(projectDB.getUsersSubmitted().get(i).getUsername()))
+            if(userDB.getUsername().equals(projectDB.getUsersSubmitted().get(i)))
             {
-                User thatUser = projectDB.getUsersSubmitted().get(i);
-
-                projectDB.deleteAppliedUser(thatUser);
-                thatUser.deleteProjectAppliedTo(projectDB);
-
+                projectDB.deleteAppliedUser(userDB.getUsername());
+                userDB.deleteProjectAppliedTo(projectDB.getTitle());
 
                 projectInterface.save(projectDB);
-                userInterface.save(thatUser);
-
-                break;
+                userInterface.save(userDB);
             }
         }
 
@@ -204,25 +200,23 @@ public class ProjectController
         {
             projectInterface.delete(project);
 
-            for(int r = 0; r < userDB.getAppliedTo().size(); r++)
-            {
-                if(project.getTitle().equals(userDB.getAppliedTo().get(r).getTitle()))
-                {
-                    userDB.deleteProjectAppliedTo(userDB.getAppliedTo().get(r));
-                }
-            }
-
-            userInterface.save(userDB);
-
-
             for(int q = 0; q < userDB.getProjects().size(); q++)
             {
-                if(project.getTitle().equals(userDB.getProjects().get(q).getTitle()))
+                if(project.getTitle().equals(userDB.getProjects().get(q)))
                 {
                     userDB.deleteProject(userDB.getProjects().get(q));
 
                     userInterface.save(userDB);
                 }
+            }
+
+            List<User> allUsers = userInterface.findAll();
+
+            for (int i = 0; i < allUsers.size(); i++)
+            {
+                allUsers.get(i).deleteProjectAppliedTo(project.getTitle());
+
+                userInterface.save(allUsers.get(i));
             }
 
             return "redirect:/";

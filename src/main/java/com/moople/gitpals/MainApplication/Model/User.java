@@ -17,11 +17,11 @@ public class User
     private String country;
     private String info;
     private Map<String, Boolean> languagesKnows;
-    private List<Project> projects;
-    private List<Project> appliedTo;
+    private List<String> projects;
+    private List<String> appliedTo;
     private List<Message> messages;
 
-    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows, List<Project> projects, List<Project> appliedTo, List<Message> messages)
+    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows, List<String> projects, List<String> appliedTo, List<Message> messages)
     {
         this.username = username;
         this.GithubAccountLink = GithubAccountLink;
@@ -64,12 +64,12 @@ public class User
         return GithubAccountLink;
     }
 
-    public List<Project> getProjects()
+    public List<String> getProjects()
     {
         return projects;
     }
 
-    public List<Project> getAppliedTo()
+    public List<String> getAppliedTo()
     {
         return appliedTo;
     }
@@ -79,7 +79,7 @@ public class User
         return messages;
     }
 
-    public void setProjects(List<Project> projects)
+    public void setProjects(List<String> projects)
     {
         this.projects = projects;
     }
@@ -114,22 +114,22 @@ public class User
         languagesKnows.remove(language);
     }
 
-    public void addProject(Project project)
+    public void addProject(String project)
     {
         projects.add(project);
     }
 
-    public void addProjectAppliedTo(Project project)
+    public void addProjectAppliedTo(String project)
     {
         appliedTo.add(project);
     }
 
-    public void deleteProjectAppliedTo(Project project)
+    public void deleteProjectAppliedTo(String project)
     {
         appliedTo.remove(project);
     }
 
-    public void deleteProject(Project project)
+    public void deleteProject(String project)
     {
         projects.remove(project);
     }

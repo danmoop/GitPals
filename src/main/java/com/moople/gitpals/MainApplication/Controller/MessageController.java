@@ -42,13 +42,13 @@ public class MessageController
     @PostMapping("/messageSent")
     public String messageSent(Model model, @RequestParam("RecipientName") String username, @RequestParam("Content") String content)
     {
-        User recipient = userInteface.findByUsername(username);
+        String recipient = username;
 
         if(recipient != null)
         {
             Message message = new Message(recipient,content);
 
-            User recipient2 = userInteface.findByUsername(recipient.getUsername());
+            User recipient2 = userInteface.findByUsername(recipient);
 
             recipient2.sendMessage(message);
 
@@ -74,7 +74,7 @@ public class MessageController
         for(int i = 0; i < userDB.getMessages().size(); i++)
         {
             if(userDB.getMessages().get(i).getContent().equals(content) &&
-                    userDB.getMessages().get(i).getAuthor().getUsername().equals(author))
+                    userDB.getMessages().get(i).getAuthor().equals(author))
             {
                 userDB.deleteMessage(userDB.getMessages().get(i));
             }
