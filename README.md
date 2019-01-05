@@ -1,4 +1,7 @@
 # GitPals
+
+[Open GitPals app](https://gitpals.herokuapp.com/) (it may take a while because of free hosting)
+
 Application for finding people to work together with on different projects
 
 This project uses **Java, Spring, MongoDB**
