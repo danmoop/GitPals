@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -101,10 +102,21 @@ public class IndexController
 
         else
         {
-            model.addAttribute("dbUser", userInterface.findByUsername(user.getName()));
+            User userDB = userInterface.findByUsername(user.getName());
+
+            model.addAttribute("dbUser", userDB);
             model.addAttribute("userObject", new User());
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
+
+            List<Project> appliedToProjects = new ArrayList<>();
+
+            for (int i = 0; i < userDB.getAppliedTo().size(); i++)
+            {
+                appliedToProjects.add(projectInterface.findByTitle(userDB.getAppliedTo().get(i)));
+            }
+
+            model.addAttribute("appliedProjects", appliedToProjects);
 
             User user1 = userInterface.findByUsername(user.getName());
 
@@ -163,6 +175,12 @@ public class IndexController
     public String bugReport()
     {
         return "sections/bugReport";
+    }
+
+    @GetMapping("/donate")
+    public String donatePage()
+    {
+        return "sections/donate";
     }
 
     @PostMapping("/reportBug")

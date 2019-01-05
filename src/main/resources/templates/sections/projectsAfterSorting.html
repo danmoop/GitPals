@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
         <a th:each="project: ${matchProjects}" th:href="${'/projects/' + project.title}">
             <li class="pr-item">
                 <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+                <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
                 <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
             </li>
         </a>

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/flat-ui.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
 </head>
 <body>
 
@@ -29,7 +30,7 @@
         
         <hr class="divider"/>
         <a th:href="${'/users/' + AuthorObject.username}" th:inline="text" class="wh"><b>Author</b> - [[${AuthorObject.username}]]</a>
-        <p th:inline="text" class="wh">[[${projectObject.description}]]</p>
+        <p th:inline="text" class="wh" style="white-space: pre-line;">[[${projectObject.description}]]</p>
         <p th:inline="text" class="wh"><b>This project requires: </b>[[${projectObject.requirements}]]</p>
         <a th:href="${'https://' + projectObject.githubProjectLink}" class="wh b" target="_blank">Project Github repository</a>
 

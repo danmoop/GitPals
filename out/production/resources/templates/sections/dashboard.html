@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/flat-ui.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
     <script src="js/flat-ui.js"></script>
 </head>
 <body>
@@ -47,7 +48,7 @@
             <h3 class="wh" style="padding: 15px;"><b>Projects you have applied to</b></h3>
 
             <ul class="pr-list text-center">
-                <a th:each="project: ${dbUser.appliedTo}" target="_blank" th:href="${'/projects/' + project.title}">
+                <a th:each="project: ${appliedProjects}" target="_blank" th:href="${'/projects/' + project.title}">
                     <li class="pr-item" style="width: calc(30% - 1.5rem);">
                         <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
                         <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>

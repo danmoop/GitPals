@@ -123,6 +123,10 @@ body
     height: 19px;
 }
 
+#msgBtn {
+    display: none;
+}
+
 .transparent{
     border: none;
     background: transparent;
@@ -150,4 +154,24 @@ a:hover{
 
 .fz-25{
     font-size: 25px;
+}
+
+@media screen and (max-width: 768px) {
+    #centerDiv {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    #centerDiv2 {
+        display: none;
+    }
+
+    #msgBtn {
+        display: inline-block;
+    }
+
+    .pr-item {
+        width: 50%;
+    }
 }

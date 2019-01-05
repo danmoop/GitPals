@@ -38,7 +38,7 @@ public class SearchController
 
         for(int i = 0; i < allUsers.size(); i++)
         {
-            if(allUsers.get(i).getUsername().contains(username))
+            if(allUsers.get(i).getUsername().toLowerCase().contains(username.toLowerCase()))
             {
                 matchUsers.add(allUsers.get(i));
             }
@@ -52,14 +52,13 @@ public class SearchController
     @PostMapping("/findProject")
     public String foundProjects(@RequestParam("project_name") String projectname, Model model)
     {
-
         List<Project> allProjects = projectInteface.findAll();
 
         List<Project> matchProjects = new ArrayList<>();
 
         for(int i = 0; i < allProjects.size(); i++)
         {
-            if(allProjects.get(i).getTitle().contains(projectname))
+            if(allProjects.get(i).getTitle().toLowerCase().contains(projectname.toLowerCase()))
             {
                 matchProjects.add(allProjects.get(i));
             }

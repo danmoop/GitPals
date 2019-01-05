@@ -29,7 +29,7 @@
                 <h3 class="wh" th:inline="text">Send <u>[[${UserObject.username}]]</u> a message</h3>
 
                 <form th:action="@{/messageSent}" method="post">
-                    <input type="text" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
+                    <input type="text" readonly="readonly" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
                     <textarea type="text" class="form-control input-lg" placeholder="Message" th:name="Content" required="required"></textarea><br/>
                     <input type="submit" class="btn btn-danger b" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
                 </form>
@@ -54,7 +54,6 @@
                     <input type="text" class="form-control input-lg push-left" readonly="readonly" th:placeholder="${UserObject.username + ' has not set country yet'}" th:value="${UserObject.country}"/>
 
                     <span class="wh b" th:inline="text">Information about [[${UserObject.username}]]</span>
-                    <!--<span type="text" class="form-control input-lg" placeholder="Some information about yourself" th:inline="text">[[${UserObject.info}]]</span> <br/>-->
                     <textarea type="text" class="form-control input-lg" th:placeholder="${UserObject.username} + ' has not given any information yet'" th:inline="text" rows="10" readonly="readonly">[[${UserObject.info}]]</textarea> <br/>
                 </div>
 
@@ -62,10 +61,10 @@
             <h5 class="wh" style="padding: 15px;"><b th:inline="text">Projects [[${UserObject.username}]] has applied to:</b></h5>
 
             <ul class="pr-list text-center">
-                <a th:each="project: ${UserObject.appliedTo}" target="_blank" th:href="${'/projects/' + project.title}">
+                <a th:each="project: ${appliedProjects}" target="_blank" th:href="${'/projects/' + project.title}">
                     <li class="pr-item" style="width: calc(30% - 1.5rem);">
                         <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                        <a class="b" th:href="${'/users/' + project.author.username}" target="_blank" th:inline="text">[[${project.author.username}]]</a>
+                        <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
                         <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
                     </li>
                 </a>
