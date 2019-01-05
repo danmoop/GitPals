@@ -25,12 +25,11 @@
         <form th:action="@{/deleteProject}" th:if="${userPrincipal == AuthorObject.username}" method="post">
             <input type="submit" class="transparent red b" value="Delete Project"/>
             <input type="hidden" th:name="projectName" th:value="${projectObject.title}"/>
-            <input type="hidden" th:name="logged_user_name" th:value="${userPrincipal}"/>
         </form>
         
         <hr class="divider"/>
         <a th:href="${'/users/' + AuthorObject.username}" th:inline="text" class="wh"><b>Author</b> - [[${AuthorObject.username}]]</a>
-        <p th:inline="text" class="wh">[[${projectObject.description}]]</p>
+        <p th:inline="text" class="wh" style="white-space: pre-line;">[[${projectObject.description}]]</p>
         <p th:inline="text" class="wh"><b>This project requires: </b>[[${projectObject.requirements}]]</p>
         <a th:href="${'https://' + projectObject.githubProjectLink}" class="wh b" target="_blank">Project Github repository</a>
 

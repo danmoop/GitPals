@@ -27,10 +27,8 @@ public class ProjectController
     @GetMapping("/submitProject")
     public String projectForm(Principal user, Model model)
     {
-
         if(!user.getName().equals("null"))
         {
-
             String technologies[] = { "Web design", "Mobile design", "Java", "C++",
                     "Python", "Machine learning", "Deep learning", "Ionic",
                     "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
@@ -191,9 +189,9 @@ public class ProjectController
     }
 
     @PostMapping("/deleteProject")
-    public String projectDeleted(Principal user, @RequestParam("projectName") String projectName, @RequestParam("logged_user_name") String logged_user_name)
+    public String projectDeleted(Principal user, @RequestParam("projectName") String projectName)
     {
-        User userDB = userInterface.findByUsername(logged_user_name);
+        User userDB = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(projectName);
 
         if(userDB.getUsername().equals(project.getAuthorName()))

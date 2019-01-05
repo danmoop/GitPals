@@ -25,7 +25,6 @@
         <form th:action="@{/deleteProject}" th:if="${userPrincipal == AuthorObject.username}" method="post">
             <input type="submit" class="transparent red b" value="Delete Project"/>
             <input type="hidden" th:name="projectName" th:value="${projectObject.title}"/>
-            <input type="hidden" th:name="logged_user_name" th:value="${userPrincipal}"/>
         </form>
         
         <hr class="divider"/>

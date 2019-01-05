@@ -66,7 +66,9 @@ public class UserController
 
         for (Iterator<String> i = techs.iterator(); i.hasNext();) {
             String item = i.next();
-            allTechs.put(item, true);
+
+            if(allTechs.get(item) != null)
+                allTechs.put(item, true);
         }
 
         userInterface.save(userFromDB);
