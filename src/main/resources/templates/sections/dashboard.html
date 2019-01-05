@@ -15,7 +15,7 @@
 
 <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
     <div class="center">
-        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank">[[${GithubUserName}]]'s dashboard</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
+        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank">[[${GithubUserName}]]'s dashboard</a></b></h6>
     </div>
 </nav>
 
@@ -47,9 +47,9 @@
 
             <h3 class="wh" style="padding: 15px;"><b>Projects you have applied to</b></h3>
 
-            <ul class="pr-list text-center">
+            <div class="pr-list text-center">
                 <a th:each="project: ${appliedProjects}" target="_blank" th:href="${'/projects/' + project.title}">
-                    <li class="pr-item" style="width: calc(30% - 1.5rem);">
+                    <li class="pr-item">
                         <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
                         <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
                         <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
@@ -57,7 +57,7 @@
                 </a>
 
                 <h6 th:if="${#lists.size(dbUser.appliedTo) == 0}" class="wh">You haven't applied for any project yet</h6>
-            </ul>
+            </div>
 
         </div>
 

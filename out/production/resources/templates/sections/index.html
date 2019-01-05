@@ -64,7 +64,7 @@
 
         </div>
 
-        <ul class="pr-list text-center" th:if="${GithubUser != null}">
+        <div class="pr-list text-center" th:if="${GithubUser != null}">
             <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
                 <li class="pr-item">
                     <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
@@ -74,7 +74,7 @@
             </a>
 
             <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
-        </ul>
+        </div>
 
         <div th:if="${GithubUser == null}">
             <h4 style="color: white;"><a href="/login">Login in</a> to view available projects</h4>
