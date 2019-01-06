@@ -167,8 +167,9 @@ public class IndexController
     }
 
     @GetMapping("/about")
-    public String aboutPage()
+    public String aboutPage(Model model)
     {
+        model.addAttribute("usersAmount", userInterface.findAll().size());
         return "sections/aboutPage";
     }
 
