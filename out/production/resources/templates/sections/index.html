@@ -40,7 +40,6 @@
         <div class="container">
             <h3 class="wh">Find a team for development and become a better developer while contributing and working together!</h3>
             <h6 class="wh b">Choose any project your requirements match and start your path in cooperative development</h6>
-            <a href="/donate" id="donateBtn" class="btn btn-primary b">Donate</a>
             <hr class="divider"/>
             <h6 class="wh b" th:inline="text">Total projects for apply: [[${#lists.size(allTheProjects)}]]</h6>
 
@@ -64,7 +63,7 @@
 
         </div>
 
-        <div class="pr-list text-center" th:if="${GithubUser != null}">
+        <div class="pr-list text-center">
             <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
                 <li class="pr-item">
                     <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
@@ -76,9 +75,12 @@
             <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
         </div>
 
-        <div th:if="${GithubUser == null}">
-            <h4 style="color: white;"><a href="/login">Login in</a> to view available projects</h4>
+        <div class="container">
+            <hr class="divider"/>
         </div>
+
+        <a href="/donate" class="btn btn-primary b">Donate</a>
+
 
     </section>
 

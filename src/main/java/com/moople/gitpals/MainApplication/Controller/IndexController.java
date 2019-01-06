@@ -54,7 +54,6 @@ public class IndexController
         {
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
-            model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
 
             if(userInterface.findByUsername(user.getName()) == null)
             {
@@ -72,6 +71,8 @@ public class IndexController
                         )
                 );
             }
+
+            model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
 
             User user1 = userInterface.findByUsername(user.getName());
 

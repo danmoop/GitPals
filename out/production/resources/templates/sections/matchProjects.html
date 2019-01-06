@@ -17,7 +17,7 @@
         <h3 class="wh b" th:inline="text">Found [[${#lists.size(match_projects)}]] project(s)</h3>
         <hr class="divider"/>
 
-        <ul class="pr-list text-center">
+        <div class="pr-list text-center">
             <a th:each="project: ${match_projects}" th:href="${'/projects/' + project.title}">
                 <li class="pr-item">
                     <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
@@ -25,7 +25,7 @@
                     <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
                 </li>
             </a>
-        </ul>
+        </div>
 
         <h3 th:if="${#lists.size(match_projects) == 0}" class="wh">No projects found</h3>
 

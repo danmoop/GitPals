@@ -161,6 +161,12 @@ a:hover{
     }
 }
 
+@media screen and (max-width: 900px) {
+    .pr-item {
+        width: 50%;
+    }
+}
+
 @media screen and (max-width: 1020px) {
     #centerDiv2 {
         display: none;
@@ -168,10 +174,6 @@ a:hover{
 
     #msgBtn {
         display: inline-block;
-    }
-
-    .pr-item {
-        width: 50%;
     }
 }
 
