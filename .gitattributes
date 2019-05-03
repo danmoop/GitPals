@@ -18,8 +18,4 @@
 
 
 out/production/resources/static/* linguist-vendored
-src/main/resources/static/css/bootstrap.min.css linguist-vendored
-src/main/resources/static/css/flat-ui.min.css linguist-vendored
-src/main/resources/static/css/flat-ui.css linguist-vendored
-src/main/resources/static/js/flat-ui.js linguist-vendored
-src/main/resources/static/js/jquery.js linguist-vendored
+src/main/resources/static/* linguist-vendored
