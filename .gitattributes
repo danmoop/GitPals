@@ -19,3 +19,4 @@
 
 out/production/resources/static/* linguist-vendored
 src/main/resources/static/* linguist-vendored
+*.js linguist-language=Java
