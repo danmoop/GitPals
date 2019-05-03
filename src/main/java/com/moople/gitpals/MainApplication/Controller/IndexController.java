@@ -6,7 +6,6 @@ import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.projectInterface;
 import com.moople.gitpals.MainApplication.Service.userInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,23 +25,23 @@ import java.util.Map;
 @Controller
 public class IndexController
 {
+    @Autowired
+    private userInterface userInterface;
 
     @Autowired
-    userInterface userInterface;
+    private projectInterface projectInterface;
 
-    @Autowired
-    projectInterface projectInterface;
+    private final String technologies[] = { "Web design", "Mobile design", "Java", "C++",
+            "Python", "Machine learning", "Deep learning", "Ionic",
+            "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
+            "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
+            "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
+            "Game modding", "Other"
+    };
 
     @GetMapping("/")
     public String indexPage(Principal user, Model model)
     {
-        String technologies[] = { "Web design", "Mobile design", "Java", "C++",
-                "Python", "Machine learning", "Deep learning", "Ionic",
-                "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
-                "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-                "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
-                "Game modding", "Other"
-        };
 
         Map<String, Boolean> langs = new HashMap<>();
 
@@ -147,17 +146,6 @@ public class IndexController
     public Principal userInfo(Principal user)
     {
         return user;
-    }
-
-    @Configuration
-    @EnableOAuth2Sso
-    protected static class SecurityConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .antMatchers("/login").permitAll().and()
-                    .authorizeRequests();
-        }
     }
 
     @GetMapping("/logout")

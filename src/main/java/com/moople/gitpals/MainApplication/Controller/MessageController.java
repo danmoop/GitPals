@@ -9,19 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.security.Principal;
 
 @Controller
 public class MessageController
 {
     @Autowired
-    userInterface userInteface;
-
-    ScriptEngineManager factory = new ScriptEngineManager();
-    ScriptEngine JS = factory.getEngineByName("JavaScript");
+    private userInterface userInteface;
 
     @GetMapping("/messages")
     public String messages(Principal user, Model model)

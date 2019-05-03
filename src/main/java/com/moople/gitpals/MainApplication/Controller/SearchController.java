@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Controller
 public class SearchController
 {
     @Autowired
-    userInterface userInteface;
+    private userInterface userInteface;
 
     @Autowired
-    projectInterface projectInteface;
+    private projectInterface projectInteface;
 
     @GetMapping("/search")
     public String searchPage()
@@ -34,15 +35,9 @@ public class SearchController
     {
         List<User> allUsers = userInteface.findAll();
 
-        List<User> matchUsers = new ArrayList<>();
-
-        for(int i = 0; i < allUsers.size(); i++)
-        {
-            if(allUsers.get(i).getUsername().toLowerCase().contains(username.toLowerCase()))
-            {
-                matchUsers.add(allUsers.get(i));
-            }
-        }
+        List<String> matchUsers = SortController.filterUsers(
+                allUsers, (User user) -> user.getUsername().toLowerCase().contains(username.toLowerCase())
+        );
 
         model.addAttribute("match_users", matchUsers);
 
@@ -50,19 +45,13 @@ public class SearchController
     }
 
     @PostMapping("/findProject")
-    public String foundProjects(@RequestParam("project_name") String projectname, Model model)
+    public String foundProjects(@RequestParam("project_name") String projectName, Model model)
     {
         List<Project> allProjects = projectInteface.findAll();
 
-        List<Project> matchProjects = new ArrayList<>();
-
-        for(int i = 0; i < allProjects.size(); i++)
-        {
-            if(allProjects.get(i).getTitle().toLowerCase().contains(projectname.toLowerCase()))
-            {
-                matchProjects.add(allProjects.get(i));
-            }
-        }
+        List<Project> matchProjects = SortController.filterProjects(
+                allProjects, (p -> p.getTitle().toLowerCase().contains(projectName.toLowerCase()))
+        );
 
         model.addAttribute("match_projects", matchProjects);
 

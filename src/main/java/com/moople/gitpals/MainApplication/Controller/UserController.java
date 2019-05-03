@@ -19,10 +19,10 @@ import java.util.Map;
 public class UserController
 {
     @Autowired
-    userInterface userInterface;
+    private userInterface userInterface;
 
     @Autowired
-    projectInterface projectInterface;
+    private projectInterface projectInterface;
 
     @GetMapping("/users/{username}")
     public String findUser(@PathVariable String username, Model model)

@@ -5,6 +5,7 @@ import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.projectInterface;
 import com.moople.gitpals.MainApplication.Service.userInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,24 +20,24 @@ import java.util.Map;
 public class ProjectController
 {
     @Autowired
-    userInterface userInterface;
+    private userInterface userInterface;
 
     @Autowired
-    projectInterface projectInterface;
+    private projectInterface projectInterface;
+
+    private final String technologies[] = { "Web design", "Mobile design", "Java", "C++",
+            "Python", "Machine learning", "Deep learning", "Ionic",
+            "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
+            "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
+            "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
+            "Game modding", "Other"
+    };
 
     @GetMapping("/submitProject")
     public String projectForm(Principal user, Model model)
     {
         if(!user.getName().equals("null"))
         {
-            String technologies[] = { "Web design", "Mobile design", "Java", "C++",
-                    "Python", "Machine learning", "Deep learning", "Ionic",
-                    "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
-                    "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-                    "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
-                    "Game modding", "Other"
-            };
-
             Map<String, Boolean> techs = new HashMap<>();
 
             for (String technology : technologies)
@@ -232,15 +233,12 @@ public class ProjectController
     {
         List<Project> allProjects = projectInterface.findAll();
 
-        List<Project> matchProjects = new ArrayList<>();
-
-        for (Project allProject : allProjects) {
-            for (int r = 0; r < allProject.getRequirements().size(); r++) {
-                if (data.contains(allProject.getRequirements().get(r))) {
-                    matchProjects.add(allProject);
-                }
-            }
-        }
+        List<Project> matchProjects = SortController.filterProjects(
+                allProjects,
+                (Project p) -> data.stream()
+                        .anyMatch((String req) -> p.getRequirements()
+                        .contains(req))
+        );
 
         model.addAttribute("matchProjects", matchProjects);
 
