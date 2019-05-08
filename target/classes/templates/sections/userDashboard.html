@@ -78,7 +78,7 @@
 
                 <div style="text-align: left; margin-left: 20px;">
                     <div th:each="tech: ${UserObject.languagesKnows}" id="techBlock">
-                        <input onclick="return false;" class="largeCheckbox" type="checkbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh b" th:text="${tech.key}"></span>
+                        <input onclick="return false;" class="largeCheckbox" type="checkbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
                     </div>
                 </div>
 

@@ -30,7 +30,7 @@
         <hr class="divider"/>
         <a th:href="${'/users/' + AuthorObject.username}" th:inline="text" class="wh"><b>Author</b> - [[${AuthorObject.username}]]</a>
         <p th:inline="text" class="wh" style="white-space: pre-line;">[[${projectObject.description}]]</p>
-        <p th:inline="text" class="wh"><b>This project requires: </b>[[${projectObject.requirements}]]</p>
+        <p th:inline="text" class="wh">This project requires: [[${projectObject.requirements}]]</p>
         <a th:href="${projectObject.githubProjectLink}" class="wh b" target="_blank">Project Github repository</a>
 
         <hr class="divider"/>

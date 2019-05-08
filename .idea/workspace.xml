@@ -2,172 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3035481b-9080-4443-a638-fdd260371679" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5.1/file-changes/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/3.5.1/taskHistory/taskHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/built.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__aopalliance_aopalliance_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_classic_1_1_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_core_1_1_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_classmate_1_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_8_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_8_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jayway_jsonpath_json_path_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_codec_commons_codec_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_io_commons_io_2_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__de_flapdoodle_embed_de_flapdoodle_embed_mongo_1_50_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__de_flapdoodle_embed_de_flapdoodle_embed_process_1_50_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_validation_validation_api_1_1_0_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_java_dev_jna_jna_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_java_dev_jna_jna_platform_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_accessors_smart_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_json_smart_2_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__nz_net_ultraq_thymeleaf_thymeleaf_layout_dialect_1_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ognl_ognl_3_0_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_commons_commons_compress_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_commons_commons_lang3_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_core_8_5_27.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_el_8_5_27.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_27.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_tomcat_annotations_api_8_5_27.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_assertj_assertj_core_2_6_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_codehaus_groovy_groovy_2_4_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_codehaus_jackson_jackson_core_asl_1_9_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_hibernate_validator_5_3_6_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_javassist_javassist_3_21_0_GA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jboss_logging_jboss_logging_3_3_1_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_core_1_10_19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mongodb_bson_3_4_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mongodb_mongodb_driver_3_4_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mongodb_mongodb_driver_core_3_4_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_objenesis_objenesis_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_5_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_skyscreamer_jsonassert_1_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_jcl_over_slf4j_1_7_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_jul_to_slf4j_1_7_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_log4j_over_slf4j_1_7_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_slf4j_api_1_7_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_autoconfigure_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_devtools_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_data_mongodb_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_logging_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_security_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_test_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_thymeleaf_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_tomcat_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_web_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_autoconfigure_1_5_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_data_spring_data_commons_1_13_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_data_spring_data_mongodb_1_10_10_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_oauth_spring_security_oauth2_2_2_1_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_config_4_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_core_4_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_test_4_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_web_4_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aop_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_beans_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_core_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_expression_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_test_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_tx_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_web_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_webmvc_4_3_14_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_thymeleaf_thymeleaf_2_1_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_thymeleaf_thymeleaf_spring4_2_1_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_unbescape_unbescape_1_1_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_yaml_snakeyaml_1_17.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Gitpals.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Gitpals_main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Gitpals_test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gallery/d1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gallery/d2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gallery/main.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gallery/messages.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gallery/project1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitpals.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/GuidePageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController$SecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/MainApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/Project.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Service/projectInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/moople/gitpals/MainApplication/Service/userInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/flat-ui.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/flat-ui.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/images/github.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/images/sad_github.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/js/dashboardScript.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/js/flat-ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/js/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/js/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/error/projectDeleted.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/error/projectExists.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/error/recipientNotFound.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/error/siteBroken.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/error/userNotFound.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/guide/goodProjDescription.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/aboutPage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/bugReport.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/donate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/matchProjects.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/matchUsers.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/projectSubmitForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/projectViewPage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/projectsAfterSorting.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/searchForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/sendMessage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/userDashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/sections/viewMessages.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/com/moople/gitpals/MainApplication/MainApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainApplication.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MainApplication.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SortController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/error/projectExists.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error/projectExists.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/error/siteBroken.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error/siteBroken.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/matchUsers.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/matchUsers.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/moople/gitpals/MainApplication/MainApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/moople/gitpals/MainApplication/MainApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/SortController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/aboutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/aboutPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/projectViewPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/projectViewPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/projectsAfterSorting.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/projectsAfterSorting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/userDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/userDashboard.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -180,39 +47,30 @@
     <option name="MAKE_PROJECT_ON_SAVE" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="390">
+              <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="642">
+              <caret line="145" selection-start-line="145" selection-end-line="145" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -220,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="300">
+              <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -244,6 +102,12 @@
       <find>factory</find>
       <find>user.</find>
       <find>Donate</find>
+      <find>aboutpage</find>
+      <find>*</find>
+      <find>find a</find>
+      <find>fz</find>
+      <find>Messages</find>
+      <find>stream</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -253,18 +117,48 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Service/userInterface.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/matchProjects.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SortController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/matchUsers.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/js/index.js" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/css/style.css" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/error/projectExists.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/error/siteBroken.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
       </list>
     </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="MainApplication" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="7" />
@@ -278,6 +172,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -351,18 +247,61 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MainApplication" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MainApplication" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MainApplication" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MainApplication" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="error" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MainApplication" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GitPals" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="sections" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556902584614" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557308108306" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
@@ -415,13 +354,13 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18070363" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18230277" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.32998884" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Version Control" order="2" />
@@ -434,15 +373,18 @@
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.32995737" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Configuration/GitHubAuthConfiguration.java">
@@ -456,13 +398,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
@@ -504,13 +439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SortController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="866">
@@ -521,10 +449,154 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="3" column="76" selection-start-line="3" selection-start-column="76" selection-end-line="3" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Soft/latest-jdk/lib/src.zip!/java.base/java/util/stream/Collectors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="276" column="29" selection-start-line="276" selection-start-column="29" selection-end-line="276" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="40" column="61" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="29" column="45" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
+          <folding>
+            <element signature="n#style#0;n#a#3;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/aboutPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="21" column="74" selection-start-line="21" selection-start-column="74" selection-end-line="21" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="18" column="10" lean-forward="true" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="85" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Soft/latest-jdk/lib/src.zip!/java.base/java/util/stream/StreamSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="66" column="32" selection-start-line="66" selection-start-column="32" selection-end-line="66" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Soft/latest-jdk/lib/src.zip!/java.base/java/util/Collection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="649">
+          <caret line="731" column="34" selection-start-line="731" selection-start-column="34" selection-end-line="731" selection-end-column="34" />
+          <folding>
+            <element signature="e#35495#35496#0" expanded="true" />
+            <element signature="e#35559#35560#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="642">
+          <caret line="145" selection-start-line="145" selection-end-line="145" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectsAfterSorting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="20" column="85" selection-start-line="20" selection-start-column="85" selection-end-line="20" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/siteBroken.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/recipientNotFound.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/projectExists.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/error/projectDeleted.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="300">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -533,29 +605,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="390">
+          <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
         </state>
       </provider>
     </entry>

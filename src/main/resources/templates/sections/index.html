@@ -20,14 +20,14 @@
             <a href="/about" class="btn btn-info"><b class="wh">About</b></a>
             <a href="/login" th:if="${GithubUserName == null}" class="btn btn-primary"><b class="wh">Login using Github</b></a>
             <a href="/dashboard" th:if="${GithubUserName != null}" class="btn btn-primary"><b class="wh">Dashboard</b></a>
-            <a href="/messages" th:if="${GithubUserName != null}" class="btn btn-info" th:inline="text" id="msgBtn"><b class="wh">Messages: [[${#lists.size(userDB.messages)}]]</b></a>
+            <a href="/messages" th:if="${GithubUserName != null}" class="btn btn-info" th:inline="text" id="msgBtn" style="font-family: 'eina';">Messages: [[${#lists.size(userDB.messages)}]]</a>
             <a href="/logout" th:if="${GithubUserName != null}" class="btn btn-danger"><b>Log Out</b></a>
         </div>
         <div class="center">
             <h6 class="wh" th:if="${GithubUserName == null}" id="centerDiv"><b>Hello, Guest</b></h6>
             <div class="row" id="centerDiv2">
                 <h6 class="wh" th:if="${GithubUserName != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" href="/dashboard">[[${GithubUserName}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
-                <a href="/messages" class="wh b" th:if="${GithubUser != null}" style="transform: translate(20%, 15%); font-size: 20px;" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
+                <a href="/messages" class="wh" th:if="${GithubUser != null}" style="transform: translate(20%, 15%); font-size: 20px; font-family: 'eina';" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
             </div>
         </div>
         <div>
@@ -39,9 +39,9 @@
         <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
         <div class="container">
             <h3 class="wh">Find a team for development and become a better developer while contributing and working together!</h3>
-            <h6 class="wh b">Choose any project your requirements match and start your path in cooperative development</h6>
+            <h5 class="wh">Choose any project that matches your requirements and start your path in cooperative development</h5>
             <hr class="divider"/>
-            <h6 class="wh b" th:inline="text">Total projects for apply: [[${#lists.size(allTheProjects)}]]</h6>
+            <h6 class="wh" th:inline="text">Total projects for apply: [[${#lists.size(allTheProjects)}]]</h6>
 
             <a href="/submitProject" th:if="${GithubUser != null}">Submit your project</a> <br/><br/>
 
@@ -68,9 +68,9 @@
         <div class="pr-list text-center">
             <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
                 <li class="pr-item">
-                    <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
+                    <header><h6 class="wh pr-title" th:inline="text">[[${project.title}]]</h6></header>
                     <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
-                    <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
+                    <p class="wh" th:inline="text" style="margin: 10px;">[[${project.requirements}]]</p>
                 </li>
             </a>
 

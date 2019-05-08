@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'eina';
+  src: url("./../fonts/Eina.woff2") format("woff2");
+}
+
+h1, h2, h3, h4, h5, h6, p, span {
+    font-family: 'eina';
+    font-weight: normal;
+}
+
 body
 {
     background: #34495e;
@@ -147,12 +157,28 @@ a:hover{
     color: #e7e7e7;
 }
 
+.fz-50{
+    font-size: 50px;
+}
+
+.fz-40{
+    font-size: 40px;
+}
+
+.fz-35{
+    font-size: 35px;
+}
+
 .fz-30{
     font-size: 30px;
 }
 
 .fz-25{
     font-size: 25px;
+}
+
+.fz-20{
+    font-size: 20px;
 }
 
 @media screen and (max-width: 768px) {

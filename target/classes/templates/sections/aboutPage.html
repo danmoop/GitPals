@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -16,9 +16,10 @@
     <div class="container">
         <h3 style="color: #2ecc71;">What is GitPals?</h3>
         <hr class="divider"/>
-        <p class="wh b">GitPals helps you to find developers for your project or to take part in someone's project. Cooperative work helps you to dive in to Open-Source projects. You can create portfolio of successful projects by working in a team, what is very appreciated. It's up to you: whether to start your own project and invite people or apply to existing projects. Start taking part in Open-Source development today!</p>
+        <p class="wh">GitPals helps you to find developers for your project or to take part in someone's project. Cooperative work helps you to dive in to Open-Source projects. You can create portfolio of successful projects by working in a team, what is very appreciated. It's up to you: whether to start your own project and invite people or apply to existing projects. Start taking part in Open-Source development today!</p>
 
-        <p class="wh b" th:inline="text">[[${usersAmount}]] users already use GitPals</p>
+        <p class="wh" th:inline="text" th:if="${#lists.size(usersAmount) == 1}">[[${usersAmount}]] user already uses GitPals</p>
+        <p class="wh" th:inline="text" th:if="${#lists.size(usersAmount) != 1}">[[${usersAmount}]] users already use GitPals</p>
 
         <a href="/" class="btn b btn-primary">Get Started!</a>
 
@@ -28,11 +29,11 @@
 
         <h4 class="wh">Developed by <a href="https://github.com/danmoop" target="_blank">danmoop</a></h4>
         <h6 class="wh">dandurnev1@gmail.com</h6>
-        <h6 class="wh b"><a href="https://github.com/danmoop/GitPals" target="_blank">GitPals Github repository</a></h6>
+        <h6 class="wh"><a href="https://github.com/danmoop/GitPals" target="_blank">GitPals Github repository</a></h6>
 
         <hr class="divider"/>
 
-        <a href="/bugReport" class="btn btn-danger b">Report about bug</a>
+        <a th:if="${LoggedUser != null}" href="/bugReport" class="btn btn-danger b">Report about bug</a>
 
     </div>
 </section>

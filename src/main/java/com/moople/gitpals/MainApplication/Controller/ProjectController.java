@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController
@@ -25,7 +26,7 @@ public class ProjectController
     @Autowired
     private projectInterface projectInterface;
 
-    private final String technologies[] = { "Web design", "Mobile design", "Java", "C++",
+    private final String[] technologies= { "Web design", "Mobile design", "Java", "C++",
             "Python", "Machine learning", "Deep learning", "Ionic",
             "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
             "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
@@ -211,11 +212,11 @@ public class ProjectController
 
             List<User> allUsers = userInterface.findAll();
 
-            for (int i = 0; i < allUsers.size(); i++)
+            for (User allUser : allUsers)
             {
-                allUsers.get(i).deleteProjectAppliedTo(project.getTitle());
+                allUser.deleteProjectAppliedTo(project.getTitle());
 
-                userInterface.save(allUsers.get(i));
+                userInterface.save(allUser);
             }
 
             return "redirect:/";
@@ -233,12 +234,9 @@ public class ProjectController
     {
         List<Project> allProjects = projectInterface.findAll();
 
-        List<Project> matchProjects = SortController.filterProjects(
-                allProjects,
-                (Project p) -> data.stream()
-                        .anyMatch((String req) -> p.getRequirements()
-                        .contains(req))
-        );
+        List<Project> matchProjects = allProjects.stream()
+                .filter(project -> data.stream()
+                    .anyMatch(req -> project.getRequirements().contains(req))).collect(Collectors.toList());
 
         model.addAttribute("matchProjects", matchProjects);
 

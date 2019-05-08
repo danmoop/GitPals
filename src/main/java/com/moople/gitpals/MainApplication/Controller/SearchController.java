@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Controller
 public class SearchController
@@ -35,9 +36,9 @@ public class SearchController
     {
         List<User> allUsers = userInteface.findAll();
 
-        List<String> matchUsers = SortController.filterUsers(
-                allUsers, (User user) -> user.getUsername().toLowerCase().contains(username.toLowerCase())
-        );
+        List<String> matchUsers = allUsers.stream()
+                .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
+                .map(User::getUsername).collect(Collectors.toList());
 
         model.addAttribute("match_users", matchUsers);
 
@@ -49,9 +50,9 @@ public class SearchController
     {
         List<Project> allProjects = projectInteface.findAll();
 
-        List<Project> matchProjects = SortController.filterProjects(
-                allProjects, (p -> p.getTitle().toLowerCase().contains(projectName.toLowerCase()))
-        );
+        List<Project> matchProjects = allProjects.stream()
+                .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
+                .collect(Collectors.toList());
 
         model.addAttribute("match_projects", matchProjects);
 

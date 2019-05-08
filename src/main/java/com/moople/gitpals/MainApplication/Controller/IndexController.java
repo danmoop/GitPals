@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Null;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class IndexController
     @Autowired
     private projectInterface projectInterface;
 
-    private final String technologies[] = { "Web design", "Mobile design", "Java", "C++",
+    private final String[] technologies = { "Web design", "Mobile design", "Java", "C++",
             "Python", "Machine learning", "Deep learning", "Ionic",
             "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
             "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
@@ -155,9 +156,16 @@ public class IndexController
     }
 
     @GetMapping("/about")
-    public String aboutPage(Model model)
+    public String aboutPage(Model model, Principal principal)
     {
         model.addAttribute("usersAmount", userInterface.findAll().size());
+
+        try{
+            model.addAttribute("LoggedUser", principal.getName());
+        } catch (NullPointerException e) {
+            model.addAttribute("LoggedUser", null);
+        }
+
         return "sections/aboutPage";
     }
 
