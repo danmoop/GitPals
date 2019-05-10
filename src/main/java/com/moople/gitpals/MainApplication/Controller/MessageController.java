@@ -2,7 +2,7 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.userInterface;
+import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import java.security.Principal;
 public class MessageController
 {
     @Autowired
-    private userInterface userInteface;
+    private UserInterface userInteface;
 
     @GetMapping("/messages")
     public String messages(Principal user, Model model)
@@ -27,14 +27,22 @@ public class MessageController
         return "sections/viewMessages";
     }
 
+    // Redirects to page where you can send a message
     @GetMapping("/sendMessage")
     public String sendMessage(Model model)
     {
         return "sections/sendMessage";
     }
 
+    /*
+        @param username & content are taken from html textfields
+        @return redirect to index page if recipient is found, otherwise redirect to error page
+     */
     @PostMapping("/messageSent")
-    public String messageSent(Model model, @RequestParam("RecipientName") String username, @RequestParam("Content") String content)
+    public String messageSent(
+            Model model,
+            @RequestParam("RecipientName") String username,
+            @RequestParam("Content") String content)
     {
         String recipient = username;
 
@@ -60,8 +68,17 @@ public class MessageController
 
     }
 
+    /*
+        @param content & author are taken from hidden html textfields,
+            which values are assigned automatically by thymeleaf
+
+        @return redirect to the same page - /messages
+     */
     @PostMapping("/deleteMessage")
-    public String messageDeleted(@RequestParam("messageContentInput") String content, @RequestParam("messageAuthorInput") String author, Principal user)
+    public String messageDeleted(
+            @RequestParam("messageContentInput") String content,
+            @RequestParam("messageAuthorInput") String author,
+            Principal user)
     {
         User userDB = userInteface.findByUsername(user.getName());
 

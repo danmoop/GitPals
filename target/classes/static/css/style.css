@@ -96,7 +96,7 @@ body
 }
 
 .pr-list{
-    margin: 3rem auto 0;
+    margin: 0px auto;
     max-width: 100rem;
     display: flex;
     flex-wrap: wrap;

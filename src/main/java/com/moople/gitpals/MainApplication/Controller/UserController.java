@@ -2,8 +2,8 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.userInterface;
-import com.moople.gitpals.MainApplication.Service.projectInterface;
+import com.moople.gitpals.MainApplication.Service.UserInterface;
+import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +19,18 @@ import java.util.Map;
 public class UserController
 {
     @Autowired
-    private userInterface userInterface;
+    private UserInterface userInterface;
 
     @Autowired
-    private projectInterface projectInterface;
+    private ProjectInterface projectInterface;
 
+    /*
+        @param username is taken from an address field - like "/users/danmoop"
+        @param model & principal are assigned automatically by spring
+        @return user's dashboard html page with all the data about the user
+     */
     @GetMapping("/users/{username}")
-    public String findUser(@PathVariable String username, Model model)
+    public String findUser(@PathVariable String username, Model model, Principal principal)
     {
         User user = userInterface.findByUsername(username);
 
@@ -38,9 +43,14 @@ public class UserController
                 appliedToProjects.add(projectInterface.findByTitle(user.getAppliedTo().get(i)));
             }
 
+            try {
+                model.addAttribute("LoggedUser", principal.getName());
+            } catch (NullPointerException e) {
+                model.addAttribute("LoggedUser", null);
+            }
+
             model.addAttribute("UserObject", userInterface.findByUsername(username));
             model.addAttribute("appliedProjects", appliedToProjects);
-
 
             return "sections/userDashboard";
         }
@@ -52,6 +62,11 @@ public class UserController
         }
     }
 
+    /*
+        @param techs are taken from html form, they are technologies checkboxes users select in their dashboard
+        @param user is assigned automatically by spring
+        @return redirect to the same page with new data
+     */
     @PostMapping("/updateUser")
     public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs)
     {
@@ -76,8 +91,17 @@ public class UserController
         return "redirect:/dashboard";
     }
 
+
+    /*
+        @param country & info are taken from html input fields
+        @param principal user is used to find user in database, set new country & info
+        @return redirect to the same page with new data
+     */
     @PostMapping("/updateUserCountry")
-    public String updateCountry(@RequestParam("countryInput") String country, @RequestParam("infoInput") String info, Principal user)
+    public String updateCountry(
+            @RequestParam("countryInput") String country,
+            @RequestParam("infoInput") String info,
+            Principal user)
     {
         User userInDB = userInterface.findByUsername(user.getName());
 

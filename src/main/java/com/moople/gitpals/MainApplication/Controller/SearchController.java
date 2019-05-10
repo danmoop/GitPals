@@ -2,28 +2,25 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.projectInterface;
-import com.moople.gitpals.MainApplication.Service.userInterface;
+import com.moople.gitpals.MainApplication.Service.ProjectInterface;
+import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Controller
 public class SearchController
 {
     @Autowired
-    private userInterface userInteface;
+    private UserInterface userInteface;
 
     @Autowired
-    private projectInterface projectInteface;
+    private ProjectInterface projectInteface;
 
     @GetMapping("/search")
     public String searchPage()
@@ -31,6 +28,10 @@ public class SearchController
         return "sections/searchForm";
     }
 
+    /*
+        @param username is taken from a html textfield
+        @return list of users whose nicknames contain user's input
+     */
     @PostMapping("/findUser")
     public String foundUsers(@RequestParam("user_name") String username, Model model)
     {
@@ -45,6 +46,10 @@ public class SearchController
         return "sections/matchUsers";
     }
 
+    /*
+        @param projectName is taken from a html textfield
+        @return list of projects whose titles contain user's input
+     */
     @PostMapping("/findProject")
     public String foundProjects(@RequestParam("project_name") String projectName, Model model)
     {

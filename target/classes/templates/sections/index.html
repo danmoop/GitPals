@@ -43,12 +43,13 @@
             <hr class="divider"/>
             <h6 class="wh" th:inline="text">Total projects for apply: [[${#lists.size(allTheProjects)}]]</h6>
 
-            <a href="/submitProject" th:if="${GithubUser != null}">Submit your project</a> <br/><br/>
+            <a href="/submitProject" th:if="${GithubUser != null}">Submit your project</a>
+
+            <div th:if="${GithubUser != null}">
+                <br/><br/>
+            </div>
 
             <button class="btn btn-info b" onclick="showSortForm();" th:if="${GithubUser != null}">Sort projects</button>
-
-            <br/>
-            <br/>
 
             <div id="sortList" style="display: none;" th:if="${GithubUser != null}">
                 <form th:action="@{/sortProjects}" method="post">
@@ -64,6 +65,8 @@
             </div>
 
         </div>
+
+        <br/>
 
         <div class="pr-list text-center">
             <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">

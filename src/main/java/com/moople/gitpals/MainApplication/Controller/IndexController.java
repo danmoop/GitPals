@@ -3,12 +3,9 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.projectInterface;
-import com.moople.gitpals.MainApplication.Service.userInterface;
+import com.moople.gitpals.MainApplication.Service.ProjectInterface;
+import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Null;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,10 +23,10 @@ import java.util.Map;
 public class IndexController
 {
     @Autowired
-    private userInterface userInterface;
+    private UserInterface userInterface;
 
     @Autowired
-    private projectInterface projectInterface;
+    private ProjectInterface projectInterface;
 
     private final String[] technologies = { "Web design", "Mobile design", "Java", "C++",
             "Python", "Machine learning", "Deep learning", "Ionic",
@@ -181,6 +177,10 @@ public class IndexController
         return "sections/donate";
     }
 
+    /*
+        @param message is taken from html textfield and it's content sent to admin
+        @return to index page
+     */
     @PostMapping("/reportBug")
     public String bugReported(@RequestParam("bug_description") String message, Principal user)
     {

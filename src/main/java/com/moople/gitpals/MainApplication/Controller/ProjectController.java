@@ -2,10 +2,9 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.projectInterface;
-import com.moople.gitpals.MainApplication.Service.userInterface;
+import com.moople.gitpals.MainApplication.Service.ProjectInterface;
+import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +20,10 @@ import java.util.stream.Collectors;
 public class ProjectController
 {
     @Autowired
-    private userInterface userInterface;
+    private UserInterface userInterface;
 
     @Autowired
-    private projectInterface projectInterface;
+    private ProjectInterface projectInterface;
 
     private final String[] technologies= { "Web design", "Mobile design", "Java", "C++",
             "Python", "Machine learning", "Deep learning", "Ionic",
@@ -55,14 +54,21 @@ public class ProjectController
             return "redirect:/";
     }
 
+    /*
+        @param project is taken from html form with all the data (project name, description etc.)
+        @param techs is a checkbox list of technologies for a project that user selects
+        @return create project and redirect to its page, otherwise show an error messaging about identical project name
+     */
     @PostMapping("/projectSubmitted")
-    public String projectSubmitted(Principal user, @ModelAttribute Project project, @RequestParam("techInput") List<String> techs)
+    public String projectSubmitted(
+            Principal user,
+            @ModelAttribute Project project,
+            @RequestParam("techInput") List<String> techs)
     {
         Project project1 = projectInterface.findByTitle(project.getTitle());
 
         if(project1 == null)
         {
-
             List<String> requirements = new ArrayList<>(techs);
 
             Project userProject = new Project(
@@ -90,10 +96,14 @@ public class ProjectController
         }
     }
 
-    @GetMapping("/projects/{projectname}")
-    public String projectPage(@PathVariable String projectname, Model model, Principal user)
+    /*
+        @param projectName is taken from an address field - like "/project/UnrealEngine"
+        @return project page with it's title, author, description, technologies etc
+     */
+    @GetMapping("/projects/{projectName}")
+    public String projectPage(@PathVariable String projectName, Model model, Principal user)
     {
-        Project project = projectInterface.findByTitle(projectname);
+        Project project = projectInterface.findByTitle(projectName);
 
         if(project == null)
         {
@@ -112,12 +122,15 @@ public class ProjectController
         }
     }
 
+    /*
+        @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
+        @return redirect to the same project page
+     */
     @PostMapping("/applyForProject")
     public String applyForProject(@RequestParam("linkInput") String link, Principal user)
     {
         User userForApply = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
-
 
         if(project.getUsersSubmitted().size() == 0)
         {
@@ -168,6 +181,10 @@ public class ProjectController
         return "redirect:/projects/" + link;
     }
 
+    /*
+        @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
+        @return redirect to the same project page
+     */
     @PostMapping("/unapplyForProject")
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user)
     {
@@ -190,6 +207,10 @@ public class ProjectController
         return "redirect:/projects/" + link;
     }
 
+    /*
+        @param projectName is project's title which is taken from a html textfield
+        @return redirect to the index page
+     */
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName)
     {
@@ -229,6 +250,10 @@ public class ProjectController
         }
     }
 
+    /*
+        @param data is a list of technologies checkboxes user select manually
+        @return a list of projects according to user's preference
+     */
     @PostMapping("/sortProjects")
     public String projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)
     {
