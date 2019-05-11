@@ -24,7 +24,7 @@ Open project in any IDE (I use Intellij IDEA). Then open Console Prompt and type
 
 **MongoDB port - default 27017**
 
-**Until you don't run mongo database, web page will return error**
+**Unless you don't run mongo database, web page will return error**
 
 Executing file - GitPals/src/main/java/com/moople/gitpals/MainApplication.java
 

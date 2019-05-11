@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class IndexController
@@ -40,10 +41,10 @@ public class IndexController
     public String indexPage(Principal user, Model model)
     {
 
-        Map<String, Boolean> langs = new HashMap<>();
+        Map<String, Boolean> technologiesMap = new HashMap<>();
 
         for (String technology : technologies) {
-            langs.put(technology, false);
+            technologiesMap.put(technology, false);
         }
 
         if(user != null)
@@ -53,14 +54,13 @@ public class IndexController
 
             if(userInterface.findByUsername(user.getName()) == null)
             {
-
                 userInterface.save(
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                "Not set",
-                                "Not set",
-                                langs,
+                                "",
+                                "",
+                                technologiesMap,
                                 new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>()
@@ -85,8 +85,13 @@ public class IndexController
             }
         }
 
-        model.addAttribute("projectTechs", langs);
-        model.addAttribute("allTheProjects", projectInterface.findAll());
+
+        List<Project> projects = projectInterface.findAll().stream()
+                .limit(50).collect(Collectors.toList());
+
+        model.addAttribute("projectTechs", technologiesMap);
+        model.addAttribute("projects", projects);
+        model.addAttribute("totalProjectsAmount", projectInterface.findAll().size());
 
         return "sections/index";
     }
@@ -94,6 +99,7 @@ public class IndexController
     @GetMapping("/dashboard")
     public String dashboardPage(Principal user, Model model)
     {
+        // if user is not logged in - redirect to index
         if(user == null)
             return "redirect:/";
 

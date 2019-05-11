@@ -41,12 +41,14 @@
             <h3 class="wh">Find a team for development and become a better developer while contributing and working together!</h3>
             <h5 class="wh">Choose any project that matches your requirements and start your path in cooperative development</h5>
             <hr class="divider"/>
-            <h6 class="wh" th:inline="text">Total projects for apply: [[${#lists.size(allTheProjects)}]]</h6>
+            <h6 class="wh" th:inline="text">Total projects for apply: [[${totalProjectsAmount}]]</h6>
+
+            <p class="wh">Only 50 the most recent projects can be shown on this page</p>
 
             <a href="/submitProject" th:if="${GithubUser != null}">Submit your project</a>
 
             <div th:if="${GithubUser != null}">
-                <br/><br/>
+                <br/>
             </div>
 
             <button class="btn btn-info b" onclick="showSortForm();" th:if="${GithubUser != null}">Sort projects</button>
@@ -69,7 +71,7 @@
         <br/>
 
         <div class="pr-list text-center">
-            <a th:each="project: ${allTheProjects}" th:href="${'/projects/' + project.title}">
+            <a th:each="project: ${projects}" th:href="${'/projects/' + project.title}">
                 <li class="pr-item">
                     <header><h6 class="wh pr-title" th:inline="text">[[${project.title}]]</h6></header>
                     <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
@@ -77,7 +79,7 @@
                 </li>
             </a>
 
-            <h6 class="wh" th:if="${#lists.size(allTheProjects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
+            <h6 class="wh" th:if="${#lists.size(projects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
         </div>
 
     </section>

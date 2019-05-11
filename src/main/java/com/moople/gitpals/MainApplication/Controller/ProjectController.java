@@ -132,50 +132,13 @@ public class ProjectController
         User userForApply = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
 
-        if(project.getUsersSubmitted().size() == 0)
+        if(!project.getUsersSubmitted().contains(user.getName()))
         {
-            User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
-
             project.addAppliedUser(userForApply.getUsername());
-            userForApply2.addProjectAppliedTo(project.getTitle());
+            userForApply.addProjectAppliedTo(project.getTitle());
 
             projectInterface.save(project);
-            userInterface.save(userForApply2);
-        }
-
-        else
-        {
-            for(int i = 0; i < project.getUsersSubmitted().size(); i++)
-            {
-                if(userForApply.getUsername().equals(project.getUsersSubmitted().get(i)))
-                {
-                    userForApply.deleteProjectAppliedTo(project.getTitle());
-
-                    User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
-
-                    project.deleteAppliedUser(userForApply2.getUsername());
-
-                    Project project2 = projectInterface.findByTitle(project.getTitle());
-
-                    userInterface.save(userForApply2);
-                    projectInterface.save(project2);
-
-                    break;
-                }
-                else
-                {
-                    userForApply.addProjectAppliedTo(project.getTitle());
-
-                    User userForApply2 = userInterface.findByUsername(userForApply.getUsername());
-
-                    project.addAppliedUser(userForApply2.getUsername());
-
-                    Project project2 = projectInterface.findByTitle(project.getTitle());
-
-                    userInterface.save(userForApply2);
-                    projectInterface.save(project2);
-                }
-            }
+            userInterface.save(userForApply);
         }
 
         return "redirect:/projects/" + link;
