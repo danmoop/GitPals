@@ -1,6 +1,5 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
@@ -9,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -181,28 +178,5 @@ public class IndexController
     public String donatePage()
     {
         return "sections/donate";
-    }
-
-    /*
-        @param message is taken from html textfield and it's content sent to admin
-        @return to index page
-     */
-    @PostMapping("/reportBug")
-    public String bugReported(@RequestParam("bug_description") String message, Principal user)
-    {
-        User admin = userInterface.findByUsername("danmoop");
-
-        String author = user.getName();
-
-        Message msg = new Message(
-                author,
-                message
-        );
-
-        admin.sendMessage(msg);
-
-        userInterface.save(admin);
-
-        return "redirect:/";
     }
 }

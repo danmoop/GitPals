@@ -180,6 +180,7 @@ public class ProjectController
         User userDB = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(projectName);
 
+        // Remove project from author's projects list
         if(userDB.getUsername().equals(project.getAuthorName()))
         {
             projectInterface.delete(project);
@@ -194,6 +195,7 @@ public class ProjectController
                 }
             }
 
+            // Remove project from everyone who applied to this project
             List<User> allUsers = userInterface.findAll();
 
             for (User allUser : allUsers)

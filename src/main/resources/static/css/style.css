@@ -118,16 +118,16 @@ body
     border: 5px solid #192538;
 }
 
-.pr-title{
-    background: #3498db;
+.pr-title {
+    background: #16a085;
     padding: 10px;
 }
 
-.text-align-none{
+.text-align-none {
     text-align: left;
 }
 
-.largeCheckbox{
+.largeCheckbox {
     width: 19px;
     height: 19px;
 }
@@ -136,48 +136,48 @@ body
     display: none;
 }
 
-.transparent{
+.transparent {
     border: none;
     background: transparent;
 }
 
-.red{
+.red {
     color: #e74c3c;
 }
 
-.blue{
+.blue {
     color: #3498db;
 }
 
-.green{
+.green {
     color: #2ecc71;
 }
 
-a:hover{
+a:hover {
     color: #e7e7e7;
 }
 
-.fz-50{
+.fz-50 {
     font-size: 50px;
 }
 
-.fz-40{
+.fz-40 {
     font-size: 40px;
 }
 
-.fz-35{
+.fz-35 {
     font-size: 35px;
 }
 
-.fz-30{
+.fz-30 {
     font-size: 30px;
 }
 
-.fz-25{
+.fz-25 {
     font-size: 25px;
 }
 
-.fz-20{
+.fz-20 {
     font-size: 20px;
 }
 
