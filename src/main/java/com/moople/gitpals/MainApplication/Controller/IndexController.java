@@ -44,11 +44,14 @@ public class IndexController
             technologiesMap.put(technology, false);
         }
 
+        // If we are logged in, display information about us on the index page
         if(user != null)
         {
             model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
 
+            // If we are logged in but there is no our user object in database, save it
+            // Usually this function is executed once when we are register for the first time
             if(userInterface.findByUsername(user.getName()) == null)
             {
                 userInterface.save(
@@ -66,22 +69,7 @@ public class IndexController
             }
 
             model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
-
-            User user1 = userInterface.findByUsername(user.getName());
-
-            for(int i = 0; i < user1.getProjects().size(); i++)
-            {
-                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i));
-
-                if(project1 != null)
-                {
-                    project1.setAuthorName(user1.getUsername());
-
-                    projectInterface.save(project1);
-                }
-            }
         }
-
 
         List<Project> projects = projectInterface.findAll().stream()
                 .limit(50).collect(Collectors.toList());
@@ -100,6 +88,7 @@ public class IndexController
         if(user == null)
             return "redirect:/";
 
+        // user is logged in
         else
         {
             User userDB = userInterface.findByUsername(user.getName());
@@ -117,20 +106,6 @@ public class IndexController
             }
 
             model.addAttribute("appliedProjects", appliedToProjects);
-
-            User user1 = userInterface.findByUsername(user.getName());
-
-            for(int i = 0; i < user1.getProjects().size(); i++)
-            {
-                Project project1 = projectInterface.findByTitle(user1.getProjects().get(i));
-
-                if(project1 != null)
-                {
-                    project1.setAuthorName(user1.getUsername());
-
-                    projectInterface.save(project1);
-                }
-            }
 
             return "sections/dashboard";
         }

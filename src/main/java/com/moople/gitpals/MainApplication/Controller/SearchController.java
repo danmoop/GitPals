@@ -29,16 +29,14 @@ public class SearchController
         return "sections/searchForm";
     }
 
-    /*
+    /**
         @param username is taken from a html textfield
         @return list of users whose nicknames contain user's input
-     */
+     **/
     @PostMapping("/findUser")
     public String foundUsers(@RequestParam("user_name") String username, Model model)
     {
-        List<User> allUsers = userInteface.findAll();
-
-        List<String> matchUsers = allUsers.stream()
+        List<String> matchUsers = userInteface.findAll().stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
                 .map(User::getUsername).collect(Collectors.toList());
 
@@ -47,16 +45,14 @@ public class SearchController
         return "sections/matchUsers";
     }
 
-    /*
+    /**
         @param projectName is taken from a html textfield
         @return list of projects whose titles contain user's input
-     */
+     **/
     @PostMapping("/findProject")
     public String foundProjects(@RequestParam("project_name") String projectName, Model model)
     {
-        List<Project> allProjects = projectInteface.findAll();
-
-        List<Project> matchProjects = allProjects.stream()
+        List<Project> matchProjects = projectInteface.findAll().stream()
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
                 .collect(Collectors.toList());
 

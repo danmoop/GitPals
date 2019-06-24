@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +26,11 @@ public class UserController
     @Autowired
     private ProjectInterface projectInterface;
 
-    /*
+    /**
         @param username is taken from an address field - like "/users/danmoop"
         @param model & principal are assigned automatically by spring
         @return user's dashboard html page with all the data about the user
-     */
+     **/
     @GetMapping("/users/{username}")
     public String findUser(@PathVariable String username, Model model, Principal principal)
     {
@@ -65,11 +64,11 @@ public class UserController
         }
     }
 
-    /*
+    /**
         @param techs are taken from html form, they are technologies checkboxes users select in their dashboard
         @param user is assigned automatically by spring
         @return redirect to the same page with new data
-     */
+     **/
     @PostMapping("/updateUser")
     public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs)
     {
@@ -82,10 +81,9 @@ public class UserController
             allTechs.put(entry.getKey(), false);
         }
 
-        for (Iterator<String> i = techs.iterator(); i.hasNext();) {
-            String item = i.next();
-
-            if(allTechs.get(item) != null)
+        for (String item : techs)
+        {
+            if (allTechs.get(item) != null)
                 allTechs.put(item, true);
         }
 
@@ -95,11 +93,11 @@ public class UserController
     }
 
 
-    /*
+    /**
         @param country & info are taken from html input fields
-        @param principal user is used to find user in database, set new country & info
+        @param user user is used to find user in database, set new country & info
         @return redirect to the same page with new data
-     */
+     **/
     @PostMapping("/updateUserCountry")
     public String updateCountry(
             @RequestParam("countryInput") String country,

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class MessageController
@@ -26,7 +28,14 @@ public class MessageController
         {
             User userDB = userInterface.findByUsername(user.getName());
 
-            model.addAttribute("UserObject", userDB);
+            List<Message> userMessages = userDB.getMessages();
+
+            // List is reversed in order to display the latest message on the top
+            // so the older message goes down
+            Collections.reverse(userMessages);
+
+            // When reversed, add this message list to html page and then display it
+            model.addAttribute("userMessages", userMessages);
 
             return "sections/viewMessages";
         }
@@ -45,30 +54,31 @@ public class MessageController
         return "sections/sendMessage";
     }
 
-    /*
+    /**
         @param username & content are taken from html textfields
         @return redirect to index page if recipient is found, otherwise redirect to error page
-     */
+     **/
     @PostMapping("/messageSent")
     public String messageSent(
             Model model,
             @RequestParam("RecipientName") String username,
             @RequestParam("Content") String content)
     {
-
+        // If there is a user with such a username then we send them a message
         if(userInterface.findByUsername(username) != null)
         {
-            Message message = new Message(username,content);
+            Message message = new Message(username, content);
 
-            User recipient2 = userInterface.findByUsername(username);
+            User recipient = userInterface.findByUsername(username);
 
-            recipient2.sendMessage(message);
+            recipient.sendMessage(message);
 
-            userInterface.save(recipient2);
+            userInterface.save(recipient);
 
             return "redirect:/";
         }
 
+        // Otherwise, notify a user that recipient is not registered, can't send them a message
         else
         {
             model.addAttribute("wrongRecipient", username);
@@ -78,12 +88,12 @@ public class MessageController
 
     }
 
-    /*
+    /**
         @param content & author are taken from hidden html textfields,
             which values are assigned automatically by thymeleaf
 
         @return redirect to the same page - /messages
-     */
+     **/
     @PostMapping("/deleteMessage")
     public String messageDeleted(
             @RequestParam("messageContentInput") String content,
@@ -92,39 +102,40 @@ public class MessageController
     {
         User userDB = userInterface.findByUsername(user.getName());
 
-        for(int i = 0; i < userDB.getMessages().size(); i++)
-        {
-            if(userDB.getMessages().get(i).getContent().equals(content) &&
-                    userDB.getMessages().get(i).getAuthor().equals(author))
-            {
-                userDB.deleteMessage(userDB.getMessages().get(i));
-            }
-        }
+        /*
+            Message content and author are acquired from html forms,
+            so if there is a match in a message list, then delete the message
+         */
+        userDB.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
 
         userInterface.save(userDB);
 
         return "redirect:/messages";
     }
 
-    /*
+    /**
         @param message is taken from html textfield and it's content sent to admin
         @return to index page
-     */
+     **/
     @PostMapping("/reportBug")
     public String bugReported(@RequestParam("bug_description") String message, Principal user)
     {
-        User admin = userInterface.findByUsername("danmoop");
+        // Users can't send POST request (here - send a message) if they are not logged in
+        if (user != null)
+        {
+            User admin = userInterface.findByUsername("danmoop");
 
-        String author = user.getName();
+            String author = user.getName();
 
-        Message msg = new Message(
-                author,
-                message
-        );
+            Message msg = new Message(
+                    author,
+                    message
+            );
 
-        admin.sendMessage(msg);
+            admin.sendMessage(msg);
 
-        userInterface.save(admin);
+            userInterface.save(admin);
+        }
 
         return "redirect:/";
     }

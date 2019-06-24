@@ -25,7 +25,7 @@ public class ProjectController
     @Autowired
     private ProjectInterface projectInterface;
 
-    private final String[] technologies= { "Web design", "Mobile design", "Java", "C++",
+    private final String[] technologies = { "Web design", "Mobile design", "Java", "C++",
             "Python", "Machine learning", "Deep learning", "Ionic",
             "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
             "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
@@ -54,11 +54,11 @@ public class ProjectController
             return "redirect:/";
     }
 
-    /*
+    /**
         @param project is taken from html form with all the data (project name, description etc.)
         @param techs is a checkbox list of technologies for a project that user selects
         @return create project and redirect to its page, otherwise show an error messaging about identical project name
-     */
+     **/
     @PostMapping("/projectSubmitted")
     public String projectSubmitted(
             Principal user,
@@ -96,10 +96,10 @@ public class ProjectController
         }
     }
 
-    /*
+    /**
         @param projectName is taken from an address field - like "/project/UnrealEngine"
         @return project page with it's title, author, description, technologies etc
-     */
+     **/
     @GetMapping("/projects/{projectName}")
     public String projectPage(@PathVariable String projectName, Model model, Principal user)
     {
@@ -122,10 +122,10 @@ public class ProjectController
         }
     }
 
-    /*
+    /**
         @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
         @return redirect to the same project page
-     */
+     **/
     @PostMapping("/applyForProject")
     public String applyForProject(@RequestParam("linkInput") String link, Principal user)
     {
@@ -144,10 +144,10 @@ public class ProjectController
         return "redirect:/projects/" + link;
     }
 
-    /*
+    /**
         @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
         @return redirect to the same project page
-     */
+     **/
     @PostMapping("/unapplyForProject")
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user)
     {
@@ -170,10 +170,10 @@ public class ProjectController
         return "redirect:/projects/" + link;
     }
 
-    /*
+    /**
         @param projectName is project's title which is taken from a html textfield
         @return redirect to the index page
-     */
+     **/
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName)
     {
@@ -215,10 +215,10 @@ public class ProjectController
         }
     }
 
-    /*
+    /**
         @param data is a list of technologies checkboxes user select manually
         @return a list of projects according to user's preference
-     */
+     **/
     @PostMapping("/sortProjects")
     public String projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)
     {
