@@ -41,13 +41,12 @@ public class ProjectController
             Map<String, Boolean> techs = new HashMap<>();
 
             for (String technology : technologies)
-            {
                 techs.put(technology, false);
-            }
 
             model.addAttribute("UserObject", user);
             model.addAttribute("projects", techs);
             model.addAttribute("projectObject", new Project());
+
             return "sections/projectSubmitForm";
         }
         else
@@ -113,10 +112,14 @@ public class ProjectController
         else
         {
             model.addAttribute("AuthorObject", userInterface.findByUsername(project.getAuthorName()));
-            if (user != null) model.addAttribute("userPrincipal", user.getName());
             model.addAttribute("projectObject", project);
-            if (user != null) model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
             model.addAttribute("usersApplied", project.getUsersSubmitted());
+
+            if (user != null)
+            {
+                model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
+                model.addAttribute("userPrincipal", user.getName());
+            }
 
             return "sections/projectViewPage";
         }
@@ -155,16 +158,13 @@ public class ProjectController
 
         User userDB = userInterface.findByUsername(user.getName());
 
-        for(int i = 0; i < projectDB.getUsersSubmitted().size(); i++)
+        if (projectDB.getUsersSubmitted().contains(userDB.getUsername()))
         {
-            if(userDB.getUsername().equals(projectDB.getUsersSubmitted().get(i)))
-            {
-                projectDB.deleteAppliedUser(userDB.getUsername());
-                userDB.deleteProjectAppliedTo(projectDB.getTitle());
+            projectDB.deleteAppliedUser(userDB.getUsername());
+            userDB.deleteProjectAppliedTo(projectDB.getTitle());
 
-                projectInterface.save(projectDB);
-                userInterface.save(userDB);
-            }
+            projectInterface.save(projectDB);
+            userInterface.save(userDB);
         }
 
         return "redirect:/projects/" + link;
@@ -185,14 +185,11 @@ public class ProjectController
         {
             projectInterface.delete(project);
 
-            for(int q = 0; q < userDB.getProjects().size(); q++)
+            if (userDB.getProjects().contains(project.getTitle()))
             {
-                if(project.getTitle().equals(userDB.getProjects().get(q)))
-                {
-                    userDB.deleteProject(userDB.getProjects().get(q));
+                userDB.deleteProject(project.getTitle());
 
-                    userInterface.save(userDB);
-                }
+                userInterface.save(userDB);
             }
 
             // Remove project from everyone who applied to this project

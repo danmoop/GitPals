@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,16 +22,16 @@ public class User
     private List<String> appliedTo;
     private List<Message> messages;
 
-    public User(String username, String GithubAccountLink, String country, String info, Map<String, Boolean> languagesKnows, List<String> projects, List<String> appliedTo, List<Message> messages)
+    public User(String username, String GithubAccountLink, Map<String, Boolean> languagesKnows)
     {
         this.username = username;
         this.GithubAccountLink = GithubAccountLink;
-        this.country = country;
-        this.info = info;
+        this.country = "";
+        this.info = "";
         this.languagesKnows = languagesKnows;
-        this.projects = projects;
-        this.appliedTo = appliedTo;
-        this.messages = messages;
+        this.projects = new ArrayList<>();
+        this.appliedTo = new ArrayList<>();
+        this.messages = new ArrayList<>();
     }
 
     public User(){}

@@ -58,12 +58,7 @@ public class IndexController
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                "",
-                                "",
-                                technologiesMap,
-                                new ArrayList<>(),
-                                new ArrayList<>(),
-                                new ArrayList<>()
+                                technologiesMap
                         )
                 );
             }
@@ -71,6 +66,7 @@ public class IndexController
             model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
         }
 
+        // Shot the most recent projects (only 50)
         List<Project> projects = projectInterface.findAll().stream()
                 .limit(50).collect(Collectors.toList());
 
@@ -124,7 +120,8 @@ public class IndexController
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
+    public String logout(HttpSession httpSession)
+    {
         httpSession.invalidate();
         return "redirect:/";
     }
@@ -134,7 +131,7 @@ public class IndexController
     {
         model.addAttribute("usersAmount", userInterface.findAll().size());
 
-        try{
+        try {
             model.addAttribute("LoggedUser", principal.getName());
         } catch (NullPointerException e) {
             model.addAttribute("LoggedUser", null);
