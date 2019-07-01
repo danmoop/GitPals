@@ -64,9 +64,9 @@ public class ProjectController
             @ModelAttribute Project project,
             @RequestParam("techInput") List<String> techs)
     {
-        Project project1 = projectInterface.findByTitle(project.getTitle());
+        Project projectDB = projectInterface.findByTitle(project.getTitle());
 
-        if(project1 == null)
+        if(projectDB == null)
         {
             List<String> requirements = new ArrayList<>(techs);
 

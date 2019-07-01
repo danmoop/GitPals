@@ -66,7 +66,7 @@ public class IndexController
             model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
         }
 
-        // Shot the most recent projects (only 50)
+        // Show the most recent projects (only 50)
         List<Project> projects = projectInterface.findAll().stream()
                 .limit(50).collect(Collectors.toList());
 
