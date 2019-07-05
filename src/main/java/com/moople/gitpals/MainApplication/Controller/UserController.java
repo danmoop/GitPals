@@ -40,9 +40,9 @@ public class UserController
         {
             List<Project> appliedToProjects = new ArrayList<>();
 
-            for (int i = 0; i < user.getAppliedTo().size(); i++)
+            for (int i = 0; i < user.getProjectsAppliedTo().size(); i++)
             {
-                appliedToProjects.add(projectInterface.findByTitle(user.getAppliedTo().get(i)));
+                appliedToProjects.add(projectInterface.findByTitle(user.getProjectsAppliedTo().get(i)));
             }
 
             try {

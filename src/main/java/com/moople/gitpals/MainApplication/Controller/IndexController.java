@@ -47,7 +47,6 @@ public class IndexController
         // If we are logged in, display information about us on the index page
         if(user != null)
         {
-            model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
 
             // If we are logged in but there is no our user object in database, save it
@@ -55,10 +54,23 @@ public class IndexController
             if(userInterface.findByUsername(user.getName()) == null)
             {
                 userInterface.save(
+
+                        /*
+                        *  There are some arguments in the constructor that were added
+                        *  due to @AllArgsConstructor annotation in User model, so
+                        *  I have to write them all here
+                        */
+
                         new User(
+                                null,
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                technologiesMap
+                                "", // country
+                                "", // user info
+                                technologiesMap,
+                                new ArrayList<>(), // created projects list
+                                new ArrayList<>(), // applied projects list
+                                new ArrayList<>() // messages list
                         )
                 );
             }
@@ -96,9 +108,9 @@ public class IndexController
 
             List<Project> appliedToProjects = new ArrayList<>();
 
-            for (int i = 0; i < userDB.getAppliedTo().size(); i++)
+            for (int i = 0; i < userDB.getProjectsAppliedTo().size(); i++)
             {
-                appliedToProjects.add(projectInterface.findByTitle(userDB.getAppliedTo().get(i)));
+                appliedToProjects.add(projectInterface.findByTitle(userDB.getProjectsAppliedTo().get(i)));
             }
 
             model.addAttribute("appliedProjects", appliedToProjects);
@@ -111,12 +123,6 @@ public class IndexController
     public User user(Principal principal)
     {
         return userInterface.findByUsername(principal.getName());
-    }
-
-    @GetMapping("/user")
-    public Principal userInfo(Principal user)
-    {
-        return user;
     }
 
     @GetMapping("/logout")

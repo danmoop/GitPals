@@ -22,7 +22,7 @@
     <div class="container">
         <h3 class="wh" th:inline="text">[[${projectObject.title}]]</h3>
 
-        <form th:action="@{/deleteProject}" th:if="${userPrincipal == AuthorObject.username}" method="post">
+        <form th:action="@{/deleteProject}" th:if="${userDB != null && userDB.username == AuthorObject.username}" method="post">
             <input type="submit" class="transparent red b" value="Delete Project"/>
             <input type="hidden" th:name="projectName" th:value="${projectObject.title}"/>
         </form>
@@ -35,9 +35,9 @@
 
         <hr class="divider"/>
 
-        <h4 class="wh" th:inline="text">Users applied for this project ([[${#lists.size(usersApplied)}]])</h4>
-        <a class="wh" th:inline="text" th:if="${#lists.size(usersApplied) != 0}" th:each="user: ${usersApplied}" th:href="${'/users/' + user}">[[${user}]]<br/></a>
-        <p class="wh" th:if="${#lists.size(usersApplied) == 0}">Nobody applied for this project yet</p>
+        <h4 class="wh" th:inline="text">Users applied for this project ([[${#lists.size(projectObject.usersSubmitted)}]])</h4>
+        <a class="wh" th:inline="text" th:if="${#lists.size(projectObject.usersSubmitted) != 0}" th:each="user: ${projectObject.usersSubmitted}" th:href="${'/users/' + user}">[[${user}]]<br/></a>
+        <p class="wh" th:if="${#lists.size(projectObject.usersSubmitted) == 0}">Nobody applied for this project yet</p>
 
         <br/>
 

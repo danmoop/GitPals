@@ -71,7 +71,7 @@ public class MessageController
 
             User recipient = userInterface.findByUsername(username);
 
-            recipient.sendMessage(message);
+            recipient.getMessages().add(message);
 
             userInterface.save(recipient);
 
@@ -132,7 +132,7 @@ public class MessageController
                     message
             );
 
-            admin.sendMessage(msg);
+            admin.getMessages().add(msg);
 
             userInterface.save(admin);
         }

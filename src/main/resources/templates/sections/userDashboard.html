@@ -69,7 +69,7 @@
                     </li>
                 </a>
             </div>
-            <h6 th:if="${#lists.size(UserObject.appliedTo) == 0}" class="wh" th:inline="text">[[${UserObject.username}]] hasn't applied to any project yet</h6>
+            <h6 th:if="${#lists.size(UserObject.projectsAppliedTo) == 0}" class="wh" th:inline="text">[[${UserObject.username}]] hasn't applied to any project yet</h6>
             <br/>
         </div>
 

@@ -70,18 +70,21 @@ public class ProjectController
         {
             List<String> requirements = new ArrayList<>(techs);
 
+            Project project1 = new Project();
+
             Project userProject = new Project(
+                    null, // Id will be assigned automatically by DB anyway, so null is fine here
                     project.getTitle(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
                     userInterface.findByUsername(user.getName()).getUsername(),
                     requirements,
-                    new ArrayList<>()
+                    new ArrayList<>() // list of submitted users, empty by default
             );
 
             User userInDB = userInterface.findByUsername(user.getName());
 
-            userInDB.addProject(userProject.getTitle());
+            userInDB.getProjects().add(userProject.getTitle());
 
             userInterface.save(userInDB);
             projectInterface.save(userProject);
@@ -113,12 +116,10 @@ public class ProjectController
         {
             model.addAttribute("AuthorObject", userInterface.findByUsername(project.getAuthorName()));
             model.addAttribute("projectObject", project);
-            model.addAttribute("usersApplied", project.getUsersSubmitted());
 
             if (user != null)
             {
                 model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
-                model.addAttribute("userPrincipal", user.getName());
             }
 
             return "sections/projectViewPage";
@@ -135,10 +136,11 @@ public class ProjectController
         User userForApply = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
 
+        // Users that already submitted can't submit another time, only once per project
         if(!project.getUsersSubmitted().contains(user.getName()))
         {
-            project.addAppliedUser(userForApply.getUsername());
-            userForApply.addProjectAppliedTo(project.getTitle());
+            project.getUsersSubmitted().add(userForApply.getUsername());
+            userForApply.getProjectsAppliedTo().add(project.getTitle());
 
             projectInterface.save(project);
             userInterface.save(userForApply);
@@ -160,8 +162,8 @@ public class ProjectController
 
         if (projectDB.getUsersSubmitted().contains(userDB.getUsername()))
         {
-            projectDB.deleteAppliedUser(userDB.getUsername());
-            userDB.deleteProjectAppliedTo(projectDB.getTitle());
+            projectDB.getUsersSubmitted().remove(userDB.getUsername());
+            userDB.getProjectsAppliedTo().remove(projectDB.getTitle());
 
             projectInterface.save(projectDB);
             userInterface.save(userDB);
@@ -187,7 +189,7 @@ public class ProjectController
 
             if (userDB.getProjects().contains(project.getTitle()))
             {
-                userDB.deleteProject(project.getTitle());
+                userDB.getProjects().remove(project.getTitle());
 
                 userInterface.save(userDB);
             }
@@ -197,7 +199,7 @@ public class ProjectController
 
             for (User allUser : allUsers)
             {
-                allUser.deleteProjectAppliedTo(project.getTitle());
+                allUser.getProjectsAppliedTo().remove(project.getTitle());
 
                 userInterface.save(allUser);
             }
