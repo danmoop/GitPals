@@ -34,15 +34,17 @@ public class IndexController
             "Game modding", "Other"
     };
 
+    /**
+     * @return html index page with a list of projects and technologies
+     */
     @GetMapping("/")
     public String indexPage(Principal user, Model model)
     {
 
         Map<String, Boolean> technologiesMap = new HashMap<>();
 
-        for (String technology : technologies) {
+        for (String technology : technologies)
             technologiesMap.put(technology, false);
-        }
 
         // If we are logged in, display information about us on the index page
         if(user != null)
@@ -55,22 +57,10 @@ public class IndexController
             {
                 userInterface.save(
 
-                        /*
-                        *  There are some arguments in the constructor that were added
-                        *  due to @AllArgsConstructor annotation in User model, so
-                        *  I have to write them all here
-                        */
-
                         new User(
-                                null,
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                "", // country
-                                "", // user info
-                                technologiesMap,
-                                new ArrayList<>(), // created projects list
-                                new ArrayList<>(), // applied projects list
-                                new ArrayList<>() // messages list
+                                technologiesMap
                         )
                 );
             }
@@ -89,6 +79,9 @@ public class IndexController
         return "sections/index";
     }
 
+    /**
+     * @return html page with user's principal data (username, etc)
+     */
     @GetMapping("/dashboard")
     public String dashboardPage(Principal user, Model model)
     {
@@ -119,12 +112,9 @@ public class IndexController
         }
     }
 
-    @GetMapping("/userDB")
-    public User user(Principal principal)
-    {
-        return userInterface.findByUsername(principal.getName());
-    }
-
+    /**
+     * @return html index page with logged-out user
+     */
     @GetMapping("/logout")
     public String logout(HttpSession httpSession)
     {
@@ -132,6 +122,10 @@ public class IndexController
         return "redirect:/";
     }
 
+
+    /**
+     * @return about html page with some information about GitPals
+     */
     @GetMapping("/about")
     public String aboutPage(Model model, Principal principal)
     {
@@ -146,15 +140,21 @@ public class IndexController
         return "sections/aboutPage";
     }
 
+    /**
+     * @return html page where users can report about a bug
+     */
     @GetMapping("/bugReport")
     public String bugReport()
     {
         return "sections/bugReport";
     }
 
-    @GetMapping("/donate")
-    public String donatePage()
+    /**
+     * @return html page where users can read some advices about submitting a project
+     */
+    @GetMapping("/guide/how-to-create-a-good-description-for-my-project")
+    public String goodDescriptionGuidwe()
     {
-        return "sections/donate";
+        return "guide/goodProjDescription";
     }
 }

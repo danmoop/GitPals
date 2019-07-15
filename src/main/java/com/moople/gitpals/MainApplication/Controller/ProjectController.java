@@ -33,6 +33,9 @@ public class ProjectController
             "Game modding", "Other"
     };
 
+    /**
+     * @return html page where users can submit their project
+     */
     @GetMapping("/submitProject")
     public String projectForm(Principal user, Model model)
     {
@@ -54,9 +57,9 @@ public class ProjectController
     }
 
     /**
-        @param project is taken from html form with all the data (project name, description etc.)
-        @param techs is a checkbox list of technologies for a project that user selects
-        @return create project and redirect to its page, otherwise show an error messaging about identical project name
+     * @param project is taken from html form with all the data (project name, description etc.)
+     * @param techs is a checkbox list of technologies for a project that user selects
+     * @return create project and redirect to its page, otherwise show an error messaging about identical project name
      **/
     @PostMapping("/projectSubmitted")
     public String projectSubmitted(
@@ -70,16 +73,12 @@ public class ProjectController
         {
             List<String> requirements = new ArrayList<>(techs);
 
-            Project project1 = new Project();
-
             Project userProject = new Project(
-                    null, // Id will be assigned automatically by DB anyway, so null is fine here
                     project.getTitle(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
                     userInterface.findByUsername(user.getName()).getUsername(),
-                    requirements,
-                    new ArrayList<>() // list of submitted users, empty by default
+                    requirements
             );
 
             User userInDB = userInterface.findByUsername(user.getName());
@@ -99,8 +98,8 @@ public class ProjectController
     }
 
     /**
-        @param projectName is taken from an address field - like "/project/UnrealEngine"
-        @return project page with it's title, author, description, technologies etc
+     * @param projectName is taken from an address field - like "/project/UnrealEngine"
+     * @return html project page with it's title, author, description, technologies etc
      **/
     @GetMapping("/projects/{projectName}")
     public String projectPage(@PathVariable String projectName, Model model, Principal user)
@@ -127,8 +126,8 @@ public class ProjectController
     }
 
     /**
-        @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
-        @return redirect to the same project page
+     * @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
+     * @return redirect to the same project page
      **/
     @PostMapping("/applyForProject")
     public String applyForProject(@RequestParam("linkInput") String link, Principal user)
@@ -150,8 +149,8 @@ public class ProjectController
     }
 
     /**
-        @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
-        @return redirect to the same project page
+     * @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
+     * @return redirect to the same project page
      **/
     @PostMapping("/unapplyForProject")
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user)
@@ -173,8 +172,8 @@ public class ProjectController
     }
 
     /**
-        @param projectName is project's title which is taken from a html textfield
-        @return redirect to the index page
+     * @param projectName is project's title which is taken from a html textfield
+     * @return redirect to the index page
      **/
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName)
@@ -215,8 +214,8 @@ public class ProjectController
     }
 
     /**
-        @param data is a list of technologies checkboxes user select manually
-        @return a list of projects according to user's preference
+     * @param data is a list of technologies checkboxes user select manually
+     * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
     public String projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)

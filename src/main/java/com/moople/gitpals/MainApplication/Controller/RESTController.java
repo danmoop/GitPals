@@ -8,6 +8,9 @@ import java.security.Principal;
 @RestController
 public class RESTController
 {
+    /**
+     * @return users' principal object (json), containing information about them (github username, avatar image etc.)
+     */
     @GetMapping("/user")
     public Principal user(Principal user)
     {

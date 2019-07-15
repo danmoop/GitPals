@@ -23,6 +23,9 @@ public class SearchController
     @Autowired
     private ProjectInterface projectInteface;
 
+    /**
+     * @return html page where users can find a project or a user by name
+     */
     @GetMapping("/search")
     public String searchPage()
     {

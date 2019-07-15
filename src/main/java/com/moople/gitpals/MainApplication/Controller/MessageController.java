@@ -20,6 +20,9 @@ public class MessageController
     @Autowired
     private UserInterface userInterface;
 
+    /**
+     * @return html page with users' messages
+     */
     @GetMapping("/messages")
     public String messages(Principal user, Model model)
     {
@@ -43,7 +46,9 @@ public class MessageController
         return "redirect:/";
     }
 
-    // Redirects to page where you can send a message
+    /**
+     * @return html page with a textfield for writing a message to a specific user
+     */
     @GetMapping("/sendMessage")
     public String sendMessage(Model model, Principal principal)
     {
@@ -55,8 +60,8 @@ public class MessageController
     }
 
     /**
-        @param username & content are taken from html textfields
-        @return redirect to index page if recipient is found, otherwise redirect to error page
+     * @param username & content are taken from html textfields
+     * @return redirect to index page if recipient is found, otherwise redirect to error page
      **/
     @PostMapping("/messageSent")
     public String messageSent(
@@ -89,10 +94,10 @@ public class MessageController
     }
 
     /**
-        @param content & author are taken from hidden html textfields,
-            which values are assigned automatically by thymeleaf
+     * @param content & author are taken from hidden html textfields,
+        which values are assigned automatically by thymeleaf
 
-        @return redirect to the same page - /messages
+     * @return redirect to the same page - /messages
      **/
     @PostMapping("/deleteMessage")
     public String messageDeleted(
@@ -114,8 +119,8 @@ public class MessageController
     }
 
     /**
-        @param message is taken from html textfield and it's content sent to admin
-        @return to index page
+     * @param message is taken from html textfield and it's content sent to admin
+     * @return to index page
      **/
     @PostMapping("/reportBug")
     public String bugReported(@RequestParam("bug_description") String message, Principal user)

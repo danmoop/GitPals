@@ -6,18 +6,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "users")
+
 public class User
 {
-    /**
-     * @param id is set as 'null' in the constructor, but initialized then to String by @Id annotation
-     */
     @Id
     private String id;
 
@@ -29,4 +27,22 @@ public class User
     private List<String> projects;
     private List<String> projectsAppliedTo;
     private List<Message> messages;
+
+    /**
+     * @param country & info are empty by default. Later they can be edited in dashboard.
+     * @param projects, projectsAppliedTo & messages are lists of objects, empty by default.
+     */
+    public User(String username, String githubAccountLink, Map<String, Boolean> languagesKnows)
+    {
+        this.username = username;
+        this.GithubAccountLink = githubAccountLink;
+        this.languagesKnows = languagesKnows;
+
+        this.country = "";
+        this.info = "";
+
+        this.projects = new ArrayList<>();
+        this.projectsAppliedTo = new ArrayList<>();
+        this.messages = new ArrayList<>();
+    }
 }
