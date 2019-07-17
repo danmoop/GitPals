@@ -10,10 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -194,7 +191,10 @@ public class ProjectController
             }
 
             // Remove project from everyone who applied to this project
-            List<User> allUsers = userInterface.findAll();
+            // First we stream, it returns list of Strings, map them to User object
+            List<User> allUsers = project.getUsersSubmitted().stream()
+                    .map(submittedUser -> userInterface.findByUsername(submittedUser))
+                    .collect(Collectors.toList());
 
             for (User allUser : allUsers)
             {
@@ -215,16 +215,35 @@ public class ProjectController
 
     /**
      * @param data is a list of technologies checkboxes user select manually
+     * @param isUnique is a condition whether there are any other techs EXCEPT what users choose (null if checkbox is not selected, "off" if selected)
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("sort_projects") List <String> data, Model model)
+    public String projectsSorted(@RequestParam("sort_projects") List <String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model)
     {
         List<Project> allProjects = projectInterface.findAll();
 
-        List<Project> matchProjects = allProjects.stream()
-                .filter(project -> data.stream()
-                    .anyMatch(req -> project.getRequirements().contains(req))).collect(Collectors.toList());
+        List<Project> matchProjects;
+
+        /** @param isUnique does the following:
+        * if there is a project with some requirements and we mark a checkbox then
+        * it will find a project with chosen requirements ONLY
+        *
+        * if checkbox is not selected it will find the same project by ONE of the requirements
+        */
+        if(isUnique) // true - if checkbox IS selected
+        {
+            matchProjects = allProjects.stream()
+                    .filter(project -> project.getRequirements().equals(data))
+                    .collect(Collectors.toList());
+        }
+
+        else // false - checkbox IS NOT selected
+        {
+            matchProjects = allProjects.stream()
+                    .filter(project -> data.stream()
+                            .anyMatch(req -> project.getRequirements().contains(req))).collect(Collectors.toList());
+        }
 
         model.addAttribute("matchProjects", matchProjects);
 

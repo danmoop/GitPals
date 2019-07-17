@@ -51,13 +51,16 @@
                 <br/>
             </div>
 
-            <button class="btn btn-info b" onclick="showSortForm();" th:if="${GithubUser != null}">Sort projects</button>
+            <button class="btn btn-info b" onclick="showSortForm();">Sort projects</button>
 
-            <div id="sortList" style="display: none;" th:if="${GithubUser != null}">
+            <div id="sortList" style="display: none;">
                 <form th:action="@{/sortProjects}" method="post">
                     <div th:each="tech: ${projectTechs}">
                         <input class="largeCheckbox" type="checkbox" th:name="sort_projects" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
                     </div>
+
+                    <hr/>
+                    <input class="largeCheckbox" type="checkbox" th:name="isUnique" /> <span class="wh">Project will contain ONLY selected technologies</span>
 
                     <br/>
                     <button class="btn btn-info b">Sort</button>

@@ -3,24 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3035481b-9080-4443-a638-fdd260371679" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/RESTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/RESTController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/GuidePageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/RESTController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/RESTController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/SearchController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/MainApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/MainApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Project.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="37" selection-end-column="7" />
+            <state relative-caret-position="-285">
+              <caret line="216" column="25" lean-forward="true" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -50,12 +34,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-298">
-              <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+            <state relative-caret-position="596">
+              <caret line="64" column="20" lean-forward="true" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="20" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="n#style#0;n#a#3;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#li#0;n#a#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h6#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,20 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1405">
+            <state relative-caret-position="297">
               <caret line="38" selection-start-line="38" selection-end-line="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="28" column="64" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -88,7 +63,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
+            <state relative-caret-position="648">
               <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -100,7 +75,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
+            <state relative-caret-position="324">
               <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
               <folding>
                 <element signature="e#419#420#0" expanded="true" />
@@ -121,7 +96,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2634">
+            <state relative-caret-position="324">
               <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -142,7 +117,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
+            <state relative-caret-position="3618">
               <caret line="152" column="85" selection-start-line="152" selection-start-column="85" selection-end-line="152" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -158,7 +133,7 @@
               <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#318#319#0" expanded="true" />
+                <element signature="e#319#320#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -175,9 +150,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pr-</find>
-      <find>br</find>
-      <find>substring</find>
       <find>projectTechs</find>
       <find>TOtal pr</find>
       <find>allthepr</find>
@@ -205,6 +177,9 @@
       <find>AuthorObject</find>
       <find>userDB</find>
       <find>userPrincipal</find>
+      <find>sort projects</find>
+      <find>sortpr</find>
+      <find>findall()</find>
     </findStrings>
     <replaceStrings>
       <replace>GithubUser.name</replace>
@@ -246,18 +221,18 @@
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/userDashboard.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/RESTController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" />
       </list>
     </option>
   </component>
@@ -291,7 +266,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -424,6 +398,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -483,16 +458,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49944258" visible="true" weight="0.26066098" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49944258" visible="true" weight="0.26599148" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" sideWeight="0.5005574" side_tool="true" weight="0.26066098" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.53957635" />
-      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.34225196" />
+      <window_info anchor="bottom" id="Problems" order="1" weight="0.32998884" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
@@ -714,19 +690,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="28" column="183" selection-start-line="28" selection-start-column="183" selection-end-line="28" selection-end-column="183" />
-          <folding>
-            <element signature="n#style#0;n#a#3;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#li#0;n#a#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h6#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
@@ -734,54 +697,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" column="76" selection-start-line="7" selection-start-column="76" selection-end-line="7" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#318#319#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="12" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="152" column="85" selection-start-line="152" selection-start-column="85" selection-end-line="152" selection-end-column="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2634">
-          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/GuidePageController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/RESTController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -794,20 +710,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="37" selection-end-column="7" />
+        <state relative-caret-position="378">
+          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/SearchController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-298">
-          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+        <state relative-caret-position="648">
+          <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -816,7 +732,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
+        <state relative-caret-position="324">
           <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
           <folding>
             <element signature="e#419#420#0" expanded="true" />
@@ -833,9 +749,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="76" selection-start-line="7" selection-start-column="76" selection-end-line="7" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3618">
+          <caret line="152" column="85" selection-start-line="152" selection-start-column="85" selection-end-line="152" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/MainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#319#320#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1405">
+        <state relative-caret-position="297">
           <caret line="38" selection-start-line="38" selection-end-line="38" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -843,20 +807,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java">
+    <entry file="jar://D:/Soft/jdk-8/src.zip!/java/util/List.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
+        <state relative-caret-position="286">
+          <caret line="511" column="12" selection-start-line="511" selection-start-column="12" selection-end-line="511" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/sections/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="596">
+          <caret line="64" column="20" lean-forward="true" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="20" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="n#style#0;n#a#3;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#li#0;n#a#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="28" column="64" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
+        <state relative-caret-position="-285">
+          <caret line="216" column="25" lean-forward="true" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
