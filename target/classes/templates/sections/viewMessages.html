@@ -30,14 +30,40 @@
 <div class="container">
     <div th:each="message: ${userMessages}">
         <li class="pr-item" style="width: 100%;">
-            <header class="text-center"><h6 class="wh pr-title"><b th:inline="text">A message by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</b></h6></header>
-            <p class="wh text-center" th:inline="text" style="margin: 10px;"><b>[[${message.content}]]</b></p>
 
-            <form th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
+            <header class="text-center">
+                <h6 th:classappend="${message.bugReport} ? pr-title-bug : pr-title">
+                    <span th:inline="text" th:if="${!message.bugReport}">A message by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
+                    <span th:inline="text" th:if="${message.bugReport}">A bug report by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
+                </h6>
+            </header>
+
+            <p class="wh text-center" th:inline="text" style="margin: 10px;">[[${message.content}]]</p>
+
+            <hr class="divider" />
+
+            <form th:if="${!message.bugReport}" th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
                 <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
                 <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
-                <input type="submit" class="btn btn-danger wh b" value="Delete message"/>
+                <input type="submit" class="btn btn-danger wh b" value="Delete"/>
             </form>
+
+            <div class="row" th:if="${message.bugReport}">
+                <div class="col-sm-6">
+                    <form th:action="@{/bugReportFixed}" method="post" class="text-center" style="padding: 15px;">
+                        <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
+                        <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
+                        <input type="submit" class="btn btn-primary wh b" value="Mark as fixed"/>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <form th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
+                        <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
+                        <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
+                        <input type="submit" class="btn btn-danger wh b" value="Delete"/>
+                    </form>
+                </div>
+            </div>
         </li>
     </div>
 </div>

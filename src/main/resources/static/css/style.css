@@ -121,6 +121,13 @@ body
 .pr-title {
     background: #16a085;
     padding: 10px;
+    color: white;
+}
+
+.pr-title-bug {
+    background: #c13e3e;
+    padding: 10px;
+    color: white;
 }
 
 .text-align-none {

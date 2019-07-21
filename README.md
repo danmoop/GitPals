@@ -24,12 +24,12 @@ Open project in any IDE (I use Intellij IDEA). Then open Console Prompt and type
 
 **MongoDB port - default 27017**
 
-**Unless you don't run mongo database, web page will return error**
+**Unless you run mongo database, web page will return error**
 
 Executing file - GitPals/src/main/java/com/moople/gitpals/MainApplication.java
 
-**Controller folder** is main folder. Controllers execute all the functions (register user, add project, delete etc.)
+**Controller folder** is a main folder. Controllers execute all the functions (register user, add project, delete smth etc.)
 
 **Service folder** contains just 2 files. That files save data to Mongo Database
 
-**Model folder** contains files that have getter and setters (User Model, Project, etc.)
+**Model folder** contains files that have information about each object (user's name, project's title etc.)

@@ -16,19 +16,23 @@
         <h3 class="wh b">Search</h3>
         <hr class="divider"/>
 
-        <form th:action="@{/findUser}" method="post">
-            <p class="wh b">Find user</p>
-            <input type="text" th:name="user_name" class="form-control" placeholder="Username"/><br/>
-            <input type="submit" class="btn btn-success b" value="Find"/>
-        </form>
+        <div class="row">
+            <div class="col-sm-6" style="border-right: 5px solid #2c3e50;">
+                <form th:action="@{/findUser}" method="post">
+                    <h4 class="wh">Find user</h4>
+                    <input type="text" th:name="user_name" class="form-control" placeholder="Username"/><br/>
+                    <input type="submit" class="btn btn-success b" value="Find"/>
+                </form>
+            </div>
 
-        <hr class="divider"/>
-
-        <form th:action="@{/findProject}" method="post">
-            <p class="wh b">Find project</p>
-            <input type="text" th:name="project_name" class="form-control" placeholder="Project name"/><br/>
-            <input type="submit" class="btn btn-success b" value="Find"/>
-        </form>
+            <div class="col-sm-6">
+                <form th:action="@{/findProject}" method="post">
+                    <h4 class="wh">Find project</h4>
+                    <input type="text" th:name="project_name" class="form-control" placeholder="Project name"/><br/>
+                    <input type="submit" class="btn btn-success b" value="Find"/>
+                </form>
+            </div>
+        </div>
 
     </div>
 </section>

@@ -137,11 +137,51 @@ public class MessageController
                     message
             );
 
+            msg.setBugReport(true);
+
             admin.getMessages().add(msg);
 
             userInterface.save(admin);
         }
 
         return "redirect:/";
+    }
+
+    /**
+     * @param content & author are taken from hidden html textfields,
+        which values are assigned automatically by thymeleaf
+
+        It is similar to deleteMessage function, but there is an
+        auto message that is sent to bug reporter
+
+     * @return redirect to the same page - /messages
+     **/
+    @PostMapping("/bugReportFixed")
+    public String bugReportFixed(
+            @RequestParam("messageContentInput") String content,
+            @RequestParam("messageAuthorInput") String author,
+            Principal user)
+    {
+        // Manipulate with admin - remove report bug message
+
+        User admin = userInterface.findByUsername(user.getName());
+        admin.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
+        userInterface.save(admin);
+
+
+        // Manipulate with bug reporter - send them a thank-you message
+
+        User bugReportAuthor = userInterface.findByUsername(author);
+
+        Message msg = new Message(
+                "danmoop",
+                "Thanks for your previous bug report! The problem is fixed!"
+        );
+
+        bugReportAuthor.getMessages().add(msg);
+
+        userInterface.save(bugReportAuthor);
+
+        return "redirect:/messages";
     }
 }

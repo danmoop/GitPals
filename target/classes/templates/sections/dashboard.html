@@ -62,7 +62,7 @@
         </div>
 
         <div class="blue-bg">
-            <h3 class="wh" style="padding: 15px;"><b>Select technologies you know</b></h3>
+            <h3 class="wh" style="padding: 15px;"><b>Technologies you know</b></h3>
             <form id="technologies" th:action="@{/updateUser}" th:object="${userObject}" method="post" style="padding: 25px;">
 
                 <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock" style="text-align: left;">
