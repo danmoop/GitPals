@@ -4,7 +4,7 @@
 
 Application for finding people to work together with on different projects
 
-[Open GitPals app](https://gitpals.herokuapp.com/) 
+[Open GitPals app](https://gitpals.herokuapp.com/) **!!! It can take up to 60 seconds to open GitPals. If you see an error (404 project not found) when it's opened - refresh your page**
 
 This project uses **Java, Spring, MongoDB**
 
