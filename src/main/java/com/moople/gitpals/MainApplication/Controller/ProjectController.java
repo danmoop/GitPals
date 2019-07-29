@@ -2,6 +2,7 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -22,40 +24,27 @@ public class ProjectController
     @Autowired
     private ProjectInterface projectInterface;
 
-    private final String[] technologies = { "Web design", "Mobile design", "Java", "C++",
-            "Python", "Machine learning", "Deep learning", "Ionic",
-            "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
-            "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-            "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
-            "Game modding", "Other"
-    };
-
     /**
      * @return html page where users can submit their project
      */
     @GetMapping("/submitProject")
     public String projectForm(Principal user, Model model)
     {
-        if(!user.getName().equals("null"))
+        if (user != null)
         {
-            Map<String, Boolean> techs = new HashMap<>();
-
-            for (String technology : technologies)
-                techs.put(technology, false);
-
             model.addAttribute("UserObject", user);
-            model.addAttribute("projects", techs);
+            model.addAttribute("techs", Data.technologiesMap);
             model.addAttribute("projectObject", new Project());
 
             return "sections/projectSubmitForm";
         }
-        else
-            return "redirect:/";
+
+        return "redirect:/";
     }
 
     /**
      * @param project is taken from html form with all the data (project name, description etc.)
-     * @param techs is a checkbox list of technologies for a project that user selects
+     * @param techs   is a checkbox list of technologies for a project that user selects
      * @return create project and redirect to its page, otherwise show an error messaging about identical project name
      **/
     @PostMapping("/projectSubmitted")
@@ -66,16 +55,14 @@ public class ProjectController
     {
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
-        if(projectDB == null)
+        if (projectDB == null)
         {
-            List<String> requirements = new ArrayList<>(techs);
-
             Project userProject = new Project(
                     project.getTitle(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
                     userInterface.findByUsername(user.getName()).getUsername(),
-                    requirements
+                    techs
             );
 
             User userInDB = userInterface.findByUsername(user.getName());
@@ -87,7 +74,6 @@ public class ProjectController
 
             return "redirect:/projects/" + userProject.getTitle();
         }
-
         else
         {
             return "error/projectExists";
@@ -103,11 +89,10 @@ public class ProjectController
     {
         Project project = projectInterface.findByTitle(projectName);
 
-        if(project == null)
+        if (project == null)
         {
             return "error/projectDeleted";
         }
-
         else
         {
             model.addAttribute("AuthorObject", userInterface.findByUsername(project.getAuthorName()));
@@ -133,7 +118,7 @@ public class ProjectController
         Project project = projectInterface.findByTitle(link);
 
         // Users that already submitted can't submit another time, only once per project
-        if(!project.getUsersSubmitted().contains(user.getName()))
+        if (!project.getUsersSubmitted().contains(user.getName()))
         {
             project.getUsersSubmitted().add(userForApply.getUsername());
             userForApply.getProjectsAppliedTo().add(project.getTitle());
@@ -179,7 +164,7 @@ public class ProjectController
         Project project = projectInterface.findByTitle(projectName);
 
         // Remove project from author's projects list
-        if(userDB.getUsername().equals(project.getAuthorName()))
+        if (userDB.getUsername().equals(project.getAuthorName()))
         {
             projectInterface.delete(project);
 
@@ -206,7 +191,6 @@ public class ProjectController
             return "redirect:/";
 
         }
-
         else
         {
             return "error/siteBroken";
@@ -214,30 +198,29 @@ public class ProjectController
     }
 
     /**
-     * @param data is a list of technologies checkboxes user select manually
+     * @param data     is a list of technologies checkboxes user select manually
      * @param isUnique is a condition whether there are any other techs EXCEPT what users choose (null if checkbox is not selected, "off" if selected)
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("sort_projects") List <String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model)
+    public String projectsSorted(@RequestParam("sort_projects") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model)
     {
         List<Project> allProjects = projectInterface.findAll();
 
         List<Project> matchProjects;
 
         /** @param isUnique does the following:
-        * if there is a project with some requirements and we mark a checkbox then
-        * it will find a project with chosen requirements ONLY
-        *
-        * if checkbox is not selected it will find the same project by ONE of the requirements
-        */
-        if(isUnique) // true - if checkbox IS selected
+         * if there is a project with some requirements and we mark a checkbox then
+         * it will find a project with chosen requirements ONLY
+         *
+         * if checkbox is not selected it will find the same project by ONE of the requirements
+         */
+        if (isUnique) // true - if checkbox IS selected
         {
             matchProjects = allProjects.stream()
                     .filter(project -> project.getRequirements().equals(data))
                     .collect(Collectors.toList());
         }
-
         else // false - checkbox IS NOT selected
         {
             matchProjects = allProjects.stream()

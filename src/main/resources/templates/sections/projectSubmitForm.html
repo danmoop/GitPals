@@ -47,7 +47,7 @@
             <p class="wh b">Select technologies you require for your project</p>
 
             <div>
-                <div th:each="tech: ${projects}" style="text-align: left;">
+                <div th:each="tech: ${techs}" style="text-align: left;">
                     <input class="largeCheckbox" type="checkbox" th:name="techInput" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
                 </div>
             </div>
