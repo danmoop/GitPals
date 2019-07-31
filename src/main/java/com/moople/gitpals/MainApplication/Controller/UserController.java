@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController
@@ -38,12 +39,9 @@ public class UserController
 
         if(user != null)
         {
-            List<Project> appliedToProjects = new ArrayList<>();
-
-            for (int i = 0; i < user.getProjectsAppliedTo().size(); i++)
-            {
-                appliedToProjects.add(projectInterface.findByTitle(user.getProjectsAppliedTo().get(i)));
-            }
+            List<Project> appliedToProjects = user.getProjectsAppliedTo().stream()
+                    .map(projectName -> projectInterface.findByTitle(projectName))
+                    .collect(Collectors.toList());
 
             try {
                 model.addAttribute("LoggedUser", principal.getName());
