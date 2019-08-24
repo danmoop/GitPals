@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class IndexController
-{
+public class IndexController {
     @Autowired
     private UserInterface userInterface;
 
@@ -29,17 +28,14 @@ public class IndexController
      * @return html index page with a list of projects and TECHS
      */
     @GetMapping("/")
-    public String indexPage(Principal user, Model model)
-    {
+    public String indexPage(Principal user, Model model) {
         // If we are logged in, display information about us on the index page
-        if (user != null)
-        {
+        if (user != null) {
             model.addAttribute("GithubUser", user);
 
             // If we are logged in but there is no our user object in database, save it
             // Usually this function is executed once when we are register for the first time
-            if (userInterface.findByUsername(user.getName()) == null)
-            {
+            if (userInterface.findByUsername(user.getName()) == null) {
                 userInterface.save(
 
                         new User(
@@ -68,15 +64,13 @@ public class IndexController
      * @return html page with user's principal data (username, etc)
      */
     @GetMapping("/dashboard")
-    public String dashboardPage(Principal user, Model model)
-    {
+    public String dashboardPage(Principal user, Model model) {
         // if user is not logged in - redirect to index
         if (user == null)
             return "redirect:/";
 
             // user is logged in
-        else
-        {
+        else {
             User userDB = userInterface.findByUsername(user.getName());
 
             model.addAttribute("dbUser", userDB);
@@ -86,8 +80,7 @@ public class IndexController
 
             List<Project> appliedToProjects = new ArrayList<>();
 
-            for (int i = 0; i < userDB.getProjectsAppliedTo().size(); i++)
-            {
+            for (int i = 0; i < userDB.getProjectsAppliedTo().size(); i++) {
                 appliedToProjects.add(projectInterface.findByTitle(userDB.getProjectsAppliedTo().get(i)));
             }
 
@@ -101,8 +94,7 @@ public class IndexController
      * @return html index page with logged-out user
      */
     @GetMapping("/logout")
-    public String logout(HttpSession httpSession)
-    {
+    public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
     }
@@ -112,16 +104,12 @@ public class IndexController
      * @return about html page with some information about GitPals
      */
     @GetMapping("/about")
-    public String aboutPage(Model model, Principal principal)
-    {
+    public String aboutPage(Model model, Principal principal) {
         model.addAttribute("usersAmount", userInterface.findAll().size());
 
-        try
-        {
+        try {
             model.addAttribute("LoggedUser", principal.getName());
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             model.addAttribute("LoggedUser", null);
         }
 
@@ -132,8 +120,7 @@ public class IndexController
      * @return html page where users can report about a bug
      */
     @GetMapping("/bugReport")
-    public String bugReport()
-    {
+    public String bugReport() {
         return "sections/bugReport";
     }
 
@@ -141,8 +128,7 @@ public class IndexController
      * @return html page where users can read some advices about submitting a project
      */
     @GetMapping("/guide/how-to-create-a-good-description-for-my-project")
-    public String goodDescriptionGuidwe()
-    {
+    public String goodDescriptionGuidwe() {
         return "guide/goodProjDescription";
     }
 }

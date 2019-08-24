@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-public class APIController
-{
+public class APIController {
     @Autowired
     private UserInterface userInterface;
 
@@ -24,8 +23,7 @@ public class APIController
      * @return users' principal github object (json), containing information about them (github username, avatar image etc.)
      */
     @GetMapping(value = "/api/principal", produces = "application/json")
-    public Principal getPrincipal(Principal user)
-    {
+    public Principal getPrincipal(Principal user) {
         if (user != null)
             return user;
 
@@ -36,8 +34,7 @@ public class APIController
      * @return users' gitpals user object(json), containing information about them (projects, message, etc)
      */
     @GetMapping(value = "/api/user", produces = "application/json")
-    public User getUser(Principal user)
-    {
+    public User getUser(Principal user) {
         if (user != null)
             return userInterface.findByUsername(user.getName());
 
@@ -48,8 +45,7 @@ public class APIController
      * @return project json object
      */
     @GetMapping(value = "api/project/{project}", produces = "application/json")
-    public Project getProject(Principal principal, @PathVariable("project") String projectName)
-    {
+    public Project getProject(Principal principal, @PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 
         if (project != null && principal.getName().equals(project.getAuthorName()))

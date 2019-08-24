@@ -15,8 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-public class MessageController
-{
+public class MessageController {
     @Autowired
     private UserInterface userInterface;
 
@@ -24,11 +23,9 @@ public class MessageController
      * @return html page with users' messages
      */
     @GetMapping("/messages")
-    public String messages(Principal user, Model model)
-    {
+    public String messages(Principal user, Model model) {
         // if users are not logged in - they can't see any messages -> redirect them to index page
-        if(user != null)
-        {
+        if (user != null) {
             User userDB = userInterface.findByUsername(user.getName());
 
             List<Message> userMessages = userDB.getMessages();
@@ -50,10 +47,9 @@ public class MessageController
      * @return html page with a textfield for writing a message to a specific user
      */
     @GetMapping("/sendMessage")
-    public String sendMessage(Model model, Principal principal)
-    {
+    public String sendMessage(Model model, Principal principal) {
         // if users are not logged in - they can't send messages -> redirect them to index page
-        if(principal == null)
+        if (principal == null)
             return "redirect:/";
 
         return "sections/sendMessage";
@@ -67,11 +63,9 @@ public class MessageController
     public String messageSent(
             Model model,
             @RequestParam("RecipientName") String username,
-            @RequestParam("Content") String content)
-    {
+            @RequestParam("Content") String content) {
         // If there is a user with such a username then we send them a message
-        if(userInterface.findByUsername(username) != null)
-        {
+        if (userInterface.findByUsername(username) != null) {
             Message message = new Message(username, content);
 
             User recipient = userInterface.findByUsername(username);
@@ -84,8 +78,7 @@ public class MessageController
         }
 
         // Otherwise, notify a user that recipient is not registered, can't send them a message
-        else
-        {
+        else {
             model.addAttribute("wrongRecipient", username);
 
             return "error/recipientNotFound";
@@ -95,16 +88,14 @@ public class MessageController
 
     /**
      * @param content & author are taken from hidden html textfields,
-        which values are assigned automatically by thymeleaf
-
+     *                which values are assigned automatically by thymeleaf
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/deleteMessage")
     public String messageDeleted(
             @RequestParam("messageContentInput") String content,
             @RequestParam("messageAuthorInput") String author,
-            Principal user)
-    {
+            Principal user) {
         User userDB = userInterface.findByUsername(user.getName());
 
         /*
@@ -123,11 +114,9 @@ public class MessageController
      * @return to index page
      **/
     @PostMapping("/reportBug")
-    public String bugReported(@RequestParam("bug_description") String message, Principal user)
-    {
+    public String bugReported(@RequestParam("bug_description") String message, Principal user) {
         // Users can't send POST request (here - send a message) if they are not logged in
-        if (user != null)
-        {
+        if (user != null) {
             User admin = userInterface.findByUsername("danmoop");
 
             String author = user.getName();
@@ -149,19 +138,17 @@ public class MessageController
 
     /**
      * @param content & author are taken from hidden html textfields,
-        which values are assigned automatically by thymeleaf
-
-        It is similar to deleteMessage function, but there is an
-        auto message that is sent to bug reporter
-
+     *                which values are assigned automatically by thymeleaf
+     *                <p>
+     *                It is similar to deleteMessage function, but there is an
+     *                auto message that is sent to bug reporter
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/bugReportFixed")
     public String bugReportFixed(
             @RequestParam("messageContentInput") String content,
             @RequestParam("messageAuthorInput") String author,
-            Principal user)
-    {
+            Principal user) {
         // Manipulate with admin - remove report bug message
 
         User admin = userInterface.findByUsername(user.getName());

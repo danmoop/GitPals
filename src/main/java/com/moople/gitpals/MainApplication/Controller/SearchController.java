@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class SearchController
-{
+public class SearchController {
     @Autowired
     private UserInterface userInteface;
 
@@ -27,18 +26,16 @@ public class SearchController
      * @return html page where users can find a project or a user by name
      */
     @GetMapping("/search")
-    public String searchPage()
-    {
+    public String searchPage() {
         return "sections/searchForm";
     }
 
     /**
-        @param username is taken from a html textfield
-        @return list of users whose nicknames contain user's input
+     * @param username is taken from a html textfield
+     * @return list of users whose nicknames contain user's input
      **/
     @PostMapping("/findUser")
-    public String foundUsers(@RequestParam("user_name") String username, Model model)
-    {
+    public String foundUsers(@RequestParam("user_name") String username, Model model) {
         List<String> matchUsers = userInteface.findAll().stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
                 .map(User::getUsername).collect(Collectors.toList());
@@ -49,12 +46,11 @@ public class SearchController
     }
 
     /**
-        @param projectName is taken from a html textfield
-        @return list of projects whose titles contain user's input
+     * @param projectName is taken from a html textfield
+     * @return list of projects whose titles contain user's input
      **/
     @PostMapping("/findProject")
-    public String foundProjects(@RequestParam("project_name") String projectName, Model model)
-    {
+    public String foundProjects(@RequestParam("project_name") String projectName, Model model) {
         List<Project> matchProjects = projectInteface.findAll().stream()
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
                 .collect(Collectors.toList());

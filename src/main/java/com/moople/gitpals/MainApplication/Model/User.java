@@ -14,8 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Document(collection = "users")
 
-public class User
-{
+public class User {
     @Id
     private String id;
 
@@ -29,11 +28,10 @@ public class User
     private List<Message> messages;
 
     /**
-     * @param country & info are empty by default. Later they can be edited in dashboard.
+     * @param country   & info are empty by default. Later they can be edited in dashboard.
      * @param projects, projectsAppliedTo & messages are lists of objects, empty by default.
      */
-    public User(String username, String githubAccountLink, Map<String, Boolean> languagesKnows)
-    {
+    public User(String username, String githubAccountLink, Map<String, Boolean> languagesKnows) {
         this.username = username;
         this.GithubAccountLink = githubAccountLink;
         this.languagesKnows = languagesKnows;

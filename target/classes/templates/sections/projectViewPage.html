@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
 </head>
+
 <body>
 
 <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
@@ -31,7 +32,14 @@
         <a th:href="${'/users/' + AuthorObject.username}" th:inline="text" class="wh"><b>Author</b> - [[${AuthorObject.username}]]</a>
         <p th:inline="text" class="wh" style="white-space: pre-line;">[[${projectObject.description}]]</p>
         <p th:inline="text" class="wh">This project requires: [[${projectObject.requirements}]]</p>
+
+        <hr/>
+
         <a th:href="${projectObject.githubProjectLink}" class="wh b" target="_blank">Project Github repository</a>
+        <br/>
+        <a th:href="${'/projects/' + projectObject.title + '/comments'}" class="wh b" target="_blank" th:inline="text">
+            Comments: [[${#lists.size(projectObject.comments)}]]
+        </a>
 
         <hr class="divider"/>
 

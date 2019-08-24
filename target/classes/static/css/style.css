@@ -213,3 +213,11 @@ a:hover {
 .flat-green {
     color: #16a085;
 }
+
+.footer {
+    position: fixed;
+    width: 25%;
+    left: 50%;
+    margin-left: -12.5%;
+    bottom: 3%;
+}

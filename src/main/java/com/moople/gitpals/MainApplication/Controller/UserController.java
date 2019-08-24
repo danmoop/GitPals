@@ -19,8 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-public class UserController
-{
+public class UserController {
     @Autowired
     private UserInterface userInterface;
 
@@ -28,17 +27,15 @@ public class UserController
     private ProjectInterface projectInterface;
 
     /**
-        @param username is taken from an address field - like "/users/danmoop"
-        @param model & principal are assigned automatically by spring
-        @return user's dashboard html page with all the data about the user
+     * @param username is taken from an address field - like "/users/danmoop"
+     * @param model    & principal are assigned automatically by spring
+     * @return user's dashboard html page with all the data about the user
      **/
     @GetMapping("/users/{username}")
-    public String findUser(@PathVariable String username, Model model, Principal principal)
-    {
+    public String findUser(@PathVariable String username, Model model, Principal principal) {
         User user = userInterface.findByUsername(username);
 
-        if(user != null)
-        {
+        if (user != null) {
             List<Project> appliedToProjects = user.getProjectsAppliedTo().stream()
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
@@ -53,34 +50,28 @@ public class UserController
             model.addAttribute("appliedProjects", appliedToProjects);
 
             return "sections/userDashboard";
-        }
-
-        else
-        {
+        } else {
             model.addAttribute("user_name", username);
             return "error/userNotFound";
         }
     }
 
     /**
-        @param techs are taken from html form, they are technologies checkboxes users select in their dashboard
-        @param user is assigned automatically by spring
-        @return redirect to the same page with new data
+     * @param techs are taken from html form, they are technologies checkboxes users select in their dashboard
+     * @param user  is assigned automatically by spring
+     * @return redirect to the same page with new data
      **/
     @PostMapping("/updateUser")
-    public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs)
-    {
+    public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs) {
         User userFromDB = userInterface.findByUsername(user.getName());
 
         Map<String, Boolean> allTechs = userFromDB.getLanguagesKnows();
 
-        for (Map.Entry<String, Boolean> entry : allTechs.entrySet())
-        {
+        for (Map.Entry<String, Boolean> entry : allTechs.entrySet()) {
             allTechs.put(entry.getKey(), false);
         }
 
-        for (String item : techs)
-        {
+        for (String item : techs) {
             if (allTechs.get(item) != null)
                 allTechs.put(item, true);
         }
@@ -92,16 +83,15 @@ public class UserController
 
 
     /**
-        @param country & info are taken from html input fields
-        @param user user is used to find user in database, set new country & info
-        @return redirect to the same page with new data
+     * @param country & info are taken from html input fields
+     * @param user    user is used to find user in database, set new country & info
+     * @return redirect to the same page with new data
      **/
     @PostMapping("/updateUserCountry")
     public String updateCountry(
             @RequestParam("countryInput") String country,
             @RequestParam("infoInput") String info,
-            Principal user)
-    {
+            Principal user) {
         User userInDB = userInterface.findByUsername(user.getName());
 
         userInDB.setCountry(country);

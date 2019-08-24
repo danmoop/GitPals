@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.Comment;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
@@ -12,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class ProjectController
-{
+public class ProjectController {
     @Autowired
     private UserInterface userInterface;
 
@@ -28,10 +29,8 @@ public class ProjectController
      * @return html page where users can submit their project
      */
     @GetMapping("/submitProject")
-    public String projectForm(Principal user, Model model)
-    {
-        if (user != null)
-        {
+    public String projectForm(Principal user, Model model) {
+        if (user != null) {
             model.addAttribute("UserObject", user);
             model.addAttribute("techs", Data.technologiesMap);
             model.addAttribute("projectObject", new Project());
@@ -51,12 +50,10 @@ public class ProjectController
     public String projectSubmitted(
             Principal user,
             @ModelAttribute Project project,
-            @RequestParam("techInput") List<String> techs)
-    {
+            @RequestParam("techInput") List<String> techs) {
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
-        if (projectDB == null)
-        {
+        if (projectDB == null) {
             Project userProject = new Project(
                     project.getTitle(),
                     project.getDescription(),
@@ -73,9 +70,7 @@ public class ProjectController
             projectInterface.save(userProject);
 
             return "redirect:/projects/" + userProject.getTitle();
-        }
-        else
-        {
+        } else {
             return "error/projectExists";
         }
     }
@@ -85,21 +80,16 @@ public class ProjectController
      * @return html project page with it's title, author, description, technologies etc
      **/
     @GetMapping("/projects/{projectName}")
-    public String projectPage(@PathVariable String projectName, Model model, Principal user)
-    {
+    public String projectPage(@PathVariable String projectName, Model model, Principal user) {
         Project project = projectInterface.findByTitle(projectName);
 
-        if (project == null)
-        {
+        if (project == null) {
             return "error/projectDeleted";
-        }
-        else
-        {
+        } else {
             model.addAttribute("AuthorObject", userInterface.findByUsername(project.getAuthorName()));
             model.addAttribute("projectObject", project);
 
-            if (user != null)
-            {
+            if (user != null) {
                 model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
             }
 
@@ -112,14 +102,12 @@ public class ProjectController
      * @return redirect to the same project page
      **/
     @PostMapping("/applyForProject")
-    public String applyForProject(@RequestParam("linkInput") String link, Principal user)
-    {
+    public String applyForProject(@RequestParam("linkInput") String link, Principal user) {
         User userForApply = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
 
         // Users that already submitted can't submit another time, only once per project
-        if (!project.getUsersSubmitted().contains(user.getName()))
-        {
+        if (!project.getUsersSubmitted().contains(user.getName())) {
             project.getUsersSubmitted().add(userForApply.getUsername());
             userForApply.getProjectsAppliedTo().add(project.getTitle());
 
@@ -135,14 +123,12 @@ public class ProjectController
      * @return redirect to the same project page
      **/
     @PostMapping("/unapplyForProject")
-    public String unapplyForProject(@RequestParam("linkInput") String link, Principal user)
-    {
+    public String unapplyForProject(@RequestParam("linkInput") String link, Principal user) {
         Project projectDB = projectInterface.findByTitle(link);
 
         User userDB = userInterface.findByUsername(user.getName());
 
-        if (projectDB.getUsersSubmitted().contains(userDB.getUsername()))
-        {
+        if (projectDB.getUsersSubmitted().contains(userDB.getUsername())) {
             projectDB.getUsersSubmitted().remove(userDB.getUsername());
             userDB.getProjectsAppliedTo().remove(projectDB.getTitle());
 
@@ -158,18 +144,15 @@ public class ProjectController
      * @return redirect to the index page
      **/
     @PostMapping("/deleteProject")
-    public String projectDeleted(Principal user, @RequestParam("projectName") String projectName)
-    {
+    public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
         User userDB = userInterface.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(projectName);
 
         // Remove project from author's projects list
-        if (userDB.getUsername().equals(project.getAuthorName()))
-        {
+        if (userDB.getUsername().equals(project.getAuthorName())) {
             projectInterface.delete(project);
 
-            if (userDB.getProjects().contains(project.getTitle()))
-            {
+            if (userDB.getProjects().contains(project.getTitle())) {
                 userDB.getProjects().remove(project.getTitle());
 
                 userInterface.save(userDB);
@@ -181,8 +164,7 @@ public class ProjectController
                     .map(submittedUser -> userInterface.findByUsername(submittedUser))
                     .collect(Collectors.toList());
 
-            for (User allUser : allUsers)
-            {
+            for (User allUser : allUsers) {
                 allUser.getProjectsAppliedTo().remove(project.getTitle());
 
                 userInterface.save(allUser);
@@ -190,9 +172,7 @@ public class ProjectController
 
             return "redirect:/";
 
-        }
-        else
-        {
+        } else {
             return "error/siteBroken";
         }
     }
@@ -203,8 +183,7 @@ public class ProjectController
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("sort_projects") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model)
-    {
+    public String projectsSorted(@RequestParam("sort_projects") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model) {
         List<Project> allProjects = projectInterface.findAll();
 
         List<Project> matchProjects;
@@ -220,8 +199,7 @@ public class ProjectController
             matchProjects = allProjects.stream()
                     .filter(project -> project.getRequirements().equals(data))
                     .collect(Collectors.toList());
-        }
-        else // false - checkbox IS NOT selected
+        } else // false - checkbox IS NOT selected
         {
             matchProjects = allProjects.stream()
                     .filter(project -> data.stream()
@@ -231,5 +209,49 @@ public class ProjectController
         model.addAttribute("matchProjects", matchProjects);
 
         return "sections/projectsAfterSorting";
+    }
+
+
+    /**
+     * @param projectName is taken from a hidden html textfield
+     * @param model & principal are assigned automatically using thymeleaf
+     *
+     * @return project comments page
+     */
+    @GetMapping("/projects/{projectName}/comments")
+    public String viewProjectComments(@PathVariable("projectName") String projectName, Model model, Principal principal) {
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (project == null) {
+            return "error/projectDeleted";
+        } else {
+            List<Comment> comments = project.getComments();
+            Collections.reverse(comments);
+
+            model.addAttribute("projectName", project.getTitle());
+            model.addAttribute("comments", comments);
+            model.addAttribute("user", principal);
+
+            return "sections/projectComments";
+        }
+    }
+
+    /**
+     * @param projectName is taken from a hidden html textfield
+     * @param text is taken from a html textfield
+     * @param principal is assigned automatically using thymeleaf
+     *
+     * @return project comments page with new comment
+     */
+    @PostMapping("/sendComment")
+    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal principal) {
+
+        Project project = projectInterface.findByTitle(projectName);
+        Comment comment = new Comment(principal.getName(), text);
+
+        project.getComments().add(comment);
+        projectInterface.save(project);
+
+        return "redirect:/projects/" + projectName + "/comments";
     }
 }

@@ -7,17 +7,14 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class Message {
+public class Comment {
     private String author;
-    private String content;
+    private String text;
     private String timeStamp;
-    private boolean isBugReport;
 
-    public Message(String author, String content) {
+    public Comment(String author, String text) {
         this.author = author;
-        this.content = content;
-        this.isBugReport = false;
-
+        this.text = text;
         this.timeStamp = new Date().toString();
     }
 }
