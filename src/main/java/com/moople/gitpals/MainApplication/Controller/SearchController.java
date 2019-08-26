@@ -23,6 +23,8 @@ public class SearchController {
     private ProjectInterface projectInteface;
 
     /**
+     * This request is handled when user wants to see a search page to find a project or a user
+     *
      * @return html page where users can find a project or a user by name
      */
     @GetMapping("/search")
@@ -30,7 +32,11 @@ public class SearchController {
         return "sections/searchForm";
     }
 
+
     /**
+     * This request is handled when user submits a username they want to find
+     * List of users will be displayed
+     *
      * @param username is taken from a html textfield
      * @return list of users whose nicknames contain user's input
      **/
@@ -45,7 +51,11 @@ public class SearchController {
         return "sections/matchUsers";
     }
 
+
     /**
+     * This request is handled when user submits a project name they want to find
+     * A list of projects will be displayed
+     *
      * @param projectName is taken from a html textfield
      * @return list of projects whose titles contain user's input
      **/

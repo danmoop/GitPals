@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Comment;
+import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +26,8 @@ public class ProjectController {
     private ProjectInterface projectInterface;
 
     /**
+     * This request is handled when user wants to see a page where they can create a project
+     *
      * @return html page where users can submit their project
      */
     @GetMapping("/submitProject")
@@ -42,6 +44,10 @@ public class ProjectController {
     }
 
     /**
+     * This request is handled when user created their project
+     * If there is no project with same name, create and save
+     * Otherwise display an error message
+     *
      * @param project is taken from html form with all the data (project name, description etc.)
      * @param techs   is a checkbox list of technologies for a project that user selects
      * @return create project and redirect to its page, otherwise show an error messaging about identical project name
@@ -76,6 +82,9 @@ public class ProjectController {
     }
 
     /**
+     * This request is handled when user wants to see a project's page
+     * All the data (project name, applied users, author etc.) will be added & displayed
+     *
      * @param projectName is taken from an address field - like "/project/UnrealEngine"
      * @return html project page with it's title, author, description, technologies etc
      **/
@@ -98,6 +107,8 @@ public class ProjectController {
     }
 
     /**
+     * This request is handled when user wants to apply to a project
+     *
      * @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
      * @return redirect to the same project page
      **/
@@ -119,6 +130,9 @@ public class ProjectController {
     }
 
     /**
+     * This request is handled when user wants to un-apply from a project
+     * They will be removed from applied list
+     *
      * @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
      * @return redirect to the same project page
      **/
@@ -140,6 +154,9 @@ public class ProjectController {
     }
 
     /**
+     * This request is handled when user wants to delete project
+     * It will be deleted and applied users will be notified about that
+     *
      * @param projectName is project's title which is taken from a html textfield
      * @return redirect to the index page
      **/
@@ -164,10 +181,14 @@ public class ProjectController {
                     .map(submittedUser -> userInterface.findByUsername(submittedUser))
                     .collect(Collectors.toList());
 
-            for (User allUser : allUsers) {
-                allUser.getProjectsAppliedTo().remove(project.getTitle());
+            // Every applied user will receive a message about project deletion
+            Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted");
 
-                userInterface.save(allUser);
+            for (User _user : allUsers) {
+                _user.getProjectsAppliedTo().remove(project.getTitle());
+                _user.getMessages().add(notification);
+
+                userInterface.save(_user);
             }
 
             return "redirect:/";
@@ -178,6 +199,9 @@ public class ProjectController {
     }
 
     /**
+     * This request is handled when user wants to sort projects by language
+     * They will be sorted and displayed
+     *
      * @param data     is a list of technologies checkboxes user select manually
      * @param isUnique is a condition whether there are any other techs EXCEPT what users choose (null if checkbox is not selected, "off" if selected)
      * @return a list of projects according to user's preference
@@ -194,13 +218,11 @@ public class ProjectController {
          *
          * if checkbox is not selected it will find the same project by ONE of the requirements
          */
-        if (isUnique) // true - if checkbox IS selected
-        {
+        if (isUnique) { // true - if checkbox IS selected
             matchProjects = allProjects.stream()
                     .filter(project -> project.getRequirements().equals(data))
                     .collect(Collectors.toList());
-        } else // false - checkbox IS NOT selected
-        {
+        } else { // false - checkbox IS NOT selected
             matchProjects = allProjects.stream()
                     .filter(project -> data.stream()
                             .anyMatch(req -> project.getRequirements().contains(req))).collect(Collectors.toList());
@@ -213,9 +235,11 @@ public class ProjectController {
 
 
     /**
-     * @param projectName is taken from a hidden html textfield
-     * @param model & principal are assigned automatically using thymeleaf
+     * This request is handled when user wants to see project's comments
+     * They will be added to model and displayed
      *
+     * @param projectName       is taken from a hidden html textfield
+     * @param model & principal are assigned automatically using thymeleaf
      * @return project comments page
      */
     @GetMapping("/projects/{projectName}/comments")
@@ -237,10 +261,12 @@ public class ProjectController {
     }
 
     /**
-     * @param projectName is taken from a hidden html textfield
-     * @param text is taken from a html textfield
-     * @param principal is assigned automatically using thymeleaf
+     * This request is handled when user submits their comment
+     * It will be added to comments list and saved
      *
+     * @param projectName is taken from a hidden html textfield
+     * @param text        is taken from a html textfield
+     * @param principal   is assigned automatically using thymeleaf
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")

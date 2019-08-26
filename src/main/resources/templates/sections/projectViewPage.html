@@ -35,9 +35,9 @@
 
         <hr/>
 
-        <a th:href="${projectObject.githubProjectLink}" class="wh b" target="_blank">Project Github repository</a>
+        <a th:href="${projectObject.githubProjectLink}" class="flat-green b" target="_blank">Project Github repository</a>
         <br/>
-        <a th:href="${'/projects/' + projectObject.title + '/comments'}" class="wh b" target="_blank" th:inline="text">
+        <a th:href="${'/projects/' + projectObject.title + '/comments'}" class="flat-blue b" target="_blank" th:inline="text">
             Comments: [[${#lists.size(projectObject.comments)}]]
         </a>
 

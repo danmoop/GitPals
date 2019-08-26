@@ -211,13 +211,15 @@ a:hover {
 }
 
 .flat-green {
-    color: #16a085;
+    color: #36bea4;
 }
 
-.footer {
-    position: fixed;
-    width: 25%;
-    left: 50%;
-    margin-left: -12.5%;
-    bottom: 3%;
+.flat-blue {
+    color: #70c0f6;
+}
+
+.commentForm {
+    width: 500px;
+    margin: 0px auto;
+    padding-bottom: 15px;
 }

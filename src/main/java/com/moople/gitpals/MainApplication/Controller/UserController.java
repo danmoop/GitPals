@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,6 +26,8 @@ public class UserController {
     private ProjectInterface projectInterface;
 
     /**
+     * This request is handled when user wants to open another user's dashboard
+     *
      * @param username is taken from an address field - like "/users/danmoop"
      * @param model    & principal are assigned automatically by spring
      * @return user's dashboard html page with all the data about the user
@@ -57,6 +58,8 @@ public class UserController {
     }
 
     /**
+     * This request is handled when user wants to update information about themselves (tick new languages)
+     *
      * @param techs are taken from html form, they are technologies checkboxes users select in their dashboard
      * @param user  is assigned automatically by spring
      * @return redirect to the same page with new data
@@ -83,6 +86,8 @@ public class UserController {
 
 
     /**
+     * This request is handled when user wants to change their country in the dashbaord
+     *
      * @param country & info are taken from html input fields
      * @param user    user is used to find user in database, set new country & info
      * @return redirect to the same page with new data

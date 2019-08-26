@@ -48,7 +48,7 @@ public class APIController {
     public Project getProject(Principal principal, @PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 
-        if (project != null && principal.getName().equals(project.getAuthorName()))
+        if (project != null && principal != null && principal.getName().equals(project.getAuthorName()))
             return project;
 
         return new Project();

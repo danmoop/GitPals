@@ -20,6 +20,9 @@ public class MessageController {
     private UserInterface userInterface;
 
     /**
+     * This request is handled when user wants to see their messages
+     * All the messages are added to model and sent to user's page
+     *
      * @return html page with users' messages
      */
     @GetMapping("/messages")
@@ -44,6 +47,8 @@ public class MessageController {
     }
 
     /**
+     * This request is handled when user wants to send someone a message
+     *
      * @return html page with a textfield for writing a message to a specific user
      */
     @GetMapping("/sendMessage")
@@ -56,6 +61,10 @@ public class MessageController {
     }
 
     /**
+     * This request is handled when user submits message sending to a specific user
+     * Recipient will be found in the database and they will receive a message
+     * If user is not found - display an error
+     *
      * @param username & content are taken from html textfields
      * @return redirect to index page if recipient is found, otherwise redirect to error page
      **/
@@ -87,8 +96,11 @@ public class MessageController {
     }
 
     /**
+     * This request is handled when user wants to delete a message in their message list
+     * Message will be deleted and changed will be saved
+     *
      * @param content & author are taken from hidden html textfields,
-     *                which values are assigned automatically by thymeleaf
+     *        which values are assigned automatically by thymeleaf
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/deleteMessage")
@@ -110,6 +122,9 @@ public class MessageController {
     }
 
     /**
+     * This request is handled when user submits their bug
+     * Message about bug will be delivered to admin
+     *
      * @param message is taken from html textfield and it's content sent to admin
      * @return to index page
      **/
@@ -137,11 +152,13 @@ public class MessageController {
     }
 
     /**
+     * This request is handled when admin marks bug as fixed
+     * The user who sent that bug will be notified about fix
+     *
      * @param content & author are taken from hidden html textfields,
-     *                which values are assigned automatically by thymeleaf
-     *                <p>
-     *                It is similar to deleteMessage function, but there is an
-     *                auto message that is sent to bug reporter
+     * which values are assigned automatically by thymeleaf
+     * It is similar to deleteMessage function, but there is an auto message that is sent to bug reporter
+     *
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/bugReportFixed")

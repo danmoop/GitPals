@@ -25,6 +25,9 @@ public class IndexController {
     private ProjectInterface projectInterface;
 
     /**
+     * This request is handled when user opens index page
+     * Add attributes about user and later display them on the page
+     *
      * @return html index page with a list of projects and TECHS
      */
     @GetMapping("/")
@@ -37,7 +40,6 @@ public class IndexController {
             // Usually this function is executed once when we are register for the first time
             if (userInterface.findByUsername(user.getName()) == null) {
                 userInterface.save(
-
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
@@ -61,6 +63,9 @@ public class IndexController {
     }
 
     /**
+     * This request is handled when user opens their dashboard page
+     * Add attributes about user and later display them on the page
+     *
      * @return html page with user's principal data (username, etc)
      */
     @GetMapping("/dashboard")
@@ -91,6 +96,9 @@ public class IndexController {
     }
 
     /**
+     * This request is handled when user wants to log out
+     * Session will be cleared
+     *
      * @return html index page with logged-out user
      */
     @GetMapping("/logout")
@@ -101,6 +109,8 @@ public class IndexController {
 
 
     /**
+     * This request is handled when user redirects to /about page to see some info
+     *
      * @return about html page with some information about GitPals
      */
     @GetMapping("/about")
@@ -117,6 +127,8 @@ public class IndexController {
     }
 
     /**
+     * This request is handled when user wants to submit a bug
+     *
      * @return html page where users can report about a bug
      */
     @GetMapping("/bugReport")
@@ -125,6 +137,7 @@ public class IndexController {
     }
 
     /**
+     * This request is handled when user wants to see a guide about submitting a project
      * @return html page where users can read some advices about submitting a project
      */
     @GetMapping("/guide/how-to-create-a-good-description-for-my-project")

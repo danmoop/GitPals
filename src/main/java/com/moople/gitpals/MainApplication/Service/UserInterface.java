@@ -5,9 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserInterface extends MongoRepository<User, String>
-{
+public interface UserInterface extends MongoRepository<User, String> {
     User findByUsername(String username);
-
     List<User> findAll();
 }
