@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>GitPals - About</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
     <title>GitPals - Forum</title>
 </head>
 <body>
-    Hello there
+    <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation">
+        <div>
+            <a href="/login" th:if="${user == null}" class="btn btn-primary"><b class="wh">Login using Github</b></a>
+            <a href="/logout" th:if="${user != null}" class="btn btn-danger"><b>Log Out</b></a>
+        </div>
+        <div class="center">
+            <h6 class="wh" id="centerDiv"><b>GitPals Forum</b></h6>
+        </div>
+    </nav>
+
+    <section class="center-content text-center">
+        <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+
+        <div class="container">
+            <h5 class="wh">Post your questions, suggestions here. Discuss anything you want about projects, teams and collaboration!</h5>
+            <hr class="divider" />
+            <h6 class="wh" th:if="${#lists.size(posts) == 0}">There are no posts added yet</h6>
+            <h6 class="wh" th:if="${#lists.size(posts) != 0}" th:inline="text">Posts added: [[${#lists.size(posts)}]]</h6>
+            <a class="b" href="/addForumPostForm" th:if="${user != null}">Add Forum Post</a>
+            <h6 class="wh" th:if="${user == null}">Log in to add posts</h6>
+        </div>
+    </section>
+
 </body>
 </html>
