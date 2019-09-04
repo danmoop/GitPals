@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ForumInterface extends MongoRepository<ForumPost, String> {
     List<ForumPost> findAll();
-    List<ForumPost> findByAuthor();
+    List<ForumPost> findByAuthor(String author);
+    ForumPost findByKey(String key);
 }

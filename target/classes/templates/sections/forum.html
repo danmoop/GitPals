@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>GitPals - About</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/flat-ui.css" />
     <link rel="stylesheet" href="../css/style.css" />
@@ -31,6 +30,19 @@
             <h6 class="wh" th:if="${#lists.size(posts) != 0}" th:inline="text">Posts added: [[${#lists.size(posts)}]]</h6>
             <a class="b" href="/addForumPostForm" th:if="${user != null}">Add Forum Post</a>
             <h6 class="wh" th:if="${user == null}">Log in to add posts</h6>
+
+            <br/><br/>
+            <ul th:if="${#lists.size(posts) != 0}">
+                <div class="pr-item" style="width: 100%;" th:each="post: ${posts}">
+                    <header class="text-center">
+                        <h6 th:inline="text" class="wh">
+                            [[${post.title}]] - by <a th:href="${'users/' + post.author}">[[${post.author}]]</a>
+                        </h6>
+                    </header>
+                    <hr/>
+                    <a th:href="${'/forum/post/' + post.key}">Open</a>
+                </div>
+            </ul>
         </div>
     </section>
 
