@@ -250,7 +250,6 @@ public class ProjectController {
             return "error/projectDeleted";
         } else {
             List<Comment> comments = project.getComments();
-            Collections.reverse(comments);
 
             model.addAttribute("projectName", project.getTitle());
             model.addAttribute("comments", comments);

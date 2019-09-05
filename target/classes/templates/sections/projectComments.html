@@ -44,7 +44,7 @@
             <li class="pr-item" style="width: 100%;">
                 <header class="text-center">
                     <h6>
-                        <span th:inline="text" class="wh">by [[${comment.author}]]</span>
+                        <span th:inline="text" class="wh">by <a href="'/users/' + comment.author">[[${comment.author}]]</a></span>
                         <span th:inline="text" class="wh">on [[${comment.timeStamp}]]</span>
                     </h6>
                 </header>
