@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 @Controller
 public class SearchController {
     @Autowired
-    private UserInterface userInteface;
+    private UserInterface userInterface;
 
     @Autowired
-    private ProjectInterface projectInteface;
+    private ProjectInterface projectInterface;
 
     /**
      * This request is handled when user wants to see a search page to find a project or a user
@@ -32,7 +32,6 @@ public class SearchController {
         return "sections/searchForm";
     }
 
-
     /**
      * This request is handled when user submits a username they want to find
      * List of users will be displayed
@@ -42,7 +41,7 @@ public class SearchController {
      **/
     @PostMapping("/findUser")
     public String foundUsers(@RequestParam("user_name") String username, Model model) {
-        List<String> matchUsers = userInteface.findAll().stream()
+        List<String> matchUsers = userInterface.findAll().stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
                 .map(User::getUsername).collect(Collectors.toList());
 
@@ -50,7 +49,6 @@ public class SearchController {
 
         return "sections/matchUsers";
     }
-
 
     /**
      * This request is handled when user submits a project name they want to find
@@ -61,7 +59,7 @@ public class SearchController {
      **/
     @PostMapping("/findProject")
     public String foundProjects(@RequestParam("project_name") String projectName, Model model) {
-        List<Project> matchProjects = projectInteface.findAll().stream()
+        List<Project> matchProjects = projectInterface.findAll().stream()
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
                 .collect(Collectors.toList());
 
