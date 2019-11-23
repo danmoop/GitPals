@@ -49,3 +49,4 @@ Temporary Items
 .idea/
 .mvn/
 out/
+node_modules/

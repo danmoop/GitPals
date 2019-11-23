@@ -21,7 +21,7 @@ public class ProjectAPIController {
      * @param projectName is a project name we pass in path
      * @return project json object
      */
-    @GetMapping(value = "/{project}", produces = "application/json")
+    @GetMapping(value = "/get/{project}", produces = "application/json")
     public Project getProject(Principal principal, @PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      GitPals
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="fetchProjects($event);">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+
+    <p class="text-center">Total projects submitted: {{ projects.length }}</p>
+    <p class="text-center">Projects shown on this page: {{ projects.length <= 25 ? projects.length : 25 }}</p>
+
+    <ion-card *ngFor="let project of projects">
+      <ion-card-header>
+        <ion-card-subtitle>{{ project.authorName }}</ion-card-subtitle>
+        <ion-card-title>{{ project.title }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{ project.description }}
+      </ion-card-content>
+
+      <ion-button color="primary" fill="clear">Explore</ion-button>
+      <ion-button color="tertiary" fill="clear">Apply</ion-button>
+        
+    </ion-card>
+
+  </div>
+</ion-content>
