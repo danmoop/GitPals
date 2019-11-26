@@ -1,17 +1,19 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Model.Project;
+import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/projects")
+@CrossOrigin
 public class ProjectAPIController {
 
     @Autowired
@@ -49,5 +51,27 @@ public class ProjectAPIController {
                 .stream()
                 .limit(amount)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping(value = "/createProject")
+    public Response submitProject(@RequestBody Map<Object, Object> map) {
+        System.out.println(map);
+
+        Project project = new Project(
+                (String) map.get("title"),
+                (String) map.get("description"),
+                (String) map.get("githubProjectLink"),
+                (String) map.get("username"),
+                (List<String>) map.get("requirements"));
+
+        System.out.println(project.toString());
+
+        if (projectInterface.findByTitle(project.getTitle()) == null) {
+            projectInterface.save(project);
+
+            return Response.OK;
+        } else {
+            return Response.PROJECT_EXISTS;
+        }
     }
 }

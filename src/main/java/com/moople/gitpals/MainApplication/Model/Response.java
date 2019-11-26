@@ -12,8 +12,9 @@ public class Response {
 
     public final static Response OK = new Response(Status.OK);
     public final static Response FAILED = new Response(Status.FAILED);
+    public final static Response PROJECT_EXISTS = new Response(Status.PROJECT_EXISTS);
 
     private enum Status {
-        OK, FAILED
+        OK, FAILED, PROJECT_EXISTS
     }
 }

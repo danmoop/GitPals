@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import axios from 'axios';
 import { localService } from './../localService';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ActionSheetController, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,11 @@ export class HomePage {
 
   user: any;
 
-  constructor(private service: localService, private alertCtrl: AlertController) {}
+  constructor(private service: localService, 
+    private alertCtrl: AlertController, 
+    private actionCtrl: ActionSheetController,
+    private router: Router,
+    private navCtrl: NavController) {}
 
   ionViewDidEnter() {
     this.fetchProjects(null);
@@ -71,7 +76,7 @@ export class HomePage {
             }).then(response => {
               this.user = response.data;
               localStorage.setItem('user', JSON.stringify(this.user));
-            }).catch(err => this.wrongCredentialsAlert());
+            }).catch(err => this.showAlert('Wrong Credentials'));
           }
         },
         {
@@ -82,10 +87,43 @@ export class HomePage {
     }).then(alert => alert.present());
   }
 
-  wrongCredentialsAlert() {
+  showAlert(text) {
     this.alertCtrl.create({
-      header: 'Wrong Credentials',
+      header: text,
       buttons: ['OK']
+    }).then(alert => alert.present());
+  }
+
+  showActions() {
+    this.actionCtrl.create({
+      header: 'Action',
+      buttons: [
+        {
+          text: 'Submit Project',
+          icon: 'checkmark-circle-outline',
+          handler: () => {
+            if(this.user != null) {
+              this.router.navigate(['create-project']);
+            } else {
+              this.showAlert('You need to Sign In first');
+            }
+          }
+        },
+        {
+          text: 'Logout',
+          icon: 'log-out',
+          role: 'destructive',
+          handler: () => {
+            if(localStorage.getItem('user') != null) {
+              localStorage.clear();
+              this.showAlert('Success!');
+              this.user = null;
+            } else {
+              this.showAlert('You need to Sign In first');
+            }
+          }
+        }
+      ]
     }).then(alert => alert.present());
   }
 }

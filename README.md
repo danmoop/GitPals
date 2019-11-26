@@ -11,7 +11,7 @@ This project uses **Java, Spring, MongoDB**
 
 **NEW! Introducing GitPals mobile app built on IonicFramework. It is under development right now, implemented using REST API (sending requests and getting responses)**
 
-![image](gallery/mobile.png)
+<img src="gallery/mobile.png" width="200">
 
 The rest of images
 ![image](gallery/main.png)
