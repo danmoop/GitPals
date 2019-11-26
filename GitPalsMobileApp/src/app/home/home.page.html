@@ -8,7 +8,7 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="showActions();">
+      <ion-button (click)="showActions();" *ngIf="user != null">
         <ion-icon slot="end" name="more"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -43,7 +43,6 @@
       </ion-card-content>
         
       <ion-button color="primary" fill="clear" (click)="getProjectInfo(project);">Explore</ion-button>
-      <ion-button color="tertiary" fill="clear" *ngIf="user != null">Apply</ion-button>
         
     </ion-card>
 

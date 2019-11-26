@@ -53,18 +53,20 @@ public class ProjectAPIController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Project is created and added to database
+     *
+     * @param map is a hashmap that comes from the client, data is being extracted and assigned
+     * @return response according to the success of a function
+     */
     @PostMapping(value = "/createProject")
     public Response submitProject(@RequestBody Map<Object, Object> map) {
-        System.out.println(map);
-
         Project project = new Project(
                 (String) map.get("title"),
                 (String) map.get("description"),
                 (String) map.get("githubProjectLink"),
                 (String) map.get("username"),
                 (List<String>) map.get("requirements"));
-
-        System.out.println(project.toString());
 
         if (projectInterface.findByTitle(project.getTitle()) == null) {
             projectInterface.save(project);
@@ -73,5 +75,26 @@ public class ProjectAPIController {
         } else {
             return Response.PROJECT_EXISTS;
         }
+    }
+
+    /**
+     * Project deleted from the database
+     *
+     * @param map is a hashmap that comes from the client, data is being extracted and assigned
+     * @return response according to the success of a function
+     */
+    @PostMapping("/deleteProject")
+    public Response deleteProject(@RequestBody Map<String, String> map) {
+        String username = map.get("username");
+        String projectName = map.get("projectName");
+
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (project != null && project.getAuthorName().equals(username)) {
+            projectInterface.delete(projectInterface.findByTitle(project.getTitle()));
+            return Response.OK;
+        }
+
+        return Response.FAILED;
     }
 }

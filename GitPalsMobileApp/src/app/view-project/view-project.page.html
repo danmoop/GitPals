@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>      
+      <a href="{{project.githubProjectLink}}">{{ project.title }}</a>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="ion-padding text-center">
+  </div>
+
+  <ion-card class="text-center">
+    <ion-card-header>
+      <ion-card-subtitle>by {{ project.authorName }}</ion-card-subtitle>
+      <ion-card-title>{{ project.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ project.description }}
+
+      <br><hr>
+
+      <b>Requirements: </b> {{ project.requirements.join(', ') }}
+      <hr>
+      Users applied for this project: {{ project.usersSubmitted.length }}
+
+      <ion-button fill="outline" *ngIf="user != null">Apply</ion-button>
+      <b *ngIf="user == null">You need to Sign In in order to apply for this project</b>
+
+    </ion-card-content>
+  </ion-card>
+
+  <div class="text-center">
+    <ion-button fill="clear" color="danger" *ngIf="user.login == project.authorName" (click)="removeProject();">Delete Project</ion-button>
+  </div>
+
+</ion-content>

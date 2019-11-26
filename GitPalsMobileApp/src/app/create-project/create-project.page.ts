@@ -42,7 +42,9 @@ export class CreateProjectPage implements OnInit {
       description: this.projectDescription,
       githubProjectLink: this.projectRepositoryLink,
       requirements: this.getProjectRequirementsList(),
-      username: JSON.parse(localStorage.getItem('user')).login
+      username: JSON.parse(localStorage.getItem('user')).login,
+      usersSubmitted: [],
+      comments: []
     }
     
     axios(this.localService.getAPI() + '/projects/createProject', {
@@ -50,7 +52,8 @@ export class CreateProjectPage implements OnInit {
       data: project
     }).then(response => {
       if(response.data.status == 'OK') {
-        this.router.navigateByUrl('/');
+        console.log(project);
+        this.router.navigate(['view-project'], { queryParams: { project: JSON.stringify(project)} });
       } else {
         this.showAlert('Project with such title already exists');
       }

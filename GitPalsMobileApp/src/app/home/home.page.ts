@@ -47,6 +47,7 @@ export class HomePage {
 
   getProjectInfo(project) {
     console.log(project);
+    this.router.navigate(['view-project'], { queryParams: { project: JSON.stringify(project)} });
   }
 
   auth() {
@@ -76,6 +77,8 @@ export class HomePage {
             }).then(response => {
               this.user = response.data;
               localStorage.setItem('user', JSON.stringify(this.user));
+
+              this.showAlert('Auth success!');
             }).catch(err => this.showAlert('Wrong Credentials'));
           }
         },
