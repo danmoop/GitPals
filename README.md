@@ -9,7 +9,13 @@ Application for finding people to work together with on different projects
 
 This project uses **Java, Spring, MongoDB**
 
-**NEW! Introducing GitPals mobile app built on IonicFramework. It is under development right now, implemented using REST API (sending requests and getting responses)**
+# Explanations
+
+So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://media.licdn.com/dms/document/C561FAQFG8gUUJ6s2qQ/feedshare-document-pdf-analyzed/0?e=1575079200&v=beta&t=bv8PqT_NGYmTPnQu3QyrTz-jJM4V2ynxvS56R3ZaM5k)
+
+# NEW! 
+
+**Introducing GitPals mobile app built on IonicFramework. It is under development right now, implemented using REST API (sending requests and getting responses)**
 
 <img src="gallery/mobile.png" width="200">
 
