@@ -11,7 +11,7 @@ This project uses **Java, Spring, MongoDB**
 
 # Explanations
 
-So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://media.licdn.com/dms/document/C561FAQFG8gUUJ6s2qQ/feedshare-document-pdf-analyzed/0?e=1575079200&v=beta&t=bv8PqT_NGYmTPnQu3QyrTz-jJM4V2ynxvS56R3ZaM5k)
+So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://github.com/danmoop/GitPals/blob/master/GitPals%20Review.pdf)
 
 # NEW! 
 
