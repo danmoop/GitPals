@@ -9,6 +9,11 @@ Application for finding people to work together with on different projects
 
 This project uses **Java, Spring, MongoDB**
 
+# Explanations
+
+So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://github.com/danmoop/GitPals/blob/master/GitPals%20Review.pdf)
+
+
 **NEW! Introducing GitPals mobile app built on React Native. It is under development right now, implemented using REST API (sending requests and getting responses)**
 
 <img src="gallery/mobile.png" width="200">
