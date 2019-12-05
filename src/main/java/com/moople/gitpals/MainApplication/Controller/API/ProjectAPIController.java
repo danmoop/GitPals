@@ -6,7 +6,6 @@ import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class ProjectAPIController {
      * @return project json object
      */
     @GetMapping(value = "/get/{project}", produces = "application/json")
-    public Project getProject(Principal principal, @PathVariable("project") String projectName) {
+    public Project getProject(@PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 
         if (project != null)

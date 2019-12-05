@@ -86,7 +86,8 @@ public class UserController {
 
 
     /**
-     * This request is handled when user wants to change their country in the dashbaord
+     * This request is handled when user wants to change
+     * their country and bio in the dashboard
      *
      * @param country & info are taken from html input fields
      * @param user    user is used to find user in database, set new country & info
