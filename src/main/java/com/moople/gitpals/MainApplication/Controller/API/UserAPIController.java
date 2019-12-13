@@ -6,7 +6,7 @@ import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -16,6 +16,11 @@ public class UserAPIController {
 
     @Autowired
     private UserInterface userInterface;
+
+    @GetMapping("/getPrincipal")
+    public Principal principal(Principal principal) {
+        return principal;
+    }
 
     /**
      * Get user object which contains username, projects, skills, etc, (fetched from db)
@@ -53,10 +58,7 @@ public class UserAPIController {
         User user = userInterface.findByUsername(username);
 
         if(user != null) {
-            user.setLanguagesKnows(techs);
-            user.setCountry(userCountry);
-            user.setInfo(info);
-
+            user.setSkillList(techs);
             return Response.OK;
         }
 

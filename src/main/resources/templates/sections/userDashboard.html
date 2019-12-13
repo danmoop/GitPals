@@ -77,7 +77,7 @@
             <h3 class="wh" style="padding: 15px;" th:inline="text"><b>Technologies [[${UserObject.username}]] knows</b></h3>
 
                 <div style="text-align: left; margin-left: 20px;">
-                    <div th:each="tech: ${UserObject.languagesKnows}" id="techBlock">
+                    <div th:each="tech: ${UserObject.skillList}" id="techBlock">
                         <input onclick="return false;" class="largeCheckbox" type="checkbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
                     </div>
                 </div>

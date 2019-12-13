@@ -3,7 +3,7 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class SearchController {
+
     @Autowired
-    private UserInterface userInterface;
+    private UserService userService;
 
     @Autowired
     private ProjectInterface projectInterface;
@@ -41,7 +43,7 @@ public class SearchController {
      **/
     @PostMapping("/findUser")
     public String foundUsers(@RequestParam("user_name") String username, Model model) {
-        List<String> matchUsers = userInterface.findAll().stream()
+        List<String> matchUsers = userService.findAll().stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
                 .map(User::getUsername).collect(Collectors.toList());
 
@@ -66,5 +68,21 @@ public class SearchController {
         model.addAttribute("match_projects", matchProjects);
 
         return "sections/matchProjects";
+    }
+
+    /**
+     * This request is handled when user wants to find users who know specific skills
+     * @param skills is a list of skills required
+     * @param model is assigned automatically, that's where the data goes
+     *
+     * @return page where all the users are displayed
+     */
+    @PostMapping("/findUsersBySkills")
+    public String usersBySkills(@RequestParam("skills") List<String> skills, Model model, Principal principal) {
+        List<User> users = userService.findBySkillList(skills);
+
+        model.addAttribute("match_users", users);
+
+        return "sections/matchUsers";
     }
 }

@@ -19,9 +19,7 @@ public class User {
 
     private String username;
     private String GithubAccountLink;
-    private String country;
-    private String info;
-    private Map<String, Boolean> languagesKnows;
+    private Map<String, Boolean> skillList;
     private List<String> projects;
     private List<String> projectsAppliedTo;
     private List<Message> messages;
@@ -30,13 +28,10 @@ public class User {
      * @param country   & info are empty by default. Later they can be edited in dashboard.
      * @param projects, projectsAppliedTo & messages are lists of objects, empty by default.
      */
-    public User(String username, String githubAccountLink, Map<String, Boolean> languagesKnows) {
+    public User(String username, String githubAccountLink, Map<String, Boolean> skillList) {
         this.username = username;
         this.GithubAccountLink = githubAccountLink;
-        this.languagesKnows = languagesKnows;
-
-        this.country = "";
-        this.info = "";
+        this.skillList = skillList;
 
         this.projects = new ArrayList<>();
         this.projectsAppliedTo = new ArrayList<>();

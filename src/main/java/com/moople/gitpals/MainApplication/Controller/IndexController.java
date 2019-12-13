@@ -4,7 +4,7 @@ import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class IndexController {
+
     @Autowired
-    private UserInterface userInterface;
+    private UserService userService;
 
     @Autowired
     private ProjectInterface projectInterface;
@@ -38,8 +39,8 @@ public class IndexController {
 
             // If we are logged in but there is no our user object in database, save it
             // Usually this function is executed once when we are register for the first time
-            if (userInterface.findByUsername(user.getName()) == null) {
-                userInterface.save(
+            if (userService.findByUsername(user.getName()) == null) {
+                userService.save(
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
@@ -48,7 +49,7 @@ public class IndexController {
                 );
             }
 
-            model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
+            model.addAttribute("userDB", userService.findByUsername(user.getName()));
         }
 
         // Show the most recent projects (only 50)
@@ -58,6 +59,7 @@ public class IndexController {
         model.addAttribute("projectTechs", Data.technologiesMap);
         model.addAttribute("projects", projects);
         model.addAttribute("totalProjectsAmount", projectInterface.findAll().size());
+        model.addAttribute("usersRegistered", userService.findAll().size());
 
         return "sections/index";
     }
@@ -76,11 +78,10 @@ public class IndexController {
 
             // user is logged in
         else {
-            User userDB = userInterface.findByUsername(user.getName());
+            User userDB = userService.findByUsername(user.getName());
 
             model.addAttribute("dbUser", userDB);
             model.addAttribute("userObject", new User());
-            model.addAttribute("GithubUserName", user.getName());
             model.addAttribute("GithubUser", user);
 
             List<Project> appliedToProjects = new ArrayList<>();
@@ -101,8 +102,8 @@ public class IndexController {
      *
      * @return html index page with logged-out user
      */
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
+    @GetMapping("/signout")
+    public String logout(HttpSession httpSession){
         httpSession.invalidate();
         return "redirect:/";
     }
@@ -115,7 +116,7 @@ public class IndexController {
      */
     @GetMapping("/about")
     public String aboutPage(Model model, Principal principal) {
-        model.addAttribute("usersAmount", userInterface.findAll().size());
+        model.addAttribute("usersAmount", userService.findAll().size());
 
         try {
             model.addAttribute("LoggedUser", principal.getName());
