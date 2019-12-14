@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>GitPals - Index Page</title>
+    <title>GitPals - Home Page</title>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
         </a>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown" th:if="${GithubUser != null}">
-                <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:inline="text">Hello, [[${GithubUser.userAuthentication.details.login}]]</a>
+                <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, [[${GithubUser.userAuthentication.details.login}]]</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
                     <a class="dropdown-item" href="/dashboard">
                         <i class="fa fa-user-circle"></i>
@@ -69,7 +69,7 @@
                     <h2>Become a better developer with <span class="font-weight-bold">GitPals</span></h2>
                     <h6>We are connecting you with other developers, whose projects match your skills. Choose any
                         project that matches your requirements and start your path in cooperative development</h6>
-                    <h6 th:inline="text">
+                    <h6>
                         There are [[${usersRegistered}]] users registered
                     </h6>
                     <a href="/login">
@@ -93,11 +93,11 @@
         <li class="projectItem" th:each="project: ${projects}">
             <div class="card text-center">
                 <div class="card-header">
-                    <h5 class="font-weight-bold" th:inline="text">[[${project.title}]]</h5>
+                    <h5 class="font-weight-bold">[[${project.title}]]</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text" th:inline="text">by [[${project.authorName}]]</p>
-                    <p class="card-text font-weight-bold" th:inline="text">[[${project.requirements}]]</p>
+                    <p class="card-text">by [[${project.authorName}]]</p>
+                    <p class="card-text font-weight-bold">[[${project.requirements}]]</p>
                     <a th:href="${'/projects/' + project.title}">
                         <button type="button" class="btn btn-outline-secondary btn-pill">Explore</button>
                     </a>

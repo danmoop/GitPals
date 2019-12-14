@@ -45,15 +45,15 @@
                 <h5 class="font-weight-bold">danmoop</h5>
             </div>
             <div class="card-body">
-                <p class="card-text" th:inline="text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
-                <p class="card-text" th:inline="text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
+                <p class="card-text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
+                <p class="card-text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
 
                 <div class="row">
                     <div class="col">
-                        Submitted <h4 th:inline="text">[[${#lists.size(dbUser.projects)}]]</h4> projects
+                        Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects
                     </div>
                     <div class="col">
-                        Applied to <h4 th:inline="text">[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
+                        Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="tech: ${dbUser.skillList}">
-                    <td th:inline="text" class="fw-600">[[${tech.key}]]</td>
+                    <td class="fw-600">[[${tech.key}]]</td>
                     <td>
                         <div class="pretty p-default p-curve p-thick">
                             <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/>

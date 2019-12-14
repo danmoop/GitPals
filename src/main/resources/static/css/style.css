@@ -27,6 +27,10 @@
 	margin-top: 2rem;
 }
 
+.m {
+    margin: 15px;
+}
+
 @media(min-width: 900px) {
     .projectItem {
         width: 23%;
@@ -67,4 +71,12 @@ h1,h2,h3,h4,h5,h6,p {
 
 .ls-none {
     list-style: none
+}
+
+.danger {
+    color: #C4183C;
+}
+
+.success {
+    color: #17C671;
 }

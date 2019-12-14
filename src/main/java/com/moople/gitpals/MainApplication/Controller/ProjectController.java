@@ -233,32 +233,6 @@ public class ProjectController {
         return "sections/projectsAfterSorting";
     }
 
-
-    /**
-     * This request is handled when user wants to see project's comments
-     * They will be added to model and displayed
-     *
-     * @param projectName       is taken from a hidden html textfield
-     * @param model & principal are assigned automatically using thymeleaf
-     * @return project comments page
-     */
-    @GetMapping("/projects/{projectName}/comments")
-    public String viewProjectComments(@PathVariable("projectName") String projectName, Model model, Principal principal) {
-        Project project = projectInterface.findByTitle(projectName);
-
-        if (project == null) {
-            return "error/projectDeleted";
-        } else {
-            List<Comment> comments = project.getComments();
-
-            model.addAttribute("projectName", project.getTitle());
-            model.addAttribute("comments", comments);
-            model.addAttribute("user", principal);
-
-            return "sections/projectComments";
-        }
-    }
-
     /**
      * This request is handled when user submits their comment
      * It will be added to comments list and saved
@@ -277,6 +251,6 @@ public class ProjectController {
         project.getComments().add(comment);
         projectInterface.save(project);
 
-        return "redirect:/projects/" + projectName + "/comments";
+        return "redirect:/projects/" + projectName;
     }
 }
