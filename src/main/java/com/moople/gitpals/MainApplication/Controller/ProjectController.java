@@ -6,7 +6,7 @@ import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
+
     @Autowired
-    private UserInterface userInterface;
+    private UserService userService;
 
     @Autowired
     private ProjectInterface projectInterface;
@@ -63,15 +64,15 @@ public class ProjectController {
                     project.getTitle(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
-                    userInterface.findByUsername(user.getName()).getUsername(),
+                    userService.findByUsername(user.getName()).getUsername(),
                     techs
             );
 
-            User userInDB = userInterface.findByUsername(user.getName());
+            User userInDB = userService.findByUsername(user.getName());
 
             userInDB.getProjects().add(userProject.getTitle());
 
-            userInterface.save(userInDB);
+            userService.save(userInDB);
             projectInterface.save(userProject);
 
             return "redirect:/projects/" + userProject.getTitle();
@@ -94,11 +95,11 @@ public class ProjectController {
         if (project == null) {
             return "error/projectDeleted";
         } else {
-            model.addAttribute("AuthorObject", userInterface.findByUsername(project.getAuthorName()));
-            model.addAttribute("projectObject", project);
+            model.addAttribute("AuthorObject", userService.findByUsername(project.getAuthorName()));
+            model.addAttribute("project", project);
 
             if (user != null) {
-                model.addAttribute("userDB", userInterface.findByUsername(user.getName()));
+                model.addAttribute("userDB", userService.findByUsername(user.getName()));
             }
 
             return "sections/projectViewPage";
@@ -113,7 +114,7 @@ public class ProjectController {
      **/
     @PostMapping("/applyForProject")
     public String applyForProject(@RequestParam("linkInput") String link, Principal user) {
-        User userForApply = userInterface.findByUsername(user.getName());
+        User userForApply = userService.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
 
         // Users that already submitted can't submit another time, only once per project
@@ -122,7 +123,7 @@ public class ProjectController {
             userForApply.getProjectsAppliedTo().add(project.getTitle());
 
             projectInterface.save(project);
-            userInterface.save(userForApply);
+            userService.save(userForApply);
         }
 
         return "redirect:/projects/" + link;
@@ -139,14 +140,14 @@ public class ProjectController {
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user) {
         Project projectDB = projectInterface.findByTitle(link);
 
-        User userDB = userInterface.findByUsername(user.getName());
+        User userDB = userService.findByUsername(user.getName());
 
         if (projectDB.getUsersSubmitted().contains(userDB.getUsername())) {
             projectDB.getUsersSubmitted().remove(userDB.getUsername());
             userDB.getProjectsAppliedTo().remove(projectDB.getTitle());
 
             projectInterface.save(projectDB);
-            userInterface.save(userDB);
+            userService.save(userDB);
         }
 
         return "redirect:/projects/" + link;
@@ -161,7 +162,7 @@ public class ProjectController {
      **/
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
-        User userDB = userInterface.findByUsername(user.getName());
+        User userDB = userService.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(projectName);
 
         // Remove project from author's projects list
@@ -171,13 +172,13 @@ public class ProjectController {
             if (userDB.getProjects().contains(project.getTitle())) {
                 userDB.getProjects().remove(project.getTitle());
 
-                userInterface.save(userDB);
+                userService.save(userDB);
             }
 
             // Remove project from everyone who applied to this project
             // First we stream, it returns list of Strings, map them to User object
             List<User> allUsers = project.getUsersSubmitted().stream()
-                    .map(submittedUser -> userInterface.findByUsername(submittedUser))
+                    .map(submittedUser -> userService.findByUsername(submittedUser))
                     .collect(Collectors.toList());
 
             // Every applied user will receive a message about project deletion
@@ -187,7 +188,7 @@ public class ProjectController {
                 _user.getProjectsAppliedTo().remove(project.getTitle());
                 _user.getMessages().add(notification);
 
-                userInterface.save(_user);
+                userService.save(_user);
             }
 
             return "redirect:/";

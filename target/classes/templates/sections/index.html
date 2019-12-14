@@ -1,95 +1,118 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Gitpals - find team for cooperative development</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
-    <link rel="stylesheet" href="css/flat-ui.css" />
-    <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <title>GitPals - Index Page</title>
 </head>
+
 <body>
-    <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation">
-        <div>
-            <a href="/about" class="btn btn-info"><b class="wh">About</b></a>
-            <a href="/login" th:if="${GithubUser == null}" class="btn btn-primary"><b class="wh">Login using Github</b></a>
-            <a href="/dashboard" th:if="${GithubUser != null}" class="btn btn-primary"><b class="wh">Dashboard</b></a>
-            <a href="/messages" th:if="${GithubUser != null}" class="btn btn-info" th:inline="text" id="msgBtn" style="font-family: 'eina';">Messages: [[${#lists.size(userDB.messages)}]]</a>
-            <a href="/logout" th:if="${GithubUser != null}" class="btn btn-danger"><b>Log Out</b></a>
-        </div>
-        <div class="center">
-            <h6 class="wh" th:if="${GithubUser == null}" id="centerDiv"><b>Hello, Guest</b></h6>
-            <div class="row" id="centerDiv2">
-                <h6 class="wh" th:if="${GithubUser != null}" th:inline="text">Hello, <b><a class="wh" target="_blank" href="/dashboard">[[${GithubUser.userAuthentication.details.login}]]</a></b> <img style="margin-left: 10px;" th:src="${GithubUser.userAuthentication.details.avatar_url}" width="64" height="64"/></h6>
-                <a href="/messages" class="wh" th:if="${GithubUser != null}" style="transform: translate(20%, 15%); font-size: 20px; font-family: 'eina';" th:inline="text">Messages: [[${#lists.size(userDB.messages)}]]</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+        <a href="/login">
+            <button type="button" class="btn btn-warning btn-sm borderBtn brickColor" th:if="${GithubUser == null}">
+                <i class="fa fa-sign-in"></i>
+                Sign In
+            </button>
+        </a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown" th:if="${GithubUser != null}">
+                <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:inline="text">Hello, [[${GithubUser.userAuthentication.details.login}]]</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                    <a class="dropdown-item" href="/dashboard">
+                        <i class="fa fa-user-circle"></i>
+                        Dashboard
+                    </a>
+                    <a href="/signout" class="dropdown-item">
+                        <i class="fa fa-sign-out"></i>
+                        Log Out
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/forum">
+                    <button type="button" class="btn btn-outline-light btn-sm">
+                        <i class="fa fa-wpforms"></i>
+                        Forum
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">
+                    <button type="button" class="btn btn-outline-light btn-sm">
+                        <i class="fa fa-search"></i>
+                        Search
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<section>
+    <div class="container text-center">
+        <div class="row animated fadeIn text-center">
+            <div class="col-sm-6">
+                <div class="div-center">
+                    <h2>Become a better developer with <span class="font-weight-bold">GitPals</span></h2>
+                    <h6>We are connecting you with other developers, whose projects match your skills. Choose any
+                        project that matches your requirements and start your path in cooperative development</h6>
+                    <h6 th:inline="text">
+                        There are [[${usersRegistered}]] users registered
+                    </h6>
+                    <a href="/login">
+                        <button type="button" class="btn btn-info btn-sm borderBtn fw-600" th:if="${GithubUser == null}">Get Started</button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <img src="./images/Picture.png" class="img-fluid">
             </div>
         </div>
-        <div>
-            <a href="/forum" class="btn btn-success"><b>Forum</b></a>
-            <a href="/search" class="btn btn-info"><b>Search</b></a>
-        </div>
-    </nav>
+        <hr>
+        <h4>Explore the most 50 recent projects published</h4>
+        <p th:if="${#lists.size(projects) == 0}">No projects published yet</p>
+        <a href="/submitProject">
+            <button type="button" class="btn btn-info btn-sm borderBtn fw-600" th:if="${GithubUser != null}">Submit Project</button>
+        </a>
+    </div>
 
-    <section class="center-content text-center">
-        <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
-        <div class="container">
-            <h3 class="wh">Find a team for development and become a better developer while contributing and working together!</h3>
-            <h5 class="wh">Choose any project that matches your requirements and start your path in cooperative development</h5>
-            <hr class="divider"/>
-            <h6 class="wh" th:inline="text">Total projects for apply ([[${totalProjectsAmount}]])</h6>
-
-            <p class="wh">Only 50 the most recent projects can be shown on this page</p>
-
-            <a href="/submitProject" th:if="${GithubUser != null}">Submit your project</a>
-
-            <div th:if="${GithubUser != null}">
-                <br/>
+    <ul class="projectUl animated fadeIn">
+        <li class="projectItem" th:each="project: ${projects}">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="font-weight-bold" th:inline="text">[[${project.title}]]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:inline="text">by [[${project.authorName}]]</p>
+                    <p class="card-text font-weight-bold" th:inline="text">[[${project.requirements}]]</p>
+                    <a th:href="${'/projects/' + project.title}">
+                        <button type="button" class="btn btn-outline-secondary btn-pill">Explore</button>
+                    </a>
+                </div>
             </div>
-
-            <button class="btn btn-info b" onclick="showSortForm();">Sort projects</button>
-
-            <div id="sortList" style="display: none;">
-                <form th:action="@{/sortProjects}" method="post">
-                    <div th:each="tech: ${projectTechs}">
-                        <input class="largeCheckbox" type="checkbox" th:name="sort_projects" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
-                    </div>
-
-                    <hr/>
-                    <input class="largeCheckbox" type="checkbox" th:name="isUnique" /> <span class="wh">Project will contain ONLY selected technologies</span>
-
-                    <br/>
-                    <button class="btn btn-info b">Sort</button>
-                </form>
-
-                <hr class="divider"/>
-            </div>
-
-        </div>
-
-        <br/>
-
-        <div class="pr-list text-center">
-            <a th:each="project: ${projects}" th:href="${'/projects/' + project.title}">
-                <li class="pr-item">
-                    <header><h6 class="wh pr-title" th:inline="text">[[${project.title}]]</h6></header>
-                    <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
-                    <p class="wh" th:inline="text" style="margin: 10px;">[[${project.requirements}]]</p>
-                </li>
-            </a>
-
-            <h6 class="wh" th:if="${#lists.size(projects) == 0}" style="margin-right: 2.5%;"> No projects published yet</h6>
-        </div>
-
-    </section>
-
-    <script src="./js/index.js"></script>
-    <script src="./js/jquery.js"></script>
-
+        </li>
+    </ul>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </body>
+
 </html>

@@ -2,7 +2,7 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.UserInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ import java.util.List;
 public class MessageController {
 
     @Autowired
-    private UserInterface userInterface;
+    private UserService userService;
 
     /**
      * This request is handled when user wants to see their messages
@@ -30,7 +30,7 @@ public class MessageController {
     public String messages(Principal user, Model model) {
         // if users are not logged in - they can't see any messages -> redirect them to index page
         if (user != null) {
-            User userDB = userInterface.findByUsername(user.getName());
+            User userDB = userService.findByUsername(user.getName());
 
             List<Message> userMessages = userDB.getMessages();
 
@@ -75,14 +75,14 @@ public class MessageController {
             @RequestParam("RecipientName") String username,
             @RequestParam("Content") String content) {
         // If there is a user with such a username then we send them a message
-        if (userInterface.findByUsername(username) != null) {
+        if (userService.findByUsername(username) != null) {
             Message message = new Message(username, content);
 
-            User recipient = userInterface.findByUsername(username);
+            User recipient = userService.findByUsername(username);
 
             recipient.getMessages().add(message);
 
-            userInterface.save(recipient);
+            userService.save(recipient);
 
             return "redirect:/";
         }
@@ -109,7 +109,7 @@ public class MessageController {
             @RequestParam("messageContentInput") String content,
             @RequestParam("messageAuthorInput") String author,
             Principal user) {
-        User userDB = userInterface.findByUsername(user.getName());
+        User userDB = userService.findByUsername(user.getName());
 
         /*
             Message content and author are acquired from html forms,
@@ -117,7 +117,7 @@ public class MessageController {
          */
         userDB.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
 
-        userInterface.save(userDB);
+        userService.save(userDB);
 
         return "redirect:/messages";
     }
@@ -133,7 +133,7 @@ public class MessageController {
     public String bugReported(@RequestParam("bug_description") String message, Principal user) {
         // Users can't send POST request (here - send a message) if they are not logged in
         if (user != null) {
-            User admin = userInterface.findByUsername("danmoop");
+            User admin = userService.findByUsername("danmoop");
 
             String author = user.getName();
 
@@ -146,7 +146,7 @@ public class MessageController {
 
             admin.getMessages().add(msg);
 
-            userInterface.save(admin);
+            userService.save(admin);
         }
 
         return "redirect:/";
@@ -169,14 +169,14 @@ public class MessageController {
             Principal user) {
         // Manipulate with admin - remove report bug message
 
-        User admin = userInterface.findByUsername(user.getName());
+        User admin = userService.findByUsername(user.getName());
         admin.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
-        userInterface.save(admin);
+        userService.save(admin);
 
 
         // Manipulate with bug reporter - send them a thank-you message
 
-        User bugReportAuthor = userInterface.findByUsername(author);
+        User bugReportAuthor = userService.findByUsername(author);
 
         Message msg = new Message(
                 "danmoop",
@@ -185,7 +185,7 @@ public class MessageController {
 
         bugReportAuthor.getMessages().add(msg);
 
-        userInterface.save(bugReportAuthor);
+        userService.save(bugReportAuthor);
 
         return "redirect:/messages";
     }

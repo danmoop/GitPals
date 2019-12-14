@@ -3,7 +3,7 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +19,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
+
     @Autowired
-    private UserInterface userInterface;
+    private UserService userService;
 
     @Autowired
     private ProjectInterface projectInterface;
@@ -34,7 +35,7 @@ public class UserController {
      **/
     @GetMapping("/users/{username}")
     public String findUser(@PathVariable String username, Model model, Principal principal) {
-        User user = userInterface.findByUsername(username);
+        User user = userService.findByUsername(username);
 
         if (user != null) {
             List<Project> appliedToProjects = user.getProjectsAppliedTo().stream()
@@ -47,7 +48,7 @@ public class UserController {
                 model.addAttribute("LoggedUser", null);
             }
 
-            model.addAttribute("UserObject", userInterface.findByUsername(username));
+            model.addAttribute("UserObject", userService.findByUsername(username));
             model.addAttribute("appliedProjects", appliedToProjects);
 
             return "sections/userDashboard";
@@ -66,9 +67,9 @@ public class UserController {
      **/
     @PostMapping("/updateUser")
     public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs) {
-        User userFromDB = userInterface.findByUsername(user.getName());
+        User userFromDB = userService.findByUsername(user.getName());
 
-        Map<String, Boolean> allTechs = userFromDB.getLanguagesKnows();
+        Map<String, Boolean> allTechs = userFromDB.getSkillList();
 
         for (Map.Entry<String, Boolean> entry : allTechs.entrySet()) {
             allTechs.put(entry.getKey(), false);
@@ -79,7 +80,7 @@ public class UserController {
                 allTechs.put(item, true);
         }
 
-        userInterface.save(userFromDB);
+        userService.save(userFromDB);
 
         return "redirect:/dashboard";
     }
@@ -98,12 +99,9 @@ public class UserController {
             @RequestParam("countryInput") String country,
             @RequestParam("infoInput") String info,
             Principal user) {
-        User userInDB = userInterface.findByUsername(user.getName());
+        User userInDB = userService.findByUsername(user.getName());
 
-        userInDB.setCountry(country);
-        userInDB.setInfo(info);
-
-        userInterface.save(userInDB);
+        userService.save(userInDB);
 
         return "redirect:/dashboard";
     }

@@ -1,93 +1,105 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+    <link rel="stylesheet" href="css/style.css">
     <title>GitPals - Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/flat-ui.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
-    <script src="js/flat-ui.js"></script>
 </head>
+
 <body>
-
-
-<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
-    <div class="center">
-        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank">Your dashboard</a></b></h6>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your dashboard</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                    <a class="dropdown-item" href="/submitProject">
+                        <i class="fa fa-wrench"></i> Submit a project
+                    </a>
+                    <a class="dropdown-item" href="/sign-out">
+                        <i class="fa fa-sign-out"></i> Log Out
+                    </a>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
 
-<section class="center-content text-center">
-    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+<div class="container text-center">
 
-    <div class="container">
-        <div class="green-bg">
-            <p class="wh fz-30"><b th:inline="text" id="userName">[[${GithubUserName}]]</b></p>
-            <p class="wh" th:inline="text">[[${GithubUser.userAuthentication.details.email}]]</p>
-            <u><a class="dark b" id="githubLink" th:href="${'https://github.com/' + GithubUserName}" target="_blank">Github profile</a></u>
-
-            <hr class="divider"/>
-
-            <h3 class="wh" style="padding: 15px;"><b>Information</b></h3>
-            <form th:action="@{/updateUserCountry}" method="post">
-                <div class="container" style="padding: 20px;" >
-                    <span class="wh b">Country</span>
-                    <input th:if="${dbUser != null}" th:name="countryInput" type="text" class="form-control input-lg" placeholder="Where are you from?" th:value="${dbUser.country}"/> <br/>
-
-                    <span class="wh b">Some info about you</span>
-                    <textarea th:if="${dbUser != null}" th:name="infoInput" type="text" class="form-control input-lg" placeholder="Some information about yourself" th:inline="text" rows="10">[[${dbUser.info}]]</textarea> <br/>
-
-                    <input type="submit" class="btn btn-inverse b" value="Submit"/>
-                </div>
-            </form>
-
-            <hr class="divider"/>
-
-            <h3 class="wh" style="padding: 15px;"><b>Projects you have applied to</b></h3>
-
-            <div class="pr-list text-center">
-                <a th:each="project: ${appliedProjects}" target="_blank" th:href="${'/projects/' + project.title}">
-                    <li class="pr-item">
-                        <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                        <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
-                        <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
-                    </li>
-                </a>
-
-                <h6 th:if="${#lists.size(dbUser.projectsAppliedTo) == 0}" class="wh">You haven't applied for any project yet</h6>
+    <div>
+        <div class="card text-center">
+            <div class="card-header">
+                <h5 class="font-weight-bold">danmoop</h5>
             </div>
+            <div class="card-body">
+                <p class="card-text" th:inline="text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
+                <p class="card-text" th:inline="text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
 
-        </div>
-
-        <div class="blue-bg">
-            <h3 class="wh" style="padding: 15px;"><b>Technologies you know</b></h3>
-            <form id="technologies" th:action="@{/updateUser}" th:object="${userObject}" method="post" style="padding: 25px;">
-
-                <div th:each="tech: ${dbUser.languagesKnows}" id="techBlock" style="text-align: left;">
-                    <input class="largeCheckbox" type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
+                <div class="row">
+                    <div class="col">
+                        Submitted <h4 th:inline="text">[[${#lists.size(dbUser.projects)}]]</h4> projects
+                    </div>
+                    <div class="col">
+                        Applied to <h4 th:inline="text">[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
+                    </div>
                 </div>
-
-                <br/>
-
-                <input type="hidden" id="userNameInput" th:field="*{username}"/>
-
-                <input onclick="alert('Saved!');" class="btn btn-inverse b text-center" type="submit" value="Save changes"/>
-            </form>
-
-            <hr class="divider"/>
-
-            <h3 class="wh" style="padding: 15px;"><b>Submit your project here!</b></h3>
-
-            <a href="/submitProject" class="btn btn-inverse b" style="margin-bottom: 50px;">Let's get started!</a>
+            </div>
         </div>
-
     </div>
 
-</section>
+    <hr />
 
-<script src="js/jquery.js"></script>
+    <h5>Technologies you know</h5>
 
+    <form th:action="@{/updateUser}" th:object="${userObject}" method="post">
+        <div class="table-striped table-responsive-md mt">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Skill name</th>
+                    <th>Possession</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tech: ${dbUser.skillList}">
+                    <td th:inline="text" class="fw-600">[[${tech.key}]]</td>
+                    <td>
+                        <div class="pretty p-default p-curve p-thick">
+                            <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/>
+                            <div class="state p-success-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Save changes" />
+    </form>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </body>
-</html>
