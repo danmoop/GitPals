@@ -96,7 +96,7 @@ public class ProjectController {
             return "error/projectDeleted";
         } else {
             model.addAttribute("AuthorObject", userService.findByUsername(project.getAuthorName()));
-            model.addAttribute("projectObject", project);
+            model.addAttribute("project", project);
 
             if (user != null) {
                 model.addAttribute("userDB", userService.findByUsername(user.getName()));
