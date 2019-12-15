@@ -57,6 +57,12 @@ public class ProjectController {
             Principal user,
             @ModelAttribute Project project,
             @RequestParam("techInput") List<String> techs) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if(user == null) {
+            return "redirect:/";
+        }
+
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
         if (projectDB == null) {
@@ -114,6 +120,12 @@ public class ProjectController {
      **/
     @PostMapping("/applyForProject")
     public String applyForProject(@RequestParam("linkInput") String link, Principal user) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if(user == null) {
+            return "redirect:/";
+        }
+
         User userForApply = userService.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
 
@@ -138,6 +150,12 @@ public class ProjectController {
      **/
     @PostMapping("/unapplyForProject")
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if(user == null) {
+            return "redirect:/";
+        }
+
         Project projectDB = projectInterface.findByTitle(link);
 
         User userDB = userService.findByUsername(user.getName());
@@ -162,11 +180,17 @@ public class ProjectController {
      **/
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if(user == null) {
+            return "redirect:/";
+        }
+
         User userDB = userService.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(projectName);
 
         // Remove project from author's projects list
-        if (userDB.getUsername().equals(project.getAuthorName())) {
+        if (userDB != null && userDB.getUsername().equals(project.getAuthorName())) {
             projectInterface.delete(project);
 
             if (userDB.getProjects().contains(project.getTitle())) {
@@ -225,7 +249,8 @@ public class ProjectController {
         } else { // false - checkbox IS NOT selected
             matchProjects = allProjects.stream()
                     .filter(project -> data.stream()
-                            .anyMatch(req -> project.getRequirements().contains(req))).collect(Collectors.toList());
+                    .anyMatch(req -> project.getRequirements().contains(req)))
+                    .collect(Collectors.toList());
         }
 
         model.addAttribute("matchProjects", matchProjects);
@@ -239,17 +264,20 @@ public class ProjectController {
      *
      * @param projectName is taken from a hidden html textfield
      * @param text        is taken from a html textfield
-     * @param principal   is assigned automatically using thymeleaf
+     * @param user   is assigned automatically using thymeleaf
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")
-    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal principal) {
+    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user) {
 
         Project project = projectInterface.findByTitle(projectName);
-        Comment comment = new Comment(principal.getName(), text);
 
-        project.getComments().add(comment);
-        projectInterface.save(project);
+        if(user != null && project != null) {
+            Comment comment = new Comment(user.getName(), text);
+
+            project.getComments().add(comment);
+            projectInterface.save(project);
+        }
 
         return "redirect:/projects/" + projectName;
     }

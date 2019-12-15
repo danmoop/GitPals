@@ -73,10 +73,11 @@ public class IndexController {
     @GetMapping("/dashboard")
     public String dashboardPage(Principal user, Model model) {
         // if user is not logged in - redirect to index
-        if (user == null)
+        if (user == null) {
             return "redirect:/";
+        }
 
-            // user is logged in
+        // user is logged in
         else {
             User userDB = userService.findByUsername(user.getName());
 
@@ -84,11 +85,10 @@ public class IndexController {
             model.addAttribute("userObject", new User());
             model.addAttribute("GithubUser", user);
 
-            List<Project> appliedToProjects = new ArrayList<>();
-
-            for (int i = 0; i < userDB.getProjectsAppliedTo().size(); i++) {
-                appliedToProjects.add(projectInterface.findByTitle(userDB.getProjectsAppliedTo().get(i)));
-            }
+            List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
+                    .stream()
+                    .map(projectName -> projectInterface.findByTitle(projectName))
+                    .collect(Collectors.toList());
 
             model.addAttribute("appliedProjects", appliedToProjects);
 
@@ -106,25 +106,6 @@ public class IndexController {
     public String logout(HttpSession httpSession){
         httpSession.invalidate();
         return "redirect:/";
-    }
-
-
-    /**
-     * This request is handled when user redirects to /about page to see some info
-     *
-     * @return about html page with some information about GitPals
-     */
-    @GetMapping("/about")
-    public String aboutPage(Model model, Principal principal) {
-        model.addAttribute("usersAmount", userService.findAll().size());
-
-        try {
-            model.addAttribute("LoggedUser", principal.getName());
-        } catch (NullPointerException e) {
-            model.addAttribute("LoggedUser", null);
-        }
-
-        return "sections/aboutPage";
     }
 
     /**

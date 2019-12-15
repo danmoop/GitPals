@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MessageController {
@@ -55,8 +56,9 @@ public class MessageController {
     @GetMapping("/sendMessage")
     public String sendMessage(Model model, Principal principal) {
         // if users are not logged in - they can't send messages -> redirect them to index page
-        if (principal == null)
+        if (principal == null) {
             return "redirect:/";
+        }
 
         return "sections/sendMessage";
     }
@@ -72,16 +74,20 @@ public class MessageController {
     @PostMapping("/messageSent")
     public String messageSent(
             Model model,
+            Principal user,
             @RequestParam("RecipientName") String username,
             @RequestParam("Content") String content) {
+
+        if(user == null) {
+            return "redirect:/";
+        }
+
         // If there is a user with such a username then we send them a message
         if (userService.findByUsername(username) != null) {
-            Message message = new Message(username, content);
-
+            Message message = new Message(user.getName(), content);
             User recipient = userService.findByUsername(username);
 
             recipient.getMessages().add(message);
-
             userService.save(recipient);
 
             return "redirect:/";
@@ -90,7 +96,6 @@ public class MessageController {
         // Otherwise, notify a user that recipient is not registered, can't send them a message
         else {
             model.addAttribute("wrongRecipient", username);
-
             return "error/recipientNotFound";
         }
 
@@ -115,10 +120,10 @@ public class MessageController {
             Message content and author are acquired from html forms,
             so if there is a match in a message list, then delete the message
          */
-        userDB.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
+        Optional<Message> msg = userDB.getMessages().stream().filter(message -> message.getAuthor().equals(author) && message.getContent().equals(content)).findFirst();
+        msg.ifPresent(message -> userDB.getMessages().remove(message));
 
         userService.save(userDB);
-
         return "redirect:/messages";
     }
 
@@ -167,23 +172,24 @@ public class MessageController {
             @RequestParam("messageContentInput") String content,
             @RequestParam("messageAuthorInput") String author,
             Principal user) {
-        // Manipulate with admin - remove report bug message
 
+        // Manipulate with admin - remove report bug message
         User admin = userService.findByUsername(user.getName());
-        admin.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
+
+        Optional<Message> msg = admin.getMessages().stream().filter(message -> message.getAuthor().equals(author) && message.getContent().equals(content)).findFirst();
+        msg.ifPresent(message -> admin.getMessages().remove(message));
+
         userService.save(admin);
 
-
         // Manipulate with bug reporter - send them a thank-you message
-
         User bugReportAuthor = userService.findByUsername(author);
 
-        Message msg = new Message(
+        Message message = new Message(
                 "danmoop",
                 "Thanks for your previous bug report! The problem is fixed!"
         );
 
-        bugReportAuthor.getMessages().add(msg);
+        bugReportAuthor.getMessages().add(message);
 
         userService.save(bugReportAuthor);
 

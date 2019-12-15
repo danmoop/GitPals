@@ -4,7 +4,9 @@ import com.moople.gitpals.MainApplication.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserServiceInterface {
@@ -24,7 +26,10 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public List<User> findBySkillList(List<String> skills) {
-        return null;
+        return userInterface.findAll()
+                .stream()
+                .filter(user -> user.getSkillList() == skills)
+                .collect(Collectors.toList());
     }
 
     @Override

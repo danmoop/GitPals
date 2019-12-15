@@ -34,16 +34,17 @@ public class UserController {
      * @return user's dashboard html page with all the data about the user
      **/
     @GetMapping("/users/{username}")
-    public String findUser(@PathVariable String username, Model model, Principal principal) {
-        User user = userService.findByUsername(username);
+    public String findUser(@PathVariable String username, Model model, Principal user) {
+
+        User userDB = userService.findByUsername(username);
 
         if (user != null) {
-            List<Project> appliedToProjects = user.getProjectsAppliedTo().stream()
+            List<Project> appliedToProjects = userDB.getProjectsAppliedTo().stream()
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
 
             try {
-                model.addAttribute("LoggedUser", principal.getName());
+                model.addAttribute("LoggedUser", user.getName());
             } catch (NullPointerException e) {
                 model.addAttribute("LoggedUser", null);
             }
@@ -67,17 +68,21 @@ public class UserController {
      **/
     @PostMapping("/updateUser")
     public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs) {
+
+        if(user == null) {
+            return "redirect:/";
+        }
+
         User userFromDB = userService.findByUsername(user.getName());
 
         Map<String, Boolean> allTechs = userFromDB.getSkillList();
 
-        for (Map.Entry<String, Boolean> entry : allTechs.entrySet()) {
-            allTechs.put(entry.getKey(), false);
-        }
+        allTechs.replaceAll((k, v) -> false);
 
         for (String item : techs) {
-            if (allTechs.get(item) != null)
+            if (allTechs.get(item) != null) {
                 allTechs.put(item, true);
+            }
         }
 
         userService.save(userFromDB);
@@ -99,6 +104,11 @@ public class UserController {
             @RequestParam("countryInput") String country,
             @RequestParam("infoInput") String info,
             Principal user) {
+
+        if(user == null) {
+            return "redirect:/";
+        }
+
         User userInDB = userService.findByUsername(user.getName());
 
         userService.save(userInDB);
