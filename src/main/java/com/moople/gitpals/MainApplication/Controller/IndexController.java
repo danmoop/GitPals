@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,13 +52,25 @@ public class IndexController {
             model.addAttribute("userDB", userService.findByUsername(user.getName()));
         }
 
-        // Show the most recent projects (only 50)
-        List<Project> projects = projectInterface.findAll().stream()
-                .limit(50).collect(Collectors.toList());
+        int projectsAmount = projectInterface.findAll().size();
+        List<Project> projects;
+
+        if(projectsAmount <= 50) {
+            projects = projectInterface.findAll();
+        } else {
+            // Show the most recent projects (only 50)
+            projects = projectInterface.findAll()
+                    .stream()
+                    .skip(projectInterface.findAll().size() - 50)
+                    .collect(Collectors.toList());
+
+        }
+
+        Collections.reverse(projects);
 
         model.addAttribute("projectTechs", Data.technologiesMap);
         model.addAttribute("projects", projects);
-        model.addAttribute("totalProjectsAmount", projectInterface.findAll().size());
+        model.addAttribute("totalProjectsAmount", projectsAmount);
         model.addAttribute("usersRegistered", userService.findAll().size());
 
         return "sections/index";
@@ -103,7 +115,7 @@ public class IndexController {
      * @return html index page with logged-out user
      */
     @GetMapping("/signout")
-    public String logout(HttpSession httpSession){
+    public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
     }
@@ -120,6 +132,7 @@ public class IndexController {
 
     /**
      * This request is handled when user wants to see a guide about submitting a project
+     *
      * @return html page where users can read some advices about submitting a project
      */
     @GetMapping("/guide/how-to-create-a-good-description-for-my-project")

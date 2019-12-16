@@ -80,3 +80,13 @@ h1,h2,h3,h4,h5,h6,p {
 .success {
     color: #17C671;
 }
+
+svg:hover * {
+     transition: 0.1s;
+     stroke: #333;
+     fill: #bdc3c7;
+}
+
+svg:not(:hover) * {
+    transition: 0.1s;
+}

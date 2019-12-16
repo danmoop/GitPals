@@ -69,7 +69,7 @@ public class UserController {
     @PostMapping("/updateUser")
     public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs) {
 
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 
@@ -105,7 +105,7 @@ public class UserController {
             @RequestParam("infoInput") String info,
             Principal user) {
 
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 

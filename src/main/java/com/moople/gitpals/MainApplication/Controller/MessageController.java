@@ -78,7 +78,7 @@ public class MessageController {
             @RequestParam("RecipientName") String username,
             @RequestParam("Content") String content) {
 
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 
@@ -106,7 +106,7 @@ public class MessageController {
      * Message will be deleted and changed will be saved
      *
      * @param content & author are taken from hidden html textfields,
-     *        which values are assigned automatically by thymeleaf
+     *                which values are assigned automatically by thymeleaf
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/deleteMessage")
@@ -162,9 +162,8 @@ public class MessageController {
      * The user who sent that bug will be notified about fix
      *
      * @param content & author are taken from hidden html textfields,
-     * which values are assigned automatically by thymeleaf
-     * It is similar to deleteMessage function, but there is an auto message that is sent to bug reporter
-     *
+     *                which values are assigned automatically by thymeleaf
+     *                It is similar to deleteMessage function, but there is an auto message that is sent to bug reporter
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/bugReportFixed")

@@ -72,9 +72,9 @@ public class SearchController {
 
     /**
      * This request is handled when user wants to find users who know specific skills
-     * @param skills is a list of skills required
-     * @param model is assigned automatically, that's where the data goes
      *
+     * @param skills is a list of skills required
+     * @param model  is assigned automatically, that's where the data goes
      * @return page where all the users are displayed
      */
     @PostMapping("/findUsersBySkills")

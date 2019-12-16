@@ -59,7 +59,7 @@ public class ProjectController {
             @RequestParam("techInput") List<String> techs) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 
@@ -122,7 +122,7 @@ public class ProjectController {
     public String applyForProject(@RequestParam("linkInput") String link, Principal user) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 
@@ -152,7 +152,7 @@ public class ProjectController {
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 
@@ -182,7 +182,7 @@ public class ProjectController {
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if(user == null) {
+        if (user == null) {
             return "redirect:/";
         }
 
@@ -249,7 +249,7 @@ public class ProjectController {
         } else { // false - checkbox IS NOT selected
             matchProjects = allProjects.stream()
                     .filter(project -> data.stream()
-                    .anyMatch(req -> project.getRequirements().contains(req)))
+                            .anyMatch(req -> project.getRequirements().contains(req)))
                     .collect(Collectors.toList());
         }
 
@@ -264,7 +264,7 @@ public class ProjectController {
      *
      * @param projectName is taken from a hidden html textfield
      * @param text        is taken from a html textfield
-     * @param user   is assigned automatically using thymeleaf
+     * @param user        is assigned automatically using thymeleaf
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")
@@ -272,7 +272,7 @@ public class ProjectController {
 
         Project project = projectInterface.findByTitle(projectName);
 
-        if(user != null && project != null) {
+        if (user != null && project != null) {
             Comment comment = new Comment(user.getName(), text);
 
             project.getComments().add(comment);

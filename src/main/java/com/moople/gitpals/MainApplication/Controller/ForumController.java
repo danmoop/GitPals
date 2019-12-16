@@ -6,10 +6,7 @@ import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -58,7 +55,7 @@ public class ForumController {
     public String getForumPost(@PathVariable("key") String key, Principal principal, Model model) {
         ForumPost post = forumInterface.findByKey(key);
 
-        if(post == null) {
+        if (post == null) {
             return "redirect:/forum";
         }
 
@@ -76,7 +73,7 @@ public class ForumController {
      * This request is handled when user submits their forum post and it is added to forum
      *
      * @param principal is assigned automatically using spring
-     * @param content is taken from html input, it is post's description
+     * @param content   is taken from html input, it is post's description
      * @return forum post page
      */
     @PostMapping("/addForumPost")
@@ -91,9 +88,9 @@ public class ForumController {
      * This request is handled when user sends their comments to a forum post
      * A comment will be added and changed will be saved to database
      *
-     * @param principal is a user session, assigned automatically
+     * @param principal   is a user session, assigned automatically
      * @param commentText is a comment text, taken from html input field
-     * @param postKey is a forum post's key, taken from a hidden html input field, assigned by thymeleaf
+     * @param postKey     is a forum post's key, taken from a hidden html input field, assigned by thymeleaf
      * @return forum post page
      */
     @PostMapping("/addCommentToPost")

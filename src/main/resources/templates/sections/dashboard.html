@@ -15,91 +15,89 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <a class="navbar-brand" href="/">
-        <img src="./images/logo.png" class="mr-2" height="30">GitPals
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your dashboard</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
-                    <a class="dropdown-item" href="/submitProject">
-                        <i class="fa fa-wrench"></i> Submit a project
-                    </a>
-                    <a class="dropdown-item" href="/sign-out">
-                        <i class="fa fa-sign-out"></i> Log Out
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container text-center">
-
-    <div>
-        <div class="card text-center">
-            <div class="card-header">
-                <h5 class="font-weight-bold">danmoop</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
-                <p class="card-text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
-
-                <div class="row">
-                    <div class="col">
-                        Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <a class="navbar-brand" href="/">
+            <img src="./images/logo.png" class="mr-2" height="30">GitPals
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your dashboard</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                        <a class="dropdown-item" href="/submitProject">
+                            <i class="fa fa-wrench"></i> Submit a project
+                        </a>
+                        <a class="dropdown-item" href="/sign-out">
+                            <i class="fa fa-sign-out"></i> Log Out
+                        </a>
                     </div>
-                    <div class="col">
-                        Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
-                    </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
 
-    <hr />
+    <div class="container text-center">
 
-    <h5>Technologies you know</h5>
+        <div>
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="font-weight-bold">danmoop</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
+                    <p class="card-text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
 
-    <form th:action="@{/updateUser}" th:object="${userObject}" method="post">
-        <div class="table-striped table-responsive-md mt">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Skill name</th>
-                    <th>Possession</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="tech: ${dbUser.skillList}">
-                    <td class="fw-600">[[${tech.key}]]</td>
-                    <td>
-                        <div class="pretty p-default p-curve p-thick">
-                            <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/>
-                            <div class="state p-success-o">
-                                <label></label>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects
                         </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <div class="col">
+                            Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Save changes" />
-    </form>
-</div>
+        <hr />
 
+        <h5>Technologies you know</h5>
 
+        <form th:action="@{/updateUser}" th:object="${userObject}" method="post">
+            <div class="table-striped table-responsive-md mt">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Skill name</th>
+                        <th>Possession</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tech: ${dbUser.skillList}">
+                        <td class="fw-600">[[${tech.key}]]</td>
+                        <td>
+                            <div class="pretty p-default p-curve p-thick">
+                                <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/>
+                                <div class="state p-success-o">
+                                    <label></label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-</script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-</script>
-<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+            <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Save changes" />
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </body>

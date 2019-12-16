@@ -28,7 +28,7 @@ public class MessageAPIController {
 
         User user = userInterface.findByUsername(username);
 
-        if(user != null) {
+        if (user != null) {
             return user.getMessages();
         }
 

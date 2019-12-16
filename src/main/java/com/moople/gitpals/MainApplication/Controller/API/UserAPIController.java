@@ -32,7 +32,7 @@ public class UserAPIController {
     public User getUser(@PathVariable("username") String username) {
         User user = userInterface.findByUsername(username);
 
-        if(user != null) {
+        if (user != null) {
             return user;
         }
 
@@ -43,8 +43,7 @@ public class UserAPIController {
      * This request handles user's info change
      *
      * @param map is a data object sent from frontend, contains new user's
-     * techs list, updated country and info
-     *
+     *            techs list, updated country and info
      * @return response whether info has been updated
      */
     @PostMapping("/updateUser")
@@ -57,7 +56,7 @@ public class UserAPIController {
 
         User user = userInterface.findByUsername(username);
 
-        if(user != null) {
+        if (user != null) {
             user.setSkillList(techs);
             return Response.OK;
         }
