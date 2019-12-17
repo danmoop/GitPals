@@ -101,7 +101,6 @@ public class ProjectController {
         if (project == null) {
             return "error/projectDeleted";
         } else {
-            model.addAttribute("AuthorObject", userService.findByUsername(project.getAuthorName()));
             model.addAttribute("project", project);
 
             if (user != null) {
@@ -206,7 +205,7 @@ public class ProjectController {
                     .collect(Collectors.toList());
 
             // Every applied user will receive a message about project deletion
-            Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted");
+            Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted", Message.TYPE.INBOX_MESSAGE);
 
             for (User _user : allUsers) {
                 _user.getProjectsAppliedTo().remove(project.getTitle());

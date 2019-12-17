@@ -6,6 +6,7 @@ import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,9 +34,11 @@ public class IndexController {
      * @return html index page with a list of projects and TECHS
      */
     @GetMapping("/")
-    public String indexPage(Principal user, Model model) {
+    public String indexPage(OAuth2Authentication user, Model model) {
         // If we are logged in, display information about us on the index page
         if (user != null) {
+            LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) user.getUserAuthentication().getDetails();
+
             model.addAttribute("GithubUser", user);
 
             // If we are logged in but there is no our user object in database, save it
@@ -44,7 +48,8 @@ public class IndexController {
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                Data.technologiesMap
+                                Data.technologiesMap,
+                                properties.get("email").toString()
                         )
                 );
             }

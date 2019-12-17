@@ -1,10 +1,13 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +25,12 @@ public class AdminController {
     @Autowired
     private ProjectInterface projectService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     /**
+     * This function returns admin page if you are an admin
+     *
      * @param admin is a current admin authentication
      * @return admin page if username matches and authenticated
      */
@@ -36,10 +44,11 @@ public class AdminController {
     }
 
     /**
+     * This function return a list of all users registered
+     *
      * @param admin is a current admin authentication
      * @param model is where we store the data and send it to html page
      * @return list of all users registered
-     *
      */
     @PostMapping("/getAllUsers")
     public String getAllUsers(Principal admin, Model model) {
@@ -53,8 +62,10 @@ public class AdminController {
     }
 
     /**
-     * @param admin is a current admin authentication
-     * @param model is where we store the data and send it to html page
+     * This function returns an information some user
+     *
+     * @param admin    is a current admin authentication
+     * @param model    is where we store the data and send it to html page
      * @param username is a user who we want to get information about
      * @return information about this user
      */
@@ -76,13 +87,15 @@ public class AdminController {
     }
 
     /**
+     * This function returns a list of all added projects
+     *
      * @param admin is a current admin authentication
      * @param model is where we store the data and send it to html page
      * @return all the projects added
      */
-    @GetMapping("/getAllProjects")
+    @PostMapping("/getAllProjects")
     public String getAllProjects(Principal admin, Model model) {
-        if(admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
             return "redirect:/";
         }
 
@@ -92,25 +105,91 @@ public class AdminController {
     }
 
     /**
-     * @param admin is a current admin authentication
-     * @param model is where we store the data and send it to html page
+     * This function returns an information about some project
+     *
+     * @param admin       is a current admin authentication
+     * @param model       is where we store the data and send it to html page
      * @param projectName is a project we want to get information about
      * @return information about the project
      */
     @PostMapping("/getProjectInfo")
     public String getProjectInfo(@RequestParam("projectName") String projectName, Principal admin, Model model) {
-        if(admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
             return "redirect:/";
         }
 
         Project project = projectService.findByTitle(projectName);
 
-        if(project == null) {
+        if (project == null) {
             model.addAttribute("project", projectName + " is not found");
         } else {
             model.addAttribute("project", project.toString());
         }
 
         return "sections/admin";
+    }
+
+    /**
+     * This function will send mail to every user in the system
+     *
+     * @param admin   is an admin principal object
+     * @param subject is a mail letter subject
+     * @param text    is a mail letter content
+     * @return admin page
+     */
+    @PostMapping("/sendMailToEveryone")
+    public String sendMailToEveryone(
+            Principal admin,
+            @RequestParam("subject") String subject,
+            @RequestParam("text") String text
+    ) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        for (User user : userService.findAll()) {
+            if (user.isNotificationsEnabled()) {
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
+                mailMessage.setTo(user.getEmail());
+                mailMessage.setSubject(subject);
+                mailMessage.setText(text);
+                mailSender.send(mailMessage);
+            }
+        }
+
+        return "redirect:/admin";
+    }
+
+    /**
+     * This function sends a message to everyone registered in the system
+     *
+     * @see Message
+     * @param admin is an admin principal object
+     * @param text  is a content of the message
+     * @return admin page
+     */
+    @PostMapping("/sendMessageToEveryone")
+    public String sendMessage(Principal admin, @RequestParam("text") String text) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        Message message = new Message(admin.getName(), text, Message.TYPE.INBOX_MESSAGE);
+
+        for (User user : userService.findAll()) {
+            user.getMessages().add(message);
+
+            if (user.isNotificationsEnabled()) {
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
+                mailMessage.setTo(user.getEmail());
+                mailMessage.setSubject("You got a message on GitPals");
+                mailMessage.setText("A message from " + admin.getName() + ": " + message.getContent());
+                mailSender.send(mailMessage);
+            }
+
+            userService.save(user);
+        }
+
+        return "redirect:/admin";
     }
 }

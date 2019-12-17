@@ -90,3 +90,9 @@ svg:hover * {
 svg:not(:hover) * {
     transition: 0.1s;
 }
+
+.danger-zone {
+    border: 2px solid #C4183C;
+    padding: 15px;
+    border-radius: 15px;
+}

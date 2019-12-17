@@ -11,13 +11,17 @@ public class Message {
     private String author;
     private String content;
     private String timeStamp;
-    private boolean isBugReport;
+    private TYPE type;
 
-    public Message(String author, String content) {
+    public Message(String author, String content, TYPE type) {
         this.author = author;
         this.content = content;
-        this.isBugReport = false;
+        this.type = type;
 
         this.timeStamp = new Date().toString();
+    }
+
+    public enum TYPE {
+        BUG_REPORT, PROJECT_INVITATION, INBOX_MESSAGE
     }
 }

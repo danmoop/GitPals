@@ -89,6 +89,11 @@
                 </table>
             </div>
 
+            <div class="custom-control custom-toggle my-2">
+                <input type="checkbox" th:name="notificationBool" id="customToggle1" class="custom-control-input" th:checked="${dbUser.notificationsEnabled}" />
+                <label class="custom-control-label" for="customToggle1" style="float: left;">Getting notifications on email</label>
+            </div>
+
             <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Save changes" />
         </form>
     </div>

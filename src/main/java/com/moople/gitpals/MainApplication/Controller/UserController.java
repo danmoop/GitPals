@@ -67,15 +67,19 @@ public class UserController {
      * @return redirect to the same page with new data
      **/
     @PostMapping("/updateUser")
-    public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs) {
+    public String updateTechs(
+            Principal user,
+            @RequestParam("techCheckbox") List<String> techs,
+            @RequestParam(value = "notificationBool", required = false) boolean notificationBool
+    ) {
 
         if (user == null) {
             return "redirect:/";
         }
 
-        User userFromDB = userService.findByUsername(user.getName());
+        User userDB = userService.findByUsername(user.getName());
 
-        Map<String, Boolean> allTechs = userFromDB.getSkillList();
+        Map<String, Boolean> allTechs = userDB.getSkillList();
 
         allTechs.replaceAll((k, v) -> false);
 
@@ -85,7 +89,9 @@ public class UserController {
             }
         }
 
-        userService.save(userFromDB);
+        userDB.setNotificationsEnabled(notificationBool);
+
+        userService.save(userDB);
 
         return "redirect:/dashboard";
     }

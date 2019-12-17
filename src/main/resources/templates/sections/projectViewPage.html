@@ -69,6 +69,15 @@
                         </form>
                     </div>
 
+                    <div class="danger-zone" th:if="${userDB != null && userDB.username == project.authorName}">
+                        <h5>Danger Zone</h5>
+
+                        <form th:action="@{/deleteProject}" th:if="${userDB != null && userDB.username == project.authorName}" method="post">
+                            <input type="submit" class="btn btn-danger btn-pill mt" value="Delete Project" onclick="return confirm('Are you sure?')"/>
+                            <input type="hidden" th:name="projectName" th:value="${project.title}"/>
+                        </form>
+                    </div>
+
                     <br/><hr/>
                     <div class="fw-600">
                         Comment section

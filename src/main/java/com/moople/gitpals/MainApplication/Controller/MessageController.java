@@ -4,6 +4,8 @@ import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,9 @@ public class MessageController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     /**
      * This request is handled when user wants to see their messages
@@ -84,11 +89,23 @@ public class MessageController {
 
         // If there is a user with such a username then we send them a message
         if (userService.findByUsername(username) != null) {
-            Message message = new Message(user.getName(), content);
+            Message message = new Message(user.getName(), content, Message.TYPE.INBOX_MESSAGE);
             User recipient = userService.findByUsername(username);
 
             recipient.getMessages().add(message);
             userService.save(recipient);
+
+            /*
+            * When you get a message within GitPals, you might be notified on your
+            * email if you have that setting enabled
+            */
+            if (recipient.isNotificationsEnabled()) {
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
+                mailMessage.setTo(recipient.getEmail());
+                mailMessage.setSubject("You got a message on GitPals");
+                mailMessage.setText("A message from " + user.getName() + ": " + message.getContent());
+                mailSender.send(mailMessage);
+            }
 
             return "redirect:/";
         }
@@ -142,12 +159,7 @@ public class MessageController {
 
             String author = user.getName();
 
-            Message msg = new Message(
-                    author,
-                    message
-            );
-
-            msg.setBugReport(true);
+            Message msg = new Message(author, message, Message.TYPE.BUG_REPORT);
 
             admin.getMessages().add(msg);
 
@@ -185,7 +197,8 @@ public class MessageController {
 
         Message message = new Message(
                 "danmoop",
-                "Thanks for your previous bug report! The problem is fixed!"
+                "Thanks for your previous bug report! The problem is fixed!",
+                Message.TYPE.INBOX_MESSAGE
         );
 
         bugReportAuthor.getMessages().add(message);

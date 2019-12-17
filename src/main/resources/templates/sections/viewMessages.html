@@ -32,9 +32,9 @@
         <li class="pr-item" style="width: 100%;">
 
             <header class="text-center">
-                <h6 th:classappend="${message.bugReport} ? pr-title-bug : pr-title">
-                    <span th:inline="text" th:if="${!message.bugReport}">A message by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
-                    <span th:inline="text" th:if="${message.bugReport}">A bug report by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
+                <h6 th:classappend="${message.type == 'BUG_REPORT'} ? pr-title-bug : pr-title">
+                    <span th:inline="text" th:if="${message.type != 'BUG_REPORT'}">A message by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
+                    <span th:inline="text" th:if="${message.type == 'BUG_REPORT'}">A bug report by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
                 </h6>
             </header>
 
@@ -42,13 +42,13 @@
 
             <hr class="divider" />
 
-            <form th:if="${!message.bugReport}" th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
+            <form th:if="${message.type != 'BUG_REPORT'}" th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
                 <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
                 <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
                 <input type="submit" class="btn btn-danger wh b" value="Delete"/>
             </form>
 
-            <div class="row" th:if="${message.bugReport}">
+            <div class="row" th:if="${message.type == 'BUG_REPORT'}">
                 <div class="col-sm-6">
                     <form th:action="@{/bugReportFixed}" method="post" class="text-center" style="padding: 15px;">
                         <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />

@@ -36,30 +36,79 @@
             </div>
         </nav>
 
-        <div class="row text-center">
-            <div class="col">
-                <h4>Get all users</h4>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <h4>Get all users</h4>
 
-                <form th:action="@{/getAllUsers}" method="post">
-                    <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
-                </form>
+                    <form th:action="@{/getAllUsers}" method="post">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
 
-                <ul th:if="${users != null}" style="list-style: none; padding-left: 0;">
-                    <li th:each="user: ${users}">
-                        <span class="fw-600">[[${user.username}]]</span>
-                    </li>
-                </ul>
+                    <ul th:if="${users != null}" style="list-style: none; padding-left: 0;">
+                        <li th:each="user: ${users}">
+                            <span class="fw-600">[[${user.username}]]</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>Get specific user</h4>
+
+                    <form th:action="@{/getUserInfo}" method="post">
+                        <input type="text" th:name="userName" class="form-control" placeholder="User" style="margin: 15px;">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <span class="fw-600" th:if="${user != null}">[[${user}]]</span>
+                </div>
             </div>
-            <div class="col">
-                <h4>Get specific user</h4>
 
-                <form th:action="@{/getUserInfo}" method="post">
-                    <input type="text" th:name="userName" class="form-control" placeholder="User" style="margin: 15px;">
-                    <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
-                </form>
+            <hr/>
 
-                <span class="fw-600" th:if="${user != null}">[[${user}]]</span>
+            <div class="row text-center">
+                <div class="col">
+                    <h4>Get all projects</h4>
+
+                    <form th:action="@{/getAllProjects}" method="post">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <ul th:if="${projects != null}" style="list-style: none; padding-left: 0;">
+                        <li th:each="project: ${projects}">
+                            <span class="fw-600">[[${project.title}]]</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>Get specific project</h4>
+
+                    <form th:action="@{/getProjectInfo}" method="post">
+                        <input type="text" th:name="projectName" class="form-control" placeholder="Project name" style="margin: 15px;">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <span class="fw-600" th:if="${project != null}">[[${project}]]</span>
+                </div>
             </div>
+
+            <hr/>
+
+            <form th:action="@{/sendMailToEveryone}" class="text-center" method="post">
+                <h4>Send Mail to everyone</h4>
+
+                <input type="text" th:name="subject" class="form-control mt" placeholder="Subject" />
+                <input type="text" th:name="text" class="form-control mt" placeholder="Text" />
+                <input class="btn btn-secondary btn-sm borderBtn mt" type="submit" value="Send" />
+            </form>
+
+            <hr/>
+
+            <form class="text-center mt" th:action="@{/sendMessageToEveryone}" method="post">
+                <h4>Send GitPals message to everyone</h4>
+
+                <input type="text" th:name="text" class="form-control mt" placeholder="Text" .>
+                <input type="submit" class="btn btn-secondary btn-sm borderBtn mt" value="Send" />
+            </form>
         </div>
     </body>
 </html>
