@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -56,11 +57,17 @@ public class ProjectController {
     public String projectSubmitted(
             Principal user,
             @ModelAttribute Project project,
-            @RequestParam("techInput") List<String> techs) {
+            @RequestParam(value = "techInput", required = false) List<String> techs,
+            RedirectAttributes redirectAttributes) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
         if (user == null) {
             return "redirect:/";
+        }
+
+        if (techs == null) {
+            redirectAttributes.addFlashAttribute("warning", "Your project should have some requirements");
+            return "redirect:/submitProject";
         }
 
         Project projectDB = projectInterface.findByTitle(project.getTitle());

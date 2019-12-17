@@ -39,7 +39,8 @@ public class UserController {
         User userDB = userService.findByUsername(username);
 
         if (user != null) {
-            List<Project> appliedToProjects = userDB.getProjectsAppliedTo().stream()
+            List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
+                    .stream()
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
 
@@ -69,10 +70,9 @@ public class UserController {
     @PostMapping("/updateUser")
     public String updateTechs(
             Principal user,
-            @RequestParam("techCheckbox") List<String> techs,
+            @RequestParam(value = "techCheckbox", required = false) List<String> techs,
             @RequestParam(value = "notificationBool", required = false) boolean notificationBool
     ) {
-
         if (user == null) {
             return "redirect:/";
         }
@@ -80,44 +80,19 @@ public class UserController {
         User userDB = userService.findByUsername(user.getName());
 
         Map<String, Boolean> allTechs = userDB.getSkillList();
-
         allTechs.replaceAll((k, v) -> false);
 
-        for (String item : techs) {
-            if (allTechs.get(item) != null) {
-                allTechs.put(item, true);
+        if (techs != null) {
+            for (String item : techs) {
+                if (allTechs.get(item) != null) {
+                    allTechs.put(item, true);
+                }
             }
         }
 
         userDB.setNotificationsEnabled(notificationBool);
 
         userService.save(userDB);
-
-        return "redirect:/dashboard";
-    }
-
-
-    /**
-     * This request is handled when user wants to change
-     * their country and bio in the dashboard
-     *
-     * @param country & info are taken from html input fields
-     * @param user    user is used to find user in database, set new country & info
-     * @return redirect to the same page with new data
-     **/
-    @PostMapping("/updateUserCountry")
-    public String updateCountry(
-            @RequestParam("countryInput") String country,
-            @RequestParam("infoInput") String info,
-            Principal user) {
-
-        if (user == null) {
-            return "redirect:/";
-        }
-
-        User userInDB = userService.findByUsername(user.getName());
-
-        userService.save(userInDB);
 
         return "redirect:/dashboard";
     }

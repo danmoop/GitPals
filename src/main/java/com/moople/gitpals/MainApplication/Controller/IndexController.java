@@ -68,7 +68,6 @@ public class IndexController {
                     .stream()
                     .skip(projectInterface.findAll().size() - 50)
                     .collect(Collectors.toList());
-
         }
 
         Collections.reverse(projects);

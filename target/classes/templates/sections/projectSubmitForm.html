@@ -33,6 +33,8 @@
         <h2>Submit your project!</h2>
         <p>Give some information about your project. What is this project? What technologies does it use? Describe your knowledge and mention what you expect to get from the audience.</p>
 
+        <h5 th:if="${warning}" class="danger font-weight-bold">[[${warning}]]!</h5>
+
         <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
             <input type="text" th:field="*{title}" class="form-control" placeholder="Project title" style="margin: 15px;">
 

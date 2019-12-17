@@ -32,7 +32,17 @@
         <div class="mt">
             <div class="card">
                 <div class="card-header fw-600">
-                    <span>[[${project.title}]] by [[${project.authorName}]]</span>
+                    <div class="row">
+                        <div class="col">
+                            <span>[[${project.title}]] by [[${project.authorName}]]</span>
+                        </div>
+                        <div class="col">
+                            <form th:action="@{/deleteProject}" th:if="${userDB != null && userDB.username == project.authorName}" method="post" style="float:right;">
+                                <input type="submit" class="btn btn-outline-danger btn-pill btn-sm fw-600" value="Delete Project" onclick="return confirm('Are you sure?')"/>
+                                <input type="hidden" th:name="projectName" th:value="${project.title}"/>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="fw-600">
@@ -61,20 +71,11 @@
                     <div class="row">
                         <form class="m" th:action="@{/applyForProject}" th:if="${userDB != null}" method="post" >
                             <input type="hidden" th:name="linkInput" th:value="${project.title}"/>
-                            <input type="submit" class="btn btn-success btn-pill mt" value="Apply" />
+                            <input type="submit" class="btn btn-success btn-pill btn-sm mt" value="Apply" />
                         </form>
                         <form class="m" th:action="@{/unapplyForProject}" th:if="${userDB != null}" method="post">
                             <input type="hidden" th:name="linkInput" th:value="${project.title}"/>
-                            <input type="submit" class="btn btn-danger btn-pill mt" value="Unapply" />
-                        </form>
-                    </div>
-
-                    <div class="danger-zone" th:if="${userDB != null && userDB.username == project.authorName}">
-                        <h5>Danger Zone</h5>
-
-                        <form th:action="@{/deleteProject}" th:if="${userDB != null && userDB.username == project.authorName}" method="post">
-                            <input type="submit" class="btn btn-danger btn-pill mt" value="Delete Project" onclick="return confirm('Are you sure?')"/>
-                            <input type="hidden" th:name="projectName" th:value="${project.title}"/>
+                            <input type="submit" class="btn btn-danger btn-pill btn-sm mt" value="Unapply" />
                         </form>
                     </div>
 

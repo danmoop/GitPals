@@ -54,6 +54,9 @@
                     <a class="dropdown-item" href="/dashboard">
                         <i class="fa fa-user-circle"></i> Dashboard
                     </a>
+                    <a class="dropdown-item" href="/submitProject">
+                        <i class="fa fa-wrench"></i> Submit a project
+                    </a>
                     <a class="dropdown-item" href="/admin" th:if="${GithubUser.userAuthentication.details.login == 'danmoop'}">
                         <i class="fa fa-globe"></i> Admin Page
                     </a>
@@ -102,7 +105,7 @@
             </div>
         </div>
         <hr>
-        <h4>Explore the most 50 recent projects published</h4>
+        <h4>Explore the most 50 recent projects published (Total published: [[${totalProjectsAmount}]])</h4>
         <p th:if="${#lists.size(projects) == 0}">No projects published yet</p>
         <a href="/submitProject">
             <button type="button" class="btn btn-info btn-sm borderBtn fw-600" th:if="${GithubUser != null}">Submit Project</button>
