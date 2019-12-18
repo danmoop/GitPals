@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class Response {
+
     private Status status;
 
     public Response(Status status) {

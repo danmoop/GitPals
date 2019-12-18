@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class Comment {
+
     private String author;
     private String text;
     private String timeStamp;

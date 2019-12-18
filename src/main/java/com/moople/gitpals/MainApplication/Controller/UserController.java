@@ -38,6 +38,8 @@ public class UserController {
 
         User userDB = userService.findByUsername(username);
 
+        System.out.println(userDB);
+
         if (user != null) {
             List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
                     .stream()

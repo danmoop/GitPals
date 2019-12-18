@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class Message {
+
     private String author;
     private String content;
     private String timeStamp;

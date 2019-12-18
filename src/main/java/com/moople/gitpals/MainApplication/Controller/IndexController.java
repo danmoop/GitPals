@@ -49,12 +49,28 @@ public class IndexController {
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
                                 Data.technologiesMap,
-                                properties.get("email").toString()
+                                properties.get("email").toString(),
+                                properties.get("location").toString(),
+                                properties.get("bio").toString()
                         )
                 );
             }
 
-            model.addAttribute("userDB", userService.findByUsername(user.getName()));
+            User userDB = userService.findByUsername(user.getName());
+
+            if(!properties.get("email").toString().equals(userDB.getEmail())) {
+                userDB.setEmail(properties.get("email").toString());
+            }
+            if(!properties.get("location").toString().equals(userDB.getCountry())) {
+                userDB.setCountry(properties.get("location").toString());
+            }
+            if(!properties.get("bio").toString().equals(userDB.getBio())) {
+                userDB.setBio(properties.get("bio").toString());
+            }
+
+            userService.save(userDB);
+
+            model.addAttribute("userDB", userDB);
         }
 
         int projectsAmount = projectInterface.findAll().size();
