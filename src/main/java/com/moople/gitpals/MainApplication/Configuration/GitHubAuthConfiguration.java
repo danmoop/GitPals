@@ -13,6 +13,7 @@ import java.util.Properties;
 @Configuration
 @EnableOAuth2Sso
 public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()

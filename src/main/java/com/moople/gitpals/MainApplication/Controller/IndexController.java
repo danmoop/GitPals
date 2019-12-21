@@ -58,17 +58,14 @@ public class IndexController {
 
             User userDB = userService.findByUsername(user.getName());
 
-            if(!properties.get("email").toString().equals(userDB.getEmail())) {
+            // When user changes their info on GitHub, they change here as well
+            if (userDataWasChanged(userDB, properties)) {
                 userDB.setEmail(properties.get("email").toString());
-            }
-            if(!properties.get("location").toString().equals(userDB.getCountry())) {
-                userDB.setCountry(properties.get("location").toString());
-            }
-            if(!properties.get("bio").toString().equals(userDB.getBio())) {
                 userDB.setBio(properties.get("bio").toString());
-            }
+                userDB.setCountry(properties.get("location").toString());
 
-            userService.save(userDB);
+                userService.save(userDB);
+            }
 
             model.addAttribute("userDB", userDB);
         }
@@ -76,7 +73,7 @@ public class IndexController {
         int projectsAmount = projectInterface.findAll().size();
         List<Project> projects;
 
-        if(projectsAmount <= 50) {
+        if (projectsAmount <= 50) {
             projects = projectInterface.findAll();
         } else {
             // Show the most recent projects (only 50)
@@ -122,8 +119,6 @@ public class IndexController {
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
 
-            model.addAttribute("appliedProjects", appliedToProjects);
-
             return "sections/dashboard";
         }
     }
@@ -158,5 +153,11 @@ public class IndexController {
     @GetMapping("/guide/how-to-create-a-good-description-for-my-project")
     public String goodDescriptionGuidwe() {
         return "guide/goodProjDescription";
+    }
+
+    private boolean userDataWasChanged(User userDB, LinkedHashMap<String, Object> properties) {
+        return !properties.get("email").toString().equals(userDB.getEmail())
+                || !properties.get("bio").toString().equals(userDB.getBio())
+                || !properties.get("location").toString().equals(userDB.getCountry());
     }
 }

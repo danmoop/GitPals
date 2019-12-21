@@ -35,12 +35,9 @@ public class UserController {
      **/
     @GetMapping("/users/{username}")
     public String findUser(@PathVariable String username, Model model, Principal user) {
-
         User userDB = userService.findByUsername(username);
 
-        System.out.println(userDB);
-
-        if (user != null) {
+        if (userDB != null) {
             List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
                     .stream()
                     .map(projectName -> projectInterface.findByTitle(projectName))
@@ -53,7 +50,6 @@ public class UserController {
             }
 
             model.addAttribute("UserObject", userService.findByUsername(username));
-            model.addAttribute("appliedProjects", appliedToProjects);
 
             return "sections/userDashboard";
         } else {

@@ -1,92 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title th:inline="text">Gitpals - [[${UserObject.username}]]</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/flat-ui.css" />
-    <link rel="stylesheet" href="../css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>GitPals - [[${UserObject.username}]]</title>
 </head>
+
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <a class="navbar-brand" href="/">
+            <img src="/images/logo.png" class="mr-2" height="30">GitPals
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
 
-
-<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
-    <div class="center">
-        <h6 class="wh" th:inline="text"><b><a class="wh" target="_blank">[[${UserObject.username}]]'s dashboard</a></b></h6>
-    </div>
-</nav>
-
-<section class="center-content text-center">
-    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
-
-    <hr class="divider" style="width: 50%;"/>
-
-    <div class="container" th:if="${LoggedUser != null}">
-        <div class="blue-bg">
-            <div class="container" th:if="${LoggedUser != UserObject.username}">
-                <br/>
-                <h3 class="wh" th:inline="text">Send <u>[[${UserObject.username}]]</u> a message</h3>
-
-                <form th:action="@{/messageSent}" method="post">
-                    <input type="text" readonly="readonly" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
-                    <textarea type="text" class="form-control input-lg" placeholder="Message" th:name="Content" required="required"></textarea><br/>
-                    <input type="submit" class="btn btn-danger b" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <br/>
-
-    <div class="container">
-        <div class="green-bg">
-
-            <p class="wh" style="font-size: 30px;"><b th:inline="text" id="userName">[[${UserObject.username}]]</b></p>
-            <u><a class="dark b" id="githubLink" th:href="${'https://github.com/' + UserObject.username}" target="_blank">Github profile</a></u>
-
-            <hr class="divider"/>
-
-            <h3 class="wh" style="padding: 15px;"><b>Information</b></h3>
-                <div class="container" style="padding: 20px;" >
-                    <span class="wh b">Country</span>
-
-                    <input type="text" class="form-control input-lg push-left" readonly="readonly" th:placeholder="${UserObject.username + ' has not set country yet'}" th:value="${UserObject.country}"/>
-
-                    <span class="wh b" th:inline="text">Information about [[${UserObject.username}]]</span>
-                    <textarea type="text" class="form-control input-lg" th:placeholder="${UserObject.username} + ' has not given any information yet'" th:inline="text" rows="10" readonly="readonly">[[${UserObject.info}]]</textarea> <br/>
-                </div>
-
-            <hr class="divider"/>
-            <h5 class="wh" style="padding: 15px;"><b th:inline="text">Projects [[${UserObject.username}]] has applied to:</b></h5>
-
-            <div class="pr-list text-center">
-                <a th:each="project: ${appliedProjects}" target="_blank" th:href="${'/projects/' + project.title}">
-                    <li class="pr-item">
-                        <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                        <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
-                        <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
-                    </li>
-                </a>
-            </div>
-            <h6 th:if="${#lists.size(UserObject.projectsAppliedTo) == 0}" class="wh" th:inline="text">[[${UserObject.username}]] hasn't applied to any project yet</h6>
-            <br/>
-        </div>
-
-        <div class="blue-bg">
-            <h3 class="wh" style="padding: 15px;" th:inline="text"><b>Technologies [[${UserObject.username}]] knows</b></h3>
-
-                <div style="text-align: left; margin-left: 20px;">
-                    <div th:each="tech: ${UserObject.skillList}" id="techBlock">
-                        <input onclick="return false;" class="largeCheckbox" type="checkbox" th:value="${tech.key}" th:checked="${tech.value}"/><span class="wh" th:text="${tech.key}"></span>
+    <div class="container text-center">
+        <div>
+            <div class="row">
+                <div class="col" style="display: inline-grid;">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text" th:if="${UserObject.country}">I am from [[${UserObject.country}]]</p>
+                            <p class="card-text" th:if="${UserObject.bio}">[[${UserObject.bio}]]</p>
+                        </div>
                     </div>
                 </div>
+                <div class="col" style="display: inline-grid;">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h5 class="font-weight-bold">Send [[${UserObject.username}]] a message</h5>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/messageSent}" method="post">
+                                <input type="text" readonly="readonly" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
+                                <textarea type="text" class="form-control" placeholder="Message" th:name="Content" required="required"></textarea><br/>
+                                <input type="submit" class="btn btn-pill neoButton" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <br/>
+        <hr />
+
+        <h5>Technologies [[${UserObject.username}]] knows</h5>
+
+        <div class="table-striped table-responsive-md mt">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Skill name</th>
+                        <th>Possession</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="tech: ${UserObject.skillList}">
+                        <td class="fw-600">[[${tech.key}]]</td>
+                            <td>
+                                <div class="pretty p-default p-curve p-thick">
+                                    <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}" onclick="return false;" />
+                                    <div class="state p-success-o">
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-</section>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </body>
-</html>

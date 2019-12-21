@@ -163,10 +163,10 @@ public class AdminController {
     /**
      * This function sends a message to everyone registered in the system
      *
-     * @see Message
      * @param admin is an admin principal object
      * @param text  is a content of the message
      * @return admin page
+     * @see Message
      */
     @PostMapping("/sendMessageToEveryone")
     public String sendMessage(Principal admin, @RequestParam("text") String text) {

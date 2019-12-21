@@ -1,41 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <title>GitPals - Search form</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/flat-ui.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+        <link rel="stylesheet" href="css/style.css">
+        <title>GitPals - Dashboard</title>
+    </head>
 
-<section class="center-content text-center">
-    <a href="/"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
-    <div class="container">
-        <h3 class="wh b">Search</h3>
-        <hr class="divider"/>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="/">
+                <img src="./images/logo.png" class="mr-2" height="30">GitPals
+            </a>
+        </nav>
 
-        <div class="row">
-            <div class="col-sm-6" style="border-right: 5px solid #2c3e50;">
-                <form th:action="@{/findUser}" method="post">
-                    <h4 class="wh">Find user</h4>
-                    <input type="text" th:name="user_name" class="form-control" placeholder="Username"/><br/>
-                    <input type="submit" class="btn btn-success b" value="Find"/>
-                </form>
+        <section class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Find user by username</h4>
+                            <form th:action="@{/findUser}" method="post">
+                                <input class="form-control" th:name="user_name" type="text" placeholder="Username" />
+                                <br/>
+                                <input class="btn neoButton btn-pill" type="submit" value="Find" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Find project by project name</h4>
+                            <form th:action="@{/findProject}" method="post">
+                                <input class="form-control" th:name="project_name" type="text" placeholder="Project name" />
+                                <br/>
+                                <input class="btn neoButton btn-pill" type="submit" value="Find" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-6">
-                <form th:action="@{/findProject}" method="post">
-                    <h4 class="wh">Find project</h4>
-                    <input type="text" th:name="project_name" class="form-control" placeholder="Project name"/><br/>
-                    <input type="submit" class="btn btn-success b" value="Find"/>
-                </form>
+            <br/>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Find users that know specific skills</div>
+
+                    <form th:action="@{/findUsersBySkills}" method="post">
+                        <div class="table-striped table-responsive-md mt">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Skill name</th>
+                                    <th>Possession</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="tech: ${techs}">
+                                    <td class="fw-600">[[${tech.key}]]</td>
+                                    <td>
+                                        <div class="pretty p-default p-curve p-thick">
+                                            <input type="checkbox" th:name="skills" th:value="${tech.key}" th:checked="${tech.value}"/>
+                                            <div class="state p-success-o">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <input type="submit" class="btn btn-pill neoButton" style="margin: 15px;" value="Find" />
+                    </form>
+                </div>
             </div>
-        </div>
-
-    </div>
-</section>
-
-</body>
+        </section>
+    </body>
 </html>

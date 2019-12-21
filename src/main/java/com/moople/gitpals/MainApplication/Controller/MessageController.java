@@ -96,9 +96,9 @@ public class MessageController {
             userService.save(recipient);
 
             /*
-            * When you get a message within GitPals, you might be notified on your
-            * email if you have that setting enabled
-            */
+             * When you get a message within GitPals, you might be notified on your
+             * email if you have that setting enabled
+             */
             if (recipient.isNotificationsEnabled()) {
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(recipient.getEmail());

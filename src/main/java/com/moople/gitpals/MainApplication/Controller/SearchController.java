@@ -2,6 +2,7 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -30,7 +31,9 @@ public class SearchController {
      * @return html page where users can find a project or a user by name
      */
     @GetMapping("/search")
-    public String searchPage() {
+    public String searchPage(Model model) {
+        model.addAttribute("techs", Data.technologiesMap);
+
         return "sections/searchForm";
     }
 
@@ -78,8 +81,8 @@ public class SearchController {
      * @return page where all the users are displayed
      */
     @PostMapping("/findUsersBySkills")
-    public String usersBySkills(@RequestParam("skills") List<String> skills, Model model, Principal principal) {
-        List<User> users = userService.findBySkillList(skills);
+    public String usersBySkills(@RequestParam("skills") List<String> skills, Model model) {
+        Set<String> users = userService.findBySkillList(skills);
 
         model.addAttribute("match_users", users);
 

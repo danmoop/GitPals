@@ -3,10 +3,8 @@ package com.moople.gitpals.MainApplication.Controller.API;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +23,7 @@ public class SearchAPIController {
 
     /**
      * This function returns a user by username
+     *
      * @param username is a user's username
      * @return user
      */
@@ -35,6 +34,7 @@ public class SearchAPIController {
 
     /**
      * This function returns a project by its title
+     *
      * @param title is a project title
      * @return project
      */

@@ -7,7 +7,7 @@ public class Response {
 
     private Status status;
 
-    public Response(Status status) {
+    private Response(Status status) {
         this.status = status;
     }
 

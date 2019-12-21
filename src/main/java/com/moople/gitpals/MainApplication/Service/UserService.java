@@ -4,9 +4,9 @@ import com.moople.gitpals.MainApplication.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 public class UserService implements UserServiceInterface {
@@ -25,11 +25,18 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public List<User> findBySkillList(List<String> skills) {
-        return userInterface.findAll()
-                .stream()
-                .filter(user -> user.getSkillList() == skills)
-                .collect(Collectors.toList());
+    public Set<String> findBySkillList(List<String> skills) {
+        Set<String> ret = new HashSet<>();
+
+        for (User user : userInterface.findAll()) {
+            for (String skill : skills) {
+                if (user.getSkillList().get(skill)) {
+                    ret.add(user.getUsername());
+                }
+            }
+        }
+
+        return ret;
     }
 
     @Override
@@ -40,7 +47,10 @@ public class UserService implements UserServiceInterface {
 
 interface UserServiceInterface {
     User findByUsername(String username);
+
     List<User> findAll();
-    List<User> findBySkillList(List<String> skills);
+
+    Set<String> findBySkillList(List<String> skills);
+
     void save(User user);
 }

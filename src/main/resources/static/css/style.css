@@ -96,3 +96,15 @@ svg:not(:hover) * {
     padding: 15px;
     border-radius: 15px;
 }
+
+.neoButton {
+    border: 1px solid rgba(255,255,255, 0.2);
+    border-radius: 12px;
+    box-shadow: 6px 6px 16px 0 rgba(217, 210, 200, 0.71), -6px -6px 26px 0 rgba(255,255,255,0.83);
+}
+
+.neoButton:hover {
+	border: 1px solid rgba(255,255,255, 0.2);
+	border-radius: 12px;
+	box-shadow: inset 6px 6px 16px 0 rgba(217, 210, 200, 0.71), inset -6px -6px 26px 0 rgba(255,255,255,0.83);
+}
