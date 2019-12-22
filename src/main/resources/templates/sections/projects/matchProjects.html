@@ -23,6 +23,13 @@
             [[${#lists.size(match_projects)}]] projects found
         </div>
         <div class="card-body">
+
+            <div class="text-center" th:if="${#lists.size(match_projects) == 0}">
+                <p>No projects found</p>
+                <a href="/search">Try search one more time</a>
+            </div>
+
+
             <ol style="padding-left: 0;">
                 <li th:each="project: ${match_projects}">
                     <a th:href="${'/projects/' + project}">[[${project}]]</a>

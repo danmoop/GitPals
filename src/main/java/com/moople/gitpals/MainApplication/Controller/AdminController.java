@@ -42,7 +42,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        return "sections/admin";
+        return "sections/users/admin";
     }
 
     /**
@@ -60,7 +60,7 @@ public class AdminController {
 
         model.addAttribute("users", userService.findAll());
 
-        return "sections/admin";
+        return "sections/users/admin";
     }
 
     /**
@@ -85,7 +85,7 @@ public class AdminController {
             model.addAttribute("user", username + " is not registered");
         }
 
-        return "sections/admin";
+        return "sections/users/admin";
     }
 
     /**
@@ -103,7 +103,7 @@ public class AdminController {
 
         model.addAttribute("projects", projectService.findAll());
 
-        return "sections/admin";
+        return "sections/users/admin";
     }
 
     /**
@@ -128,7 +128,7 @@ public class AdminController {
             model.addAttribute("project", project.toString());
         }
 
-        return "sections/admin";
+        return "sections/users/admin";
     }
 
     /**

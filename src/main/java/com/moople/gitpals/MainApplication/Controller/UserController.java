@@ -51,7 +51,7 @@ public class UserController {
 
             model.addAttribute("UserObject", userService.findByUsername(username));
 
-            return "sections/userDashboard";
+            return "sections/users/userDashboard";
         } else {
             model.addAttribute("user_name", username);
             return "error/userNotFound";

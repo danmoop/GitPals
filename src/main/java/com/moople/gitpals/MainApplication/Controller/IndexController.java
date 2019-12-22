@@ -90,7 +90,7 @@ public class IndexController {
         model.addAttribute("totalProjectsAmount", projectsAmount);
         model.addAttribute("usersRegistered", userService.findAll().size());
 
-        return "sections/index";
+        return "sections/users/index";
     }
 
     /**
@@ -119,7 +119,7 @@ public class IndexController {
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
 
-            return "sections/dashboard";
+            return "sections/users/dashboard";
         }
     }
 
@@ -146,15 +146,13 @@ public class IndexController {
     }
 
     /**
-     * This request is handled when user wants to see a guide about submitting a project
+     * This function determines whether some changes occurred in user's GitHub account
+     * If data has changed, change it in GitPals too
      *
-     * @return html page where users can read some advices about submitting a project
+     * @param userDB is user object
+     * @param properties are user properties obtained after GitHub authentication
+     * @return whether data is different or not
      */
-    @GetMapping("/guide/how-to-create-a-good-description-for-my-project")
-    public String goodDescriptionGuidwe() {
-        return "guide/goodProjDescription";
-    }
-
     private boolean userDataWasChanged(User userDB, LinkedHashMap<String, Object> properties) {
         return !properties.get("email").toString().equals(userDB.getEmail())
                 || !properties.get("bio").toString().equals(userDB.getBio())

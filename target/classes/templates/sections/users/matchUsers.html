@@ -23,6 +23,11 @@
                     [[${#lists.size(match_users)}]] users found
                 </div>
                 <div class="card-body">
+                    <div class="text-center" th:if="${#lists.size(match_users) == 0}">
+                        <p>No users found</p>
+                        <a href="/search">Try search one more time</a>
+                    </div>
+
                     <ol style="padding-left: 0;">
                         <li th:each="user: ${match_users}">
                             <a th:href="${'/users/' + user}">[[${user}]]</a>

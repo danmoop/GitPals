@@ -50,7 +50,7 @@ public class MessageController {
             // When reversed, add this message list to html page and then display it
             model.addAttribute("userMessages", userMessages);
 
-            return "sections/viewMessages";
+            return "sections/users/viewMessages";
         }
 
         return "redirect:/";
@@ -161,9 +161,7 @@ public class MessageController {
             User admin = userService.findByUsername("danmoop");
 
             String author = user.getName();
-
             Message msg = new Message(author, message, Message.TYPE.BUG_REPORT);
-
             admin.getMessages().add(msg);
 
             userService.save(admin);
@@ -205,7 +203,6 @@ public class MessageController {
         );
 
         bugReportAuthor.getMessages().add(message);
-
         userService.save(bugReportAuthor);
 
         return "redirect:/messages";

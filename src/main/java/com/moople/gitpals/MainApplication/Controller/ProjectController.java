@@ -38,7 +38,7 @@ public class ProjectController {
             model.addAttribute("techs", Data.technologiesMap);
             model.addAttribute("projectObject", new Project());
 
-            return "sections/projectSubmitForm";
+            return "sections/projects/projectSubmitForm";
         }
 
         return "redirect:/";
@@ -115,7 +115,7 @@ public class ProjectController {
                 model.addAttribute("userDB", userService.findByUsername(user.getName()));
             }
 
-            return "sections/projectViewPage";
+            return "sections/projects/projectViewPage";
         }
     }
 
@@ -262,7 +262,7 @@ public class ProjectController {
 
         model.addAttribute("matchProjects", matchProjects);
 
-        return "sections/projectsAfterSorting";
+        return "sections/projects/projectsAfterSorting";
     }
 
     /**

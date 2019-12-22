@@ -52,7 +52,7 @@ public class SearchController {
 
         model.addAttribute("match_users", matchUsers);
 
-        return "sections/matchUsers";
+        return "sections/users/matchUsers";
     }
 
     /**
@@ -71,7 +71,7 @@ public class SearchController {
 
         model.addAttribute("match_projects", matchProjects);
 
-        return "sections/matchProjects";
+        return "sections/projects/matchProjects";
     }
 
     /**
@@ -87,6 +87,6 @@ public class SearchController {
 
         model.addAttribute("match_users", users);
 
-        return "sections/matchUsers";
+        return "sections/users/matchUsers";
     }
 }
