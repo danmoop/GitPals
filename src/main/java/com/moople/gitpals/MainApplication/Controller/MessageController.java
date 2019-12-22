@@ -26,6 +26,9 @@ public class MessageController {
     @Autowired
     private JavaMailSender mailSender;
 
+    private SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+
     /**
      * This request is handled when user wants to see their messages
      * All the messages are added to model and sent to user's page
@@ -87,10 +90,11 @@ public class MessageController {
             return "redirect:/";
         }
 
+        User recipient = userService.findByUsername(username);
+
         // If there is a user with such a username then we send them a message
-        if (userService.findByUsername(username) != null) {
+        if (recipient != null) {
             Message message = new Message(user.getName(), content, Message.TYPE.INBOX_MESSAGE);
-            User recipient = userService.findByUsername(username);
 
             recipient.getMessages().add(message);
             userService.save(recipient);
@@ -100,7 +104,6 @@ public class MessageController {
              * email if you have that setting enabled
              */
             if (recipient.isNotificationsEnabled()) {
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(recipient.getEmail());
                 mailMessage.setSubject("You got a message on GitPals");
                 mailMessage.setText("A message from " + user.getName() + ": " + message.getContent());

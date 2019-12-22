@@ -15,49 +15,49 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <a class="navbar-brand" href="/">
-        <img src="./images/logo.png" class="mr-2" height="30">GitPals
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
-        <ul class="navbar-nav mr-auto">
-            Submit project
-        </ul>
-    </div>
-</nav>
-
-<section>
-    <div class="container text-center">
-        <h2>Submit your project!</h2>
-        <p>Give some information about your project. What is this project? What technologies does it use? Describe your knowledge and mention what you expect to get from the audience.</p>
-
-        <h5 th:if="${warning}" class="danger font-weight-bold">[[${warning}]]!</h5>
-
-        <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
-            <input type="text" th:field="*{title}" class="form-control" placeholder="Project title" style="margin: 15px;">
-
-            <input type="text" th:field="*{description}" class="form-control" placeholder="Project description" style="margin: 15px;">
-
-            <input type="text" th:field="*{githubProjectLink}" class="form-control" placeholder="Project GitHub repository link" style="margin: 15px;">
-
-            <p>Select technologies required for your project</p>
-
-            <ul style="list-style: none; text-align: left;">
-                <li th:each="tech: ${techs}">
-                    <div class="pretty p-default p-curve p-thick">
-                        <input type="checkbox" th:name="techInput" th:value="${tech.key}" th:checked="${tech.value}" />
-                        <div class="state p-success-o">
-                            <label>[[${tech.key}]]</label>
-                        </div>
-                    </div>
-                </li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <a class="navbar-brand" href="/">
+            <img src="./images/logo.png" class="mr-2" height="30">GitPals
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+            <ul class="navbar-nav mr-auto">
+                Submit project
             </ul>
+        </div>
+    </nav>
 
-            <br>
-            <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Submit" />
-        </form>
-    </div>
-</section>
+    <section>
+        <div class="container text-center">
+            <h2>Submit your project</h2>
+            <p>Give some information about your project. What is this project? What technologies does it use? Describe your knowledge and mention what you expect to get from the audience.</p>
+
+            <h5 th:if="${warning}" class="danger font-weight-bold">[[${warning}]]!</h5>
+
+            <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
+                <input type="text" th:field="*{title}" class="form-control" placeholder="Project title" style="margin: 15px;">
+
+                <input type="text" th:field="*{description}" class="form-control" placeholder="Project description" style="margin: 15px;">
+
+                <input type="text" th:field="*{githubProjectLink}" class="form-control" placeholder="Project GitHub repository link" style="margin: 15px;">
+
+                <p>Select technologies required for your project</p>
+
+                <ul style="list-style: none; text-align: left;">
+                    <li th:each="tech: ${techs}">
+                        <div class="pretty p-default p-curve p-thick">
+                            <input type="checkbox" th:name="techInput" th:value="${tech.key}" th:checked="${tech.value}" />
+                            <div class="state p-success-o">
+                                <label>[[${tech.key}]]</label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <br>
+                <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Submit" />
+            </form>
+        </div>
+    </section>
 </body>

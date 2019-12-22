@@ -1,72 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Gitpals - View messages</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/flat-ui.css" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <title>GitPals - your messages</title>
+    </head>
 
-<nav class="navbar navbar-inverse navbar-lg navigation" role="navigation" style="height: 100px;">
-    <div class="center">
-        <h6 class="wh" th:inline="text">Your message box</h6>
-    </div>
-</nav>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="/">
+                <img src="./images/logo.png" class="mr-2" height="30">GitPals
+            </a>
+        </nav>
 
-<section class="center-content text-center">
-    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
-    <div class="container">
-        <hr class="divider"/>
-    </div>
-</section>
-
-<h3 th:if="${#lists.size(userMessages) == 0}" class="wh text-center">You have no messages yet</h3>
-<h4 class="wh text-center"><a href="/sendMessage">Send a message to someone</a></h4>
-
-<div class="container">
-    <div th:each="message: ${userMessages}">
-        <li class="pr-item" style="width: 100%;">
-
-            <header class="text-center">
-                <h6 th:classappend="${message.type == 'BUG_REPORT'} ? pr-title-bug : pr-title">
-                    <span th:inline="text" th:if="${message.type != 'BUG_REPORT'}">A message by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
-                    <span th:inline="text" th:if="${message.type == 'BUG_REPORT'}">A bug report by <a th:href="${'/users/' + message.author}" class="wh"><u>[[${message.author}]]</u></a> sent on [[${message.timeStamp}]]</span>
-                </h6>
-            </header>
-
-            <p class="wh text-center" th:inline="text" style="margin: 10px;">[[${message.content}]]</p>
-
-            <hr class="divider" />
-
-            <form th:if="${message.type != 'BUG_REPORT'}" th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
-                <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
-                <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
-                <input type="submit" class="btn btn-danger wh b" value="Delete"/>
-            </form>
-
-            <div class="row" th:if="${message.type == 'BUG_REPORT'}">
-                <div class="col-sm-6">
-                    <form th:action="@{/bugReportFixed}" method="post" class="text-center" style="padding: 15px;">
-                        <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
-                        <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
-                        <input type="submit" class="btn btn-primary wh b" value="Mark as fixed"/>
-                    </form>
-                </div>
-                <div class="col-sm-6">
-                    <form th:action="@{/deleteMessage}" method="post" class="text-center" style="padding: 15px;">
-                        <input type="hidden" th:value="${message.content}" th:name="messageContentInput" />
-                        <input type="hidden" th:value="${message.author}" th:name="messageAuthorInput" />
-                        <input type="submit" class="btn btn-danger wh b" value="Delete"/>
-                    </form>
-                </div>
-            </div>
-        </li>
-    </div>
-</div>
-
-</body>
+        <section class="container text-center">
+            <ul>
+                <li th:each="message: ${userMessages}">
+                    <div class="card">
+                        <div class="card-header">
+                            [[${message.author}]] - [[${author.timeStamp}]]
+                        </div>
+                        <div class="card-body">
+                            <p>[[${message.content}]]</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </body>
 </html>

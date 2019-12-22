@@ -38,8 +38,6 @@ public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
 
-        mailSender.setJavaMailProperties(props);
-
         return mailSender;
     }
 }

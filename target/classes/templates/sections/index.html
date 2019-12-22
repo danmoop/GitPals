@@ -119,7 +119,7 @@
                     <h5 class="font-weight-bold">[[${project.title}]]</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">by [[${project.authorName}]]</p>
+                    <p class="card-text">by <a th:href="${'/users/' + project.authorName}">[[${project.authorName}]]</a></p>
                     <p class="card-text font-weight-bold">[[${project.requirements}]]</p>
                     <a th:href="${'/projects/' + project.title}">
                         <button type="button" class="btn neoButton btn-pill">Explore</button>

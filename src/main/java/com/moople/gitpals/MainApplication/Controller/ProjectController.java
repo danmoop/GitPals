@@ -90,7 +90,8 @@ public class ProjectController {
 
             return "redirect:/projects/" + userProject.getTitle();
         } else {
-            return "error/projectExists";
+            redirectAttributes.addFlashAttribute("warning", "Project with this name already exists");
+            return "redirect:/submitProject";
         }
     }
 
@@ -187,16 +188,16 @@ public class ProjectController {
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
 
+        Project project = projectInterface.findByTitle(projectName);
+        User userDB = userService.findByUsername(user.getName());
+
         // If authenticated user is null (so there is no auth), redirect to main page
-        if (user == null) {
+        if (userDB == null || project == null) {
             return "redirect:/";
         }
 
-        User userDB = userService.findByUsername(user.getName());
-        Project project = projectInterface.findByTitle(projectName);
-
         // Remove project from author's projects list
-        if (userDB != null && userDB.getUsername().equals(project.getAuthorName())) {
+        if (userDB.getUsername().equals(project.getAuthorName())) {
             projectInterface.delete(project);
 
             if (userDB.getProjects().contains(project.getTitle())) {

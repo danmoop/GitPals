@@ -64,4 +64,3 @@ public class UserAPIController {
         return Response.FAILED;
     }
 }
-

@@ -28,6 +28,8 @@ public class AdminController {
     @Autowired
     private JavaMailSender mailSender;
 
+    private SimpleMailMessage mailMessage = new SimpleMailMessage();
+
     /**
      * This function returns admin page if you are an admin
      *
@@ -149,7 +151,6 @@ public class AdminController {
 
         for (User user : userService.findAll()) {
             if (user.isNotificationsEnabled()) {
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(user.getEmail());
                 mailMessage.setSubject(subject);
                 mailMessage.setText(text);
@@ -180,7 +181,6 @@ public class AdminController {
             user.getMessages().add(message);
 
             if (user.isNotificationsEnabled()) {
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(user.getEmail());
                 mailMessage.setSubject("You got a message on GitPals");
                 mailMessage.setText("A message from " + admin.getName() + ": " + message.getContent());

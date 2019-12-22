@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8"/>
-    <title>GitPals - Search projects</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/flat-ui.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>GitPals - [[${#lists.size(match_projects)}]] projects found</title>
 </head>
+
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals
+    </a>
+</nav>
 
-<section class="center-content text-center">
-    <a href="/"><h1 th:if="${#lists.size(match_projects) != 0}" class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
-    <a href="/"><h1 th:if="${#lists.size(match_projects) == 0}" class="wh"><img width="150" height="150" src="../images/sad_github.png"/>GitPals</h1></a>
-    <h3 class="wh b" th:inline="text">Found [[${#lists.size(match_projects)}]] project(s)</h3>
-    <hr class="divider"/>
-
-    <div class="pr-list text-center">
-        <a th:each="project: ${match_projects}" th:href="${'/projects/' + project.title}">
-            <li class="pr-item">
-                <header><h6 class="wh pr-title"><b th:inline="text">[[${project.title}]]</b></h6></header>
-                <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
-                <p class="wh" th:inline="text" style="margin: 10px;"><b>[[${project.requirements}]]</b></p>
-            </li>
-        </a>
+<section class="container">
+    <div class="card">
+        <div class="card-header text-center">
+            [[${#lists.size(match_projects)}]] projects found
+        </div>
+        <div class="card-body">
+            <ol style="padding-left: 0;">
+                <li th:each="project: ${match_projects}">
+                    <a th:href="${'/projects/' + project}">[[${project}]]</a>
+                </li>
+            </ol>
+        </div>
     </div>
-
-    <h3 th:if="${#lists.size(match_projects) == 0}" class="wh">No projects found</h3>
-
 </section>
-
 </body>
 </html>

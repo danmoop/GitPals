@@ -34,7 +34,7 @@
                 <div class="card-header fw-600">
                     <div class="row">
                         <div class="col">
-                            <span>[[${project.title}]] by [[${project.authorName}]]</span>
+                            <span>[[${project.title}]] by <a th:href="${'/users/' + project.authorName}">[[${project.authorName}]]</a></span>
                         </div>
                         <div class="col">
                             <form th:action="@{/deleteProject}" th:if="${userDB != null && userDB.username == project.authorName}" method="post" style="float:right;">
@@ -95,14 +95,14 @@
 
                     <div class="container">
                         <ul class="mt ls-none">
-                            <li class="mt" th:each="i : ${#numbers.sequence(project.comments.size() - 1, 0, -1)}">
+                            <li class="mt" th:each="comment: ${project.comments}">
                                 <div class="card">
                                     <div class="card-header">
-                                        <span class="fw-600">[[${project.comments[i].author}]]</span> <br />
-                                        <span>[[${project.comments[i].timeStamp}]]</span>
+                                        <span class="fw-600">[[${comment.author}]]</span> <br />
+                                        <span>[[${comment.timeStamp}]]</span>
                                     </div>
                                     <div class="card-body">
-                                        <span>[[${project.comments[i].text}]]</span>
+                                        <span>[[${comment.text}]]</span>
                                     </div>
                                 </div>
                             </li>

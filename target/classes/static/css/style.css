@@ -20,7 +20,8 @@
 
 .projectItem {
     margin: 0 0.75rem 2.25rem;
-    width: 100%
+    width: 100%;
+    display: inline-grid;
 }
 
 .mt {
