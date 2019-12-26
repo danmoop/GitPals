@@ -43,29 +43,26 @@ public class IndexController {
 
             // If we are logged in but there is no our user object in database, save it
             // Usually this function is executed once when we are register for the first time
+
+            String email = properties.get("email") == null ? null : properties.get("email").toString();
+            String country = properties.get("location") == null ? null : properties.get("location").toString();
+            String bio = properties.get("bio") == null ? null : properties.get("bio").toString();
+
             if (userService.findByUsername(user.getName()) == null) {
                 userService.save(
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
                                 Data.technologiesMap,
-                                properties.get("email").toString(),
-                                properties.get("location").toString(),
-                                properties.get("bio").toString()
+                                email,
+                                country,
+                                bio
                         )
                 );
             }
 
             User userDB = userService.findByUsername(user.getName());
-
-            // When user changes their info on GitHub, they change here as well
-            if (userDataWasChanged(userDB, properties)) {
-                userDB.setEmail(properties.get("email").toString());
-                userDB.setBio(properties.get("bio").toString());
-                userDB.setCountry(properties.get("location").toString());
-
-                userService.save(userDB);
-            }
+            checkIfDataHasChanged(userDB, properties);
 
             model.addAttribute("userDB", userDB);
         }
@@ -145,17 +142,47 @@ public class IndexController {
         return "sections/bugReport";
     }
 
-    /**
-     * This function determines whether some changes occurred in user's GitHub account
-     * If data has changed, change it in GitPals too
-     *
-     * @param userDB is user object
-     * @param properties are user properties obtained after GitHub authentication
-     * @return whether data is different or not
-     */
-    private boolean userDataWasChanged(User userDB, LinkedHashMap<String, Object> properties) {
-        return !properties.get("email").toString().equals(userDB.getEmail())
-                || !properties.get("bio").toString().equals(userDB.getBio())
-                || !properties.get("location").toString().equals(userDB.getCountry());
+
+
+    private void checkIfDataHasChanged(User userDB, LinkedHashMap<String, Object> properties) {
+
+        // Email
+        if (properties.get("email") == null) {
+            if (userDB.getEmail() != null) {
+                userDB.setEmail(null);
+                userService.save(userDB);
+            }
+        } else {
+            if (userDB.getEmail() == null || !userDB.getEmail().equals(properties.get("email").toString())) {
+                userDB.setEmail(properties.get("email").toString());
+                userService.save(userDB);
+            }
+        }
+
+        // Location
+        if (properties.get("location") == null) {
+            if (userDB.getCountry() != null) {
+                userDB.setCountry(null);
+                userService.save(userDB);
+            }
+        } else {
+            if (userDB.getCountry() == null || !userDB.getCountry().equals(properties.get("location").toString())) {
+                userDB.setCountry(properties.get("location").toString());
+                userService.save(userDB);
+            }
+        }
+
+        // Bio
+        if (properties.get("bio") == null) {
+            if (userDB.getBio() != null) {
+                userDB.setBio(null);
+                userService.save(userDB);
+            }
+        } else {
+            if (userDB.getBio() == null || !userDB.getBio().equals(properties.get("bio").toString())) {
+                userDB.setBio(properties.get("bio").toString());
+                userService.save(userDB);
+            }
+        }
     }
 }

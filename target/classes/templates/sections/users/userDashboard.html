@@ -30,8 +30,11 @@
                             <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text" th:if="${UserObject.country}">I am from [[${UserObject.country}]]</p>
-                            <p class="card-text" th:if="${UserObject.bio}">[[${UserObject.bio}]]</p>
+                            <p class="card-text" th:if="${UserObject.email}">Email - [[${UserObject.email}]]</p>
+                            <p class="card-text" th:if="${UserObject.country}">Location - [[${UserObject.country}]]</p>
+                            <p class="card-text" th:if="${UserObject.bio}">Bio - [[${UserObject.bio}]]</p>
+
+                            <p class="card-text" th:if="${UserObject.email == null && UserObject.country == null && UserObject.bio == null}">No info about [[${UserObject.username}]]</p>
                         </div>
                     </div>
                 </div>

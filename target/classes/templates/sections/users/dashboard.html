@@ -47,9 +47,11 @@
                     <h5 class="font-weight-bold">danmoop</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
-                    <p class="card-text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
 
+                    <p class="card-text" th:if="${dbUser.email}">Email - [[${dbUser.email}]]</p>
+                    <p class="card-text" th:if="${dbUser.country}">Location - [[${dbUser.country}]]</p>
+                    <p class="card-text" th:if="${dbUser.bio}">Bio - [[${dbUser.bio}]]</p>
+                    <hr/>
                     <div class="row">
                         <div class="col">
                             Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects

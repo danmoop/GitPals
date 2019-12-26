@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -27,8 +28,6 @@ public class AdminController {
 
     @Autowired
     private JavaMailSender mailSender;
-
-    private SimpleMailMessage mailMessage = new SimpleMailMessage();
 
     /**
      * This function returns admin page if you are an admin
@@ -150,7 +149,8 @@ public class AdminController {
         }
 
         for (User user : userService.findAll()) {
-            if (user.isNotificationsEnabled()) {
+            if (user.getEmail() != null && user.isNotificationsEnabled()) {
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(user.getEmail());
                 mailMessage.setSubject(subject);
                 mailMessage.setText(text);
@@ -180,7 +180,8 @@ public class AdminController {
         for (User user : userService.findAll()) {
             user.getMessages().add(message);
 
-            if (user.isNotificationsEnabled()) {
+            if (user.getEmail() != null && user.isNotificationsEnabled()) {
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(user.getEmail());
                 mailMessage.setSubject("You got a message on GitPals");
                 mailMessage.setText("A message from " + admin.getName() + ": " + message.getContent());
@@ -189,6 +190,38 @@ public class AdminController {
 
             userService.save(user);
         }
+
+        return "redirect:/admin";
+    }
+
+    /**
+     * This function removes all projects created by a user
+     * A quick way to clear projects if some users spams a lot
+     *
+     * @param admin if an admin authentication
+     * @param username is a user whose projects will be deleted
+     * @param redirectAttributes is where I put a message if user is not found
+     * @return admin page
+     */
+    @PostMapping("/clearAllUserProjects")
+    public String clearAllUserProjects(Principal admin, @RequestParam("username") String username, RedirectAttributes redirectAttributes) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(username);
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "No such user");
+            return "redirect:/admin";
+        }
+
+        user.getProjects().stream()
+                .map(project -> projectService.findByTitle(project))
+                .forEach(project -> projectService.delete(project));
+
+        user.getProjects().clear();
+        userService.save(user);
 
         return "redirect:/admin";
     }

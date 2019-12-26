@@ -28,7 +28,6 @@ public class MessageController {
 
     private SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-
     /**
      * This request is handled when user wants to see their messages
      * All the messages are added to model and sent to user's page
@@ -103,7 +102,7 @@ public class MessageController {
              * When you get a message within GitPals, you might be notified on your
              * email if you have that setting enabled
              */
-            if (recipient.isNotificationsEnabled()) {
+            if (recipient.getEmail() != null && recipient.isNotificationsEnabled()) {
                 mailMessage.setTo(recipient.getEmail());
                 mailMessage.setSubject("You got a message on GitPals");
                 mailMessage.setText("A message from " + user.getName() + ": " + message.getContent());
