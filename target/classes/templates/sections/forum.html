@@ -1,49 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/flat-ui.css" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
-    <title>GitPals - Forum</title>
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-lg navigation" role="navigation">
-        <div>
-            <a href="/login" th:if="${user == null}" class="btn btn-primary"><b class="wh">Login using Github</b></a>
-            <a href="/logout" th:if="${user != null}" class="btn btn-danger"><b>Log Out</b></a>
-        </div>
-        <div class="center">
-            <h6 class="wh" id="centerDiv"><b>GitPals Forum</b></h6>
-        </div>
-    </nav>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <title>GitPals - Forum</title>
+    </head>
 
-    <section class="center-content text-center">
-        <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="/">
+                <img src="./images/logo.png" class="mr-2" height="30">GitPals
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                            <a class="dropdown-item" href="/submitProject">
+                                <i class="fa fa-wrench"></i> Submit a project
+                            </a>
+                            <a class="dropdown-item" href="/messages">
+                                <i class="fa fa-envelope-square"></i> Messages
+                            </a>
+                            <a class="dropdown-item" href="/sign-out">
+                                <i class="fa fa-sign-out"></i> Log Out
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-        <div class="container">
-            <h5 class="wh">Post your questions, suggestions here. Discuss anything you want about projects, teams and collaboration!</h5>
-            <hr class="divider" />
-            <h6 class="wh" th:if="${#lists.size(posts) == 0}">There are no posts added yet</h6>
-            <h6 class="wh" th:if="${#lists.size(posts) != 0}" th:inline="text">Posts added: [[${#lists.size(posts)}]]</h6>
-            <a class="b" href="/addForumPostForm" th:if="${user != null}">Add Forum Post</a>
-            <h6 class="wh" th:if="${user == null}">Log in to add posts</h6>
+        <div class="container text-center">
+            <h3 class="font-weight-bold">GitPals - Forum</h3>
+            <h4>Post your questions, suggestions here. Discuss anything you want about projects, teams and collaboration!</h4>
+            <hr/>
 
-            <br/><br/>
-            <ul th:if="${#lists.size(posts) != 0}">
-                <div class="pr-item" style="width: 100%;" th:each="post: ${posts}">
-                    <header class="text-center">
-                        <h6 th:inline="text" class="wh">
-                            [[${post.title}]] - by <a th:href="${'users/' + post.author}">[[${post.author}]]</a>
-                        </h6>
-                    </header>
+            <h4 th:if="${#lists.size(posts) == 0}">No posts added yet</h4>
+
+            <a class="btn btn-light" id="card-block-toggler" th:if="${user != null}">Add Forum Post</a>
+
+            <p th:if="${user == null}">You need to <a href="/login">sign in</a> in order to add posts</p>
+
+            <div class="card mt" id="card-block" th:if="${user != null}" style="display: none;">
+                <div class="card-body">
+                    <h4 class="card-title">Add forum post</h4>
                     <hr/>
-                    <a th:href="${'/forum/post/' + post.key}">Open post</a>
+
+                    <form th:action="@{/addForumPost}" method="post">
+                        <input type="text" required th:name="title" class="form-control mt" placeholder="Post title"/>
+                        <textarea class="form-control mt" required th:name="content" placeholder="Post content"></textarea>
+                        <input type="submit" class="btn btn-outline-secondary mt" value="Add">
+                    </form>
+                    <hr/>
                 </div>
-            </ul>
+            </div>
+
+            <div class="card mt" th:each="post: ${posts}">
+                <div class="card-body">
+                    <h5 class="card-title">[[${post.title}]] by <a href="#/">[[${post.author}]]</a></h5>
+                    <hr/>
+                    <p>Published on [[${post.timeStamp}]]</p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <p>
+                                    [[${#lists.size(post.viewSet)}]] views
+                                    <a href="#/" data-toggle="tooltip" data-placement="top" title="Only registered users' views count"><i class="fa fa-info-circle"></i></a>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p>[[${#lists.size(post.comments)}]] comments</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-outline-secondary" th:href="${'/forum/post/' + post.key}">Open</a>
+                </div>
+            </div>
         </div>
-    </section>
-</body>
+    </body>
+
+    <script src="/js/index.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </html>

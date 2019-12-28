@@ -38,17 +38,6 @@ public class ForumController {
     }
 
     /**
-     * This request is handled when user wants to open page with adding posts to forum
-     *
-     * @return add form page
-     */
-    @GetMapping("/addForumPostForm")
-    public String addForumPostForm() {
-        return "sections/addForumPostForm";
-    }
-
-
-    /**
      * This request is handled when user wants to open a posts's page
      *
      * @param key is a post's key which is taken from an address field
@@ -81,6 +70,10 @@ public class ForumController {
      */
     @PostMapping("/addForumPost")
     public String addForumPost(Principal principal, @RequestParam("title") String title, @RequestParam("content") String content) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         ForumPost post = new ForumPost(principal.getName(), title, content);
         forumInterface.save(post);
 
@@ -98,6 +91,9 @@ public class ForumController {
      */
     @PostMapping("/addCommentToPost")
     public String addCommentToPost(Principal principal, @RequestParam("commentText") String commentText, @RequestParam("postKey") String postKey) {
+        if (principal == null) {
+            return "redirect:/";
+        }
 
         ForumPost post = forumInterface.findByKey(postKey);
 
