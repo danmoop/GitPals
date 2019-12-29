@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -105,7 +106,7 @@ public class ProjectAPIController {
 
         for (int i = 0; i < amount; i++) {
             String s = String.valueOf(i);
-            Project project = new Project(s, s, s, s, new ArrayList<>());
+            Project project = new Project(getRandomKey(), s, s, s, new ArrayList<>());
 
             projectInterface.save(project);
         }
@@ -118,5 +119,18 @@ public class ProjectAPIController {
         projectInterface.deleteAll();
 
         return Response.OK;
+    }
+
+    private String getRandomKey() {
+        StringBuilder b = new StringBuilder();
+        Random rand = new Random();
+
+        String possible = "qwertyuiopasdfghjklzxcvbnm";
+
+        for (int i = 0; i < 10; i++) {
+            b.append(possible.charAt(rand.nextInt(possible.length())));
+        }
+
+        return b.toString();
     }
 }

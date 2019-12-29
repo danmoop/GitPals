@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <a class="navbar-brand" href="/">
-            <img src="/images/logo.png" class="mr-2" height="30">GitPals
+            <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col" style="display: inline-grid;">
+                <div class="col" style="display: inline-grid;" th:if="${LoggedUser != null}">
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="font-weight-bold">Send [[${UserObject.username}]] a message</h5>

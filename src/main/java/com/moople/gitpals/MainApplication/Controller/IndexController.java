@@ -35,6 +35,7 @@ public class IndexController {
      */
     @GetMapping("/")
     public String indexPage(OAuth2Authentication user, Model model) {
+
         // If we are logged in, display information about us on the index page
         if (user != null) {
             LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) user.getUserAuthentication().getDetails();
@@ -141,7 +142,6 @@ public class IndexController {
     public String bugReport() {
         return "sections/bugReport";
     }
-
 
 
     private void checkIfDataHasChanged(User userDB, LinkedHashMap<String, Object> properties) {
