@@ -117,15 +117,15 @@
     </div>
 
     <ul class="projectUl animated fadeIn">
-        <li class="projectItem" th:each="project: ${projects}">
+        <li class="projectItem" th:each="i : ${#numbers.sequence(projects.size() - 1, 0, -1)}">
             <div class="card text-center">
                 <div class="card-header">
-                    <h5 class="font-weight-bold">[[${project.title}]]</h5>
+                    <h5 class="font-weight-bold">[[${projects[i].title}]]</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">by <a th:href="${'/users/' + project.authorName}">[[${project.authorName}]]</a></p>
-                    <p class="card-text font-weight-bold">[[${project.requirements}]]</p>
-                    <a th:href="${'/projects/' + project.title}">
+                    <p class="card-text">by <a th:href="${'/users/' + projects[i].authorName}">[[${projects[i].authorName}]]</a></p>
+                    <p class="card-text font-weight-bold">[[${projects[i].requirements}]]</p>
+                    <a th:href="${'/projects/' + projects[i].title}">
                         <button type="button" class="btn neoButton btn-pill">Explore</button>
                     </a>
                 </div>

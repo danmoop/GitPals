@@ -65,7 +65,7 @@ public class SearchController {
     @PostMapping("/findProject")
     public String foundProjects(@RequestParam("project_name") String projectName, Model model) {
         List<String> matchProjects = projectInterface.findAll()
-                .parallelStream()
+                .stream()
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
                 .map(Project::getTitle)
                 .collect(Collectors.toList());

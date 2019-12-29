@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,20 +69,20 @@ public class IndexController {
             model.addAttribute("userDB", userDB);
         }
 
-        int projectsAmount = projectInterface.findAll().size();
+        List<Project> allProjects = projectInterface.findAll();
+        int projectsAmount = allProjects.size();
+
         List<Project> projects;
 
         if (projectsAmount <= 50) {
-            projects = projectInterface.findAll();
+            projects = allProjects;
         } else {
-            // Show the most recent projects (only 50)
-            projects = projectInterface.findAll()
-                    .stream()
-                    .skip(projectInterface.findAll().size() - 50)
-                    .collect(Collectors.toList());
-        }
+            projects = new ArrayList<>();
 
-        Collections.reverse(projects);
+            for (int i = projectsAmount - 1; i >= projectsAmount - 50; i--) {
+                projects.add(allProjects.get(i));
+            }
+        }
 
         model.addAttribute("projectTechs", Data.technologiesMap);
         model.addAttribute("projects", projects);
