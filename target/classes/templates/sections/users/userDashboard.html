@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <a class="navbar-brand" href="/">
-            <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
+            <img src="/images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
         </button>
@@ -47,7 +47,7 @@
                             <form th:action="@{/messageSent}" method="post">
                                 <input type="text" readonly="readonly" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
                                 <textarea type="text" class="form-control" placeholder="Message" th:name="Content" required="required"></textarea><br/>
-                                <input type="submit" class="btn btn-pill neoButton" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
+                                <input type="submit" class="btn btn-outline-light btn-pill" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
                             </form>
                         </div>
                     </div>

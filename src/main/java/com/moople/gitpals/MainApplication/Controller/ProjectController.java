@@ -275,7 +275,12 @@ public class ProjectController {
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")
-    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user) {
+    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user, RedirectAttributes redirectAttributes) {
+
+        if(text.equals("")) {
+            redirectAttributes.addFlashAttribute("error", "Your comment should have any text!");
+            return "redirect:/projects/" + projectName;
+        }
 
         Project project = projectInterface.findByTitle(projectName);
 

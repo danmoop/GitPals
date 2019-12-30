@@ -42,7 +42,7 @@
                     <h4>Get all users</h4>
 
                     <form th:action="@{/getAllUsers}" method="post">
-                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
                     </form>
 
                     <ul th:if="${users != null}" style="list-style: none; padding-left: 0;">
@@ -56,7 +56,7 @@
 
                     <form th:action="@{/getUserInfo}" method="post">
                         <input type="text" th:name="userName" class="form-control" placeholder="User" style="margin: 15px;">
-                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
                     </form>
 
                     <span class="fw-600" th:if="${user != null}">[[${user}]]</span>
@@ -70,7 +70,7 @@
                     <h4>Get all projects</h4>
 
                     <form th:action="@{/getAllProjects}" method="post">
-                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
                     </form>
 
                     <ul th:if="${projects != null}" style="list-style: none; padding-left: 0;">
@@ -84,7 +84,7 @@
 
                     <form th:action="@{/getProjectInfo}" method="post">
                         <input type="text" th:name="projectName" class="form-control" placeholder="Project name" style="margin: 15px;">
-                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
                     </form>
 
                     <span class="fw-600" th:if="${project != null}">[[${project}]]</span>
@@ -98,7 +98,7 @@
 
                 <input type="text" th:name="subject" class="form-control mt" placeholder="Subject" />
                 <input type="text" th:name="text" class="form-control mt" placeholder="Text" />
-                <input class="btn btn-secondary btn-sm borderBtn mt" type="submit" value="Send" />
+                <input class="btn btn-outline-light btn-pill mt" type="submit" value="Send" />
             </form>
 
             <hr/>
@@ -107,7 +107,7 @@
                 <h4>Send GitPals message to everyone</h4>
 
                 <input type="text" th:name="text" class="form-control mt" placeholder="Text" .>
-                <input type="submit" class="btn btn-secondary btn-sm borderBtn mt" value="Send" />
+                <input type="submit" class="btn btn-outline-light btn-pill mt" value="Send" />
             </form>
         </div>
     </body>

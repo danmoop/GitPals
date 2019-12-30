@@ -71,7 +71,7 @@
                             <form th:action="@{/deleteMessage}" method="post">
                                 <input type="hidden" th:name="messageContentInput" th:value="${message.content}" />
                                 <input type="hidden" th:name="messageAuthorInput" th:value="${message.author}" />
-                                <input class="btn btn-danger btn-pill neoButton-red" type="submit" value="Remove" />
+                                <input class="btn btn-outline-danger btn-pill" type="submit" value="Remove" />
                             </form>
                         </div>
                     </div>
