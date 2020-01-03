@@ -28,7 +28,7 @@
                             <a class="dropdown-item" href="/messages">
                                 <i class="fa fa-envelope-square"></i> Messages
                             </a>
-                            <a class="dropdown-item" href="/sign-out">
+                            <a class="dropdown-item" href="/signout">
                                 <i class="fa fa-sign-out"></i> Log Out
                             </a>
                         </div>
@@ -55,32 +55,32 @@
 
                     <form th:action="@{/addForumPost}" method="post">
                         <input type="text" required th:name="title" class="form-control mt" placeholder="Post title"/>
-                        <textarea class="form-control mt" required th:name="content" placeholder="Post content"></textarea>
+                        <textarea class="form-control mt" rows="8" required th:name="content" placeholder="Post content"></textarea>
                         <input type="submit" class="btn btn-outline-secondary mt" value="Add">
                     </form>
                     <hr/>
                 </div>
             </div>
 
-            <div class="card mt" th:each="post: ${posts}">
+            <div class="card mt" th:each="i : ${#numbers.sequence(posts.size() - 1, 0, -1)}">
                 <div class="card-body">
-                    <h5 class="card-title">[[${post.title}]] by <a href="#/">[[${post.author}]]</a></h5>
+                    <h5 class="card-title">[[${posts[i].title}]] by <a href="#/">[[${posts[i].author}]]</a></h5>
                     <hr/>
-                    <p>Published on [[${post.timeStamp}]]</p>
+                    <p>Published on [[${posts[i].timeStamp}]]</p>
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <p>
-                                    [[${#lists.size(post.viewSet)}]] views
+                                    [[${#lists.size(posts[i].viewSet)}]] views
                                     <a href="#/" data-toggle="tooltip" data-placement="top" title="Only registered users' views count"><i class="fa fa-info-circle"></i></a>
                                 </p>
                             </div>
                             <div class="col">
-                                <p>[[${#lists.size(post.comments)}]] comments</p>
+                                <p>[[${#lists.size(posts[i].comments)}]] comments</p>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-outline-light btn-pill" th:href="${'/forum/post/' + post.key}">Open</a>
+                    <a class="btn btn-outline-light btn-pill" th:href="${'/forum/post/' + posts[i].key}">Open</a>
                 </div>
             </div>
         </div>

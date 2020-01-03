@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -277,7 +278,7 @@ public class ProjectController {
     @PostMapping("/sendComment")
     public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user, RedirectAttributes redirectAttributes) {
 
-        if(text.equals("")) {
+        if (text.equals("")) {
             redirectAttributes.addFlashAttribute("error", "Your comment should have any text!");
             return "redirect:/projects/" + projectName;
         }
@@ -289,6 +290,29 @@ public class ProjectController {
 
             project.getComments().add(comment);
             projectInterface.save(project);
+        }
+
+        return "redirect:/projects/" + projectName;
+    }
+
+    @PostMapping("/deleteComment")
+    public String deleteComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (project == null) {
+            return "redirect:/";
+        }
+
+        Optional<Comment> comment = project.getComments()
+                .stream()
+                .filter(projectComment -> projectComment.getAuthor().equals(user.getName()) && projectComment.getText().equals(text) && projectComment.getTimeStamp().equals(ts))
+                .findFirst();
+
+        if (comment.isPresent()) {
+            project.getComments().remove(comment.get());
+            projectInterface.save(project);
+        } else {
+            return "redirect:/";
         }
 
         return "redirect:/projects/" + projectName;

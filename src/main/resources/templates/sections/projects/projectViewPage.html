@@ -85,9 +85,27 @@
                         </form>
                     </div>
 
+                    <p>
+                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            View applied users
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <p th:if="${#lists.size(project.usersSubmitted) == 0}">No users applied yet</p>
+                            <ol th:if="${#lists.size(project.usersSubmitted) > 0}">
+                                <a th:each="user: ${project.usersSubmitted}" th:href="${'/users/' + user}">
+                                    <li>
+                                        [[${user}]]
+                                    </li>
+                                </a>
+                            </ol>
+                        </div>
+                    </div>
+
                     <br/><hr/>
                     <div class="fw-600">
-                        Comment section
+                        Comment section ([[${#lists.size(project.comments)}]] comments)
                     </div>
 
                     <u class="fw-600 danger" th:if="${error}">
@@ -111,6 +129,12 @@
                                     <div class="card-header">
                                         <span class="fw-600">[[${comment.author}]]</span> <br />
                                         <span>[[${comment.timeStamp}]]</span>
+                                        <form th:action="@{/deleteComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}">
+                                            <input type="hidden" th:name="ts" th:value="*{comment.timeStamp}" />
+                                            <input type="hidden" th:name="projectName" th:value="*{project.title}" />
+                                            <input type="hidden" th:name="text" th:value="*{comment.text}" />
+                                            <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" />
+                                        </form>
                                     </div>
                                     <div class="card-body">
                                         <span>[[${comment.text}]]</span>

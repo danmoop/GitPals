@@ -24,6 +24,10 @@
     display: inline-grid;
 }
 
+.row-column {
+    width: 100%;
+}
+
 .mt {
 	margin-top: 2rem;
 }
@@ -35,6 +39,12 @@
 @media(min-width: 900px) {
     .projectItem {
         width: 23%;
+    }
+}
+
+@media(min-width: 768px) {
+    .row-column {
+        display: inline-grid;
     }
 }
 

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -29,7 +28,6 @@ public class ForumController {
     @GetMapping("/forum")
     public String forumPage(Principal principal, Model model) {
         List<ForumPost> posts = forumInterface.findAll();
-        Collections.reverse(posts);
 
         model.addAttribute("posts", posts);
         model.addAttribute("user", principal);
@@ -101,5 +99,23 @@ public class ForumController {
         forumInterface.save(post);
 
         return "redirect:/forum/post/" + postKey;
+    }
+
+    /**
+     * This function removed a forum post from the database by key
+     *
+     * @param user is a forum post's author
+     * @param key  is a forum post's key, it is used to find a post among many others
+     * @return home page
+     */
+    @PostMapping("/deleteForumPost")
+    public String deleteForumPost(Principal user, @RequestParam("key") String key) {
+        ForumPost post = forumInterface.findByKey(key);
+
+        if (user != null && post != null && user.getName().equals(post.getAuthor())) {
+            forumInterface.delete(post);
+        }
+
+        return "redirect:/forum";
     }
 }

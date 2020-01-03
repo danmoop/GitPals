@@ -24,7 +24,7 @@
     <div class="container text-center">
         <div>
             <div class="row">
-                <div class="col" style="display: inline-grid;">
+                <div class="col row-column mt">
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col" style="display: inline-grid;" th:if="${LoggedUser != null}">
+                <div class="col row-column mt" th:if="${LoggedUser != null}">
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="font-weight-bold">Send [[${UserObject.username}]] a message</h5>

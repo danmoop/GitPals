@@ -198,8 +198,8 @@ public class AdminController {
      * This function removes all projects created by a user
      * A quick way to clear projects if some users spams a lot
      *
-     * @param admin if an admin authentication
-     * @param username is a user whose projects will be deleted
+     * @param admin              is an admin authentication
+     * @param username           is a user whose projects will be deleted
      * @param redirectAttributes is where I put a message if user is not found
      * @return admin page
      */
