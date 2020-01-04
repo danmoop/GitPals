@@ -231,42 +231,6 @@ public class ProjectController {
     }
 
     /**
-     * This request is handled when user wants to sort projects by language
-     * They will be sorted and displayed
-     *
-     * @param data     is a list of technologies checkboxes user select manually
-     * @param isUnique is a condition whether there are any other techs EXCEPT what users choose (null if checkbox is not selected, "off" if selected)
-     * @return a list of projects according to user's preference
-     **/
-    @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("sort_projects") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model) {
-        List<Project> allProjects = projectInterface.findAll();
-
-        List<Project> matchProjects;
-
-        /** @param isUnique does the following:
-         * if there is a project with some requirements and we mark a checkbox then
-         * it will find a project with chosen requirements ONLY
-         *
-         * if checkbox is not selected it will find the same project by ONE of the requirements
-         */
-        if (isUnique) { // true - if checkbox IS selected
-            matchProjects = allProjects.stream()
-                    .filter(project -> project.getRequirements().equals(data))
-                    .collect(Collectors.toList());
-        } else { // false - checkbox IS NOT selected
-            matchProjects = allProjects.stream()
-                    .filter(project -> data.stream()
-                            .anyMatch(req -> project.getRequirements().contains(req)))
-                    .collect(Collectors.toList());
-        }
-
-        model.addAttribute("matchProjects", matchProjects);
-
-        return "sections/projects/projectsAfterSorting";
-    }
-
-    /**
      * This request is handled when user submits their comment
      * It will be added to comments list and saved
      *
@@ -295,6 +259,15 @@ public class ProjectController {
         return "redirect:/projects/" + projectName;
     }
 
+    /**
+     * This function removes a comment added below project description
+     *
+     * @param user        is comment's author
+     * @param projectName is a project name
+     * @param text        is a comment text
+     * @param ts          is a comment's timestamp (when comment was added)
+     * @return project page
+     */
     @PostMapping("/deleteComment")
     public String deleteComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
         Project project = projectInterface.findByTitle(projectName);
@@ -308,7 +281,7 @@ public class ProjectController {
                 .filter(projectComment -> projectComment.getAuthor().equals(user.getName()) && projectComment.getText().equals(text) && projectComment.getTimeStamp().equals(ts))
                 .findFirst();
 
-        if (comment.isPresent()) {
+        if (comment.isPresent() && comment.get().getAuthor().equals(user.getName())) {
             project.getComments().remove(comment.get());
             projectInterface.save(project);
         } else {

@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Comment;
 import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ForumController {
 
     @Autowired
     private ForumInterface forumInterface;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * This request is handled when user wants to open forum page
@@ -42,20 +47,27 @@ public class ForumController {
      * @return post page
      */
     @GetMapping("/forum/post/{key}")
-    public String getForumPost(@PathVariable("key") String key, Principal principal, Model model) {
+    public String getForumPost(@PathVariable("key") String key, Principal user, Model model) {
         ForumPost post = forumInterface.findByKey(key);
 
         if (post == null) {
             return "redirect:/forum";
         }
 
-        if (principal != null && !post.getViewSet().contains(principal.getName())) {
-            post.getViewSet().add(principal.getName());
+
+        if (user != null && !post.getViewSet().contains(user.getName())) {
+            post.getViewSet().add(user.getName());
             forumInterface.save(post);
         }
 
+        try {
+            model.addAttribute("userDB", userService.findByUsername(user.getName()));
+        } catch (NullPointerException e) {
+            model.addAttribute("userDB", null);
+        }
+
         model.addAttribute("post", post);
-        model.addAttribute("user", principal);
+
         return "sections/viewForumPost";
     }
 
@@ -117,5 +129,37 @@ public class ForumController {
         }
 
         return "redirect:/forum";
+    }
+
+    /**
+     * This function deleted comment added on forum post
+     *
+     * @param user is comment's author
+     * @param key  is a forum post's key
+     * @param text is a comment's text
+     * @param ts   is a comment's timestamp (when comment was added)
+     * @return forum post's page
+     */
+    @PostMapping("/deleteForumPostComment")
+    public String deleteForumPostComment(Principal user, @RequestParam("key") String key, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+        ForumPost post = forumInterface.findByKey(key);
+
+        if (post == null || user == null) {
+            return "redirect:/";
+        }
+
+        Optional<Comment> comment = post.getComments()
+                .stream()
+                .filter(postComment -> postComment.getAuthor().equals(user.getName()) && postComment.getText().equals(text) && postComment.getTimeStamp().equals(ts))
+                .findFirst();
+
+        if (comment.isPresent() && comment.get().getAuthor().equals(user.getName())) {
+            post.getComments().remove(comment.get());
+            forumInterface.save(post);
+        } else {
+            return "redirect:/";
+        }
+
+        return "redirect:/forum/post/" + key;
     }
 }

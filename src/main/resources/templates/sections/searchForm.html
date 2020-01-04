@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
         <link rel="stylesheet" href="css/style.css">
-        <title>GitPals - Dashboard</title>
+        <title>GitPals - Search</title>
     </head>
 
     <body>
@@ -47,36 +47,74 @@
             </div>
 
             <br/>
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Find users that know specific skills</h4>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Find users that know specific skills</h4>
 
-                    <form th:action="@{/findUsersBySkills}" method="post">
-                        <div class="table-striped table-responsive-md mt">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Skill name</th>
-                                    <th>Possession</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="tech: ${techs}">
-                                    <td class="fw-600">[[${tech.key}]]</td>
-                                    <td>
-                                        <div class="pretty p-default p-curve p-thick">
-                                            <input type="checkbox" th:name="skills" th:value="${tech.key}" th:checked="${tech.value}"/>
-                                            <div class="state p-success-o">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <form th:action="@{/findUsersBySkills}" method="post">
+                                <div class="table-striped table-responsive-md mt">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Skill name</th>
+                                            <th>Possession</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="tech: ${techs}">
+                                            <td class="fw-600">[[${tech.key}]]</td>
+                                            <td>
+                                                <div class="pretty p-default p-curve p-thick">
+                                                    <input type="checkbox" th:name="skills" th:value="${tech.key}" th:checked="${tech.value}"/>
+                                                    <div class="state p-success-o">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <input type="submit" class="btn btn-outline-light btn-pill" style="margin: 15px;" value="Find" />
+                            </form>
                         </div>
-                        <input type="submit" class="btn btn-outline-light btn-pill" style="margin: 15px;" value="Find" />
-                    </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Find projects by requirements</h4>
+
+                            <form th:action="@{/sortProjects}" method="post">
+                                <div class="table-striped table-responsive-md mt">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Skill name</th>
+                                            <th>Possession</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="tech: ${techs}">
+                                            <td class="fw-600">[[${tech.key}]]</td>
+                                            <td>
+                                                <div class="pretty p-default p-curve p-thick">
+                                                    <input type="checkbox" th:name="requirement" th:value="${tech.key}" th:checked="${tech.value}"/>
+                                                    <div class="state p-success-o">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <input type="submit" class="btn btn-outline-light btn-pill" style="margin: 15px;" value="Find" />
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

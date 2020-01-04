@@ -6,10 +6,8 @@ import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -97,40 +95,5 @@ public class ProjectAPIController {
         }
 
         return Response.FAILED;
-    }
-
-    // TEST AREA ///
-
-    @GetMapping("/create/{amount}")
-    public Response createProjects(@PathVariable int amount) {
-
-        for (int i = 0; i < amount; i++) {
-            String s = String.valueOf(i);
-            Project project = new Project(getRandomKey(), s, s, s, new ArrayList<>());
-
-            projectInterface.save(project);
-        }
-
-        return Response.OK;
-    }
-
-    @GetMapping("/killThemAll")
-    public Response deleteProjects() {
-        projectInterface.deleteAll();
-
-        return Response.OK;
-    }
-
-    private String getRandomKey() {
-        StringBuilder b = new StringBuilder();
-        Random rand = new Random();
-
-        String possible = "qwertyuiopasdfghjklzxcvbnm";
-
-        for (int i = 0; i < 10; i++) {
-            b.append(possible.charAt(rand.nextInt(possible.length())));
-        }
-
-        return b.toString();
     }
 }

@@ -133,7 +133,7 @@
                                             <input type="hidden" th:name="ts" th:value="*{comment.timeStamp}" />
                                             <input type="hidden" th:name="projectName" th:value="*{project.title}" />
                                             <input type="hidden" th:name="text" th:value="*{comment.text}" />
-                                            <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" />
+                                            <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="return confirm('Are you sure?')"/>
                                         </form>
                                     </div>
                                     <div class="card-body">

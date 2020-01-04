@@ -46,7 +46,7 @@
                                 <span>[[${post.title}]] by <a th:href="${'/users/' + post.author}">[[${post.author}]]</a></span>
                             </div>
                             <div class="col">
-                                <form th:action="@{/deleteForumPost}" th:if="${user != null && user.userAuthentication.details.login == post.author}" method="post" style="float:right;">
+                                <form th:action="@{/deleteForumPost}" th:if="${userDB != null && userDB.username == post.author}" method="post" style="float:right;">
                                     <input type="submit" class="btn btn-outline-danger btn-pill btn-sm fw-600" value="Delete post" onclick="return confirm('Are you sure?')"/>
                                     <input type="hidden" th:name="key" th:value="${post.key}"/>
                                 </form>
@@ -75,10 +75,10 @@
                             [[${error}]]
                         </u>
 
-                        <span th:if="${user == null}"><a href="/login">Sign In</a> in order to add a comment</span>
+                        <span th:if="${userDB == null}"><a href="/login">Sign In</a> in order to add a comment</span>
 
                         <div class="row mt">
-                            <form class="col" th:action="@{/addCommentToPost}" method="post" th:if="${user != null}" style="display: inline-flex;">
+                            <form class="col" th:action="@{/addCommentToPost}" method="post" th:if="${userDB != null}" style="display: inline-flex;">
                                 <input required type="hidden" th:name="title" th:value="*{post.title}" />
                                 <input required type="hidden" th:name="postKey" th:value="*{post.key}" />
                                 <input required type="text" class="form-control" th:name="commentText" placeholder="Comment" />
@@ -93,6 +93,12 @@
                                         <div class="card-header">
                                             <span class="fw-600">[[${comment.author}]]</span> <br />
                                             <span>[[${comment.timeStamp}]]</span>
+                                            <form th:action="@{/deleteForumPostComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}">
+                                                <input type="hidden" th:name="ts" th:value="*{comment.timeStamp}" />
+                                                <input type="hidden" th:name="key" th:value="*{post.key}" />
+                                                <input type="hidden" th:name="text" th:value="*{comment.text}" />
+                                                <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="return confirm('Are you sure?')"/>
+                                            </form>
                                         </div>
                                         <div class="card-body">
                                             <span>[[${comment.text}]]</span>
