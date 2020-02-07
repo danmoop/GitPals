@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <title>GitPals - Find team for cooperative development</title>
+</head>
+
+<body>
+<style type="text/css">
+        .st0 {
+            display: none;
+        }
+
+        .st1 {
+            opacity: 0.7;
+        }
+
+        .st2 {
+            fill: #ED1C24;
+            stroke: #CD2928;
+            stroke-miterlimit: 10;
+        }
+
+        .st3 {
+            fill: #A67C52;
+            stroke: #CD2928;
+            stroke-miterlimit: 10;
+        }
+    </style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+        <a href="/login">
+            <button type="button" class="btn btn-warning btn-sm borderBtn brickColor" th:if="${GithubUser == null}">
+                <i class="fa fa-sign-in"></i> Sign In
+            </button>
+        </a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown" th:if="${GithubUser != null}">
+                <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, [[${GithubUser.userAuthentication.details.login}]]</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                    <a class="dropdown-item" href="/dashboard">
+                        <i class="fa fa-user-circle"></i> Dashboard
+                    </a>
+                    <a class="dropdown-item" href="/submitProject">
+                        <i class="fa fa-wrench"></i> Submit a project
+                    </a>
+                    <a class="dropdown-item" href="/admin" th:if="${GithubUser.userAuthentication.details.login == 'danmoop'}">
+                        <i class="fa fa-globe"></i> Admin Page
+                    </a>
+                    <a href="/signout" class="dropdown-item">
+                        <i class="fa fa-sign-out"></i> Log Out
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/forum">
+                    <button type="button" class="btn neoButton btn-sm fw-600">
+                        <i class="fa fa-wpforms"></i> Forum
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">
+                    <button type="button" class="btn neoButton btn-sm fw-600">
+                        <i class="fa fa-search"></i> Search
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<section>
+    <div class="container text-center">
+        <div class="row animated fadeIn text-center">
+            <div class="col-sm-6">
+                <div class="div-center">
+                    <h2>Become a better developer with <span class="font-weight-bold">GitPals</span></h2>
+                    <h6>We are connecting you with other developers, whose projects match your skills. Choose any
+                        project that matches your requirements and start your path in cooperative development</h6>
+                    <h6>
+                        There are [[${usersRegistered}]] users registered
+                    </h6>
+                    <a href="/login">
+                        <button type="button" class="btn btn-info btn-sm borderBtn fw-600" th:if="${GithubUser == null}">Get Started</button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <svg fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768"><defs><style>.cls-1{opacity:0.7;}.cls-2{fill:#ed1c24;}.cls-2,.cls-3{stroke:#cd2928;stroke-miterlimit:10;}.cls-3{fill:#a67c52;}</style></defs><g id="Layer_4" data-name="Layer 4" class="cls-1"><polygon class="cls-2" points="970.39 586.72 970.39 476.86 975.62 476.86 975.62 378.77 979.54 378.77 978.24 297.69 980.85 297.69 980.85 230.99 980.85 223.15 984.77 223.15 984.77 211.38 990.01 211.38 990.01 220.53 990.01 223.15 993.93 223.15 993.93 229.69 993.93 232.3 993.93 234.92 993.93 236.22 992.62 297.69 996.55 297.69 996.55 377.47 1000.47 377.47 1000.47 475.55 1004.39 475.55 1004.39 586.72 970.39 586.72"/><polygon class="cls-2" points="1042.32 586.72 1042.32 476.86 1047.55 476.86 1047.55 378.77 1051.47 378.77 1050.17 297.69 1052.78 297.69 1052.78 230.99 1052.78 223.15 1056.7 223.15 1056.7 211.38 1061.94 211.38 1061.94 220.53 1061.94 223.15 1065.86 223.15 1065.86 229.69 1065.86 232.3 1065.86 234.92 1065.86 236.22 1064.55 297.69 1068.47 297.69 1068.47 377.47 1072.4 377.47 1072.4 475.55 1076.32 475.55 1076.32 586.72 1042.32 586.72"/><path class="cls-2" d="M677,570s293.13-58.59,303.84-340.31C980.84,229.69,1004.94,476.51,677,570Z"/><path class="cls-2" d="M678,570S386.39,510.51,375.73,224.45C375.73,224.45,351.76,475.07,678,570Z"/><path class="cls-2" d="M1366,573s-293-59.55-303.67-345.91C1062.33,227.07,1038.25,478,1366,573Z"/><line class="cls-2" x1="27.46" y1="563.03" x2="27.46" y2="585.4"/><line class="cls-2" x1="61.47" y1="551.18" x2="61.47" y2="584.75"/><line class="cls-2" x1="92.85" y1="537.36" x2="92.85" y2="585.4"/><line class="cls-2" x1="126.86" y1="516.29" x2="126.86" y2="583.95"/><line class="cls-2" x1="156.94" y1="497.98" x2="156.94" y2="586.06"/><line class="cls-2" x1="190.94" y1="467.59" x2="190.94" y2="584.1"/><line class="cls-2" x1="222.33" y1="436.71" x2="222.33" y2="586.06"/><line class="cls-2" x1="256.33" y1="385.31" x2="256.33" y2="584.1"/><line class="cls-2" x1="289.02" y1="561.87" x2="289.02" y2="582.79"/><line class="cls-2" x1="388.42" y1="561.21" x2="388.42" y2="582.14"/><line class="cls-2" x1="999.16" y1="561.87" x2="999.16" y2="582.79"/><polygon class="cls-2" points="368.8 230.99 368.8 250.17 309.6 250.17 309.95 230.99 368.8 230.99"/><polygon class="cls-2" points="368.8 376.16 368.8 395.34 309.6 395.34 309.95 376.16 368.8 376.16"/><polygon class="cls-2" points="368.8 475.55 368.8 494.73 309.6 494.73 309.95 475.55 368.8 475.55"/><polygon class="cls-2" points="368.8 295.07 368.8 314.26 309.6 314.26 309.95 295.07 368.8 295.07"/><rect class="cls-2" y="584.1" width="1365.35" height="15.69"/><polygon class="cls-2" points="966.08 722.73 966.08 701.8 972.62 701.8 972.62 618.1 972.62 614.18 966.08 614.18 967.39 605.02 960.85 605.02 960.85 599.79 1016.43 599.79 1015.78 605.02 1010.55 605.02 1009.24 614.18 1005.32 614.18 1005.32 701.8 1010.55 701.8 1009.24 722.73 966.08 722.73"/><polygon class="cls-2" points="1038.01 722.73 1038.01 701.8 1044.55 701.8 1044.55 618.1 1044.55 614.18 1038.01 614.18 1039.32 605.02 1032.78 605.02 1032.78 599.79 1088.36 599.79 1087.71 605.02 1082.48 605.02 1081.17 614.18 1077.24 614.18 1077.24 701.8 1082.48 701.8 1081.17 722.73 1038.01 722.73"/><polygon class="cls-2" points="353.11 722.73 353.11 701.8 359.65 701.8 359.65 618.1 359.65 614.18 353.11 614.18 354.42 605.02 347.88 605.02 347.88 599.79 403.46 599.79 402.8 605.02 397.57 605.02 396.26 614.18 392.34 614.18 392.34 701.8 397.57 701.8 396.26 722.73 353.11 722.73"/><rect class="cls-3" x="960.85" y="724.03" width="54.93" height="32.7"/><rect class="cls-3" x="1032.78" y="724.03" width="53.62" height="32.7"/><rect class="cls-3" x="941.23" y="756.73" width="164.78" height="11.77"/><rect class="cls-3" x="277.25" y="724.03" width="54.93" height="32.7"/><rect class="cls-3" x="349.18" y="724.03" width="53.62" height="32.7"/><rect class="cls-3" x="257.64" y="756.73" width="164.78" height="11.77"/><polygon class="cls-2" points="281.18 722.73 281.18 701.8 287.72 701.8 287.72 618.1 287.72 614.18 281.18 614.18 282.49 605.02 275.95 605.02 275.95 599.79 331.53 599.79 330.87 605.02 325.64 605.02 324.33 614.18 320.41 614.18 320.41 701.8 325.64 701.8 324.33 722.73 281.18 722.73"/><polygon class="cls-2" points="286.41 584.1 286.41 474.24 291.64 474.24 291.64 376.16 295.56 376.16 294.26 295.07 296.87 295.07 296.87 228.38 296.87 220.53 300.8 220.53 300.8 208.76 306.03 208.76 306.03 217.91 306.03 220.53 309.95 220.53 309.95 227.07 309.95 229.69 309.95 232.3 309.95 233.61 308.64 295.07 312.56 295.07 312.56 374.85 316.49 374.85 316.49 472.94 320.41 472.94 320.41 584.1 286.41 584.1"/><polygon class="cls-2" points="358.34 584.1 358.34 474.24 363.57 474.24 363.57 376.16 367.49 376.16 366.19 295.07 368.8 295.07 368.8 228.38 368.8 220.53 372.72 220.53 372.72 208.76 377.95 208.76 377.95 217.91 377.95 220.53 381.88 220.53 381.88 227.07 381.88 229.69 381.88 232.3 381.88 233.61 380.57 295.07 384.49 295.07 384.49 374.85 388.42 374.85 388.42 472.94 392.34 472.94 392.34 584.1 358.34 584.1"/><path class="cls-2" d="M0,570.37s286.41-59.1,296.87-343.3C296.87,227.07,320.41,476.06,0,570.37Z"/><polygon class="cls-2" points="1052.78 378.77 1052.78 397.96 993.58 397.96 993.93 378.77 1052.78 378.77"/><polygon class="cls-2" points="1052.78 478.17 1052.78 497.35 993.58 497.35 993.93 478.17 1052.78 478.17"/><polygon class="cls-2" points="1052.78 297.69 1052.78 316.87 993.58 316.87 993.93 297.69 1052.78 297.69"/><line class="cls-2" x1="281.18" y1="326.46" x2="281.18" y2="584.75"/><line class="cls-2" x1="711.5" y1="559.5" x2="711.45" y2="584.09"/><line class="cls-2" x1="745.5" y1="547.5" x2="745.45" y2="583.42"/><line class="cls-2" x1="776.5" y1="532.5" x2="776.83" y2="584.09"/><line class="cls-2" x1="810.84" y1="514.11" x2="810.84" y2="582.61"/><line class="cls-2" x1="840.5" y1="494.5" x2="840.92" y2="584.75"/><line class="cls-2" x1="874.5" y1="466.5" x2="874.92" y2="582.77"/><line class="cls-2" x1="906.31" y1="433.52" x2="906.31" y2="584.75"/><line class="cls-2" x1="940.31" y1="381.48" x2="940.31" y2="582.77"/><line class="cls-2" x1="965.16" y1="321.89" x2="965.16" y2="583.43"/><line class="cls-2" x1="1299.96" y1="553.35" x2="1299.96" y2="587.34"/><line class="cls-2" x1="1268.57" y1="539.36" x2="1268.57" y2="588.01"/><line class="cls-2" x1="1234.57" y1="518.03" x2="1234.57" y2="586.54"/><line class="cls-2" x1="1204.49" y1="499.49" x2="1204.49" y2="588.68"/><line class="cls-2" x1="1170.48" y1="468.71" x2="1170.48" y2="586.69"/><line class="cls-2" x1="1139.1" y1="437.45" x2="1139.1" y2="588.68"/><line class="cls-2" x1="1105.09" y1="385.4" x2="1105.09" y2="586.69"/><line class="cls-2" x1="1080.25" y1="325.81" x2="1080.25" y2="587.35"/><line class="cls-2" x1="652.59" y1="562.74" x2="652.59" y2="585.4"/><line class="cls-2" x1="618.59" y1="550.74" x2="618.59" y2="584.73"/><line class="cls-2" x1="587.2" y1="536.74" x2="587.2" y2="585.4"/><line class="cls-2" x1="553.2" y1="518.71" x2="553.2" y2="583.92"/><line class="cls-2" x1="523.12" y1="499.09" x2="523.12" y2="586.06"/><line class="cls-2" x1="489.12" y1="471.63" x2="489.12" y2="584.08"/><line class="cls-2" x1="457.73" y1="440.24" x2="457.73" y2="586.06"/><line class="cls-2" x1="423.73" y1="393.16" x2="423.73" y2="584.08"/><line class="cls-2" x1="398.88" y1="343.46" x2="398.88" y2="584.74"/><polygon class="cls-2" points="1052.78 230.82 1052.78 250 993.58 250 993.93 230.82 1052.78 230.82"/><line class="cls-2" x1="677.5" y1="569.5" x2="677.45" y2="585.09"/></g></svg>
+            </div>
+        </div>
+        <hr>
+        <h4>Explore the most 50 recent projects published (Total published: [[${totalProjectsAmount}]])</h4>
+        <p th:if="${#lists.size(projects) == 0}">No projects published yet</p>
+        <a href="/submitProject">
+            <button type="button" class="btn btn-info btn-sm borderBtn fw-600" th:if="${GithubUser != null}">Submit Project</button>
+        </a>
+    </div>
+
+    <ul class="projectUl animated fadeIn">
+        <li class="projectItem" th:each="project: ${projects}">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="font-weight-bold">[[${project.title}]]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">by [[${project.authorName}]]</p>
+                    <p class="card-text font-weight-bold">[[${project.requirements}]]</p>
+                    <a th:href="${'/projects/' + project.title}">
+                        <button type="button" class="btn neoButton btn-pill">Explore</button>
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+</body>
+
+</html>

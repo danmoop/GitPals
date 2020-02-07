@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - Projects</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/flat-ui.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
+</head>
+<body>
+
+<section class="center-content text-center">
+    <a href="/" th:if="${#lists.size(matchProjects) != 0}"><h1 class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <a href="/" th:if="${#lists.size(matchProjects) == 0}"><h1 class="wh"><img width="150" height="150" src="../images/sad_github.png"/>GitPals</h1></a>
+    <h3 class="wh b" th:inline="text">Projects according to your choice ([[${#lists.size(matchProjects)}]])</h3>
+    <hr class="divider"/>
+    <ul class="pr-list text-center">
+        <a th:each="project: ${matchProjects}" th:href="${'/projects/' + project.title}">
+            <li class="pr-item">
+                <header><h6 class="wh pr-title" th:inline="text">[[${project.title}]]</h6></header>
+                <a class="b" th:href="${'/users/' + project.authorName}" target="_blank" th:inline="text">[[${project.authorName}]]</a>
+                <p class="wh" th:inline="text" style="margin: 10px;">[[${project.requirements}]]</p>
+            </li>
+        </a>
+    </ul>
+
+    <h4 class="wh" th:if="${#lists.size(matchProjects) == 0}" style="margin-right: 2.5%;">Not found anything</h4>
+
+</section>
+
+</body>
+</html>

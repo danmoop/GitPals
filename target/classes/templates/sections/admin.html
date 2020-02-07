@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+        <link rel="stylesheet" href="css/style.css">
+        <title>GitPals - Dashboard</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="/">
+                <img src="./images/logo.png" class="mr-2" height="30">GitPals
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Page</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                            <a class="dropdown-item" href="/submitProject">
+                                <i class="fa fa-wrench"></i> Submit a project
+                            </a>
+                            <a class="dropdown-item" href="/sign-out">
+                                <i class="fa fa-sign-out"></i> Log Out
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <h4>Get all users</h4>
+
+                    <form th:action="@{/getAllUsers}" method="post">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <ul th:if="${users != null}" style="list-style: none; padding-left: 0;">
+                        <li th:each="user: ${users}">
+                            <span class="fw-600">[[${user.username}]]</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>Get specific user</h4>
+
+                    <form th:action="@{/getUserInfo}" method="post">
+                        <input type="text" th:name="userName" class="form-control" placeholder="User" style="margin: 15px;">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <span class="fw-600" th:if="${user != null}">[[${user}]]</span>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row text-center">
+                <div class="col">
+                    <h4>Get all projects</h4>
+
+                    <form th:action="@{/getAllProjects}" method="post">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <ul th:if="${projects != null}" style="list-style: none; padding-left: 0;">
+                        <li th:each="project: ${projects}">
+                            <span class="fw-600">[[${project.title}]]</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>Get specific project</h4>
+
+                    <form th:action="@{/getProjectInfo}" method="post">
+                        <input type="text" th:name="projectName" class="form-control" placeholder="Project name" style="margin: 15px;">
+                        <input class="btn btn-secondary btn-sm borderBtn" type="submit" value="Get" />
+                    </form>
+
+                    <span class="fw-600" th:if="${project != null}">[[${project}]]</span>
+                </div>
+            </div>
+
+            <hr/>
+
+            <form th:action="@{/sendMailToEveryone}" class="text-center" method="post">
+                <h4>Send Mail to everyone</h4>
+
+                <input type="text" th:name="subject" class="form-control mt" placeholder="Subject" />
+                <input type="text" th:name="text" class="form-control mt" placeholder="Text" />
+                <input class="btn btn-secondary btn-sm borderBtn mt" type="submit" value="Send" />
+            </form>
+
+            <hr/>
+
+            <form class="text-center mt" th:action="@{/sendMessageToEveryone}" method="post">
+                <h4>Send GitPals message to everyone</h4>
+
+                <input type="text" th:name="text" class="form-control mt" placeholder="Text" .>
+                <input type="submit" class="btn btn-secondary btn-sm borderBtn mt" value="Send" />
+            </form>
+        </div>
+    </body>
+</html>

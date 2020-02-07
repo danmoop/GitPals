@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <title>GitPals - Dashboard</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <a class="navbar-brand" href="/">
+            <img src="./images/logo.png" class="mr-2" height="30">GitPals
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your dashboard</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                        <a class="dropdown-item" href="/submitProject">
+                            <i class="fa fa-wrench"></i> Submit a project
+                        </a>
+                        <a class="dropdown-item" href="/sign-out">
+                            <i class="fa fa-sign-out"></i> Log Out
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container text-center">
+
+        <div>
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="font-weight-bold">danmoop</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:if="${GithubUser.userAuthentication.details.location}">from [[${GithubUser.userAuthentication.details.location}]]</p>
+                    <p class="card-text" th:if="${GithubUser.userAuthentication.details.bio}">[[${GithubUser.userAuthentication.details.bio}]]</p>
+
+                    <div class="row">
+                        <div class="col">
+                            Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects
+                        </div>
+                        <div class="col">
+                            Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <h5>Technologies you know</h5>
+
+        <form th:action="@{/updateUser}" th:object="${userObject}" method="post">
+            <div class="table-striped table-responsive-md mt">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Skill name</th>
+                        <th>Possession</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tech: ${dbUser.skillList}">
+                        <td class="fw-600">[[${tech.key}]]</td>
+                        <td>
+                            <div class="pretty p-default p-curve p-thick">
+                                <input type="checkbox" th:name="techCheckbox" th:value="${tech.key}" th:checked="${tech.value}"/>
+                                <div class="state p-success-o">
+                                    <label></label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="custom-control custom-toggle my-2">
+                <input type="checkbox" th:name="notificationBool" id="customToggle1" class="custom-control-input" th:checked="${dbUser.notificationsEnabled}" />
+                <label class="custom-control-label" for="customToggle1" style="float: left;">Getting notifications on email</label>
+            </div>
+
+            <input type="submit" class="btn btn-pill neoButton" style="margin: 15px;" value="Save changes" />
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+</body>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/flat-ui.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
+    <title>GitPals - Add forum post</title>
+</head>
+<body>
+<section class="center-content text-center">
+    <a href="/"><h1 class="wh"><img width="150" height="150" src="images/github.png"/>GitPals</h1></a>
+
+    <div class="container">
+        <h3 class="wh">Submit your post here.</h3>
+        <form th:action="@{/addForumPost}" method="post">
+            <input type="text" class="form-control" th:name="title" placeholder="Post title" />
+            <textarea type="text" class="form-control" th:name="content" placeholder="Post content..."></textarea> <br/>
+            <input type="submit" class="btn btn-info b" value="Submit"/>
+        </form>
+    </div>
+</section>
+</body>
+</html>

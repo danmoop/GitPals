@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GitPals - Search users</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/flat-ui.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/github.png"/>
+</head>
+<body>
+
+<section class="center-content text-center">
+    <a href="/"><h1 th:if="${#lists.size(match_users) != 0}" class="wh"><img width="150" height="150" src="../images/github.png"/>GitPals</h1></a>
+    <a href="/"><h1 th:if="${#lists.size(match_users) == 0}" class="wh"><img width="150" height="150" src="../images/sad_github.png"/>GitPals</h1></a>
+    <div class="container">
+        <h3 class="wh b" th:inline="text">Found ([[${#lists.size(match_users)}]]) users</h3>
+        <hr class="divider"/>
+
+        <div th:each="user: ${match_users}">
+            <a th:href="${ '/users/' + user }" th:inline="text" class="b fz-25">[[${user}]]</a>
+        </div>
+
+        <h3 th:if="${#lists.size(match_users) == 0}" class="wh">No users found</h3>
+
+    </div>
+</section>
+
+</body>
+</html>

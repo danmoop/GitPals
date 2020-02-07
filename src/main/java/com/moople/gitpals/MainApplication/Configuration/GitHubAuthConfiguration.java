@@ -27,7 +27,7 @@ public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setPort(465);
 
         mailSender.setUsername("gitpals1@gmail.com");
         mailSender.setPassword("mypalsareongitpals$100");
@@ -37,8 +37,6 @@ public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
-
-        mailSender.setJavaMailProperties(props);
 
         return mailSender;
     }
