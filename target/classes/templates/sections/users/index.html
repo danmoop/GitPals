@@ -73,7 +73,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/forum">
                             <button type="button" class="btn neoButton btn-sm fw-600">
-                                <i class="fa fa-wpforms"></i> Forum
+                                <i class="fa fa-wpforms"></i> Forum ([[${forumPostsSize}]])
                             </button>
                         </a>
                     </li>
@@ -95,9 +95,7 @@
                             <h2>Become a better developer with <span class="font-weight-bold">GitPals</span></h2>
                             <h6>We are connecting you with other developers, whose projects match your skills. Choose any
                                 project that matches your requirements and start your path in cooperative development</h6>
-                            <h6>
-                                There are [[${usersRegistered}]] users registered
-                            </h6>
+                            <br>
                             <a href="/login">
                                 <button type="button" class="btn btn-primary btn-sm borderBtn fw-600" th:if="${GithubUser == null}">Get Started</button>
                             </a>

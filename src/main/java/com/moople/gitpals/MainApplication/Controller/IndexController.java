@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
+import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class IndexController {
 
     @Autowired
     private ProjectInterface projectInterface;
+
+    @Autowired
+    private ForumInterface forumInterface;
 
     /**
      * This request is handled when user opens index page
@@ -86,6 +90,7 @@ public class IndexController {
         model.addAttribute("projectTechs", Data.technologiesMap);
         model.addAttribute("projects", projects);
         model.addAttribute("totalProjectsAmount", projectsAmount);
+        model.addAttribute("forumPostsSize", forumInterface.findAll().size());
         model.addAttribute("usersRegistered", userService.findAll().size());
 
         return "sections/users/index";

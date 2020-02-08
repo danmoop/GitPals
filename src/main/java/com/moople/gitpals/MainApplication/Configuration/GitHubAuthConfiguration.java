@@ -27,7 +27,7 @@ public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(465);
+        mailSender.setPort(587);
 
         mailSender.setUsername("gitpals1@gmail.com");
         mailSender.setPassword("mypalsareongitpals$100");
