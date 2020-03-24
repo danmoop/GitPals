@@ -26,8 +26,9 @@ public class ProjectAPIController {
     public Project getProject(@PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 
-        if (project != null)
+        if (project != null) {
             return project;
+        }
 
         return new Project();
     }

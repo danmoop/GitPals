@@ -14,16 +14,14 @@ This project uses **Java, Spring, MongoDB**
 So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://github.com/danmoop/GitPals/blob/master/GitPals%20Review.pdf)
 
 
-**NEW! Introducing GitPals mobile app built on React Native. It is under development right now, implemented using REST API (sending requests and getting responses)**
-
-<img src="gallery/mobile.png" width="200">
+**NEW! Introducing GitPals mobile app built on Ionic. It is under development right now, implemented using REST API (sending requests and getting responses)**
 
 The rest of images
-![image](gallery/main.png)
-![image](gallery/d1.png)
-![image](gallery/d2.png)
-![image](gallery/project1.png)
-![image](gallery/messages.png)
+![image](gallery/1.png)
+![image](gallery/2.png)
+![image](gallery/3.png)
+![image](gallery/4.png)
+![image](gallery/5.png)
 
 # Contributing:
 Thank you for deciding to contribute! Download GitPals to your PC. You need to have MongoDB installed on your pc.

@@ -26,6 +26,10 @@ public class MessageAPIController {
     public List<Message> getMessages(@RequestBody Map<String, String> map) {
         String username = map.get("username");
 
+        if (username == null) {
+            return new ArrayList<>();
+        }
+
         User user = userInterface.findByUsername(username);
 
         if (user != null) {

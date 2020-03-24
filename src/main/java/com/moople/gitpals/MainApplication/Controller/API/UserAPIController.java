@@ -58,6 +58,10 @@ public class UserAPIController {
 
         if (user != null) {
             user.setSkillList(techs);
+            user.setCountry(userCountry);
+            user.setBio(info);
+            userInterface.save(user);
+
             return Response.OK;
         }
 
