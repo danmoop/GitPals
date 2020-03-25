@@ -6,6 +6,7 @@ import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +42,14 @@ public class ProjectAPIController {
         return projectInterface.findAll();
     }
 
+    @GetMapping(value = "/getNumberOfProjects", produces = "application/json")
+    public Map<String, Integer> getNumberOfProjects() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("totalNumberOfProjects", projectInterface.findAll().size());
+
+        return map;
+    }
+
     /**
      * @param amount is an amount of projects we want to get from the huge list
      * @return list of project which length == amount, so we get fixed list
@@ -51,50 +60,5 @@ public class ProjectAPIController {
                 .stream()
                 .limit(amount)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Project is created and added to database
-     *
-     * @param map is a hashmap that comes from the client, data is being extracted and assigned
-     * @return response according to the success of a function
-     */
-    @PostMapping(value = "/createProject")
-    public Response submitProject(@RequestBody Map<Object, Object> map) {
-        Project project = new Project(
-                (String) map.get("title"),
-                (String) map.get("description"),
-                (String) map.get("githubProjectLink"),
-                (String) map.get("username"),
-                (List<String>) map.get("requirements"));
-
-        if (projectInterface.findByTitle(project.getTitle()) == null) {
-            projectInterface.save(project);
-
-            return Response.OK;
-        } else {
-            return Response.PROJECT_EXISTS;
-        }
-    }
-
-    /**
-     * Project deleted from the database
-     *
-     * @param map is a hashmap that comes from the client, data is being extracted and assigned
-     * @return response according to the success of a function
-     */
-    @PostMapping("/deleteProject")
-    public Response deleteProject(@RequestBody Map<String, String> map) {
-        String username = map.get("username");
-        String projectName = map.get("projectName");
-
-        Project project = projectInterface.findByTitle(projectName);
-
-        if (project != null && project.getAuthorName().equals(username)) {
-            projectInterface.delete(projectInterface.findByTitle(project.getTitle()));
-            return Response.OK;
-        }
-
-        return Response.FAILED;
     }
 }
