@@ -26,9 +26,6 @@ public class AdminController {
     @Autowired
     private ProjectInterface projectService;
 
-    @Autowired
-    private JavaMailSender mailSender;
-
     /**
      * This function returns admin page if you are an admin
      *
@@ -148,16 +145,6 @@ public class AdminController {
             return "redirect:/";
         }
 
-        for (User user : userService.findAll()) {
-            if (user.getEmail() != null && user.isNotificationsEnabled()) {
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
-                mailMessage.setTo(user.getEmail());
-                mailMessage.setSubject(subject);
-                mailMessage.setText(text);
-                mailSender.send(mailMessage);
-            }
-        }
-
         return "redirect:/admin";
     }
 
@@ -179,14 +166,6 @@ public class AdminController {
 
         for (User user : userService.findAll()) {
             user.getMessages().add(message);
-
-            if (user.getEmail() != null && user.isNotificationsEnabled()) {
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
-                mailMessage.setTo(user.getEmail());
-                mailMessage.setSubject("You got a message on GitPals");
-                mailMessage.setText("A message from " + admin.getName() + ": " + message.getContent());
-                mailSender.send(mailMessage);
-            }
 
             userService.save(user);
         }

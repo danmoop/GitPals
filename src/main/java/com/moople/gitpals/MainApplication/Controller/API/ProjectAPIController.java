@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Model.Project;
-import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +41,9 @@ public class ProjectAPIController {
         return projectInterface.findAll();
     }
 
+    /**
+     * @return total number of projects created on GitPals
+     */
     @GetMapping(value = "/getNumberOfProjects", produces = "application/json")
     public Map<String, Integer> getNumberOfProjects() {
         Map<String, Integer> map = new HashMap<>();

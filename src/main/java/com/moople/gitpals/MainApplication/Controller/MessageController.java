@@ -23,11 +23,6 @@ public class MessageController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JavaMailSender mailSender;
-
-    private SimpleMailMessage mailMessage = new SimpleMailMessage();
-
     /**
      * This request is handled when user wants to see their messages
      * All the messages are added to model and sent to user's page
@@ -97,17 +92,6 @@ public class MessageController {
 
             recipient.getMessages().add(message);
             userService.save(recipient);
-
-            /*
-             * When you get a message within GitPals, you might be notified on your
-             * email if you have that setting enabled
-             */
-            if (recipient.getEmail() != null && recipient.isNotificationsEnabled()) {
-                mailMessage.setTo(recipient.getEmail());
-                mailMessage.setSubject("You got a message on GitPals");
-                mailMessage.setText("A message from " + user.getName() + ": " + message.getContent());
-                mailSender.send(mailMessage);
-            }
 
             return "redirect:/";
         }
