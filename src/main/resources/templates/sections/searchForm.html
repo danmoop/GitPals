@@ -19,6 +19,17 @@
 </nav>
 
 <section class="container text-center">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Find forum posts</h4>
+            <form th:action="@{/findForumPosts}" method="post">
+                <input class="form-control" th:name="post_name" type="text" placeholder="Post title" />
+                <br/>
+                <input class="btn btn-outline-light btn-pill" type="submit" value="Find" />
+            </form>
+        </div>
+    </div>
+    <br/>
     <div class="row">
         <div class="col">
             <div class="card">

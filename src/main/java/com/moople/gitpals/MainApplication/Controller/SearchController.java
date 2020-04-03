@@ -1,8 +1,10 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
+import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class SearchController {
 
     @Autowired
     private ProjectInterface projectInterface;
+
+    @Autowired
+    private ForumInterface forumInterface;
 
     /**
      * This request is handled when user wants to see a search page to find a project or a user
@@ -127,5 +132,23 @@ public class SearchController {
         model.addAttribute("match_projects", matchProjects);
 
         return "sections/projects/matchProjects";
+    }
+
+    /**
+     * This request finds all the forum posts whose titles match target value
+     *
+     * @param postName is target value, compare all the posts with it
+     * @param model is where list with posts is put
+     * @return list with posts to the result page
+     */
+    @PostMapping("/findForumPosts")
+    public String findForumPosts(@RequestParam("post_name") String postName, Model model) {
+        List<ForumPost> posts = forumInterface.findAll().stream()
+                .filter(post -> post.getTitle().toLowerCase().contains(postName.toLowerCase()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("match_posts", posts);
+
+        return "sections/matchForumPosts";
     }
 }
