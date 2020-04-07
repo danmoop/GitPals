@@ -69,4 +69,18 @@ public class SearchAPIController {
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * This function returns a list of project with requirements requested by a user
+     *
+     * @param requirements is a list of requirements project should contain
+     * @return list of projects whose requirements match the user's choice
+     */
+    @GetMapping(value = "/matchProjectsByRequirements", produces = "application/json")
+    public List<Project> getSortedProjects(@RequestBody List<String> requirements) {
+        return projectInterface.findAll().stream()
+                .filter(project -> requirements.stream()
+                        .anyMatch(req -> project.getRequirements().contains(req)))
+                .collect(Collectors.toList());
+    }
 }
