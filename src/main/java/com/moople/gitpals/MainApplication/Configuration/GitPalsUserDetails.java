@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.Configuration;
 
+import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +16,9 @@ public class GitPalsUserDetails implements UserDetailsService {
     @Autowired
     private UserInterface userInterface;
 
+    @Autowired
+    private KeyStorageInterface keyStorageInterface;
+
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         com.moople.gitpals.MainApplication.Model.User user = userInterface.findByUsername(s);
@@ -23,6 +27,7 @@ public class GitPalsUserDetails implements UserDetailsService {
             throw new UsernameNotFoundException("No user with username " + s);
         }
 
-        return new User(user.getUsername(), user.getId(), new ArrayList<>());
+        String key = keyStorageInterface.findByUsername(s).getKey();
+        return new User(user.getUsername(), key, new ArrayList<>());
     }
 }

@@ -1,11 +1,9 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.Data;
-import com.moople.gitpals.MainApplication.Service.ForumInterface;
-import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserService;
+import com.moople.gitpals.MainApplication.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,6 +28,9 @@ public class IndexController {
 
     @Autowired
     private ForumInterface forumInterface;
+
+    @Autowired
+    private KeyStorageInterface keyStorageInterface;
 
     /**
      * This request is handled when user opens index page
@@ -64,6 +65,10 @@ public class IndexController {
                                 bio
                         )
                 );
+            }
+
+            if(keyStorageInterface.findByUsername(user.getName()) == null) {
+                keyStorageInterface.save(new KeyStorage(user.getName()));
             }
 
             User userDB = userService.findByUsername(user.getName());
