@@ -1,9 +1,12 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
+import com.nimbusds.jose.KeySourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,6 +29,9 @@ public class UserController {
 
     @Autowired
     private ProjectInterface projectInterface;
+
+    @Autowired
+    private KeyStorageInterface keyStorageInterface;
 
     /**
      * This request is handled when user wants to open another user's dashboard
@@ -91,6 +98,43 @@ public class UserController {
         userDB.setNotificationsEnabled(notificationBool);
 
         userService.save(userDB);
+
+        return "redirect:/dashboard";
+    }
+
+    /**
+     * This request displays the user's personal key for authentication via mobile phone
+     *
+     * @param user is a current user authentication
+     * @param attributes is where key is put so it would be seen at the user's page
+     * @return dashboard page with a key
+     */
+    @PostMapping("/requestAuthKey")
+    public String getAuthKey(Principal user, RedirectAttributes attributes) {
+        String key = keyStorageInterface.findByUsername(user.getName()).getKey();
+
+        attributes.addFlashAttribute("key", key);
+
+        return "redirect:/dashboard";
+    }
+
+    /**
+     * Tihs function reset current user's key, so a new one generated
+     *
+     * @param user is a current user authentication
+     * @param attributes is where key is put so it would be seen at the user's page
+     * @return dashboard page with a key
+     */
+    @PostMapping("/resetAuthKey")
+    public String resetKey(Principal user, RedirectAttributes attributes) {
+        KeyStorage temp = new KeyStorage(user.getName());
+
+        KeyStorage keyStorageDB = keyStorageInterface.findByUsername(user.getName());
+        keyStorageDB.setKey(temp.getKey());
+
+        keyStorageInterface.save(keyStorageDB);
+
+        attributes.addFlashAttribute("key", keyStorageDB.getKey());
 
         return "redirect:/dashboard";
     }

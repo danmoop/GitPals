@@ -5,12 +5,16 @@ import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
 import com.moople.gitpals.MainApplication.Model.AuthRequest;
 import com.moople.gitpals.MainApplication.Model.AuthResponse;
 import com.moople.gitpals.MainApplication.Model.Response;
+import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -26,11 +30,15 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @GetMapping("/ping")
-    public String resp() {
-        return "ping";
-    }
+    @Autowired
+    private UserInterface userInterface;
 
+    /**
+     * This function checks a request sent by a user and creates a jwt token for the user
+     *
+     * @param request contains username and password (key) so the system can identify the user
+     * @return jwt token
+     */
     @PostMapping("/login")
     public ResponseEntity createToken(@RequestBody AuthRequest request) {
         try {
@@ -48,5 +56,22 @@ public class AuthController {
         final String jwt = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponse(jwt));
+    }
+
+    /**
+     * This function finds a user by jwt token and returns user object
+     *
+     * @param map is a map which contains token sent by the user
+     * @return user object
+     */
+    @PostMapping("/get")
+    public User getUser(@RequestBody Map<String, String> map) {
+        String token = map.get("token");
+
+        try {
+            return userInterface.findByUsername(jwtUtil.extractUsername(token));
+        } catch (Exception e) {
+            return new User();
+        }
     }
 }
