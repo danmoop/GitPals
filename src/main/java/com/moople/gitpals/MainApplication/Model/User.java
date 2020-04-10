@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
+@NoArgsConstructor
 @Document(collection = "users")
 
 public class User {
