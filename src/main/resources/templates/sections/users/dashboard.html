@@ -45,12 +45,13 @@
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="font-weight-bold">Obtain your auth key</h5>
+                    <p>It is required for authentication via mobile app, which is currently under development</p>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <form action="/requestAuthKey" method="post">
-                                <input type="submit" class="btn btn-outline-light btn-pill" value="Request key" />
+                                <input type="submit" class="btn btn-outline-light btn-pill" value="Show key" />
                             </form>
                         </div>
 
@@ -116,11 +117,6 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="custom-control custom-toggle my-2">
-                <input type="checkbox" th:name="notificationBool" id="customToggle1" class="custom-control-input" th:checked="${dbUser.notificationsEnabled}" />
-                <label class="custom-control-label" for="customToggle1" style="float: left;">Getting notifications on email</label>
             </div>
 
             <input type="submit" class="btn btn-outline-light btn-pill" style="margin: 15px;" value="Save changes" />

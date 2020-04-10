@@ -37,7 +37,7 @@ public class ForumController {
         model.addAttribute("posts", posts);
         model.addAttribute("user", principal);
 
-        return "sections/forum";
+        return "sections/forum/forum";
     }
 
     /**
@@ -54,7 +54,6 @@ public class ForumController {
             return "redirect:/forum";
         }
 
-
         if (user != null && !post.getViewSet().contains(user.getName())) {
             post.getViewSet().add(user.getName());
             forumInterface.save(post);
@@ -68,7 +67,7 @@ public class ForumController {
 
         model.addAttribute("post", post);
 
-        return "sections/viewForumPost";
+        return "sections/forum/viewForumPost";
     }
 
     /**

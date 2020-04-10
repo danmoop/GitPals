@@ -149,6 +149,6 @@ public class SearchController {
 
         model.addAttribute("match_posts", posts);
 
-        return "sections/matchForumPosts";
+        return "sections/forum/matchForumPosts";
     }
 }

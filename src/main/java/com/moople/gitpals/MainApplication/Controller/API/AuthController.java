@@ -66,9 +66,8 @@ public class AuthController {
      */
     @PostMapping("/get")
     public User getUser(@RequestBody Map<String, String> map) {
-        String token = map.get("token");
-
         try {
+            String token = map.get("token");
             return userInterface.findByUsername(jwtUtil.extractUsername(token));
         } catch (Exception e) {
             return new User();
