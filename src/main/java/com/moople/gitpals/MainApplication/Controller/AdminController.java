@@ -1,8 +1,10 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class AdminController {
 
     @Autowired
     private ProjectInterface projectService;
+
+    @Autowired
+    private ForumInterface forumInterface;
 
     /**
      * This function returns admin page if you are an admin
@@ -66,7 +71,7 @@ public class AdminController {
      * @return information about this user
      */
     @PostMapping("/getUserInfo")
-    public String getUserInfo(@RequestParam("userName") String username, Principal admin, Model model) {
+    public String getUserInfo(@RequestParam("userName") String username, Principal admin, RedirectAttributes attributes) {
         if (admin == null || !admin.getName().equals("danmoop")) {
             return "redirect:/";
         }
@@ -74,12 +79,12 @@ public class AdminController {
         User user = userService.findByUsername(username);
 
         if (user != null) {
-            model.addAttribute("user", user.toString());
+            attributes.addFlashAttribute("user", user.toString());
         } else {
-            model.addAttribute("user", username + " is not registered");
+            attributes.addFlashAttribute("user", username + " is not registered");
         }
 
-        return "sections/users/admin";
+        return "redirect:/admin";
     }
 
     /**
@@ -126,27 +131,6 @@ public class AdminController {
     }
 
     /**
-     * This function will send mail to every user in the system
-     *
-     * @param admin   is an admin principal object
-     * @param subject is a mail letter subject
-     * @param text    is a mail letter content
-     * @return admin page
-     */
-    @PostMapping("/sendMailToEveryone")
-    public String sendMailToEveryone(
-            Principal admin,
-            @RequestParam("subject") String subject,
-            @RequestParam("text") String text
-    ) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
-            return "redirect:/";
-        }
-
-        return "redirect:/admin";
-    }
-
-    /**
      * This function sends a message to everyone registered in the system
      *
      * @param admin is an admin principal object
@@ -189,17 +173,107 @@ public class AdminController {
         User user = userService.findByUsername(username);
 
         if (user == null) {
-            redirectAttributes.addFlashAttribute("error", "No such user");
+            redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "No such user");
             return "redirect:/admin";
         }
 
         user.getProjects().stream()
                 .map(project -> projectService.findByTitle(project))
-                .forEach(project -> projectService.delete(project));
+                .forEach(project -> {
+                    notifyAppliedUsers(project);
+                    projectService.delete(project);
+                });
 
         user.getProjects().clear();
         userService.save(user);
 
+        redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "All projects by " + username + " were deleted");
+
         return "redirect:/admin";
+    }
+
+    /**
+     * This function returns information about a forum post by its id
+     *
+     * @param id         is an id of a forum post
+     * @param attributes is where I put a message if user is not found
+     * @return admin page with information about the post
+     */
+    @PostMapping("/getForumPostById")
+    public String getForumPostById(@RequestParam("id") String id, Principal admin, RedirectAttributes attributes) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        ForumPost post = forumInterface.findByKey(id);
+
+        if (post == null) {
+            attributes.addFlashAttribute("forumPost", "No such post with id " + id);
+            return "redirect:/admin";
+        } else {
+            attributes.addFlashAttribute("forumPost", post.toString());
+            return "redirect:/admin";
+        }
+    }
+
+    /**
+     * This function is used to delete a forum post by its id
+     *
+     * @param id         is a post id
+     * @param attributes is where I put information about the status of deletion
+     * @return admin page with a status of the operation
+     */
+    @PostMapping("/deleteForumPostById")
+    public String deleteForumPostById(@RequestParam("id") String id, Principal admin, RedirectAttributes attributes) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        ForumPost post = forumInterface.findByKey(id);
+
+        if (post == null) {
+            attributes.addFlashAttribute("forumPostDeletionStatus", "No such post");
+            return "redirect:/admin";
+        } else {
+            forumInterface.delete(post);
+
+            attributes.addFlashAttribute("forumPostDeletionStatus", "Success!");
+            return "redirect:/admin";
+        }
+    }
+
+    /**
+     * This function removes all the forum posts added by a user
+     *
+     * @param username   is a user whose posts will be deleted
+     * @param admin      is a current authorization user
+     * @param attributes is where the status of deletion put so it could be displayed in the admin page
+     * @return admin page
+     */
+    @PostMapping("/deleteAllForumPostsByUser")
+    public String deleteForumPosts(@RequestParam("username") String username, Principal admin, RedirectAttributes attributes) {
+        if (admin == null || !admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        forumInterface.findAll().stream()
+                .filter(post -> post.getAuthor().equals(username))
+                .forEach(post -> forumInterface.delete(post));
+
+        attributes.addFlashAttribute("forumPostsDeletionForUser", "Success!");
+
+        return "redirect:/admin";
+    }
+
+    /**
+     * This function is used to notify all applied users to the project that it has been deleted due to rules violation
+     *
+     * @param project is a project that is being deleted
+     */
+    private void notifyAppliedUsers(Project project) {
+        Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.INBOX_MESSAGE);
+        project.getUsersSubmitted().stream()
+                .map(username -> userService.findByUsername(username))
+                .forEach(user -> user.getMessages().add(msg));
     }
 }

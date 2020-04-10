@@ -1,14 +1,15 @@
 package com.moople.gitpals.MainApplication.Model;
 
 import com.moople.gitpals.MainApplication.Service.Encrypt;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@Document(collection = "keyStorage")
 public class KeyStorage {
 
     @Id
@@ -19,14 +20,10 @@ public class KeyStorage {
 
     public KeyStorage(String username) {
         this.username = username;
-        this.key = Encrypt.MD5(username + new Date().getTime() + Math.random());
+        this.key = generateKey();
     }
 
-    @Override
-    public String toString() {
-        return "KeyStorage{" +
-                "username='" + username + '\'' +
-                ", key='" + key + '\'' +
-                '}';
+    public static String generateKey() {
+        return Encrypt.MD5(new Date().getTime() + UUID.randomUUID().toString() + Math.random());
     }
 }

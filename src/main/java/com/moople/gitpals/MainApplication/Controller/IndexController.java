@@ -67,7 +67,7 @@ public class IndexController {
                 );
             }
 
-            if(keyStorageInterface.findByUsername(user.getName()) == null) {
+            if (keyStorageInterface.findByUsername(user.getName()) == null) {
                 keyStorageInterface.save(new KeyStorage(user.getName()));
             }
 
@@ -152,7 +152,6 @@ public class IndexController {
     public String bugReport() {
         return "sections/bugReport";
     }
-
 
     private void checkIfDataHasChanged(User userDB, LinkedHashMap<String, Object> properties) {
 

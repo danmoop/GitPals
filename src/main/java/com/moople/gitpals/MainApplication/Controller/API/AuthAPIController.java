@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthAPIController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -45,8 +45,7 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Response.FAILED);
         }
 

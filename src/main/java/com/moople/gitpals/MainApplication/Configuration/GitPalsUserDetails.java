@@ -23,7 +23,7 @@ public class GitPalsUserDetails implements UserDetailsService {
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         com.moople.gitpals.MainApplication.Model.User user = userInterface.findByUsername(s);
 
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("No user with username " + s);
         }
 

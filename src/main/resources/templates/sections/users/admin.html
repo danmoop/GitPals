@@ -93,12 +93,22 @@
 
             <hr/>
 
-            <form th:action="@{/sendMailToEveryone}" class="text-center" method="post">
-                <h4>Send Mail to everyone</h4>
+            <form th:action="@{/clearAllUserProjects}" class="text-center" method="post">
+                <h4>Delete all projects by user</h4>
+                <p th:if="${userProjectsDeletedMessage}">[[${userProjectsDeletedMessage}]]</p>
 
-                <input type="text" th:name="subject" class="form-control mt" placeholder="Subject" />
-                <input type="text" th:name="text" class="form-control mt" placeholder="Text" />
-                <input class="btn btn-outline-light btn-pill mt" type="submit" value="Send" />
+                <input type="text" th:name="username" class="form-control mt" placeholder="Username" />
+                <input class="btn btn-outline-light btn-pill mt" type="submit" value="Delete" />
+            </form>
+
+            <hr/>
+
+            <form th:action="@{/deleteAllForumPostsByUser}" class="text-center" method="post">
+                <h4>Delete all forum posts by user</h4>
+                <p th:if="${forumPostsDeletionForUser}">[[${forumPostsDeletionForUser}]]</p>
+
+                <input type="text" th:name="username" class="form-control mt" placeholder="Username" />
+                <input class="btn btn-outline-light btn-pill mt" type="submit" value="Delete" />
             </form>
 
             <hr/>
@@ -109,6 +119,30 @@
                 <input type="text" th:name="text" class="form-control mt" placeholder="Text" .>
                 <input type="submit" class="btn btn-outline-light btn-pill mt" value="Send" />
             </form>
+            <hr/>
+
+            <div class="row text-center">
+                <div class="col">
+                    <h4>Get Forum Post</h4>
+
+                    <form th:action="@{/getForumPostById}" method="post">
+                        <input type="text" th:name="id" class="form-control" placeholder="Post Id" style="margin: 15px;">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
+                    </form>
+
+                    <span class="fw-600" th:if="${forumPost != null}">[[${forumPost}]]</span>
+                </div>
+                <div class="col">
+                    <h4>Delete Forum Post</h4>
+
+                    <form th:action="@{/deleteForumPostById}" method="post">
+                        <input type="text" th:name="id" class="form-control" placeholder="Post Id" style="margin: 15px;">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Delete" />
+                    </form>
+
+                    <span class="fw-600" th:if="${forumPostDeletionStatus != null}">[[${forumPostDeletionStatus}]]</span>
+                </div>
+            </div>
         </div>
     </body>
 </html>

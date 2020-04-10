@@ -13,5 +13,4 @@ public class MainApplication {
         // Init data for later importing and using
         Data.initTechnologiesMap();
     }
-
 }

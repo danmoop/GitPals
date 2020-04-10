@@ -124,7 +124,7 @@ public class SearchController {
         } else { // false - checkbox IS NOT selected
             matchProjects = allProjects.stream()
                     .filter(project -> data.stream()
-                    .anyMatch(req -> project.getRequirements().contains(req)))
+                            .anyMatch(req -> project.getRequirements().contains(req)))
                     .map(Project::getTitle)
                     .collect(Collectors.toList());
         }
@@ -138,7 +138,7 @@ public class SearchController {
      * This request finds all the forum posts whose titles match target value
      *
      * @param postName is target value, compare all the posts with it
-     * @param model is where list with posts is put
+     * @param model    is where list with posts is put
      * @return list with posts to the result page
      */
     @PostMapping("/findForumPosts")

@@ -1,14 +1,16 @@
 package com.moople.gitpals.MainApplication.Model;
 
+import com.moople.gitpals.MainApplication.Service.Encrypt;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Document(collection = "forumPosts")
 public class ForumPost {
 
@@ -39,15 +41,6 @@ public class ForumPost {
     }
 
     private String generateKey() {
-        String possible = "1234567890asdfghjklmnbvcxz";
-
-        StringBuilder stringBuilder = new StringBuilder();
-        Random random = new Random();
-
-        for (int i = 0; i < 12; i++) {
-            stringBuilder.append(possible.charAt(random.nextInt(possible.length())));
-        }
-
-        return stringBuilder.toString();
+        return Encrypt.MD5(new Date().getTime() + author + timeStamp + Math.random());
     }
 }

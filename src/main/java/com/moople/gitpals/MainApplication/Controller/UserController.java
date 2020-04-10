@@ -6,7 +6,6 @@ import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
-import com.nimbusds.jose.KeySourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -105,7 +104,7 @@ public class UserController {
     /**
      * This request displays the user's personal key for authentication via mobile phone
      *
-     * @param user is a current user authentication
+     * @param user       is a current user authentication
      * @param attributes is where key is put so it would be seen at the user's page
      * @return dashboard page with a key
      */
@@ -121,20 +120,18 @@ public class UserController {
     /**
      * Tihs function reset current user's key, so a new one generated
      *
-     * @param user is a current user authentication
+     * @param user       is a current user authentication
      * @param attributes is where key is put so it would be seen at the user's page
      * @return dashboard page with a key
      */
     @PostMapping("/resetAuthKey")
     public String resetKey(Principal user, RedirectAttributes attributes) {
-        KeyStorage temp = new KeyStorage(user.getName());
+        KeyStorage key = keyStorageInterface.findByUsername(user.getName());
 
-        KeyStorage keyStorageDB = keyStorageInterface.findByUsername(user.getName());
-        keyStorageDB.setKey(temp.getKey());
+        key.setKey(KeyStorage.generateKey());
+        keyStorageInterface.save(key);
 
-        keyStorageInterface.save(keyStorageDB);
-
-        attributes.addFlashAttribute("key", keyStorageDB.getKey());
+        attributes.addFlashAttribute("key", key.getKey());
 
         return "redirect:/dashboard";
     }
