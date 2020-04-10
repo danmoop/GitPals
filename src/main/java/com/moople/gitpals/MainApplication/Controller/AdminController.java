@@ -274,6 +274,9 @@ public class AdminController {
         Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.INBOX_MESSAGE);
         project.getUsersSubmitted().stream()
                 .map(username -> userService.findByUsername(username))
-                .forEach(user -> user.getMessages().add(msg));
+                .forEach(user -> {
+                    user.getMessages().add(msg);
+                    userService.save(user);
+                });
     }
 }
