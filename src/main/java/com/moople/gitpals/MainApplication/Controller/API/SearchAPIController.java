@@ -1,13 +1,17 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
+import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,6 +25,9 @@ public class SearchAPIController {
     @Autowired
     private ProjectInterface projectInterface;
 
+    @Autowired
+    private ForumInterface forumInterface;
+
     /**
      * This function returns a user by username
      *
@@ -29,7 +36,14 @@ public class SearchAPIController {
      */
     @GetMapping(value = "/findByUsername/{username}", produces = "application/json")
     public User getUserByUsername(@PathVariable String username) {
-        return userService.findByUsername(username);
+        User user = userService.findByUsername(username);
+
+        if (user == null) return null;
+
+        // It is not safe to send user's messages to anyone, so remove them
+        user.setMessages(null);
+
+        return user;
     }
 
     /**
@@ -46,14 +60,15 @@ public class SearchAPIController {
     /**
      * This function returns a list of users whose username matches the input
      *
-     * @param username is a username we pass in path
+     * @param userName is a username we pass in path
      * @return list of users whose username match the one we pass
      */
     @GetMapping(value = "/matchByUsername/{userName}", produces = "application/json")
-    public List<User> foundUsers(@PathVariable String username) {
+    public List<User> foundUsers(@PathVariable String userName) {
         return userService.findAll()
                 .stream()
-                .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
+                .filter(user -> user.getUsername().toLowerCase().contains(userName.toLowerCase()))
+                .peek(user -> user.setMessages(null))
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +86,7 @@ public class SearchAPIController {
     }
 
     /**
-     * This function returns a list of project with requirements requested by a user
+     * This function returns a list of project with requirements (skills) requested by a user
      *
      * @param requirements is a list of requirements project should contain
      * @return list of projects whose requirements match the user's choice
@@ -82,5 +97,58 @@ public class SearchAPIController {
                 .filter(project -> requirements.stream()
                         .anyMatch(req -> project.getRequirements().contains(req)))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * This request finds all the forum posts whose titles match target value
+     *
+     * @param data is an object, which contains post title sent by the user
+     * @return list of posts, whose titles match the target value sent by the user
+     */
+    @GetMapping(value = "/matchForumPostsByTitle", produces = "application/json")
+    public List<ForumPost> getPostsByTitle(@RequestBody Map<String, String> data) {
+        try {
+            String title = data.get("title");
+
+            return forumInterface.findAll().stream()
+                    .filter(post -> post.getTitle().toLowerCase().contains(title.toLowerCase()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * This function returns one particular forum post, which is found by its id
+     *
+     * @param data contains a post id
+     * @return a forum post with an id prompted by the user
+     */
+    @GetMapping(value = "/findForumPostById", produces = "application/json")
+    public ForumPost getPostById(@RequestBody Map<String, String> data) {
+        try {
+            String id = data.get("id");
+
+            return forumInterface.findByKey(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * This function returns all the posts from a particular user
+     *
+     * @param data an object, which contains the username
+     * @return all the posts who the user
+     */
+    @GetMapping(value = "/matchForumPostsByAuthor", produces = "application/json")
+    public List<ForumPost> getPostsByUser(@RequestBody Map<String, String> data) {
+        try {
+            String username = data.get("username");
+
+            return forumInterface.findByAuthor(username);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 }
