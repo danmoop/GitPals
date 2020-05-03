@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -39,7 +40,7 @@ public class IndexController {
      * @return html index page with a list of projects and TECHS
      */
     @GetMapping("/")
-    public String indexPage(OAuth2Authentication user, Model model) {
+    public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes) {
 
         // If we are logged in, display information about us on the index page
         if (user != null) {
@@ -49,11 +50,13 @@ public class IndexController {
 
             // If we are logged in but there is no our user object in database, save it
             // Usually this function is executed once when we are register for the first time
-
             String email = properties.get("email") == null ? null : properties.get("email").toString();
             String country = properties.get("location") == null ? null : properties.get("location").toString();
             String bio = properties.get("bio") == null ? null : properties.get("bio").toString();
 
+            /** When authentication exists, however, there is no such user in the database,
+             *  it means that this user has just logged in for the first time
+            */
             if (userService.findByUsername(user.getName()) == null) {
                 userService.save(
                         new User(
@@ -65,10 +68,10 @@ public class IndexController {
                                 bio
                         )
                 );
-            }
-
-            if (keyStorageInterface.findByUsername(user.getName()) == null) {
                 keyStorageInterface.save(new KeyStorage(user.getName()));
+
+                redirectAttributes.addFlashAttribute("message", "You have just registered! Fill in the information about yourself - choose skills you know on this page!");
+                return "redirect:/dashboard";
             }
 
             User userDB = userService.findByUsername(user.getName());

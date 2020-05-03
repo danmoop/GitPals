@@ -40,7 +40,10 @@
     </nav>
 
     <div class="container text-center">
-
+        <div th:if="${message}">
+            <h3 th:if="${message}" style="color: #16a085;">[[${message}]]</h3>
+            <hr/>
+        </div>
         <div>
             <div class="card text-center">
                 <div class="card-header">

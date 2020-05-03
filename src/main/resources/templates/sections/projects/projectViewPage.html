@@ -94,11 +94,12 @@
                         <div class="card card-body">
                             <p th:if="${#lists.size(project.usersSubmitted) == 0}">No users applied yet</p>
                             <ol th:if="${#lists.size(project.usersSubmitted) > 0}">
-                                <a th:each="user: ${project.usersSubmitted}" th:href="${'/users/' + user}">
-                                    <li>
+                                <li th:each="user: ${project.usersSubmitted}">
+                                    <a th:href="${'/users/' + user}">
                                         [[${user}]]
-                                    </li>
-                                </a>
+                                    </a>
+                                    <a th:href="${'https://github.com/' + user}">(GitHub Profile)</a>
+                                </li>
                             </ol>
                         </div>
                     </div>
