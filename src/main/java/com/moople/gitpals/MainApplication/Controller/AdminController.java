@@ -65,9 +65,9 @@ public class AdminController {
     /**
      * This function returns an information some user
      *
-     * @param admin    is a current admin authentication
-     * @param model    is where we store the data and send it to html page
-     * @param username is a user who we want to get information about
+     * @param admin      is a current admin authentication
+     * @param attributes is where we store the data and send it to html page
+     * @param username   is a user who we want to get information about
      * @return information about this user
      */
     @PostMapping("/getUserInfo")
@@ -79,6 +79,7 @@ public class AdminController {
         User user = userService.findByUsername(username);
 
         if (user != null) {
+            user.setMessages(null);
             attributes.addFlashAttribute("user", user.toString());
         } else {
             attributes.addFlashAttribute("user", username + " is not registered");

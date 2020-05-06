@@ -46,6 +46,7 @@
                     </form>
 
                     <ul th:if="${users != null}" style="list-style: none; padding-left: 0;">
+                        Users registered: ([[${#lists.size(users)}]])
                         <li th:each="user: ${users}">
                             <span class="fw-600">[[${user.username}]]</span>
                         </li>
@@ -74,6 +75,7 @@
                     </form>
 
                     <ul th:if="${projects != null}" style="list-style: none; padding-left: 0;">
+                        Projects created: ([[${#lists.size(projects)}]])
                         <li th:each="project: ${projects}">
                             <span class="fw-600">[[${project.title}]]</span>
                         </li>
