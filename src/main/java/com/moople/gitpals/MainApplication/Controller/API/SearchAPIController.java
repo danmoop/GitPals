@@ -102,14 +102,11 @@ public class SearchAPIController {
     /**
      * This request finds all the forum posts whose titles match target value
      *
-     * @param data is an object, which contains post title sent by the user
      * @return list of posts, whose titles match the target value sent by the user
      */
-    @GetMapping(value = "/matchForumPostsByTitle", produces = "application/json")
-    public List<ForumPost> getPostsByTitle(@RequestBody Map<String, String> data) {
+    @GetMapping(value = "/matchForumPostsByTitle/{title}", produces = "application/json")
+    public List<ForumPost> getPostsByTitle(@PathVariable String title) {
         try {
-            String title = data.get("title");
-
             return forumInterface.findAll().stream()
                     .filter(post -> post.getTitle().toLowerCase().contains(title.toLowerCase()))
                     .collect(Collectors.toList());
@@ -121,14 +118,11 @@ public class SearchAPIController {
     /**
      * This function returns one particular forum post, which is found by its id
      *
-     * @param data contains a post id
      * @return a forum post with an id prompted by the user
      */
-    @GetMapping(value = "/findForumPostById", produces = "application/json")
-    public ForumPost getPostById(@RequestBody Map<String, String> data) {
+    @GetMapping(value = "/findForumPostById/{id}", produces = "application/json")
+    public ForumPost getPostById(@PathVariable String id) {
         try {
-            String id = data.get("id");
-
             return forumInterface.findByKey(id);
         } catch (Exception e) {
             return null;
@@ -138,15 +132,12 @@ public class SearchAPIController {
     /**
      * This function returns all the posts from a particular user
      *
-     * @param data an object, which contains the username
      * @return all the posts who the user
      */
-    @GetMapping(value = "/matchForumPostsByAuthor", produces = "application/json")
-    public List<ForumPost> getPostsByUser(@RequestBody Map<String, String> data) {
+    @GetMapping(value = "/matchForumPostsByAuthor/{author}", produces = "application/json")
+    public List<ForumPost> getPostsByUser(@PathVariable String author) {
         try {
-            String username = data.get("username");
-
-            return forumInterface.findByAuthor(username);
+            return forumInterface.findByAuthor(author);
         } catch (Exception e) {
             return new ArrayList<>();
         }

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Data {
-    // This data is imported in IndexController & ProjectController
 
+    // This data is imported in IndexController & ProjectController
     private static final String[] TECHS = {"Web design", "Mobile design", "Java", "C++",
             "Python", "Machine learning", "Deep learning", "Ionic",
             "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",

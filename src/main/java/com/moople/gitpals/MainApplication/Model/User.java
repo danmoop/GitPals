@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,9 @@ public class User {
     private String country;
     private String bio;
     private String GithubAccountLink;
+    private String avatarURL;
     private Map<String, Boolean> skillList;
+    private Map<String, Boolean> preferences;
     private List<String> projects;
     private List<String> projectsAppliedTo;
     private List<Message> messages;
@@ -46,5 +49,6 @@ public class User {
         this.messages = new ArrayList<>();
 
         this.notificationsEnabled = true;
+        this.preferences = new HashMap<>();
     }
 }
