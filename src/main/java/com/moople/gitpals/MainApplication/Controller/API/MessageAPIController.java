@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,11 +46,13 @@ public class MessageAPIController {
      * @param data is data the sender user provides to the server, their token, recipient name, and a message itself
      * @return response whether a message was sent successfully
      */
-    @PostMapping("/send")
+    @PostMapping(value = "/send", produces = "application/json")
     public Response sendMessage(@RequestBody Map<Object, Object> data) {
         String recipientName = (String) data.get("recipient");
         String token = (String) data.get("token");
-        Message message = (Message) data.get("message");
+
+        LinkedHashMap linkedHashMap = (LinkedHashMap) data.get("message");
+        Message message = new Message((String) linkedHashMap.get("author"), (String) linkedHashMap.get("content"), Message.TYPE.INBOX_MESSAGE);
 
         User recipient = userInterface.findByUsername(recipientName);
         String sender = jwtUtil.extractUsername(token);
@@ -59,6 +62,7 @@ public class MessageAPIController {
         }
 
         recipient.getMessages().add(message);
+        userInterface.save(recipient);
         return Response.OK;
     }
 }
