@@ -29,9 +29,6 @@ public class UserController {
     @Autowired
     private ProjectInterface projectInterface;
 
-    @Autowired
-    private KeyStorageInterface keyStorageInterface;
-
     /**
      * This request is handled when user wants to open another user's dashboard
      *
@@ -97,41 +94,6 @@ public class UserController {
         userDB.setNotificationsEnabled(notificationBool);
 
         userService.save(userDB);
-
-        return "redirect:/dashboard";
-    }
-
-    /**
-     * This request displays the user's personal key for authentication via mobile phone
-     *
-     * @param user       is a current user authentication
-     * @param attributes is where key is put so it would be seen at the user's page
-     * @return dashboard page with a key
-     */
-    @PostMapping("/requestAuthKey")
-    public String getAuthKey(Principal user, RedirectAttributes attributes) {
-        String key = keyStorageInterface.findByUsername(user.getName()).getKey();
-
-        attributes.addFlashAttribute("key", key);
-
-        return "redirect:/dashboard";
-    }
-
-    /**
-     * Tihs function reset current user's key, so a new one generated
-     *
-     * @param user       is a current user authentication
-     * @param attributes is where key is put so it would be seen at the user's page
-     * @return dashboard page with a key
-     */
-    @PostMapping("/resetAuthKey")
-    public String resetKey(Principal user, RedirectAttributes attributes) {
-        KeyStorage key = keyStorageInterface.findByUsername(user.getName());
-
-        key.setKey(KeyStorage.generateKey());
-        keyStorageInterface.save(key);
-
-        attributes.addFlashAttribute("key", key.getKey());
 
         return "redirect:/dashboard";
     }

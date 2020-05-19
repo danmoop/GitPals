@@ -252,7 +252,7 @@ public class AdminController {
      * @return admin page
      */
     @PostMapping("/deleteAllForumPostsByUser")
-    public String deleteForumPosts(@RequestParam("username") String username, Principal admin, RedirectAttributes attributes) {
+    public String deleteForumPosts(@RequestParam String username, Principal admin, RedirectAttributes attributes) {
         if (admin == null || !admin.getName().equals("danmoop")) {
             return "redirect:/";
         }
@@ -263,6 +263,46 @@ public class AdminController {
 
         attributes.addFlashAttribute("forumPostsDeletionForUser", "Success!");
 
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/banUser")
+    public String banUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
+        if (!admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(username);
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("banMsg", username + " is not registered");
+            return "redirect:/admin";
+        }
+
+        user.setBanned(true);
+        userService.save(user);
+
+        redirectAttributes.addFlashAttribute("banMsg", username + " has been banned");
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/unbanUser")
+    public String unbanUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
+        if (!admin.getName().equals("danmoop")) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(username);
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("unbanMsg", username + " is not registered");
+            return "redirect:/admin";
+        }
+
+        user.setBanned(false);
+        userService.save(user);
+
+        redirectAttributes.addFlashAttribute("unbanMsg", username + " has been unbanned");
         return "redirect:/admin";
     }
 

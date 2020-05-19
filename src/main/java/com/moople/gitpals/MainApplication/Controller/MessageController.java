@@ -104,9 +104,9 @@ public class MessageController {
 
     /**
      * This request is handled when user wants to delete a message in their message list
-     * Message will be deleted and changed will be saved
+     * Message will be deleted and changes will be saved
      *
-     * @param content & author are taken from hidden html textfields,
+     * @param content & author are taken from hidden html text fields,
      *                which values are assigned automatically by thymeleaf
      * @return redirect to the same page - /messages
      **/
@@ -132,7 +132,7 @@ public class MessageController {
      * This request is handled when user submits their bug
      * Message about bug will be delivered to admin
      *
-     * @param message is taken from html textfield and it's content sent to admin
+     * @param message is taken from html text field and it's content sent to admin
      * @return to index page
      **/
     @PostMapping("/reportBug")

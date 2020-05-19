@@ -26,11 +26,11 @@ public class User {
     private String GithubAccountLink;
     private String avatarURL;
     private Map<String, Boolean> skillList;
-    private Map<String, Boolean> preferences;
     private List<String> projects;
     private List<String> projectsAppliedTo;
     private List<Message> messages;
     private boolean notificationsEnabled;
+    private boolean banned;
 
     /**
      * @param country   & info are taken from GitHub account
@@ -49,6 +49,6 @@ public class User {
         this.messages = new ArrayList<>();
 
         this.notificationsEnabled = true;
-        this.preferences = new HashMap<>();
+        this.banned = false;
     }
 }

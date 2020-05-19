@@ -47,32 +47,6 @@
         <div>
             <div class="card text-center">
                 <div class="card-header">
-                    <h5 class="font-weight-bold">Obtain your auth key</h5>
-                    <p>It is required for authentication via mobile app, which is currently under development</p>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <form action="/requestAuthKey" method="post">
-                                <input type="submit" class="btn btn-outline-light btn-pill" value="Show key" />
-                            </form>
-                        </div>
-
-                        <div class="col">
-                            <form action="/resetAuthKey" method="post">
-                                <input type="submit" class="btn btn-outline-light btn-pill" value="Reset key" />
-                            </form>
-                        </div>
-                    </div>
-
-                    <hr/>
-                    <h4 th:if="key">[[${key}]]</h4>
-                </div>
-            </div>
-            <br/>
-
-            <div class="card text-center">
-                <div class="card-header">
                     <h5 class="font-weight-bold">danmoop</h5>
                 </div>
                 <div class="card-body">

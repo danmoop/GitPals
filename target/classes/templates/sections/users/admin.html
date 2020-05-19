@@ -145,6 +145,29 @@
                     <span class="fw-600" th:if="${forumPostDeletionStatus != null}">[[${forumPostDeletionStatus}]]</span>
                 </div>
             </div>
+            <hr/>
+            <div class="row text-center" style="margin-bottom: 150px;">
+                <div class="col">
+                    <h4>Ban user</h4>
+
+                    <form th:action="@{/banUser}" method="post">
+                        <input type="text" th:name="username" class="form-control" placeholder="Username" style="margin: 15px;">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Ban" />
+                    </form>
+
+                    <span class="fw-600" th:if="${banMsg != null}">[[${banMsg}]]</span>
+                </div>
+                <div class="col">
+                    <h4>Unban user</h4>
+
+                    <form th:action="@{/unbanUser}" method="post">
+                        <input type="text" th:name="username" class="form-control" placeholder="Username" style="margin: 15px;">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Unban" />
+                    </form>
+
+                    <span class="fw-600" th:if="${unbanMsg != null}">[[${unbanMsg}]]</span>
+                </div>
+            </div>
         </div>
     </body>
 </html>
