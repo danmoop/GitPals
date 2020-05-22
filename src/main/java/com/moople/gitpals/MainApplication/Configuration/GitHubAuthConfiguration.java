@@ -25,7 +25,7 @@ public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/requestAuthKey").authenticated()
                 .and()
                 .authorizeRequests()
                 .and().csrf().disable();

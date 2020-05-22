@@ -56,7 +56,7 @@ public class IndexController {
 
             /** When authentication exists, however, there is no such user in the database,
              *  it means that this user has just logged in for the first time
-            */
+             */
             if (userService.findByUsername(user.getName()) == null) {
                 userService.save(
                         new User(
@@ -154,6 +154,32 @@ public class IndexController {
     @GetMapping("/bugReport")
     public String bugReport() {
         return "sections/bugReport";
+    }
+
+    /**
+     * This request returns a page, which displays a user's auth key, which
+     * is required for the authentication via the mobile app
+     *
+     * @param user is a current user's authentication
+     * @param model is where the key is added
+     * @return with, which displays user's key
+     */
+    @GetMapping("/requestAuthKey")
+    public String getAuthKey(Principal user, Model model) {
+        if (user == null) {
+            model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
+            return "sections/users/getAuthKey";
+        } else {
+            String key = keyStorageInterface.findByUsername(user.getName()).getKey();
+            if (key == null) {
+                KeyStorage ks = new KeyStorage(user.getName());
+                keyStorageInterface.save(ks);
+                model.addAttribute("key", ks.getKey());
+                return "sections/users/getAuthKey";
+            }
+            model.addAttribute("key", key);
+            return "sections/users/getAuthKey";
+        }
     }
 
     private void checkIfDataHasChanged(User userDB, LinkedHashMap<String, Object> properties) {

@@ -49,29 +49,4 @@ public class UserAPIController {
             return Response.FAILED;
         }
     }
-
-    /**
-     * This request displays the user's personal key for authentication via mobile phone
-     *
-     * @param user is a user's authentication
-     * @return user's auth key
-     */
-    @GetMapping("/requestAuthKey")
-    public Map<String, String> getAuthKey(Principal user) {
-        HashMap<String, String> result = new HashMap<>();
-        if (user == null) {
-            result.put("message", "You are not logged in. Please sign in to obtain your key");
-            return result;
-        } else {
-            String key = keyStorageInterface.findByUsername(user.getName()).getKey();
-            if (key == null) {
-                KeyStorage ks = new KeyStorage(user.getName());
-                keyStorageInterface.save(ks);
-                result.put("your-key", ks.getKey());
-                return result;
-            }
-            result.put("your-key", key);
-            return result;
-        }
-    }
 }
