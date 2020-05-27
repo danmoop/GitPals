@@ -2,19 +2,19 @@
 
 <img src="https://image.flaticon.com/icons/svg/89/89341.svg" width="150" height="150">
 
-Application for finding people to work together with on different projects
-[Open GitPals Presentation](https://danmoop.github.io/GitPals-Showcase/)
+[Open GitPals app](https://www.gitpals.com/)
 
-[Open GitPals app](https://gitpals.herokuapp.com/)
-
-This project uses **Java, Spring, MongoDB**
+This project uses:
+1. Java (Spring Framework, Thymeleaf for template rendering on a webiste, REST API used for a GitPals Mobile App)
+2. HTML / CSS (Shards UI Kit)
+3. MongoDB as a database
 
 # Explanations
 
 So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://github.com/danmoop/GitPals/blob/master/GitPals%20Review.pdf)
 
 
-**NEW! Introducing GitPals mobile app built on Ionic. It is under development right now, implemented using REST API (sending requests and getting responses)**
+**NEW! Introducing GitPals mobile app built on React Native (UI Kitten Kit). It is under development right now, implemented using REST API (sending requests and getting responses)**
 
 The rest of images
 ![image](gallery/1.png)
