@@ -57,10 +57,31 @@
                     <hr/>
                     <div class="row">
                         <div class="col">
-                            Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects
+                            Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
                         </div>
                         <div class="col">
-                            Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
+                            Submitted <h4>[[${#lists.size(dbUser.projects)}]]</h4> projects
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col">
+                            <h5 style="text-align: left;">Projects applied to:</h5>
+                            <p th:if="${#lists.size(dbUser.projectsAppliedTo) == 0}" style="text-align: left;">None</p>
+                            <ol th:if="${#lists.size(dbUser.projectsAppliedTo) != 0}">
+                                <li th:each="project: ${dbUser.projectsAppliedTo}" style="float: left;">
+                                    <a th:href="${'/projects/' + project}">[[${project}]]</a>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="col">
+                            <h5 style="text-align: right;">Submitted projects:</h5>
+                            <p th:if="${#lists.size(dbUser.projects) == 0}" style="text-align: right;">None</p>
+                            <ol th:if="${#lists.size(dbUser.projects) != 0}">
+                                <li th:each="project: ${dbUser.projects}" style="float: right;">
+                                    <a th:href="${'/projects/' + project}">[[${project}]]</a>
+                                </li>
+                            </ol>
                         </div>
                     </div>
                 </div>
