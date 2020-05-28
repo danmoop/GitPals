@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public interface ForumInterface extends MongoRepository<ForumPost, String> {
     List<ForumPost> findAll();
+
     List<ForumPost> findByAuthor(String author);
+
     ForumPost findByKey(String key);
 }

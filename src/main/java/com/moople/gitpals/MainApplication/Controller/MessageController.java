@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MessageController {
@@ -41,7 +42,7 @@ public class MessageController {
             // When reversed, add this message list to html page and then display it
             model.addAttribute("userMessages", userMessages);
 
-            return "sections/viewMessages";
+            return "sections/users/viewMessages";
         }
 
         return "redirect:/";
@@ -55,8 +56,9 @@ public class MessageController {
     @GetMapping("/sendMessage")
     public String sendMessage(Model model, Principal principal) {
         // if users are not logged in - they can't send messages -> redirect them to index page
-        if (principal == null)
+        if (principal == null) {
             return "redirect:/";
+        }
 
         return "sections/sendMessage";
     }
@@ -72,16 +74,21 @@ public class MessageController {
     @PostMapping("/messageSent")
     public String messageSent(
             Model model,
+            Principal user,
             @RequestParam("RecipientName") String username,
             @RequestParam("Content") String content) {
-        // If there is a user with such a username then we send them a message
-        if (userService.findByUsername(username) != null) {
-            Message message = new Message(username, content);
 
-            User recipient = userService.findByUsername(username);
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        User recipient = userService.findByUsername(username);
+
+        // If there is a user with such a username then we send them a message
+        if (recipient != null) {
+            Message message = new Message(user.getName(), content, Message.TYPE.INBOX_MESSAGE);
 
             recipient.getMessages().add(message);
-
             userService.save(recipient);
 
             return "redirect:/";
@@ -90,7 +97,6 @@ public class MessageController {
         // Otherwise, notify a user that recipient is not registered, can't send them a message
         else {
             model.addAttribute("wrongRecipient", username);
-
             return "error/recipientNotFound";
         }
 
@@ -98,10 +104,10 @@ public class MessageController {
 
     /**
      * This request is handled when user wants to delete a message in their message list
-     * Message will be deleted and changed will be saved
+     * Message will be deleted and changes will be saved
      *
-     * @param content & author are taken from hidden html textfields,
-     *        which values are assigned automatically by thymeleaf
+     * @param content & author are taken from hidden html text fields,
+     *                which values are assigned automatically by thymeleaf
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/deleteMessage")
@@ -115,10 +121,10 @@ public class MessageController {
             Message content and author are acquired from html forms,
             so if there is a match in a message list, then delete the message
          */
-        userDB.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
+        Optional<Message> msg = userDB.getMessages().stream().filter(message -> message.getAuthor().equals(author) && message.getContent().equals(content)).findFirst();
+        msg.ifPresent(message -> userDB.getMessages().remove(message));
 
         userService.save(userDB);
-
         return "redirect:/messages";
     }
 
@@ -126,7 +132,7 @@ public class MessageController {
      * This request is handled when user submits their bug
      * Message about bug will be delivered to admin
      *
-     * @param message is taken from html textfield and it's content sent to admin
+     * @param message is taken from html text field and it's content sent to admin
      * @return to index page
      **/
     @PostMapping("/reportBug")
@@ -136,14 +142,7 @@ public class MessageController {
             User admin = userService.findByUsername("danmoop");
 
             String author = user.getName();
-
-            Message msg = new Message(
-                    author,
-                    message
-            );
-
-            msg.setBugReport(true);
-
+            Message msg = new Message(author, message, Message.TYPE.BUG_REPORT);
             admin.getMessages().add(msg);
 
             userService.save(admin);
@@ -157,9 +156,8 @@ public class MessageController {
      * The user who sent that bug will be notified about fix
      *
      * @param content & author are taken from hidden html textfields,
-     * which values are assigned automatically by thymeleaf
-     * It is similar to deleteMessage function, but there is an auto message that is sent to bug reporter
-     *
+     *                which values are assigned automatically by thymeleaf
+     *                It is similar to deleteMessage function, but there is an auto message that is sent to bug reporter
      * @return redirect to the same page - /messages
      **/
     @PostMapping("/bugReportFixed")
@@ -167,24 +165,25 @@ public class MessageController {
             @RequestParam("messageContentInput") String content,
             @RequestParam("messageAuthorInput") String author,
             Principal user) {
-        // Manipulate with admin - remove report bug message
 
+        // Manipulate with admin - remove report bug message
         User admin = userService.findByUsername(user.getName());
-        admin.getMessages().removeIf(message -> message.getAuthor().equals(author) && message.getContent().equals(content));
+
+        Optional<Message> msg = admin.getMessages().stream().filter(message -> message.getAuthor().equals(author) && message.getContent().equals(content)).findFirst();
+        msg.ifPresent(message -> admin.getMessages().remove(message));
+
         userService.save(admin);
 
-
         // Manipulate with bug reporter - send them a thank-you message
-
         User bugReportAuthor = userService.findByUsername(author);
 
-        Message msg = new Message(
+        Message message = new Message(
                 "danmoop",
-                "Thanks for your previous bug report! The problem is fixed!"
+                "Thanks for your previous bug report! The problem is fixed!",
+                Message.TYPE.INBOX_MESSAGE
         );
 
-        bugReportAuthor.getMessages().add(msg);
-
+        bugReportAuthor.getMessages().add(message);
         userService.save(bugReportAuthor);
 
         return "redirect:/messages";

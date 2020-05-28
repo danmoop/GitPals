@@ -1,7 +1,9 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -34,24 +37,24 @@ public class UserController {
      * @return user's dashboard html page with all the data about the user
      **/
     @GetMapping("/users/{username}")
-    public String findUser(@PathVariable String username, Model model, Principal principal) {
-        User user = userService.findByUsername(username);
+    public String findUser(@PathVariable String username, Model model, Principal user) {
+        User userDB = userService.findByUsername(username);
 
-        if (user != null) {
-            List<Project> appliedToProjects = user.getProjectsAppliedTo().stream()
+        if (userDB != null) {
+            List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
+                    .stream()
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
 
             try {
-                model.addAttribute("LoggedUser", principal.getName());
+                model.addAttribute("LoggedUser", user.getName());
             } catch (NullPointerException e) {
                 model.addAttribute("LoggedUser", null);
             }
 
             model.addAttribute("UserObject", userService.findByUsername(username));
-            model.addAttribute("appliedProjects", appliedToProjects);
 
-            return "sections/userDashboard";
+            return "sections/users/userDashboard";
         } else {
             model.addAttribute("user_name", username);
             return "error/userNotFound";
@@ -66,42 +69,31 @@ public class UserController {
      * @return redirect to the same page with new data
      **/
     @PostMapping("/updateUser")
-    public String updateTechs(Principal user, @RequestParam("techCheckbox") List<String> techs) {
-        User userFromDB = userService.findByUsername(user.getName());
-
-        Map<String, Boolean> allTechs = userFromDB.getSkillList();
-
-        for (Map.Entry<String, Boolean> entry : allTechs.entrySet()) {
-            allTechs.put(entry.getKey(), false);
+    public String updateTechs(
+            Principal user,
+            @RequestParam(value = "techCheckbox", required = false) List<String> techs,
+            @RequestParam(value = "notificationBool", required = false) boolean notificationBool
+    ) {
+        if (user == null) {
+            return "redirect:/";
         }
 
-        for (String item : techs) {
-            if (allTechs.get(item) != null)
-                allTechs.put(item, true);
+        User userDB = userService.findByUsername(user.getName());
+
+        Map<String, Boolean> allTechs = userDB.getSkillList();
+        allTechs.replaceAll((k, v) -> false);
+
+        if (techs != null) {
+            for (String item : techs) {
+                if (allTechs.get(item) != null) {
+                    allTechs.put(item, true);
+                }
+            }
         }
 
-        userService.save(userFromDB);
+        userDB.setNotificationsEnabled(notificationBool);
 
-        return "redirect:/dashboard";
-    }
-
-
-    /**
-     * This request is handled when user wants to change
-     * their country and bio in the dashboard
-     *
-     * @param country & info are taken from html input fields
-     * @param user    user is used to find user in database, set new country & info
-     * @return redirect to the same page with new data
-     **/
-    @PostMapping("/updateUserCountry")
-    public String updateCountry(
-            @RequestParam("countryInput") String country,
-            @RequestParam("infoInput") String info,
-            Principal user) {
-        User userInDB = userService.findByUsername(user.getName());
-
-        userService.save(userInDB);
+        userService.save(userDB);
 
         return "redirect:/dashboard";
     }

@@ -1,18 +1,20 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.Data;
-import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserService;
+import com.moople.gitpals.MainApplication.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,12 @@ public class IndexController {
     @Autowired
     private ProjectInterface projectInterface;
 
+    @Autowired
+    private ForumInterface forumInterface;
+
+    @Autowired
+    private KeyStorageInterface keyStorageInterface;
+
     /**
      * This request is handled when user opens index page
      * Add attributes about user and later display them on the page
@@ -32,36 +40,68 @@ public class IndexController {
      * @return html index page with a list of projects and TECHS
      */
     @GetMapping("/")
-    public String indexPage(Principal user, Model model) {
+    public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes) {
+
         // If we are logged in, display information about us on the index page
         if (user != null) {
+            LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) user.getUserAuthentication().getDetails();
+
             model.addAttribute("GithubUser", user);
 
             // If we are logged in but there is no our user object in database, save it
             // Usually this function is executed once when we are register for the first time
+            String email = properties.get("email") == null ? null : properties.get("email").toString();
+            String country = properties.get("location") == null ? null : properties.get("location").toString();
+            String bio = properties.get("bio") == null ? null : properties.get("bio").toString();
+
+            /** When authentication exists, however, there is no such user in the database,
+             *  it means that this user has just logged in for the first time
+             */
             if (userService.findByUsername(user.getName()) == null) {
                 userService.save(
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                Data.technologiesMap
+                                Data.technologiesMap,
+                                email,
+                                country,
+                                bio
                         )
                 );
+                keyStorageInterface.save(new KeyStorage(user.getName()));
+
+                redirectAttributes.addFlashAttribute("message", "You have just registered! Fill in the information about yourself - choose skills you know on this page!");
+                return "redirect:/dashboard";
             }
 
-            model.addAttribute("userDB", userService.findByUsername(user.getName()));
+            User userDB = userService.findByUsername(user.getName());
+            checkIfDataHasChanged(userDB, properties);
+
+            model.addAttribute("userDB", userDB);
         }
 
-        // Show the most recent projects (only 50)
-        List<Project> projects = projectInterface.findAll().stream()
-                .limit(50).collect(Collectors.toList());
+        List<Project> allProjects = projectInterface.findAll();
+        int projectsAmount = allProjects.size();
+
+        List<Project> projects;
+
+        if (projectsAmount <= 50) {
+            projects = allProjects;
+        } else {
+            projects = new ArrayList<>();
+
+            for (int i = projectsAmount - 1; i >= projectsAmount - 50; i--) {
+                projects.add(allProjects.get(i));
+            }
+        }
 
         model.addAttribute("projectTechs", Data.technologiesMap);
         model.addAttribute("projects", projects);
-        model.addAttribute("totalProjectsAmount", projectInterface.findAll().size());
+        model.addAttribute("totalProjectsAmount", projectsAmount);
+        model.addAttribute("forumPostsSize", forumInterface.findAll().size());
         model.addAttribute("usersRegistered", userService.findAll().size());
 
-        return "sections/index";
+        return "sections/users/index";
     }
 
     /**
@@ -73,10 +113,11 @@ public class IndexController {
     @GetMapping("/dashboard")
     public String dashboardPage(Principal user, Model model) {
         // if user is not logged in - redirect to index
-        if (user == null)
+        if (user == null) {
             return "redirect:/";
+        }
 
-            // user is logged in
+        // user is logged in
         else {
             User userDB = userService.findByUsername(user.getName());
 
@@ -84,15 +125,12 @@ public class IndexController {
             model.addAttribute("userObject", new User());
             model.addAttribute("GithubUser", user);
 
-            List<Project> appliedToProjects = new ArrayList<>();
+            List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
+                    .stream()
+                    .map(projectName -> projectInterface.findByTitle(projectName))
+                    .collect(Collectors.toList());
 
-            for (int i = 0; i < userDB.getProjectsAppliedTo().size(); i++) {
-                appliedToProjects.add(projectInterface.findByTitle(userDB.getProjectsAppliedTo().get(i)));
-            }
-
-            model.addAttribute("appliedProjects", appliedToProjects);
-
-            return "sections/dashboard";
+            return "sections/users/dashboard";
         }
     }
 
@@ -103,28 +141,9 @@ public class IndexController {
      * @return html index page with logged-out user
      */
     @GetMapping("/signout")
-    public String logout(HttpSession httpSession){
+    public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
-    }
-
-
-    /**
-     * This request is handled when user redirects to /about page to see some info
-     *
-     * @return about html page with some information about GitPals
-     */
-    @GetMapping("/about")
-    public String aboutPage(Model model, Principal principal) {
-        model.addAttribute("usersAmount", userService.findAll().size());
-
-        try {
-            model.addAttribute("LoggedUser", principal.getName());
-        } catch (NullPointerException e) {
-            model.addAttribute("LoggedUser", null);
-        }
-
-        return "sections/aboutPage";
     }
 
     /**
@@ -138,11 +157,70 @@ public class IndexController {
     }
 
     /**
-     * This request is handled when user wants to see a guide about submitting a project
-     * @return html page where users can read some advices about submitting a project
+     * This request returns a page, which displays a user's auth key, which
+     * is required for the authentication via the mobile app
+     *
+     * @param user is a current user's authentication
+     * @param model is where the key is added
+     * @return with, which displays user's key
      */
-    @GetMapping("/guide/how-to-create-a-good-description-for-my-project")
-    public String goodDescriptionGuidwe() {
-        return "guide/goodProjDescription";
+    @GetMapping("/requestAuthKey")
+    public String getAuthKey(Principal user, Model model) {
+        if (user == null) {
+            model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
+            return "sections/users/getAuthKey";
+        } else {
+            String key = keyStorageInterface.findByUsername(user.getName()).getKey();
+            if (key == null) {
+                KeyStorage ks = new KeyStorage(user.getName());
+                keyStorageInterface.save(ks);
+                model.addAttribute("key", ks.getKey());
+                return "sections/users/getAuthKey";
+            }
+            model.addAttribute("key", key);
+            return "sections/users/getAuthKey";
+        }
+    }
+
+    private void checkIfDataHasChanged(User userDB, LinkedHashMap<String, Object> properties) {
+
+        // Email
+        if (properties.get("email") == null) {
+            if (userDB.getEmail() != null) {
+                userDB.setEmail(null);
+                userService.save(userDB);
+            }
+        } else {
+            if (userDB.getEmail() == null || !userDB.getEmail().equals(properties.get("email").toString())) {
+                userDB.setEmail(properties.get("email").toString());
+                userService.save(userDB);
+            }
+        }
+
+        // Location
+        if (properties.get("location") == null) {
+            if (userDB.getCountry() != null) {
+                userDB.setCountry(null);
+                userService.save(userDB);
+            }
+        } else {
+            if (userDB.getCountry() == null || !userDB.getCountry().equals(properties.get("location").toString())) {
+                userDB.setCountry(properties.get("location").toString());
+                userService.save(userDB);
+            }
+        }
+
+        // Bio
+        if (properties.get("bio") == null) {
+            if (userDB.getBio() != null) {
+                userDB.setBio(null);
+                userService.save(userDB);
+            }
+        } else {
+            if (userDB.getBio() == null || !userDB.getBio().equals(properties.get("bio").toString())) {
+                userDB.setBio(properties.get("bio").toString());
+                userService.save(userDB);
+            }
+        }
     }
 }

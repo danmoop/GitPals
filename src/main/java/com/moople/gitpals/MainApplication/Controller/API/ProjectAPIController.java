@@ -1,11 +1,15 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
+import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.Response;
+import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
+import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,7 +20,13 @@ import java.util.stream.Collectors;
 public class ProjectAPIController {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ProjectInterface projectInterface;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     /**
      * @param projectName is a project name we pass in path
@@ -26,8 +36,9 @@ public class ProjectAPIController {
     public Project getProject(@PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 
-        if (project != null)
+        if (project != null) {
             return project;
+        }
 
         return new Project();
     }
@@ -38,6 +49,17 @@ public class ProjectAPIController {
     @GetMapping(value = "/getAll", produces = "application/json")
     public List<Project> allProjects() {
         return projectInterface.findAll();
+    }
+
+    /**
+     * @return total number of projects created on GitPals
+     */
+    @GetMapping(value = "/getNumberOfProjects", produces = "application/json")
+    public Map<String, Integer> getNumberOfProjects() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("totalNumberOfProjects", projectInterface.findAll().size());
+
+        return map;
     }
 
     /**
@@ -53,47 +75,35 @@ public class ProjectAPIController {
     }
 
     /**
-     * Project is created and added to database
+     * This function submits a new project if there are no duplicates (same name)
      *
-     * @param map is a hashmap that comes from the client, data is being extracted and assigned
-     * @return response according to the success of a function
+     * @param data contains all the info about the user who submits and the new project
+     * @return response, which depends on the existence of the project with the same name (duplicate)
      */
-    @PostMapping(value = "/createProject")
-    public Response submitProject(@RequestBody Map<Object, Object> map) {
-        Project project = new Project(
-                (String) map.get("title"),
-                (String) map.get("description"),
-                (String) map.get("githubProjectLink"),
-                (String) map.get("username"),
-                (List<String>) map.get("requirements"));
+    @PostMapping(value = "/submitProject", produces = "application/json")
+    public Response submitProject(@RequestBody Map<String, Object> data) {
+        try {
+            if (projectInterface.findByTitle((String) data.get("title")) != null) {
+                return Response.PROJECT_EXISTS;
+            }
 
-        if (projectInterface.findByTitle(project.getTitle()) == null) {
+            Project project = new Project(
+                    (String) data.get("title"),
+                    (String) data.get("description"),
+                    (String) data.get("githubProjectLink"),
+                    jwtUtil.extractUsername((String) data.get("token")),
+                    (List<String>) data.get("requirements")
+            );
+
             projectInterface.save(project);
 
+            User user = userService.findByUsername(jwtUtil.extractUsername((String) data.get("token")));
+            user.getProjects().add(project.getTitle());
+            userService.save(user);
+
             return Response.OK;
-        } else {
-            return Response.PROJECT_EXISTS;
+        } catch (Exception e) {
+            return Response.FAILED;
         }
-    }
-
-    /**
-     * Project deleted from the database
-     *
-     * @param map is a hashmap that comes from the client, data is being extracted and assigned
-     * @return response according to the success of a function
-     */
-    @PostMapping("/deleteProject")
-    public Response deleteProject(@RequestBody Map<String, String> map) {
-        String username = map.get("username");
-        String projectName = map.get("projectName");
-
-        Project project = projectInterface.findByTitle(projectName);
-
-        if (project != null && project.getAuthorName().equals(username)) {
-            projectInterface.delete(projectInterface.findByTitle(project.getTitle()));
-            return Response.OK;
-        }
-
-        return Response.FAILED;
     }
 }

@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -37,7 +39,7 @@ public class ProjectController {
             model.addAttribute("techs", Data.technologiesMap);
             model.addAttribute("projectObject", new Project());
 
-            return "sections/projectSubmitForm";
+            return "sections/projects/projectSubmitForm";
         }
 
         return "redirect:/";
@@ -56,7 +58,19 @@ public class ProjectController {
     public String projectSubmitted(
             Principal user,
             @ModelAttribute Project project,
-            @RequestParam("techInput") List<String> techs) {
+            @RequestParam(value = "techInput", required = false) List<String> techs,
+            RedirectAttributes redirectAttributes) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        if (techs == null) {
+            redirectAttributes.addFlashAttribute("warning", "Your project should have some requirements");
+            return "redirect:/submitProject";
+        }
+
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
         if (projectDB == null) {
@@ -77,7 +91,8 @@ public class ProjectController {
 
             return "redirect:/projects/" + userProject.getTitle();
         } else {
-            return "error/projectExists";
+            redirectAttributes.addFlashAttribute("warning", "Project with this name already exists");
+            return "redirect:/submitProject";
         }
     }
 
@@ -95,14 +110,13 @@ public class ProjectController {
         if (project == null) {
             return "error/projectDeleted";
         } else {
-            model.addAttribute("AuthorObject", userService.findByUsername(project.getAuthorName()));
             model.addAttribute("project", project);
 
             if (user != null) {
                 model.addAttribute("userDB", userService.findByUsername(user.getName()));
             }
 
-            return "sections/projectViewPage";
+            return "sections/projects/projectViewPage";
         }
     }
 
@@ -114,6 +128,12 @@ public class ProjectController {
      **/
     @PostMapping("/applyForProject")
     public String applyForProject(@RequestParam("linkInput") String link, Principal user) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if (user == null) {
+            return "redirect:/";
+        }
+
         User userForApply = userService.findByUsername(user.getName());
         Project project = projectInterface.findByTitle(link);
 
@@ -138,6 +158,12 @@ public class ProjectController {
      **/
     @PostMapping("/unapplyForProject")
     public String unapplyForProject(@RequestParam("linkInput") String link, Principal user) {
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if (user == null) {
+            return "redirect:/";
+        }
+
         Project projectDB = projectInterface.findByTitle(link);
 
         User userDB = userService.findByUsername(user.getName());
@@ -162,8 +188,14 @@ public class ProjectController {
      **/
     @PostMapping("/deleteProject")
     public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
-        User userDB = userService.findByUsername(user.getName());
+
         Project project = projectInterface.findByTitle(projectName);
+        User userDB = userService.findByUsername(user.getName());
+
+        // If authenticated user is null (so there is no auth), redirect to main page
+        if (userDB == null || project == null) {
+            return "redirect:/";
+        }
 
         // Remove project from author's projects list
         if (userDB.getUsername().equals(project.getAuthorName())) {
@@ -182,7 +214,7 @@ public class ProjectController {
                     .collect(Collectors.toList());
 
             // Every applied user will receive a message about project deletion
-            Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted");
+            Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted", Message.TYPE.INBOX_MESSAGE);
 
             for (User _user : allUsers) {
                 _user.getProjectsAppliedTo().remove(project.getTitle());
@@ -199,84 +231,63 @@ public class ProjectController {
     }
 
     /**
-     * This request is handled when user wants to sort projects by language
-     * They will be sorted and displayed
-     *
-     * @param data     is a list of technologies checkboxes user select manually
-     * @param isUnique is a condition whether there are any other techs EXCEPT what users choose (null if checkbox is not selected, "off" if selected)
-     * @return a list of projects according to user's preference
-     **/
-    @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("sort_projects") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model) {
-        List<Project> allProjects = projectInterface.findAll();
-
-        List<Project> matchProjects;
-
-        /** @param isUnique does the following:
-         * if there is a project with some requirements and we mark a checkbox then
-         * it will find a project with chosen requirements ONLY
-         *
-         * if checkbox is not selected it will find the same project by ONE of the requirements
-         */
-        if (isUnique) { // true - if checkbox IS selected
-            matchProjects = allProjects.stream()
-                    .filter(project -> project.getRequirements().equals(data))
-                    .collect(Collectors.toList());
-        } else { // false - checkbox IS NOT selected
-            matchProjects = allProjects.stream()
-                    .filter(project -> data.stream()
-                            .anyMatch(req -> project.getRequirements().contains(req))).collect(Collectors.toList());
-        }
-
-        model.addAttribute("matchProjects", matchProjects);
-
-        return "sections/projectsAfterSorting";
-    }
-
-
-    /**
-     * This request is handled when user wants to see project's comments
-     * They will be added to model and displayed
-     *
-     * @param projectName       is taken from a hidden html textfield
-     * @param model & principal are assigned automatically using thymeleaf
-     * @return project comments page
-     */
-    @GetMapping("/projects/{projectName}/comments")
-    public String viewProjectComments(@PathVariable("projectName") String projectName, Model model, Principal principal) {
-        Project project = projectInterface.findByTitle(projectName);
-
-        if (project == null) {
-            return "error/projectDeleted";
-        } else {
-            List<Comment> comments = project.getComments();
-
-            model.addAttribute("projectName", project.getTitle());
-            model.addAttribute("comments", comments);
-            model.addAttribute("user", principal);
-
-            return "sections/projectComments";
-        }
-    }
-
-    /**
      * This request is handled when user submits their comment
      * It will be added to comments list and saved
      *
      * @param projectName is taken from a hidden html textfield
      * @param text        is taken from a html textfield
-     * @param principal   is assigned automatically using thymeleaf
+     * @param user        is assigned automatically using thymeleaf
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")
-    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal principal) {
+    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user, RedirectAttributes redirectAttributes) {
+
+        if (text.equals("")) {
+            redirectAttributes.addFlashAttribute("error", "Your comment should have any text!");
+            return "redirect:/projects/" + projectName;
+        }
 
         Project project = projectInterface.findByTitle(projectName);
-        Comment comment = new Comment(principal.getName(), text);
 
-        project.getComments().add(comment);
-        projectInterface.save(project);
+        if (user != null && project != null) {
+            Comment comment = new Comment(user.getName(), text);
 
-        return "redirect:/projects/" + projectName + "/comments";
+            project.getComments().add(comment);
+            projectInterface.save(project);
+        }
+
+        return "redirect:/projects/" + projectName;
+    }
+
+    /**
+     * This function removes a comment added below project description
+     *
+     * @param user        is comment's author
+     * @param projectName is a project name
+     * @param text        is a comment text
+     * @param ts          is a comment's timestamp (when comment was added)
+     * @return project page
+     */
+    @PostMapping("/deleteComment")
+    public String deleteComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (project == null) {
+            return "redirect:/";
+        }
+
+        Optional<Comment> comment = project.getComments()
+                .stream()
+                .filter(projectComment -> projectComment.getAuthor().equals(user.getName()) && projectComment.getText().equals(text) && projectComment.getTimeStamp().equals(ts))
+                .findFirst();
+
+        if (comment.isPresent() && comment.get().getAuthor().equals(user.getName())) {
+            project.getComments().remove(comment.get());
+            projectInterface.save(project);
+        } else {
+            return "redirect:/";
+        }
+
+        return "redirect:/projects/" + projectName;
     }
 }

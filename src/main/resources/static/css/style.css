@@ -20,16 +20,31 @@
 
 .projectItem {
     margin: 0 0.75rem 2.25rem;
-    width: 100%
+    width: 100%;
+    display: inline-grid;
+}
+
+.row-column {
+    width: 100%;
 }
 
 .mt {
 	margin-top: 2rem;
 }
 
+.m {
+    margin: 15px;
+}
+
 @media(min-width: 900px) {
     .projectItem {
         width: 23%;
+    }
+}
+
+@media(min-width: 768px) {
+    .row-column {
+        display: inline-grid;
     }
 }
 
@@ -67,4 +82,46 @@ h1,h2,h3,h4,h5,h6,p {
 
 .ls-none {
     list-style: none
+}
+
+.danger {
+    color: #C4183C;
+}
+
+.success {
+    color: #17C671;
+}
+
+svg:hover * {
+     transition: 0.1s;
+     stroke: #333;
+     fill: #bdc3c7;
+}
+
+svg:not(:hover) * {
+    transition: 0.1s;
+}
+
+.danger-zone {
+    border: 2px solid #C4183C;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.neoButton {
+    border: 1px solid rgba(255,255,255, 0.2);
+    border-radius: 12px;
+    box-shadow: 6px 6px 16px 0 rgba(217, 210, 200, 0.71), -6px -6px 26px 0 rgba(255,255,255,0.83);
+}
+
+.neoButton:hover {
+	border: 1px solid rgba(255,255,255, 0.2);
+	border-radius: 12px;
+	box-shadow: inset 6px 6px 16px 0 rgba(217, 210, 200, 0.71), inset -6px -6px 26px 0 rgba(255,255,255,0.83);
+}
+
+.neoButton-red {
+    border: 1px solid rgba(255,255,255, 0.2);
+    border-radius: 12px;
+    box-shadow: 6px 6px 16px 0 rgba(240, 82, 82, 0.71), -6px -6px 26px 0 rgba(255,255,255,0.83);
 }

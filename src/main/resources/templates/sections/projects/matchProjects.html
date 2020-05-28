@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>GitPals - [[${#lists.size(match_projects)}]] projects found</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
+    </a>
+</nav>
+
+<section class="container">
+    <div class="card">
+        <div class="card-header text-center">
+            [[${#lists.size(match_projects)}]] projects found
+        </div>
+        <div class="card-body">
+
+            <div class="text-center" th:if="${#lists.size(match_projects) == 0}">
+                <p>No projects found</p>
+                <a href="/search">Try search one more time</a>
+            </div>
+
+            <ol>
+                <li th:each="project: ${match_projects}">
+                    <a th:href="${'/projects/' + project}">[[${project}]]</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+</body>
+</html>

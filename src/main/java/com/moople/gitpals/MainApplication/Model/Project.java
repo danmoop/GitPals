@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "projects")
 public class Project {
+
     @Id
     private String id;
 
@@ -22,6 +23,7 @@ public class Project {
     private List<String> requirements;
     private List<String> usersSubmitted;
     private List<Comment> comments;
+    private boolean isPromoted;
 
     /**
      * @param usersSubmitted is a list of objects (users' names), empty by default.
@@ -34,5 +36,6 @@ public class Project {
         this.requirements = requirements;
         this.usersSubmitted = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.isPromoted = false;
     }
 }
