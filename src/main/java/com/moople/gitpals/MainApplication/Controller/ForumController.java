@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.print.PrinterIOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -160,5 +161,24 @@ public class ForumController {
         }
 
         return "redirect:/forum/post/" + key;
+    }
+
+    @PostMapping("/editForumPostComment")
+    public String editComment(Principal user, @RequestParam("forumPostKey") String postKey, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+        ForumPost post = forumInterface.findByKey(postKey);
+
+        if (user == null || post == null) {
+            return "redirect:/";
+        }
+
+        post.getComments().forEach(comment -> {
+            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(user.getName())) {
+                comment.setText(text);
+                comment.setEdited(true);
+                forumInterface.save(post);
+            }
+        });
+
+        return "redirect:/forum/post/" + postKey;
     }
 }

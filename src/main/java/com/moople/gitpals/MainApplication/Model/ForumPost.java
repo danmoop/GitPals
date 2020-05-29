@@ -2,6 +2,7 @@ package com.moople.gitpals.MainApplication.Model;
 
 import com.moople.gitpals.MainApplication.Service.Encrypt;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Data
+@ToString
 @Document(collection = "forumPosts")
 public class ForumPost {
 
@@ -41,6 +43,6 @@ public class ForumPost {
     }
 
     private String generateKey() {
-        return Encrypt.MD5(new Date().getTime() + author + timeStamp + Math.random());
+        return Encrypt.MD5(new Date().getTime() + author + content + timeStamp + Math.random());
     }
 }
