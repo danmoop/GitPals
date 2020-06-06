@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
@@ -29,6 +32,10 @@ public class AdminController {
     @Autowired
     private ForumInterface forumInterface;
 
+    private final long ONE_DAY = 84600 * 1000;
+    private final long ONE_WEEK = ONE_DAY * 7;
+    private final String ADMIN_NAME = "danmoop";
+
     /**
      * This function returns admin page if you are an admin
      *
@@ -37,7 +44,7 @@ public class AdminController {
      */
     @GetMapping("/admin")
     public String adminPage(Principal admin) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -53,7 +60,7 @@ public class AdminController {
      */
     @PostMapping("/getAllUsers")
     public String getAllUsers(Principal admin, Model model) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -72,7 +79,7 @@ public class AdminController {
      */
     @PostMapping("/getUserInfo")
     public String getUserInfo(@RequestParam("userName") String username, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -97,7 +104,7 @@ public class AdminController {
      */
     @PostMapping("/getAllProjects")
     public String getAllProjects(Principal admin, Model model) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -116,7 +123,7 @@ public class AdminController {
      */
     @PostMapping("/getProjectInfo")
     public String getProjectInfo(@RequestParam("projectName") String projectName, Principal admin, Model model) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -141,7 +148,7 @@ public class AdminController {
      */
     @PostMapping("/sendMessageToEveryone")
     public String sendMessage(Principal admin, @RequestParam("text") String text) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -167,7 +174,7 @@ public class AdminController {
      */
     @PostMapping("/clearAllUserProjects")
     public String clearAllUserProjects(Principal admin, @RequestParam("username") String username, RedirectAttributes redirectAttributes) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -202,7 +209,7 @@ public class AdminController {
      */
     @PostMapping("/getForumPostById")
     public String getForumPostById(@RequestParam("id") String id, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -226,7 +233,7 @@ public class AdminController {
      */
     @PostMapping("/deleteForumPostById")
     public String deleteForumPostById(@RequestParam("id") String id, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -253,7 +260,7 @@ public class AdminController {
      */
     @PostMapping("/deleteAllForumPostsByUser")
     public String deleteForumPosts(@RequestParam String username, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals("danmoop")) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -268,7 +275,7 @@ public class AdminController {
 
     @PostMapping("/banUser")
     public String banUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
-        if (!admin.getName().equals("danmoop")) {
+        if (!admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -288,7 +295,7 @@ public class AdminController {
 
     @PostMapping("/unbanUser")
     public String unbanUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
-        if (!admin.getName().equals("danmoop")) {
+        if (!admin.getName().equals(ADMIN_NAME)) {
             return "redirect:/";
         }
 
@@ -303,6 +310,46 @@ public class AdminController {
         userService.save(user);
 
         redirectAttributes.addFlashAttribute("unbanMsg", username + " has been unbanned");
+        return "redirect:/admin";
+    }
+
+    /**
+     * This function returns a list of users who were active in the previous 24 hours
+     * @param admin is an admin's authentication
+     * @param redirectAttributes is where information about users is put
+     * @return admin page and display a list of active users
+     */
+    @PostMapping("/getActiveDailyUsers")
+    public String getActiveDailyUsers(Principal admin, RedirectAttributes redirectAttributes) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+            return "redirect:/";
+        }
+
+        long currentTime = new Date().getTime();
+
+        List<String> activeUsers = userService.findAll()
+                .stream().filter(user -> currentTime - user.getLastOnlineDate() <= ONE_DAY)
+                .map(User::getUsername)
+                .collect(Collectors.toList());
+
+        redirectAttributes.addFlashAttribute("activeDailyUsers", activeUsers);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/getActiveWeeklyUsers")
+    public String getActiveWeeklyUsers(Principal admin, RedirectAttributes redirectAttributes) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+            return "redirect:/";
+        }
+
+        long currentTime = new Date().getTime();
+
+        List<String> activeUsers = userService.findAll()
+                .stream().filter(user -> currentTime - user.getLastOnlineDate() <= ONE_WEEK)
+                .map(User::getUsername)
+                .collect(Collectors.toList());
+
+        redirectAttributes.addFlashAttribute("activeWeeklyUsers", activeUsers);
         return "redirect:/admin";
     }
 

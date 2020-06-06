@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class User {
     private List<String> projects;
     private List<String> projectsAppliedTo;
     private List<Message> messages;
+    private long lastOnlineDate;
     private boolean notificationsEnabled;
     private boolean banned;
 
@@ -51,5 +53,7 @@ public class User {
 
         this.notificationsEnabled = true;
         this.banned = false;
+
+        this.lastOnlineDate = new Date().getTime();
     }
 }

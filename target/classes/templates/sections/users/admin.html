@@ -146,7 +146,7 @@
                 </div>
             </div>
             <hr/>
-            <div class="row text-center" style="margin-bottom: 150px;">
+            <div class="row text-center">
                 <div class="col">
                     <h4>Ban user</h4>
 
@@ -166,6 +166,37 @@
                     </form>
 
                     <span class="fw-600" th:if="${unbanMsg != null}">[[${unbanMsg}]]</span>
+                </div>
+            </div>
+            <hr/>
+            <div class="row text-center" style="margin-bottom: 150px;">
+                <div class="col">
+                    <h4>Get Active Daily Users</h4>
+
+                    <form th:action="@{/getActiveDailyUsers}" method="post">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
+                    </form>
+
+                    <ul th:if="${activeDailyUsers != null}" style="list-style: none; padding-left: 0;">
+                        Active Users Per Day ([[${#lists.size(activeDailyUsers)}]])
+                        <li th:each="user: ${activeDailyUsers}">
+                            <span class="fw-600">[[${user}]]</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>Get Active Weekly Users</h4>
+
+                    <form th:action="@{/getActiveWeeklyUsers}" method="post">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Get" />
+                    </form>
+
+                    <ul th:if="${activeWeeklyUsers != null}" style="list-style: none; padding-left: 0;">
+                        Active Users Per Day ([[${#lists.size(activeWeeklyUsers)}]])
+                        <li th:each="user: ${activeWeeklyUsers}">
+                            <span class="fw-600">[[${user}]]</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

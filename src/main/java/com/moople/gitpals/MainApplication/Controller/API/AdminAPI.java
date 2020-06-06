@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -46,17 +47,11 @@ public class AdminAPI {
             return Response.FAILED;
         }
 
-        // Example, in which comments had no "edited" boolean and "key" parameter,
-        // so I had to update database manually by calling this request
-
-        /*forumInterface.findAll()
-                .forEach(post -> {
-                    post.getComments().forEach(comment -> {
-                        comment.setKey(comment.generateKey());
-                        comment.setEdited(false);
-                    });
-                    forumInterface.save(post);
-                });*/
+        userService.findAll()
+                .forEach(user -> {
+                    user.setLastOnlineDate(new Date().getTime());
+                    userService.save(user);
+                });
 
         return Response.OK;
     }

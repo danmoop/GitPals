@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +33,8 @@ public class IndexController {
 
     @Autowired
     private KeyStorageInterface keyStorageInterface;
+
+    private final long ONE_DAY = 1000 * 86400;
 
     /**
      * This request is handled when user opens index page
@@ -221,6 +224,13 @@ public class IndexController {
                 userDB.setBio(properties.get("bio").toString());
                 userService.save(userDB);
             }
+        }
+
+        // Last Online Date (update if there is 1day difference to avoid multiple database updates on the same day)
+        long currentTime = new Date().getTime();
+        if(currentTime - userDB.getLastOnlineDate() >= ONE_DAY) {
+            userDB.setLastOnlineDate(currentTime);
+            userService.save(userDB);
         }
     }
 }
