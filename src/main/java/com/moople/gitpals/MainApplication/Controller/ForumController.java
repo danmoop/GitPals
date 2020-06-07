@@ -162,6 +162,15 @@ public class ForumController {
         return "redirect:/forum/post/" + key;
     }
 
+    /**
+     * This function edits a comment in a forum post (changes comment's context & marks it as edited)
+     *
+     * @param user       is an author's authentication
+     * @param postKey    is forum post's key required to find a forum post in the database
+     * @param text       is a new text that will be set to a comment
+     * @param commentKey is a comment key required to find a comment in a list of comments added to a post
+     * @return forum post page with edited comment contents
+     */
     @PostMapping("/editForumPostComment")
     public String editComment(Principal user, @RequestParam("forumPostKey") String postKey, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
         ForumPost post = forumInterface.findByKey(postKey);

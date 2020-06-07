@@ -290,4 +290,33 @@ public class ProjectController {
 
         return "redirect:/projects/" + projectName;
     }
+
+
+    /**
+     * This function edits a comment in a project (changes comment's context & marks it as edited)
+     *
+     * @param user        is an author's authentication
+     * @param projectName is project's name required to find a forum post in the database
+     * @param text        is a new text that will be set to a comment
+     * @param commentKey  is a comment key required to find a comment in a list of comments added to a post
+     * @return project page with edited comment contents
+     */
+    @PostMapping("/editProjectComment")
+    public String editComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (user == null || project == null) {
+            return "redirect:/";
+        }
+
+        project.getComments().forEach(comment -> {
+            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(user.getName())) {
+                comment.setText(text);
+                comment.setEdited(true);
+                projectInterface.save(project);
+            }
+        });
+
+        return "redirect:/projects/" + projectName;
+    }
 }

@@ -1,9 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;

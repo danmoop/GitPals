@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Model;
 
 import lombok.Data;
+
 import java.io.Serializable;
 
 @Data

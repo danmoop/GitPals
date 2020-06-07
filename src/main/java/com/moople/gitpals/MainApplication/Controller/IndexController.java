@@ -163,7 +163,7 @@ public class IndexController {
      * This request returns a page, which displays a user's auth key, which
      * is required for the authentication via the mobile app
      *
-     * @param user is a current user's authentication
+     * @param user  is a current user's authentication
      * @param model is where the key is added
      * @return with, which displays user's key
      */
@@ -228,7 +228,7 @@ public class IndexController {
 
         // Last Online Date (update if there is 1day difference to avoid multiple database updates on the same day)
         long currentTime = new Date().getTime();
-        if(currentTime - userDB.getLastOnlineDate() >= ONE_DAY) {
+        if (currentTime - userDB.getLastOnlineDate() >= ONE_DAY) {
             userDB.setLastOnlineDate(currentTime);
             userService.save(userDB);
         }

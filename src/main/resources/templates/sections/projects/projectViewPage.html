@@ -118,7 +118,7 @@
                         <form class="col" th:action="@{/sendComment}" method="post" th:if="${userDB != null}" style="display: inline-flex;">
                             <input required type="hidden" th:name="projectName" th:value="*{projectName}" />
                             <input required type="text" class="form-control" th:name="text" placeholder="Comment" />
-                            <input type="submit" class="btn btn-primary btn-sm" value="Send" />
+                            <input type="submit" class="btn btn-outline-primary btn-sm fw-600" value="Send" />
                         </form>
                     </div>
 
@@ -127,17 +127,36 @@
                             <li class="mt" th:each="comment: ${project.comments}">
                                 <div class="card">
                                     <div class="card-header">
-                                        <span class="fw-600">[[${comment.author}]]</span> <br />
-                                        <span>[[${comment.timeStamp}]]</span>
-                                        <form th:action="@{/deleteComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}">
-                                            <input type="hidden" th:name="ts" th:value="*{comment.timeStamp}" />
-                                            <input type="hidden" th:name="projectName" th:value="*{project.title}" />
-                                            <input type="hidden" th:name="text" th:value="*{comment.text}" />
-                                            <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="return confirm('Are you sure?')"/>
-                                        </form>
+                                        <div class="row">
+                                            <div class="col">
+                                                <span class="fw-600">[[${comment.author}]]</span> <br />
+                                                <span>[[${comment.timeStamp}]]</span>
+                                            </div>
+                                            <div class="col">
+                                                <form th:action="@{/deleteComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}" style="float: right;">
+                                                    <input type="hidden" th:name="ts" th:value="*{comment.timeStamp}" />
+                                                    <input type="hidden" th:name="projectName" th:value="*{project.title}" />
+                                                    <input type="hidden" th:name="text" th:value="*{comment.text}" />
+                                                    <input type="submit" class="btn btn-outline-danger btn-sm fw-600" value="Delete" onclick="return confirm('Are you sure?')"/>
+                                                </form>
+                                                <button th:id="${'edit_' + comment.key}" th:if="${userDB != null && userDB.username == comment.author}" class="btn btn-outline-primary btn-sm fw-600" style="float:right; margin-right: 10px;" th:onclick="changeDisplay([[${comment.key}]])">Edit</button>
+                                            </div>
+                                        </div>
+                                        <div th:if="${comment.edited}">
+                                            <br/>
+                                            <span style="color: #212529;">(Edited)</span>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <span>[[${comment.text}]]</span>
+                                        <div class="row mt" th:if="${userDB != null && userDB.username == comment.author}" th:id="${'editField_' + comment.key}" style="display: none;">
+                                            <form class="col" th:action="@{/editProjectComment}" method="post" style="display: inline-flex;">
+                                                <input required type="text" th:name="editedText" class="form-control" placeholder="New comment" th:value="*{comment.text}" />
+                                                <input hidden th:name="commentKey" th:value="*{comment.key}" />
+                                                <input hidden th:name="projectName" th:value="*{project.title}" />
+                                                <input type="submit" class="btn btn-outline-primary btn-sm fw-600" value="Save" />
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -147,6 +166,13 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        function changeDisplay(key) {
+            document.getElementById('editField_' + key).style.display = document.getElementById('editField_' + key).style.display == 'none' ? 'block' : 'none';
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>

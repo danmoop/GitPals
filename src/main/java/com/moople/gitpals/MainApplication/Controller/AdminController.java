@@ -315,7 +315,8 @@ public class AdminController {
 
     /**
      * This function returns a list of users who were active in the previous 24 hours
-     * @param admin is an admin's authentication
+     *
+     * @param admin              is an admin's authentication
      * @param redirectAttributes is where information about users is put
      * @return admin page and display a list of active users
      */
@@ -336,6 +337,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * This function returns a list of users who were active in the previous 7 days
+     *
+     * @param admin              is an admin's authentication
+     * @param redirectAttributes is where information about users is put
+     * @return admin page and display a list of active users
+     */
     @PostMapping("/getActiveWeeklyUsers")
     public String getActiveWeeklyUsers(Principal admin, RedirectAttributes redirectAttributes) {
         if (admin == null || !admin.getName().equals(ADMIN_NAME)) {

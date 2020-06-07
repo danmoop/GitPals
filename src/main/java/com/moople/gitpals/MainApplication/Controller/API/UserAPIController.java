@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
-import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
@@ -9,8 +8,6 @@ import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController

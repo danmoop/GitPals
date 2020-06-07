@@ -1,4 +1,4 @@
-package com.moople.gitpals.MainApplication.Controller;
+package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
@@ -12,7 +12,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
-public class APIController {
+public class WebAPIController {
     @Autowired
     private UserInterface userInterface;
 

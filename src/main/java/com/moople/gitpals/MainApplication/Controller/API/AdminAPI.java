@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Model.Response;
-import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
