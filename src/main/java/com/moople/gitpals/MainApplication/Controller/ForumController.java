@@ -2,6 +2,7 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Comment;
 import com.moople.gitpals.MainApplication.Model.ForumPost;
+import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,19 @@ public class ForumController {
      * @return forum page
      */
     @GetMapping("/forum")
-    public String forumPage(Principal principal, Model model) {
+    public String forumPage(Principal user, Model model) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         List<ForumPost> posts = forumInterface.findAll();
 
         model.addAttribute("posts", posts);
-        model.addAttribute("user", principal);
+        model.addAttribute("user", user);
 
         return "sections/forum/forum";
     }
@@ -48,6 +57,14 @@ public class ForumController {
      */
     @GetMapping("/forum/post/{key}")
     public String getForumPost(@PathVariable("key") String key, Principal user, Model model) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         ForumPost post = forumInterface.findByKey(key);
 
         if (post == null) {
@@ -73,17 +90,23 @@ public class ForumController {
     /**
      * This request is handled when user submits their forum post and it is added to forum
      *
-     * @param principal is assigned automatically using spring
-     * @param content   is taken from html input, it is post's description
+     * @param user    is assigned automatically using spring
+     * @param content is taken from html input, it is post's description
      * @return forum post page
      */
     @PostMapping("/addForumPost")
-    public String addForumPost(Principal principal, @RequestParam("title") String title, @RequestParam("content") String content) {
-        if (principal == null) {
+    public String addForumPost(Principal user, @RequestParam("title") String title, @RequestParam("content") String content) {
+        if (user == null) {
             return "redirect:/";
+        } else {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
         }
 
-        ForumPost post = new ForumPost(principal.getName(), title, content);
+        ForumPost post = new ForumPost(user.getName(), title, content);
         forumInterface.save(post);
 
         return "redirect:/forum/post/" + post.getKey();
@@ -93,20 +116,26 @@ public class ForumController {
      * This request is handled when user sends their comments to a forum post
      * A comment will be added and changed will be saved to database
      *
-     * @param principal   is a user session, assigned automatically
+     * @param user        is a user session, assigned automatically
      * @param commentText is a comment text, taken from html input field
      * @param postKey     is a forum post's key, taken from a hidden html input field, assigned by thymeleaf
      * @return forum post page
      */
     @PostMapping("/addCommentToPost")
-    public String addCommentToPost(Principal principal, @RequestParam("commentText") String commentText, @RequestParam("postKey") String postKey) {
-        if (principal == null) {
+    public String addCommentToPost(Principal user, @RequestParam("commentText") String commentText, @RequestParam("postKey") String postKey) {
+        if (user == null) {
             return "redirect:/";
+        } else {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
         }
 
         ForumPost post = forumInterface.findByKey(postKey);
 
-        post.getComments().add(new Comment(principal.getName(), commentText));
+        post.getComments().add(new Comment(user.getName(), commentText));
         forumInterface.save(post);
 
         return "redirect:/forum/post/" + postKey;
@@ -121,6 +150,14 @@ public class ForumController {
      */
     @PostMapping("/deleteForumPost")
     public String deleteForumPost(Principal user, @RequestParam("key") String key) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         ForumPost post = forumInterface.findByKey(key);
 
         if (user != null && post != null && user.getName().equals(post.getAuthor())) {
@@ -141,6 +178,14 @@ public class ForumController {
      */
     @PostMapping("/deleteForumPostComment")
     public String deleteForumPostComment(Principal user, @RequestParam("key") String key, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         ForumPost post = forumInterface.findByKey(key);
 
         if (post == null || user == null) {
@@ -173,6 +218,14 @@ public class ForumController {
      */
     @PostMapping("/editForumPostComment")
     public String editComment(Principal user, @RequestParam("forumPostKey") String postKey, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+        if(user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         ForumPost post = forumInterface.findByKey(postKey);
 
         if (user == null || post == null) {

@@ -1,10 +1,8 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.ForumPost;
-import com.moople.gitpals.MainApplication.Model.Message;
-import com.moople.gitpals.MainApplication.Model.Project;
-import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Model.*;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
+import com.moople.gitpals.MainApplication.Service.GlobalMessageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,9 @@ public class AdminController {
 
     @Autowired
     private ForumInterface forumInterface;
+
+    @Autowired
+    private GlobalMessageInterface globalMessageInterface;
 
     private final long ONE_DAY = 84600 * 1000;
     private final long ONE_WEEK = ONE_DAY * 7;
@@ -358,6 +359,55 @@ public class AdminController {
                 .collect(Collectors.toList());
 
         redirectAttributes.addFlashAttribute("activeWeeklyUsers", activeUsers);
+        return "redirect:/admin";
+    }
+
+    /**
+     * This function creates a global alert that will be displayed on GitPals home page
+     *
+     * @param admin is an admin's authentication
+     * @param text  is a new text for an alert
+     * @return to the admin page
+     */
+    @PostMapping("/modifyGlobalAlert")
+    public String modifyGlobalAlert(Principal admin, @RequestParam String text) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+            return "redirect:/";
+        }
+
+        List<GlobalMessage> globalMessages = globalMessageInterface.findAll();
+
+        if (globalMessages.size() == 0) {
+            GlobalMessage globalMessage = new GlobalMessage(text);
+            globalMessageInterface.save(globalMessage);
+        } else {
+            GlobalMessage globalMessage = globalMessages.get(0);
+            globalMessage.setContent(text);
+            globalMessageInterface.save(globalMessage);
+        }
+
+        userService.findAll().forEach(user -> {
+            user.setHasSeenGlobalMessage(false);
+            userService.save(user);
+        });
+
+        return "redirect:/admin";
+    }
+
+    /**
+     * This function removes a global alert so it won't be displayed anymore
+     *
+     * @param admin is an admin's authentication
+     * @return to the admin page
+     */
+    @PostMapping("/removeGlobalAlert")
+    public String removeGlobalAlert(Principal admin) {
+        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+            return "redirect:/";
+        }
+
+        globalMessageInterface.deleteAll();
+
         return "redirect:/admin";
     }
 

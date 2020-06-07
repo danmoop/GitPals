@@ -169,7 +169,7 @@
                 </div>
             </div>
             <hr/>
-            <div class="row text-center" style="margin-bottom: 150px;">
+            <div class="row text-center">
                 <div class="col">
                     <h4>Get Active Daily Users</h4>
 
@@ -197,6 +197,24 @@
                             <span class="fw-600">[[${user}]]</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+            <hr/>
+            <div class="row text-center" style="margin-bottom: 150px;">
+                <div class="col">
+                    <h4>Create a global alert</h4>
+
+                    <form th:action="@{/modifyGlobalAlert}" method="post">
+                        <input type="text" th:name="text" class="form-control" placeholder="Message" style="margin: 15px;">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Create" />
+                    </form>
+                </div>
+                <div class="col">
+                    <h4>Remove a global alert</h4>
+
+                    <form th:action="@{/removeGlobalAlert}" method="post">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Delete" />
+                    </form>
                 </div>
             </div>
         </div>

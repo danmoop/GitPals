@@ -37,6 +37,14 @@ public class UserController {
     public String findUser(@PathVariable String username, Model model, Principal user) {
         User userDB = userService.findByUsername(username);
 
+        if (user != null) {
+            User loggedUser = userService.findByUsername(user.getName());
+
+            if (loggedUser.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         if (userDB != null) {
             List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
                     .stream()
@@ -77,6 +85,10 @@ public class UserController {
 
         User userDB = userService.findByUsername(user.getName());
 
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
+
         Map<String, Boolean> allTechs = userDB.getSkillList();
         allTechs.replaceAll((k, v) -> false);
 
@@ -93,5 +105,23 @@ public class UserController {
         userService.save(userDB);
 
         return "redirect:/dashboard";
+    }
+
+    /**
+     * This function removes a global message from a user's home page
+     * @param user is a user's authentication
+     * @return to the home page
+     */
+    @PostMapping("/setGlobalMessageAsSeen")
+    public String setGlobalMessageAsSeen(Principal user) {
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        User userDB = userService.findByUsername(user.getName());
+        userDB.setHasSeenGlobalMessage(true);
+        userService.save(userDB);
+
+        return "redirect:/";
     }
 }

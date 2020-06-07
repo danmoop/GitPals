@@ -32,6 +32,10 @@ public class MessageController {
         // if users are not logged in - they can't see any messages -> redirect them to index page
         if (user != null) {
             User userDB = userService.findByUsername(user.getName());
+            
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
 
             List<Message> userMessages = userDB.getMessages();
 
@@ -54,10 +58,16 @@ public class MessageController {
      * @return html page with a textfield for writing a message to a specific user
      */
     @GetMapping("/sendMessage")
-    public String sendMessage(Model model, Principal principal) {
+    public String sendMessage(Model model, Principal user) {
         // if users are not logged in - they can't send messages -> redirect them to index page
-        if (principal == null) {
+        if (user == null) {
             return "redirect:/";
+        } else {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
         }
 
         return "sections/sendMessage";
@@ -80,6 +90,12 @@ public class MessageController {
 
         if (user == null) {
             return "redirect:/";
+        } else {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
         }
 
         User recipient = userService.findByUsername(username);
@@ -116,6 +132,10 @@ public class MessageController {
             @RequestParam("messageAuthorInput") String author,
             Principal user) {
         User userDB = userService.findByUsername(user.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
 
         /*
             Message content and author are acquired from html forms,

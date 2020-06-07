@@ -35,6 +35,12 @@ public class ProjectController {
     @GetMapping("/submitProject")
     public String projectForm(Principal user, Model model) {
         if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+
             model.addAttribute("UserObject", user);
             model.addAttribute("techs", Data.technologiesMap);
             model.addAttribute("projectObject", new Project());
@@ -71,6 +77,12 @@ public class ProjectController {
             return "redirect:/submitProject";
         }
 
+        User userDB = userService.findByUsername(user.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
+
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
         if (projectDB == null) {
@@ -82,11 +94,9 @@ public class ProjectController {
                     techs
             );
 
-            User userInDB = userService.findByUsername(user.getName());
+            userDB.getProjects().add(userProject.getTitle());
 
-            userInDB.getProjects().add(userProject.getTitle());
-
-            userService.save(userInDB);
+            userService.save(userDB);
             projectInterface.save(userProject);
 
             return "redirect:/projects/" + userProject.getTitle();
@@ -105,6 +115,7 @@ public class ProjectController {
      **/
     @GetMapping("/projects/{projectName}")
     public String projectPage(@PathVariable String projectName, Model model, Principal user) {
+
         Project project = projectInterface.findByTitle(projectName);
 
         if (project == null) {
@@ -113,7 +124,13 @@ public class ProjectController {
             model.addAttribute("project", project);
 
             if (user != null) {
-                model.addAttribute("userDB", userService.findByUsername(user.getName()));
+                User userDB = userService.findByUsername(user.getName());
+
+                if (userDB.isBanned()) {
+                    return "sections/users/banned";
+                }
+
+                model.addAttribute("userDB", userDB);
             }
 
             return "sections/projects/projectViewPage";
@@ -135,6 +152,11 @@ public class ProjectController {
         }
 
         User userForApply = userService.findByUsername(user.getName());
+
+        if (userForApply.isBanned()) {
+            return "sections/users/banned";
+        }
+
         Project project = projectInterface.findByTitle(link);
 
         // Users that already submitted can't submit another time, only once per project
@@ -165,8 +187,11 @@ public class ProjectController {
         }
 
         Project projectDB = projectInterface.findByTitle(link);
-
         User userDB = userService.findByUsername(user.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
 
         if (projectDB.getUsersSubmitted().contains(userDB.getUsername())) {
             projectDB.getUsersSubmitted().remove(userDB.getUsername());
@@ -195,6 +220,10 @@ public class ProjectController {
         // If authenticated user is null (so there is no auth), redirect to main page
         if (userDB == null || project == null) {
             return "redirect:/";
+        }
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
         }
 
         // Remove project from author's projects list
@@ -250,6 +279,13 @@ public class ProjectController {
         Project project = projectInterface.findByTitle(projectName);
 
         if (user != null && project != null) {
+
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+
             Comment comment = new Comment(user.getName(), text);
 
             project.getComments().add(comment);
@@ -270,6 +306,12 @@ public class ProjectController {
      */
     @PostMapping("/deleteComment")
     public String deleteComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+        User userDB = userService.findByUsername(user.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
+
         Project project = projectInterface.findByTitle(projectName);
 
         if (project == null) {
@@ -303,6 +345,12 @@ public class ProjectController {
      */
     @PostMapping("/editProjectComment")
     public String editComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+        User userDB = userService.findByUsername(user.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
+
         Project project = projectInterface.findByTitle(projectName);
 
         if (user == null || project == null) {

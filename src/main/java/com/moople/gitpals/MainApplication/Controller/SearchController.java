@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,7 +37,15 @@ public class SearchController {
      * @return html page where users can find a project or a user by name
      */
     @GetMapping("/search")
-    public String searchPage(Model model) {
+    public String searchPage(Model model, Principal user) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         model.addAttribute("techs", Data.technologiesMap);
 
         return "sections/searchForm";
@@ -50,9 +59,17 @@ public class SearchController {
      * @return list of users whose nicknames contain user's input
      **/
     @PostMapping("/findUser")
-    public String foundUsers(@RequestParam("user_name") String username, Model model) {
+    public String foundUsers(@RequestParam("user_name") String username, Model model, Principal user) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         List<String> matchUsers = userService.findAll().stream()
-                .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
+                .filter(matchedUser -> matchedUser.getUsername().toLowerCase().contains(username.toLowerCase()))
                 .map(User::getUsername).collect(Collectors.toList());
 
         model.addAttribute("match_users", matchUsers);
@@ -68,7 +85,15 @@ public class SearchController {
      * @return list of projects whose titles contain user's input
      **/
     @PostMapping("/findProject")
-    public String foundProjects(@RequestParam("project_name") String projectName, Model model) {
+    public String foundProjects(@RequestParam("project_name") String projectName, Model model, Principal user) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         List<String> matchProjects = projectInterface.findAll()
                 .stream()
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
@@ -88,7 +113,15 @@ public class SearchController {
      * @return page where all the users are displayed
      */
     @PostMapping("/findUsersBySkills")
-    public String usersBySkills(@RequestParam("skills") List<String> skills, Model model) {
+    public String usersBySkills(@RequestParam("skills") List<String> skills, Model model, Principal user) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         Set<String> users = userService.findBySkillList(skills);
 
         model.addAttribute("match_users", users);
@@ -105,7 +138,15 @@ public class SearchController {
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("requirement") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model) {
+    public String projectsSorted(@RequestParam("requirement") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model, Principal user) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         List<Project> allProjects = projectInterface.findAll();
 
         List<String> matchProjects;
@@ -142,7 +183,15 @@ public class SearchController {
      * @return list with posts to the result page
      */
     @PostMapping("/findForumPosts")
-    public String findForumPosts(@RequestParam("post_name") String postName, Model model) {
+    public String findForumPosts(@RequestParam("post_name") String postName, Model model, Principal user) {
+        if (user != null) {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
         List<ForumPost> posts = forumInterface.findAll().stream()
                 .filter(post -> post.getTitle().toLowerCase().contains(postName.toLowerCase()))
                 .collect(Collectors.toList());

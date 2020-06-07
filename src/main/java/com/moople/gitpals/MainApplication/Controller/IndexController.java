@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.GlobalMessage;
 import com.moople.gitpals.MainApplication.Model.KeyStorage;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
@@ -33,6 +34,9 @@ public class IndexController {
 
     @Autowired
     private KeyStorageInterface keyStorageInterface;
+
+    @Autowired
+    private GlobalMessageInterface globalMessageInterface;
 
     private final long ONE_DAY = 1000 * 86400;
 
@@ -78,6 +82,11 @@ public class IndexController {
             }
 
             User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+
             checkIfDataHasChanged(userDB, properties);
 
             model.addAttribute("userDB", userDB);
@@ -96,6 +105,11 @@ public class IndexController {
             for (int i = projectsAmount - 1; i >= projectsAmount - 50; i--) {
                 projects.add(allProjects.get(i));
             }
+        }
+
+        List<GlobalMessage> globalMessages = globalMessageInterface.findAll();
+        if (globalMessages.size() != 0) {
+            model.addAttribute("globalMessage", globalMessages.get(0));
         }
 
         model.addAttribute("projectTechs", Data.technologiesMap);
@@ -123,6 +137,10 @@ public class IndexController {
         // user is logged in
         else {
             User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
 
             model.addAttribute("dbUser", userDB);
             model.addAttribute("userObject", new User());
@@ -173,6 +191,12 @@ public class IndexController {
             model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
             return "sections/users/getAuthKey";
         } else {
+            User userDB = userService.findByUsername(user.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+
             String key = keyStorageInterface.findByUsername(user.getName()).getKey();
             if (key == null) {
                 KeyStorage ks = new KeyStorage(user.getName());
