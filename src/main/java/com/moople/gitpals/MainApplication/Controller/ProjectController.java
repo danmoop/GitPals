@@ -373,7 +373,13 @@ public class ProjectController {
         return "redirect:/projects/" + projectName;
     }
 
-
+    /**
+     * This function returns a valid list of required roles for project
+     * The list, which is obtained from a client side might contain empty strings, so we need to validate the list
+     *
+     * @param roles is a list of roles the user sends to the server
+     * @return a valid list of roles without spaces or empty strings
+     */
     private List<String> validateProjectRolesArrayList(List<String> roles) {
         return roles.stream()
                 .filter(role -> !role.equals(""))
