@@ -6,6 +6,7 @@ import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class MessageAPIController {
      * @param data is data the sender user provides to the server, their token, recipient name, and a message itself
      * @return response whether a message was sent successfully
      */
-    @PostMapping(value = "/send", produces = "application/json")
+    @PostMapping(value = "/send", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response sendMessage(@RequestBody Map<Object, Object> data) {
         String recipientName = (String) data.get("recipient");
         String token = (String) data.get("token");

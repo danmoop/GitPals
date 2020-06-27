@@ -58,9 +58,17 @@
                     <br/><br/>
 
                     <div class="fw-600">
-                        Requirements for the project
+                        The project uses:
                     </div>
                     <span>[[${project.requirements}]]</span>
+                    <br/><br/>
+
+                    <div class="fw-600">
+                        Roles wanted for this project ([[${#lists.size(project.requiredRoles)}]])
+                    </div>
+                    <span class="badge badge-light" th:each="role: ${project.requiredRoles}" style="margin-left: 2px; margin-right: 2px;">
+                        [[${role}]]
+                    </span>
 
                     <br/><br/>
                     <div class="fw-600">

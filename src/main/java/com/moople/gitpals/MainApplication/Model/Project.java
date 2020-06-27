@@ -23,18 +23,20 @@ public class Project {
     private List<String> requirements;
     private List<String> usersSubmitted;
     private List<Comment> comments;
+    private List<String> requiredRoles;
     private boolean isPromoted;
 
     /**
      * @param usersSubmitted is a list of objects (users' names), empty by default.
      */
-    public Project(String title, String description, String githubProjectLink, String authorName, List<String> requirements) {
+    public Project(String title, String description, String githubProjectLink, String authorName, List<String> requirements, List<String> requiredRoles) {
         this.title = title;
         this.description = description;
         this.githubProjectLink = githubProjectLink;
         this.authorName = authorName;
         this.requirements = requirements;
         this.usersSubmitted = new ArrayList<>();
+        this.requiredRoles = requiredRoles;
         this.comments = new ArrayList<>();
         this.isPromoted = false;
     }

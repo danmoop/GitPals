@@ -7,8 +7,10 @@ import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class ProjectAPIController {
      * @param projectName is a project name we pass in path
      * @return project json object
      */
-    @GetMapping(value = "/get/{project}", produces = "application/json")
+    @GetMapping(value = "/get/{project}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Project getProject(@PathVariable("project") String projectName) {
         Project project = projectInterface.findByTitle(projectName);
 
@@ -46,7 +48,7 @@ public class ProjectAPIController {
     /**
      * @return list of all projects created from the database
      */
-    @GetMapping(value = "/getAll", produces = "application/json")
+    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> allProjects() {
         return projectInterface.findAll();
     }
@@ -54,7 +56,7 @@ public class ProjectAPIController {
     /**
      * @return total number of projects created on GitPals
      */
-    @GetMapping(value = "/getNumberOfProjects", produces = "application/json")
+    @GetMapping(value = "/getNumberOfProjects", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Integer> getNumberOfProjects() {
         Map<String, Integer> map = new HashMap<>();
         map.put("totalNumberOfProjects", projectInterface.findAll().size());
@@ -66,7 +68,7 @@ public class ProjectAPIController {
      * @param amount is an amount of projects we want to get from the huge list
      * @return list of project which length == amount, so we get fixed list
      */
-    @GetMapping(value = "/getAmount/{amount}", produces = "application/json")
+    @GetMapping(value = "/getAmount/{amount}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> getSomeProjects(@PathVariable("amount") int amount) {
         return projectInterface.findAll()
                 .stream()
@@ -80,7 +82,7 @@ public class ProjectAPIController {
      * @param data contains all the info about the user who submits and the new project
      * @return response, which depends on the existence of the project with the same name (duplicate)
      */
-    @PostMapping(value = "/submitProject", produces = "application/json")
+    @PostMapping(value = "/submitProject", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response submitProject(@RequestBody Map<String, Object> data) {
         try {
             if (projectInterface.findByTitle((String) data.get("title")) != null) {
@@ -92,7 +94,8 @@ public class ProjectAPIController {
                     (String) data.get("description"),
                     (String) data.get("githubProjectLink"),
                     jwtUtil.extractUsername((String) data.get("token")),
-                    (List<String>) data.get("requirements")
+                    (List<String>) data.get("requirements"),
+                    new ArrayList<>()
             );
 
             projectInterface.save(project);

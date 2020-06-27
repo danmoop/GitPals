@@ -19,6 +19,11 @@ public class GitPalsUserDetails implements UserDetailsService {
     @Autowired
     private KeyStorageInterface keyStorageInterface;
 
+    /**
+     * @param s
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         com.moople.gitpals.MainApplication.Model.User user = userInterface.findByUsername(s);

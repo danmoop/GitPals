@@ -22,6 +22,10 @@ public class GitHubAuthConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JWTFilter jwtFilter;
 
+    /**
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()

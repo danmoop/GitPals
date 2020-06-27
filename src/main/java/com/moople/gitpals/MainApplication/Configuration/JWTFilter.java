@@ -23,6 +23,13 @@ public class JWTFilter extends OncePerRequestFilter {
     @Autowired
     private JWTUtil jwtUtil;
 
+    /**
+     * @param request
+     * @param response
+     * @param chain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {

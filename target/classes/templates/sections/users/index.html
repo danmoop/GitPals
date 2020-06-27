@@ -126,10 +126,17 @@
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="font-weight-bold">[[${projects[i].title}]]</h5>
+                            <p style="margin: 0;">by <a th:href="${'/users/' + projects[i].authorName}">[[${projects[i].authorName}]]</a></p>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">by <a th:href="${'/users/' + projects[i].authorName}">[[${projects[i].authorName}]]</a></p>
                             <p class="card-text font-weight-bold">[[${projects[i].requirements}]]</p>
+
+                            <div style="margin-bottom: 25px;" th:if="${#lists.size(projects[i].requiredRoles) != 0}">
+                                Wanted:
+                                <span class="badge badge-light" th:each="role: ${projects[i].requiredRoles}" style="margin-left: 2px; margin-right: 2px;">
+                                    [[${role}]]
+                                </span>
+                            </div>
                             <a th:href="${'/projects/' + projects[i].title}">
                                 <button type="button" class="btn btn-outline-light btn-pill">Explore</button>
                             </a>

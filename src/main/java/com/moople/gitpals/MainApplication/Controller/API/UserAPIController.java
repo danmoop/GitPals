@@ -6,6 +6,7 @@ import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public class UserAPIController {
      * @param data is an object, which contains user's current skill set and token
      * @return status, which depends on the success of the user's object change
      */
-    @PostMapping(value = "/setSkillList", produces = "application/json")
+    @PostMapping(value = "/setSkillList", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response setSkillList(@RequestBody Map<Object, Object> data) {
         try {
             Map<String, Boolean> skillMap = (Map<String, Boolean>) data.get("techs");

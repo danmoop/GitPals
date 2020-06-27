@@ -64,7 +64,8 @@ public class ProjectController {
     public String projectSubmitted(
             Principal user,
             @ModelAttribute Project project,
-            @RequestParam(value = "techInput", required = false) List<String> techs,
+            @RequestParam(name = "techInput", required = false) List<String> techs,
+            @RequestParam(name = "role", required = false) List<String> roles,
             RedirectAttributes redirectAttributes) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
@@ -72,8 +73,10 @@ public class ProjectController {
             return "redirect:/";
         }
 
-        if (techs == null) {
-            redirectAttributes.addFlashAttribute("warning", "Your project should have some requirements");
+        roles = validateProjectRolesArrayList(roles);
+
+        if (techs == null || roles.size() == 0) {
+            redirectAttributes.addFlashAttribute("warning", "Your project should have all the requirements filled!");
             return "redirect:/submitProject";
         }
 
@@ -83,6 +86,7 @@ public class ProjectController {
             return "sections/users/banned";
         }
 
+        System.out.println(roles);
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
         if (projectDB == null) {
@@ -91,7 +95,8 @@ public class ProjectController {
                     project.getDescription(),
                     project.getGithubProjectLink(),
                     userService.findByUsername(user.getName()).getUsername(),
-                    techs
+                    techs,
+                    roles
             );
 
             userDB.getProjects().add(userProject.getTitle());
@@ -366,5 +371,12 @@ public class ProjectController {
         });
 
         return "redirect:/projects/" + projectName;
+    }
+
+
+    private List<String> validateProjectRolesArrayList(List<String> roles) {
+        return roles.stream()
+                .filter(role -> !role.equals(""))
+                .collect(Collectors.toList());
     }
 }

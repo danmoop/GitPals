@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -113,13 +114,18 @@ public class SearchController {
      * @return page where all the users are displayed
      */
     @PostMapping("/findUsersBySkills")
-    public String usersBySkills(@RequestParam("skills") List<String> skills, Model model, Principal user) {
+    public String usersBySkills(@RequestParam(name = "skills", required = false) List<String> skills, Model model, Principal user, RedirectAttributes redirectAttributes) {
         if (user != null) {
             User userDB = userService.findByUsername(user.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
             }
+        }
+
+        if(skills == null) {
+            redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
+            return "redirect:/search";
         }
 
         Set<String> users = userService.findBySkillList(skills);
@@ -138,13 +144,18 @@ public class SearchController {
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam("requirement") List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model, Principal user) {
+    public String projectsSorted(@RequestParam(name = "requirement", required = false) List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model, Principal user, RedirectAttributes redirectAttributes) {
         if (user != null) {
             User userDB = userService.findByUsername(user.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
             }
+        }
+
+        if(data == null) {
+            redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
+            return "redirect:/search";
         }
 
         List<Project> allProjects = projectInterface.findAll();
