@@ -9,12 +9,18 @@ This project uses:
 2. HTML / CSS (Shards UI Kit)
 3. MongoDB as a database
 
-# Explanations
-
-So for this project I created a document where I explain all the components of the app, so if you are not familiar with a project or feel stuck understanding something - please have a look at the [explanations](https://github.com/danmoop/GitPals/blob/master/GitPals%20Review.pdf)
-
-
-**NEW! Introducing GitPals mobile app built on React Native (UI Kitten Kit). It is under development right now, implemented using REST API (sending requests and getting responses)**
+Check-list
+- [x] Adding/deleting projects
+- [x] Filling in your profile
+- [x] Applying to projects
+- [x] Writing/editing/removing comments
+- [x] Forum (like a discussion board)
+- [x] Creating roles for your projects (like Designer/Programmer, so people would know who you are looking for)
+- [x] Searching 
+- [x] Bootstrap Design (Shards UI KIT)
+- [ ] Realtime messaging among users (IN PROGRESS: WebSockets)
+- [ ] REST API (IN PROGRESS)
+- [ ] Mobile App (IN PROGRESS: React Native + UI KITTEN)
 
 The rest of images
 ![image](gallery/1.png)
