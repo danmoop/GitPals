@@ -41,7 +41,7 @@ public class SearchAPIController {
         if (user == null) return null;
 
         // It is not safe to send user's messages to anyone, so remove them
-        user.setMessages(null);
+        user.setDialogs(null);
 
         return user;
     }
@@ -68,7 +68,7 @@ public class SearchAPIController {
         return userService.findAll()
                 .stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(userName.toLowerCase()))
-                .peek(user -> user.setMessages(null))
+                .peek(user -> user.setDialogs(null))
                 .collect(Collectors.toList());
     }
 

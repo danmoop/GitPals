@@ -87,7 +87,7 @@ public class AdminController {
         User user = userService.findByUsername(username);
 
         if (user != null) {
-            user.setMessages(null);
+            user.setDialogs(null);
             attributes.addFlashAttribute("user", user.toString());
         } else {
             attributes.addFlashAttribute("user", username + " is not registered");
@@ -140,31 +140,6 @@ public class AdminController {
     }
 
     /**
-     * This function sends a message to everyone registered in the system
-     *
-     * @param admin is an admin principal object
-     * @param text  is a content of the message
-     * @return admin page
-     * @see Message
-     */
-    @PostMapping("/sendMessageToEveryone")
-    public String sendMessage(Principal admin, @RequestParam("text") String text) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
-            return "redirect:/";
-        }
-
-        Message message = new Message(admin.getName(), text, Message.TYPE.INBOX_MESSAGE);
-
-        for (User user : userService.findAll()) {
-            user.getMessages().add(message);
-
-            userService.save(user);
-        }
-
-        return "redirect:/admin";
-    }
-
-    /**
      * This function removes all projects created by a user
      * A quick way to clear projects if some users spams a lot
      *
@@ -189,7 +164,7 @@ public class AdminController {
         user.getProjects().stream()
                 .map(project -> projectService.findByTitle(project))
                 .forEach(project -> {
-                    notifyAppliedUsers(project);
+                    //notifyAppliedUsers(project);
                     projectService.delete(project);
                 });
 
@@ -415,9 +390,8 @@ public class AdminController {
      * This function is used to notify all applied users to the project that it has been deleted due to rules violation
      *
      * @param project is a project that is being deleted
-     */
     private void notifyAppliedUsers(Project project) {
-        Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.INBOX_MESSAGE);
+        Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.REGULAR_MESSAGE);
         project.getUsersSubmitted().stream()
                 .map(username -> userService.findByUsername(username))
                 .forEach(user -> {
@@ -425,4 +399,5 @@ public class AdminController {
                     userService.save(user);
                 });
     }
+     */
 }

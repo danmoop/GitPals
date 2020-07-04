@@ -20,9 +20,9 @@ public class GitPalsUserDetails implements UserDetailsService {
     private KeyStorageInterface keyStorageInterface;
 
     /**
-     * @param s
-     * @return
-     * @throws UsernameNotFoundException
+     * @param s is a username of a user that is trying to authenticate
+     * @return user's credentials if the username is present in a database
+     * @throws UsernameNotFoundException if user is not in the database
      */
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

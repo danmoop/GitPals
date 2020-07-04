@@ -12,12 +12,14 @@ import java.util.Date;
 public class Message {
 
     private String author;
+    private String recipient;
     private String content;
     private String timeStamp;
     private String type;
 
-    public Message(String author, String content, TYPE type) {
+    public Message(String author, String recipient, String content, TYPE type) {
         this.author = author;
+        this.recipient = recipient;
         this.content = content;
         this.type = type.toString();
 
@@ -25,6 +27,6 @@ public class Message {
     }
 
     public enum TYPE {
-        BUG_REPORT, PROJECT_INVITATION, INBOX_MESSAGE
+        BUG_REPORT, PROJECT_INVITATION, REGULAR_MESSAGE
     }
 }

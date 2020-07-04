@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
-        <title>GitPals - Messages</title>
+        <title>GitPals - Dialogs</title>
     </head>
 
     <body>
@@ -55,28 +55,25 @@
         </nav>
 
         <div class="container text-center">
-            <h4>Your messages ([[${#lists.size(userMessages)}]])</h4>
-            <hr/>
-            <h5 th:if="${#lists.size(userMessages) == 0}">No messages yet!</h5>
-            <ul style="list-style: none; padding-left: 0;">
-                <li th:each="message: ${userMessages}" class="mt">
-                    <div class="card">
-                        <div class="card-header">
-                            <a th:href="${'/users/' + message.author}">[[${message.author}]]</a> - [[${message.timeStamp}]]
-                        </div>
-                        <div class="card-body">
-                            <p>[[${message.content}]]</p>
-                            <hr/>
+            <h4>Your Dialogs ([[${#lists.size(userMessages)}]])</h4>
 
-                            <form th:action="@{/deleteMessage}" method="post">
-                                <input type="hidden" th:name="messageContentInput" th:value="${message.content}" />
-                                <input type="hidden" th:name="messageAuthorInput" th:value="${message.author}" />
-                                <input class="btn btn-outline-danger btn-pill" type="submit" value="Remove" />
-                            </form>
+            <ul>
+                <li th:each="name: ${userMessages.keySet()}" style="list-style: none;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <p>[[${name}]]: [[${#lists.size(userMessages.get(name))}]]</p>
+                                </div>
+                                <div class="col">
+                                    <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-light">Open</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </li>
             </ul>
+            <hr/>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

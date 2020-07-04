@@ -38,20 +38,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col row-column mt" th:if="${LoggedUser != null}">
+                <!--<div class="col row-column mt" th:if="${LoggedUser != null}">
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="font-weight-bold">Send [[${UserObject.username}]] a message</h5>
                         </div>
                         <div class="card-body">
                             <form th:action="@{/messageSent}" method="post">
-                                <input type="text" readonly="readonly" class="form-control input-lg" placeholder="Recipient" th:name="RecipientName" required="required" th:value="${UserObject.username}"/><br/>
-                                <textarea type="text" class="form-control" placeholder="Message" th:name="Content" required="required"></textarea><br/>
+                                <input type="text" readonly="readonly" class="form-control input-lg" placeholder="Recipient" th:name="recipientName" required="required" th:value="${UserObject.username}"/><br/>
+                                <textarea type="text" class="form-control" placeholder="Message" th:name="content" required="required"></textarea><br/>
                                 <input type="submit" class="btn btn-outline-light btn-pill" value="Send" onclick="alert('Message sent!');" style="margin: 20px;"/>
                             </form>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
 

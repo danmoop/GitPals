@@ -6,10 +6,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +25,7 @@ public class User {
     private String GithubAccountLink;
     private String avatarURL;
     private Map<String, Boolean> skillList;
+    private Map<String, List<Message>> dialogs;
     private List<String> projects;
     private List<String> projectsAppliedTo;
     private List<Message> messages;
@@ -48,13 +46,14 @@ public class User {
         this.country = country;
         this.bio = bio;
 
+        this.dialogs = new HashMap<>();
         this.projects = new ArrayList<>();
         this.projectsAppliedTo = new ArrayList<>();
         this.messages = new ArrayList<>();
 
         this.notificationsEnabled = true;
-        this.banned = false;
         this.hasSeenGlobalMessage = false;
+        this.banned = false;
 
         this.lastOnlineDate = new Date().getTime();
     }

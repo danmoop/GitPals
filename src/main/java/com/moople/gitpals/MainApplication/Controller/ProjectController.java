@@ -145,7 +145,7 @@ public class ProjectController {
     /**
      * This request is handled when user wants to apply to a project
      *
-     * @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
+     * @param link is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
      * @return redirect to the same project page
      **/
     @PostMapping("/applyForProject")
@@ -180,7 +180,7 @@ public class ProjectController {
      * This request is handled when user wants to un-apply from a project
      * They will be removed from applied list
      *
-     * @param link is project's title which is taken from a hidden html textfield (value assigned automatically with thymeleaf)
+     * @param link is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
      * @return redirect to the same project page
      **/
     @PostMapping("/unapplyForProject")
@@ -213,7 +213,7 @@ public class ProjectController {
      * This request is handled when user wants to delete project
      * It will be deleted and applied users will be notified about that
      *
-     * @param projectName is project's title which is taken from a html textfield
+     * @param projectName is project's title which is taken from a html text field
      * @return redirect to the index page
      **/
     @PostMapping("/deleteProject")
@@ -248,11 +248,11 @@ public class ProjectController {
                     .collect(Collectors.toList());
 
             // Every applied user will receive a message about project deletion
-            Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted", Message.TYPE.INBOX_MESSAGE);
+            //Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted", Message.TYPE.REGULAR_MESSAGE);
 
             for (User _user : allUsers) {
                 _user.getProjectsAppliedTo().remove(project.getTitle());
-                _user.getMessages().add(notification);
+                //_user.getMessages().add(notification);
 
                 userService.save(_user);
             }
@@ -268,15 +268,15 @@ public class ProjectController {
      * This request is handled when user submits their comment
      * It will be added to comments list and saved
      *
-     * @param projectName is taken from a hidden html textfield
-     * @param text        is taken from a html textfield
+     * @param projectName is taken from a hidden html text field
+     * @param text        is taken from a html text field
      * @param user        is assigned automatically using thymeleaf
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")
     public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user, RedirectAttributes redirectAttributes) {
 
-        if (text.equals("")) {
+        if (text.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Your comment should have any text!");
             return "redirect:/projects/" + projectName;
         }
@@ -350,16 +350,17 @@ public class ProjectController {
      */
     @PostMapping("/editProjectComment")
     public String editComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
-        User userDB = userService.findByUsername(user.getName());
-
-        if (userDB.isBanned()) {
-            return "sections/users/banned";
-        }
 
         Project project = projectInterface.findByTitle(projectName);
 
         if (user == null || project == null) {
             return "redirect:/";
+        }
+
+        User userDB = userService.findByUsername(user.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
         }
 
         project.getComments().forEach(comment -> {
