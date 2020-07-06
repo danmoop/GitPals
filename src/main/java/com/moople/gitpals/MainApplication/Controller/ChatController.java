@@ -26,7 +26,7 @@ public class ChatController {
 
     @GetMapping("/chat")
     public String chatPage(Principal auth, Model model) {
-        if(auth != null) {
+        if (auth != null) {
             model.addAttribute("user", userService.findByUsername(auth.getName()));
             return "sections/chat";
         } else {

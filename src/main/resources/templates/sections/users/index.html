@@ -57,9 +57,9 @@
                             <a class="dropdown-item" href="/submitProject">
                                 <i class="fa fa-wrench"></i> Submit a project
                             </a>
-                            <!--<a class="dropdown-item" href="/messages">
-                                <i class="fa fa-envelope-square"></i> Messages ([[${#lists.size(userDB.dialogs)}]])
-                            </a>-->
+                            <a class="dropdown-item" href="/messages">
+                                <i class="fa fa-envelope-square"></i> Dialogs ([[${#maps.size(userDB.dialogs)}]])
+                            </a>
                             <a class="dropdown-item" href="/admin" th:if="${GithubUser.userAuthentication.details.login == 'danmoop'}">
                                 <i class="fa fa-globe"></i> Admin Page
                             </a>
@@ -144,7 +144,16 @@
                     </div>
                 </li>
             </ul>
+
+            <!-- Use a button to open the snackbar -->
+            <div id="snackbar">
+                <span id="snackbar-text"></span>
+                <a id="snackbar-link" href="#/" class="btn btn-outline-primary fw-600 btn-sm">Open dialog</a>
+            </div>
+
         </section>
+        <script src="/js/sockjs.min.js"></script>
+        <script src="/js/stomp.umd.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
@@ -152,6 +161,39 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
         </script>
         <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
-    </body>
 
+        <script th:inline="javascript">
+            var stompClient = null;
+
+            function connect() {
+                var socket = new SockJS('/gitpals-messages');
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe('/topic/messages/' + [[${key}]], function (greeting) {
+                        console.log(JSON.parse(greeting.body));
+                        showMessages(JSON.parse(greeting.body));
+                    });
+                });
+            }
+
+            function showMessages(body) {
+                showSnackbar(body);
+            }
+
+            $(function () {
+                connect();
+            });
+
+            function showSnackbar(message) {
+              var x = document.getElementById("snackbar");
+              document.getElementById('snackbar-text').innerText = `A message from ${message.author}: ${message.content}`;
+              document.getElementById('snackbar-link').href = `/dialogs/${message.author}`;
+
+              x.className = "show";
+
+              setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+            }
+        </script>
+    </body>
 </html>

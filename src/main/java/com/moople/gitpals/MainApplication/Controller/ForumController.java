@@ -218,7 +218,7 @@ public class ForumController {
      */
     @PostMapping("/editForumPostComment")
     public String editComment(Principal user, @RequestParam("forumPostKey") String postKey, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
-        if(user != null) {
+        if (user != null) {
             User userDB = userService.findByUsername(user.getName());
 
             if (userDB.isBanned()) {

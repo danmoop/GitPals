@@ -118,6 +118,10 @@ public class IndexController {
         model.addAttribute("forumPostsSize", forumInterface.findAll().size());
         model.addAttribute("usersRegistered", userService.findAll().size());
 
+        if (user != null) {
+            model.addAttribute("key", keyStorageInterface.findByUsername(user.getName()).getKey());
+        }
+
         return "sections/users/index";
     }
 

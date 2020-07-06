@@ -1,6 +1,9 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.*;
+import com.moople.gitpals.MainApplication.Model.ForumPost;
+import com.moople.gitpals.MainApplication.Model.GlobalMessage;
+import com.moople.gitpals.MainApplication.Model.Project;
+import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.GlobalMessageInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
@@ -391,13 +394,13 @@ public class AdminController {
      *
      * @param project is a project that is being deleted
     private void notifyAppliedUsers(Project project) {
-        Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.REGULAR_MESSAGE);
-        project.getUsersSubmitted().stream()
-                .map(username -> userService.findByUsername(username))
-                .forEach(user -> {
-                    user.getMessages().add(msg);
-                    userService.save(user);
-                });
+    Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.REGULAR_MESSAGE);
+    project.getUsersSubmitted().stream()
+    .map(username -> userService.findByUsername(username))
+    .forEach(user -> {
+    user.getMessages().add(msg);
+    userService.save(user);
+    });
     }
      */
 }

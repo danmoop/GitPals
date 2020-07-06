@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Comment;
-import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;

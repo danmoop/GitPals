@@ -123,7 +123,7 @@ public class SearchController {
             }
         }
 
-        if(skills == null) {
+        if (skills == null) {
             redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
             return "redirect:/search";
         }
@@ -153,7 +153,7 @@ public class SearchController {
             }
         }
 
-        if(data == null) {
+        if (data == null) {
             redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
             return "redirect:/search";
         }

@@ -38,10 +38,13 @@ public class SearchAPIController {
     public User getUserByUsername(@PathVariable String username) {
         User user = userService.findByUsername(username);
 
-        if (user == null) return null;
+        if (user == null) {
+            return null;
+        }
 
         // It is not safe to send user's messages to anyone, so remove them
         user.setDialogs(null);
+        user.setMessages(null);
 
         return user;
     }
@@ -68,7 +71,10 @@ public class SearchAPIController {
         return userService.findAll()
                 .stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(userName.toLowerCase()))
-                .peek(user -> user.setDialogs(null))
+                .peek(user -> {
+                    user.setDialogs(null);
+                    user.setMessages(null);
+                })
                 .collect(Collectors.toList());
     }
 

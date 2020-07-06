@@ -55,7 +55,19 @@
         </nav>
 
         <div class="container text-center">
-            <h4>Your Dialogs ([[${#lists.size(userMessages)}]])</h4>
+            <h5>Create a new dialog</h5>
+
+            <div class="row">
+                <form th:action="@{/openDialog}" class="col" style="display: inline-flex;" method="post">
+                    <input type="text" required th:name="dialogLink" class="form-control" placeholder="User you want to start a dialog with" />
+                    <input type="submit" class="btn btn-light" value="Start" />
+                </form>
+            </div>
+            <hr/>
+
+            <h4>Your Dialogs ([[${#maps.size(userMessages)}]])</h4>
+
+            <p th:if="${#maps.size(userMessages) == 0}">You have no dialogs yet. Create one if you want using the form above</p>
 
             <ul>
                 <li th:each="name: ${userMessages.keySet()}" style="list-style: none;">
@@ -63,7 +75,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <p>[[${name}]]: [[${#lists.size(userMessages.get(name))}]]</p>
+                                    <p>[[${name}]]</p>
                                 </div>
                                 <div class="col">
                                     <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-light">Open</a>

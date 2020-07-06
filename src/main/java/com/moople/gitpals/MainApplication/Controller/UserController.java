@@ -109,6 +109,7 @@ public class UserController {
 
     /**
      * This function removes a global message from a user's home page
+     *
      * @param user is a user's authentication
      * @return to the home page
      */
