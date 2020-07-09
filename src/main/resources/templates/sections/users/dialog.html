@@ -41,19 +41,21 @@
         </div>
     </nav>
 
-    <ul id="messages">
-        <p th:if="${#lists.size(messages) == 0}" class="fw-600">No messages before this point!</p>
-        <li th:each="message: ${messages}" style="font-weight: 500; list-style: none;">
-            <div th:class="${message.author == senderName ? 'alert alert-light' : 'alert alert-primary'}" role="alert">
-                [[${message.author}]] | [[${message.content}]]
-            </div>
-        </li>
-    </ul>
+    <div class="container">
+        <ul id="messages">
+            <p th:if="${#lists.size(messages) == 0}" class="fw-600">No messages before this point!</p>
+            <li th:each="message: ${messages}" style="font-weight: 500; list-style: none;">
+                <div th:class="${message.author == senderName ? 'alert alert-light' : 'alert alert-primary'}" role="alert">
+                    [[${message.author}]] | [[${message.content}]]
+                </div>
+            </li>
+        </ul>
 
-    <form class="col" style="display: inline-flex; margin-bottom: 50px;">
-        <input id="content" style="font-weight: 500;" type="text" class="form-control" placeholder="Message" />
-        <button id="send" class="btn btn-light" style="font-weight: 500;">Send</button>
-    </form>
+        <form class="col" style="display: inline-flex; margin-bottom: 50px;">
+            <input id="content" style="font-weight: 500;" type="text" class="form-control" placeholder="Message" />
+            <button id="send" class="btn btn-primary btn-sm" style="font-weight: 500;">Send</button>
+        </form>
+    </div>
 
     <script th:inline="javascript">
 
@@ -94,6 +96,5 @@
             connect();
         });
     </script>
-
 </body>
 </html>

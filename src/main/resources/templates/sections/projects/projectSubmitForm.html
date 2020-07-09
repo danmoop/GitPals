@@ -69,24 +69,26 @@
                     <div class="col">
                         <p>Select required roles for your project (e.g - Designer/Programmer)</p>
                         <div id="roles">
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Programmer"/>
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Designer"/>
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Manager"/>
+                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role1"/>
+                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role2"/>
+                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role3"/>
                         </div>
                         <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addRole();">Add Another Role</button>
                     </div>
                 </div>
 
                 <br>
-                <input type="submit" class="btn btn-outline-light btn-pill" style="margin: 15px;" value="Submit"/>
+                <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Submit"/>
             </form>
         </div>
     </section>
 
     <script>
+        var i = 4;
         addRole = () => {
-            var anotherRole = '<input type="text" name="role" class="form-control" style="margin-top: 10px;" placeholder="Developer"/>';
+            var anotherRole = `<input type="text" name="role" class="form-control" style="margin-top: 10px;" placeholder="Role${i}"/>`;
             document.getElementById('roles').insertAdjacentHTML('beforeend', anotherRole);
+            i++;
         }
     </script>
 </body>
