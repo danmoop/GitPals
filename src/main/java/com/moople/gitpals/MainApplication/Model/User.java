@@ -24,7 +24,8 @@ public class User {
     private String bio;
     private String GithubAccountLink;
     private String avatarURL;
-    private Map<String, Boolean> skillList;
+    private String timezone;
+    private Set<String> skillList;
     private Map<String, List<Message>> dialogs;
     private List<String> projects;
     private List<String> projectsAppliedTo;
@@ -38,10 +39,10 @@ public class User {
      * @param country   & info are taken from GitHub account
      * @param projects, projectsAppliedTo & messages are lists of objects, empty by default.
      */
-    public User(String username, String githubAccountLink, Map<String, Boolean> skillList, String email, String country, String bio) {
+    public User(String username, String githubAccountLink, String email, String country, String bio) {
         this.username = username;
         this.GithubAccountLink = githubAccountLink;
-        this.skillList = skillList;
+        this.skillList = new HashSet<>();
         this.email = email;
         this.country = country;
         this.bio = bio;

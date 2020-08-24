@@ -72,7 +72,7 @@
             <ul>
                 <li th:each="name: ${userMessages.keySet()}" style="list-style: none;">
                     <div class="alert alert-light" role="alert">
-                        [[${name}]]
+                        [[${name}]]: ([[${#lists.size(userMessages.get(name))}]] messages)
                         <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-primary btn-pill btn-sm">Open</a>
                     </div>
                 </li>

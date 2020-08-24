@@ -69,7 +69,6 @@ public class IndexController {
                         new User(
                                 user.getName(),
                                 "https://github.com/" + user.getName(),
-                                Data.technologiesMap,
                                 email,
                                 country,
                                 bio
@@ -85,6 +84,9 @@ public class IndexController {
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
+            } else if (userDB.getSkillList().size() == 0) {
+                redirectAttributes.addFlashAttribute("error", "You should have at least one skill!");
+                return "redirect:/dashboard";
             }
 
             checkIfDataHasChanged(userDB, properties);
@@ -112,10 +114,8 @@ public class IndexController {
             model.addAttribute("globalMessage", globalMessages.get(0));
         }
 
-        model.addAttribute("projectTechs", Data.technologiesMap);
         model.addAttribute("projects", projects);
         model.addAttribute("totalProjectsAmount", projectsAmount);
-        model.addAttribute("forumPostsSize", forumInterface.findAll().size());
         model.addAttribute("usersRegistered", userService.findAll().size());
 
         if (user != null) {

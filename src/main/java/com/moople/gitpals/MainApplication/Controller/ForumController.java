@@ -177,7 +177,7 @@ public class ForumController {
      * @return forum post's page
      */
     @PostMapping("/deleteForumPostComment")
-    public String deleteForumPostComment(Principal user, @RequestParam("key") String key, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+    public String deleteForumPostComment(Principal user, @RequestParam("postKey") String postKey, @RequestParam("commentKey") String commentKey) {
         if (user != null) {
             User userDB = userService.findByUsername(user.getName());
 
@@ -186,25 +186,20 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumInterface.findByKey(key);
-
+        ForumPost post = forumInterface.findByKey(postKey);
         if (post == null || user == null) {
             return "redirect:/";
         }
 
-        Optional<Comment> comment = post.getComments()
-                .stream()
-                .filter(postComment -> postComment.getAuthor().equals(user.getName()) && postComment.getText().equals(text) && postComment.getTimeStamp().equals(ts))
-                .findFirst();
+        Optional<Comment> optionalComment = post.getComments().stream().filter(comm -> comm.getKey().equals(commentKey)).findFirst();
 
-        if (comment.isPresent() && comment.get().getAuthor().equals(user.getName())) {
-            post.getComments().remove(comment.get());
+        if (optionalComment.isPresent() && post.getAuthor().equals(user.getName())) {
+            post.getComments().remove(optionalComment.get());
             forumInterface.save(post);
+            return "redirect:/forum/post/" + postKey;
         } else {
             return "redirect:/";
         }
-
-        return "redirect:/forum/post/" + key;
     }
 
     /**

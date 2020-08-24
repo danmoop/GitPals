@@ -138,7 +138,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <span class="fw-600">[[${comment.author}]]</span> <br />
-                                                <span>[[${comment.timeStamp}]]</span>
+                                                <span th:text="${#dates.format(comment.timeStamp, 'dd MMM yyyy, HH:MM:ss')}"></span>
                                             </div>
                                             <div class="col">
                                                 <form th:action="@{/deleteComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}" style="float: right;">

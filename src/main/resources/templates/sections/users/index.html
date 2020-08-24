@@ -47,18 +47,16 @@
                         <i class="fa fa-sign-in"></i> Sign In
                     </button>
                 </a>
+                <a th:if="${userDB != null}" class="navbar-brand" href="/messages"></a>
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown" th:if="${GithubUser != null}">
-                        <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, [[${GithubUser.userAuthentication.details.login}]]</a>
+                        <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[[${GithubUser.userAuthentication.details.login}]]</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
                             <a class="dropdown-item" href="/dashboard">
                                 <i class="fa fa-user-circle"></i> Dashboard
                             </a>
                             <a class="dropdown-item" href="/submitProject">
                                 <i class="fa fa-wrench"></i> Submit a project
-                            </a>
-                            <a class="dropdown-item" href="/messages">
-                                <i class="fa fa-envelope-square"></i> Dialogs <span class="badge badge-primary">[[${#maps.size(userDB.dialogs)}]]</span>
                             </a>
                             <a class="dropdown-item" href="/admin" th:if="${GithubUser.userAuthentication.details.login == 'danmoop'}">
                                 <i class="fa fa-globe"></i> Admin Page
@@ -70,10 +68,24 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="/messages">
+                            <button type="button" class="btn neoButton btn-sm fw-600">
+                                <i class="fa fa-code" aria-hidden="true"></i> Support
+                            </button>
+                        </a>
+                    </li>-->
+                    <li class="nav-item" th:if="${userDB != null}">
+                        <a class="nav-link" href="/messages">
+                            <button type="button" class="btn neoButton btn-sm fw-600">
+                                <i class="fa fa-envelope-square"></i> Dialogs <span class="fw-600 badge badge-primary">[[${#maps.size(userDB.dialogs)}]]</span>
+                            </button>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/forum">
                             <button type="button" class="btn neoButton btn-sm fw-600">
-                                <i class="fa fa-wpforms"></i> Forum ([[${forumPostsSize}]])
+                                <i class="fa fa-wpforms"></i> Forum
                             </button>
                         </a>
                     </li>

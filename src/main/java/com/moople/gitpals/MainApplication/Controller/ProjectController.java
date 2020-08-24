@@ -382,7 +382,7 @@ public class ProjectController {
      */
     private List<String> validateProjectRolesArrayList(List<String> roles) {
         return roles.stream()
-                .filter(role -> !role.equals(""))
+                .filter(role -> !role.trim().equals(""))
                 .collect(Collectors.toList());
     }
 }

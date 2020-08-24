@@ -98,9 +98,8 @@
                                         </div>
                                         <div class="col">
                                             <form th:action="@{/deleteForumPostComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}" style="float:right; margin-right: 10px;">
-                                                <input type="hidden" th:name="ts" th:value="*{comment.timeStamp}" />
-                                                <input type="hidden" th:name="key" th:value="*{post.key}" />
-                                                <input type="hidden" th:name="text" th:value="*{comment.text}" />
+                                                <input type="hidden" th:name="postKey" th:value="*{post.key}" />
+                                                <input type="hidden" th:name="commentKey" th:value="*{comment.key}">
                                                 <input type="submit" class="btn btn-outline-danger btn-sm fw-600" value="Delete" onclick="return confirm('Are you sure?')"/>
                                             </form>
                                             <button th:id="${'edit_' + comment.key}" th:if="${userDB != null && userDB.username == comment.author}" class="btn btn-outline-primary btn-sm fw-600" style="float:right; margin-right: 10px;" th:onclick="changeDisplay([[${comment.key}]])">Edit</button>

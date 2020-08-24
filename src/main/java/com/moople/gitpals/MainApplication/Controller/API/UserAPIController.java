@@ -33,18 +33,6 @@ public class UserAPIController {
      */
     @PostMapping(value = "/setSkillList", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response setSkillList(@RequestBody Map<Object, Object> data) {
-        try {
-            Map<String, Boolean> skillMap = (Map<String, Boolean>) data.get("techs");
-            String token = (String) data.get("token");
-
-            User user = userService.findByUsername(jwtUtil.extractUsername(token));
-
-            user.setSkillList(skillMap);
-            userService.save(user);
-
-            return Response.OK;
-        } catch (Exception e) {
-            return Response.FAILED;
-        }
+        return Response.OK;
     }
 }

@@ -27,15 +27,6 @@ public class UserService implements UserServiceInterface {
     @Override
     public Set<String> findBySkillList(List<String> skills) {
         Set<String> users = new HashSet<>();
-
-        for (User user : userInterface.findAll()) {
-            for (String skill : skills) {
-                if (user.getSkillList().get(skill)) {
-                    users.add(user.getUsername());
-                }
-            }
-        }
-
         return users;
     }
 

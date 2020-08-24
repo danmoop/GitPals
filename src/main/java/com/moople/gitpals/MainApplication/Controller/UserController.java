@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -67,42 +68,29 @@ public class UserController {
     }
 
     /**
-     * This request is handled when user wants to update information about themselves (tick new languages)
+     * This request is handled when user wants to update information about themselves (pick new languages)
      *
-     * @param techs are taken from html form, they are technologies checkboxes users select in their dashboard
-     * @param user  is assigned automatically by spring
-     * @return redirect to the same page with new data
-     **/
+     * @param auth   is a current user's authentication
+     * @param skills is a new or updated set of skills
+     * @return a dashboard page with new skills
+     */
     @PostMapping("/updateUser")
-    public String updateTechs(
-            Principal user,
-            @RequestParam(value = "techCheckbox", required = false) List<String> techs,
-            @RequestParam(value = "notificationBool", required = false) boolean notificationBool
-    ) {
-        if (user == null) {
-            return "redirect:/";
+    public String updateTechs(Principal auth, @RequestParam(value = "skill", required = false) Set<String> skills, RedirectAttributes redirectAttributes) {
+        User user = userService.findByUsername(auth.getName());
+
+        if (skills == null) {
+            redirectAttributes.addFlashAttribute("error", "You should have at least one skill!");
+            return "redirect:/dashboard";
         }
 
-        User userDB = userService.findByUsername(user.getName());
+        skills = skills.stream()
+                .filter(s -> !s.trim().equals(""))
+                .collect(Collectors.toSet());
 
-        if (userDB.isBanned()) {
-            return "sections/users/banned";
+        if (user != null) {
+            user.setSkillList(skills);
+            userService.save(user);
         }
-
-        Map<String, Boolean> allTechs = userDB.getSkillList();
-        allTechs.replaceAll((k, v) -> false);
-
-        if (techs != null) {
-            for (String item : techs) {
-                if (allTechs.get(item) != null) {
-                    allTechs.put(item, true);
-                }
-            }
-        }
-
-        userDB.setNotificationsEnabled(notificationBool);
-
-        userService.save(userDB);
 
         return "redirect:/dashboard";
     }

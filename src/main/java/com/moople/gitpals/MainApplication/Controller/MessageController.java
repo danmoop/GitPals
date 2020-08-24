@@ -84,6 +84,10 @@ public class MessageController {
             return "redirect:/";
         }
 
+        if(userService.findByUsername(name) == null) {
+            return "redirect:/users/" + name;
+        }
+
         User user = userService.findByUsername(auth.getName());
 
         List<Message> messages = user.getDialogs().getOrDefault(name, new ArrayList<>());
