@@ -53,25 +53,19 @@
                 <div class="row">
                     <div class="col">
                         <p>Select technologies, which are used in your project</p>
-
-                        <ul style="list-style: none; text-align: left;">
-                            <li th:each="tech: ${techs}">
-                                <div class="pretty p-default p-curve p-thick">
-                                    <input type="checkbox" th:name="techInput" th:value="${tech.key}"
-                                           th:checked="${tech.value}"/>
-                                    <div class="state p-success-o">
-                                        <label>[[${tech.key}]]</label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        <div id="skills">
+                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement 1"/>
+                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement 2"/>
+                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement 3"/>
+                        </div>
+                        <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addSkill();">Add Another Requirement</button>
                     </div>
                     <div class="col">
                         <p>Select required roles for your project (e.g - Designer/Programmer)</p>
                         <div id="roles">
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role1"/>
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role2"/>
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role3"/>
+                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 1"/>
+                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 2"/>
+                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 3"/>
                         </div>
                         <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addRole();">Add Another Role</button>
                     </div>
@@ -85,10 +79,15 @@
 
     <script>
         var i = 4;
+        var s = 4;
         addRole = () => {
-            var anotherRole = `<input type="text" name="role" class="form-control" style="margin-top: 10px;" placeholder="Role${i}"/>`;
+            var anotherRole = `<input type="text" name="role" class="form-control" style="margin-top: 10px;" placeholder="Role ${i++}"/>`;
             document.getElementById('roles').insertAdjacentHTML('beforeend', anotherRole);
-            i++;
+        }
+
+        addSkill = () => {
+            var anotherSkill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill ${s++}"/>`;
+            document.getElementById('skills').insertAdjacentHTML('beforeend', anotherSkill);
         }
     </script>
 </body>

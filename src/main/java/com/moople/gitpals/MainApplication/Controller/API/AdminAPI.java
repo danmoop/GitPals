@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -49,7 +48,7 @@ public class AdminAPI {
         }
 
         userService.findAll().forEach(user -> {
-            user.setDialogs(new HashMap<>());
+            user.setAdmin(false);
             userService.save(user);
         });
 

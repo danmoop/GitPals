@@ -38,7 +38,6 @@ public class AdminController {
 
     private final long ONE_DAY = 84600 * 1000;
     private final long ONE_WEEK = ONE_DAY * 7;
-    private final String ADMIN_NAME = "danmoop";
 
     /**
      * This function returns admin page if you are an admin
@@ -48,7 +47,7 @@ public class AdminController {
      */
     @GetMapping("/admin")
     public String adminPage(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -64,7 +63,7 @@ public class AdminController {
      */
     @PostMapping("/getAllUsers")
     public String getAllUsers(Principal admin, Model model) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -83,7 +82,7 @@ public class AdminController {
      */
     @PostMapping("/getUserInfo")
     public String getUserInfo(@RequestParam("userName") String username, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -108,7 +107,7 @@ public class AdminController {
      */
     @PostMapping("/getAllProjects")
     public String getAllProjects(Principal admin, Model model) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -127,7 +126,7 @@ public class AdminController {
      */
     @PostMapping("/getProjectInfo")
     public String getProjectInfo(@RequestParam("projectName") String projectName, Principal admin, Model model) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -153,7 +152,7 @@ public class AdminController {
      */
     @PostMapping("/clearAllUserProjects")
     public String clearAllUserProjects(Principal admin, @RequestParam("username") String username, RedirectAttributes redirectAttributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -188,7 +187,7 @@ public class AdminController {
      */
     @PostMapping("/getForumPostById")
     public String getForumPostById(@RequestParam("id") String id, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -212,7 +211,7 @@ public class AdminController {
      */
     @PostMapping("/deleteForumPostById")
     public String deleteForumPostById(@RequestParam("id") String id, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -239,7 +238,7 @@ public class AdminController {
      */
     @PostMapping("/deleteAllForumPostsByUser")
     public String deleteForumPosts(@RequestParam String username, Principal admin, RedirectAttributes attributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -254,7 +253,7 @@ public class AdminController {
 
     @PostMapping("/banUser")
     public String banUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
-        if (!admin.getName().equals(ADMIN_NAME)) {
+        if (!userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -274,7 +273,7 @@ public class AdminController {
 
     @PostMapping("/unbanUser")
     public String unbanUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
-        if (!admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -301,7 +300,7 @@ public class AdminController {
      */
     @PostMapping("/getActiveDailyUsers")
     public String getActiveDailyUsers(Principal admin, RedirectAttributes redirectAttributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -325,7 +324,7 @@ public class AdminController {
      */
     @PostMapping("/getActiveWeeklyUsers")
     public String getActiveWeeklyUsers(Principal admin, RedirectAttributes redirectAttributes) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -349,7 +348,7 @@ public class AdminController {
      */
     @PostMapping("/modifyGlobalAlert")
     public String modifyGlobalAlert(Principal admin, @RequestParam String text) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -380,7 +379,7 @@ public class AdminController {
      */
     @PostMapping("/removeGlobalAlert")
     public String removeGlobalAlert(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
@@ -390,17 +389,35 @@ public class AdminController {
     }
 
     /**
-     * This function is used to notify all applied users to the project that it has been deleted due to rules violation
+     * This function makes some user an admin, or the opposite, the regular user
      *
-     * @param project is a project that is being deleted
-    private void notifyAppliedUsers(Project project) {
-    Message msg = new Message("Project " + project.getTitle() + " you were applied to has been deleted because author has violated the rules on GitPals platform", project.getAuthorName(), Message.TYPE.REGULAR_MESSAGE);
-    project.getUsersSubmitted().stream()
-    .map(username -> userService.findByUsername(username))
-    .forEach(user -> {
-    user.getMessages().add(msg);
-    userService.save(user);
-    });
-    }
+     * @param admin              is a current admin auth who sends the request
+     * @param username           is a user who will become and admin or the opposite
+     * @param redirectAttributes is where the message is put if the user is not found in the database
+     * @return the admin page with a message, which tells that a user has become either an admin or a user
      */
+    @PostMapping("/makeAdmin")
+    public String makeAdmin(Principal admin, @RequestParam("username") String username, RedirectAttributes redirectAttributes) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(username);
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("makeAdminMsg", username + " is not registered");
+            return "redirect:/admin";
+        }
+
+        user.setAdmin(!user.isAdmin());
+        userService.save(user);
+
+        if (user.isAdmin()) {
+            redirectAttributes.addFlashAttribute("makeAdminMsg", username + " is now an admin");
+        } else {
+            redirectAttributes.addFlashAttribute("makeAdminMsg", username + " is no longer an admin");
+        }
+
+        return "redirect:/admin";
+    }
 }

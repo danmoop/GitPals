@@ -34,6 +34,7 @@ public class User {
     private boolean notificationsEnabled;
     private boolean banned;
     private boolean hasSeenGlobalMessage;
+    private boolean isAdmin;
 
     /**
      * @param country   & info are taken from GitHub account
@@ -55,6 +56,7 @@ public class User {
         this.notificationsEnabled = true;
         this.hasSeenGlobalMessage = false;
         this.banned = false;
+        this.isAdmin = false;
 
         this.lastOnlineDate = new Date().getTime();
     }

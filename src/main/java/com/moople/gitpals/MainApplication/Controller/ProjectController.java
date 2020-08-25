@@ -56,15 +56,15 @@ public class ProjectController {
      * Otherwise display an error message
      *
      * @param project is taken from html form with all the data (project name, description etc.)
-     * @param techs   is a checkbox list of technologies for a project that user selects
+     * @param skills   is a checkbox list of technologies for a project that user selects
      * @return create project and redirect to its page, otherwise show an error messaging about identical project name
      **/
     @PostMapping("/projectSubmitted")
     public String projectSubmitted(
             Principal user,
             @ModelAttribute Project project,
-            @RequestParam(name = "techInput", required = false) List<String> techs,
             @RequestParam(name = "role", required = false) List<String> roles,
+            @RequestParam(name = "skill", required = false) List<String> skills,
             RedirectAttributes redirectAttributes) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
@@ -72,9 +72,16 @@ public class ProjectController {
             return "redirect:/";
         }
 
-        roles = validateProjectRolesArrayList(roles);
+        // roles and skills may contain empty text fields, so they are removed
+        roles = roles.stream()
+                .filter(role -> !role.trim().equals(""))
+                .collect(Collectors.toList());
 
-        if (techs == null || roles.size() == 0) {
+        skills = skills.stream()
+                .filter(skill -> !skill.trim().equals(""))
+                .collect(Collectors.toList());
+
+        if (skills.size() == 0 || roles.size() == 0) {
             redirectAttributes.addFlashAttribute("warning", "Your project should have all the requirements filled!");
             return "redirect:/submitProject";
         }
@@ -94,7 +101,7 @@ public class ProjectController {
                     project.getDescription(),
                     project.getGithubProjectLink(),
                     userService.findByUsername(user.getName()).getUsername(),
-                    techs,
+                    skills,
                     roles
             );
 
@@ -371,18 +378,5 @@ public class ProjectController {
         });
 
         return "redirect:/projects/" + projectName;
-    }
-
-    /**
-     * This function returns a valid list of required roles for project
-     * The list, which is obtained from a client side might contain empty strings, so we need to validate the list
-     *
-     * @param roles is a list of roles the user sends to the server
-     * @return a valid list of roles without spaces or empty strings
-     */
-    private List<String> validateProjectRolesArrayList(List<String> roles) {
-        return roles.stream()
-                .filter(role -> !role.trim().equals(""))
-                .collect(Collectors.toList());
     }
 }

@@ -200,7 +200,7 @@
                 </div>
             </div>
             <hr/>
-            <div class="row text-center" style="margin-bottom: 150px;">
+            <div class="row text-center">
                 <div class="col">
                     <h4>Create a global alert</h4>
 
@@ -214,6 +214,18 @@
 
                     <form th:action="@{/removeGlobalAlert}" method="post">
                         <input class="btn btn-outline-light btn-pill" type="submit" value="Delete" />
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center" style="margin-bottom: 150px;">
+                <div class="col">
+                    <h4>Make someone an admin</h4>
+                    <h4 th:if="${makeAdminMsg}">[[${makeAdminMsg}]]</h4>
+
+                    <form th:action="@{/makeAdmin}" method="post">
+                        <input type="text" th:name="username" class="form-control" placeholder="Username" style="margin: 15px;">
+                        <input class="btn btn-outline-light btn-pill" type="submit" value="Apply" />
                     </form>
                 </div>
             </div>

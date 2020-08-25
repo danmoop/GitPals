@@ -58,7 +58,7 @@
                             <a class="dropdown-item" href="/submitProject">
                                 <i class="fa fa-wrench"></i> Submit a project
                             </a>
-                            <a class="dropdown-item" href="/admin" th:if="${GithubUser.userAuthentication.details.login == 'danmoop'}">
+                            <a class="dropdown-item" href="/admin" th:if="${userDB.admin}">
                                 <i class="fa fa-globe"></i> Admin Page
                             </a>
                             <a href="/signout" class="dropdown-item">
