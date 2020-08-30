@@ -18,7 +18,7 @@ Check-list
 - [x] Creating roles for your projects (like Designer/Programmer, so people would know who you are looking for)
 - [x] Searching 
 - [x] Bootstrap Design (Shards UI KIT)
-- [ ] Realtime messaging among users (IN PROGRESS: WebSockets)
+- [x] Realtime messaging among users
 - [ ] REST API (IN PROGRESS)
 - [ ] Mobile App (IN PROGRESS: React Native + UI KITTEN)
 
