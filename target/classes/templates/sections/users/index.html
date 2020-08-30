@@ -123,8 +123,8 @@
                 </div>
                 <hr>
                 <h4>Showing projects on page [[${page}]]/[[${pagesLength}]]</h4>
-                <a th:href="'/' + ${page - 1}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i> Page [[${page - 1}]]</a>
-                <a th:href="'/' + ${page + 1}" class="btn btn-success btn-sm">Page [[${page + 1}]] <i class="fa fa-arrow-right"></i></a>
+                <a th:if="${page - 1 > 0}" th:href="'/' + ${page - 1}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i> Page [[${page - 1}]]</a>
+                <a th:if="${page + 1 <= pagesLength}" th:href="'/' + ${page + 1}" class="btn btn-success btn-sm">Page [[${page + 1}]] <i class="fa fa-arrow-right"></i></a>
                 <p th:if="${#lists.size(projects) == 0}">No projects published yet</p>
                 <a href="/submitProject">
                     <button type="button" class="btn btn-primary btn-sm borderBtn fw-600" th:if="${GithubUser != null}">Submit Project</button>
