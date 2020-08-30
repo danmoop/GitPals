@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,6 @@ public class SearchAPIController {
 
         // It is not safe to send user's messages to anyone, so remove them
         user.setDialogs(null);
-        user.setMessages(null);
 
         return user;
     }
@@ -73,7 +71,6 @@ public class SearchAPIController {
                 .filter(user -> user.getUsername().toLowerCase().contains(userName.toLowerCase()))
                 .peek(user -> {
                     user.setDialogs(null);
-                    user.setMessages(null);
                 })
                 .collect(Collectors.toList());
     }
@@ -101,7 +98,7 @@ public class SearchAPIController {
     public List<Project> getSortedProjects(@RequestBody List<String> requirements) {
         return projectInterface.findAll().stream()
                 .filter(project -> requirements.stream()
-                        .anyMatch(req -> project.getRequirements().contains(req)))
+                        .anyMatch(req -> project.getRequirements().contains(req.toLowerCase())))
                 .collect(Collectors.toList());
     }
 
@@ -112,13 +109,9 @@ public class SearchAPIController {
      */
     @GetMapping(value = "/matchForumPostsByTitle/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> getPostsByTitle(@PathVariable String title) {
-        try {
-            return forumInterface.findAll().stream()
-                    .filter(post -> post.getTitle().toLowerCase().contains(title.toLowerCase()))
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
+        return forumInterface.findAll().stream()
+                .filter(post -> post.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -128,11 +121,7 @@ public class SearchAPIController {
      */
     @GetMapping(value = "/findForumPostById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ForumPost getPostById(@PathVariable String id) {
-        try {
-            return forumInterface.findByKey(id);
-        } catch (Exception e) {
-            return null;
-        }
+        return forumInterface.findByKey(id);
     }
 
     /**
@@ -142,10 +131,6 @@ public class SearchAPIController {
      */
     @GetMapping(value = "/matchForumPostsByAuthor/{author}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> getPostsByUser(@PathVariable String author) {
-        try {
-            return forumInterface.findByAuthor(author);
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
+        return forumInterface.findByAuthor(author);
     }
 }

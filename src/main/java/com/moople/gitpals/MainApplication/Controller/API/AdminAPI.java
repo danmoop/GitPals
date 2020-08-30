@@ -31,8 +31,6 @@ public class AdminAPI {
     @Autowired
     private KeyStorageInterface keyStorageInterface;
 
-    private final String ADMIN_NAME = "danmoop";
-
     /**
      * This function is only for admin
      * It performs some manipulations with user DB
@@ -43,7 +41,7 @@ public class AdminAPI {
      */
     @GetMapping("/set")
     public Response setter(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return Response.FAILED;
         }
 
@@ -64,7 +62,7 @@ public class AdminAPI {
      */
     @GetMapping(value = "/backupProjects", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> backupProjects(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return new ArrayList<>();
         }
 
@@ -79,7 +77,7 @@ public class AdminAPI {
      */
     @GetMapping(value = "/backupUsers", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> backupUsers(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return new ArrayList<>();
         }
 
@@ -95,7 +93,7 @@ public class AdminAPI {
      */
     @GetMapping(value = "/backupForum", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> backupForum(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return new ArrayList<>();
         }
 
@@ -111,7 +109,7 @@ public class AdminAPI {
      */
     @GetMapping(value = "/backupKeys", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<KeyStorage> backupKeys(Principal admin) {
-        if (admin == null || !admin.getName().equals(ADMIN_NAME)) {
+        if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return new ArrayList<>();
         }
 

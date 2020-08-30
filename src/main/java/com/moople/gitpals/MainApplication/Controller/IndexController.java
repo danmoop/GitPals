@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -40,15 +41,19 @@ public class IndexController {
 
     private final long ONE_DAY = 1000 * 86400;
 
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/1";
+    }
+
     /**
      * This request is handled when user opens index page
      * Add attributes about user and later display them on the page
      *
      * @return html index page with a list of projects and TECHS
      */
-    @GetMapping("/")
-    public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes) {
-
+    @GetMapping("/{page}")
+    public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes, @PathVariable(value = "page", required = false) int page) {
         // If we are logged in, display information about us on the index page
         if (user != null) {
             LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) user.getUserAuthentication().getDetails();
@@ -98,13 +103,21 @@ public class IndexController {
         int projectsAmount = allProjects.size();
 
         List<Project> projects;
+        int numberOfPages = projectInterface.findAll().size() / 50;
+        numberOfPages = numberOfPages == 0 ? 1 : numberOfPages;
+
+        if (page > numberOfPages) {
+            return "redirect:/" + (page - 1);
+        } else if (page < 1) {
+            return "redirect:/" + (page + 1);
+        }
 
         if (projectsAmount <= 50) {
             projects = allProjects;
         } else {
             projects = new ArrayList<>();
 
-            for (int i = projectsAmount - 1; i >= projectsAmount - 50; i--) {
+            for (int i = projectsAmount - 1 - (50 * (page - 1)); i >= projectsAmount - (50 * page); i--) {
                 projects.add(allProjects.get(i));
             }
         }
@@ -115,7 +128,8 @@ public class IndexController {
         }
 
         model.addAttribute("projects", projects);
-        model.addAttribute("totalProjectsAmount", projectsAmount);
+        model.addAttribute("pagesLength", numberOfPages);
+        model.addAttribute("page", page);
         model.addAttribute("usersRegistered", userService.findAll().size());
 
         if (user != null) {

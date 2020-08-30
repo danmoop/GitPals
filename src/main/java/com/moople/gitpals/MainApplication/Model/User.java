@@ -29,7 +29,6 @@ public class User {
     private Map<String, List<Message>> dialogs;
     private List<String> projects;
     private List<String> projectsAppliedTo;
-    private List<Message> messages;
     private long lastOnlineDate;
     private boolean notificationsEnabled;
     private boolean banned;
@@ -51,7 +50,6 @@ public class User {
         this.dialogs = new HashMap<>();
         this.projects = new ArrayList<>();
         this.projectsAppliedTo = new ArrayList<>();
-        this.messages = new ArrayList<>();
 
         this.notificationsEnabled = true;
         this.hasSeenGlobalMessage = false;
