@@ -1,6 +1,6 @@
 # GitPals
 
-<img src="https://image.flaticon.com/icons/svg/89/89341.svg" width="150" height="150">
+<img src="./icons/pinterest_profile_image.png" width="150" height="150">
 
 [Open GitPals app](https://www.gitpals.com/)
 
@@ -20,7 +20,7 @@ Check-list
 - [x] Bootstrap Design (Shards UI KIT)
 - [x] Realtime messaging among users
 - [ ] REST API (IN PROGRESS)
-- [ ] Mobile App (IN PROGRESS: React Native + UI KITTEN)
+- [ ] Mobile App (IN PROGRESS: Ionic)
 
 The rest of images
 ![image](gallery/1.png)
