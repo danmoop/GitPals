@@ -12,125 +12,104 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <a class="navbar-brand" href="/">
-        <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
-    </a>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <a class="navbar-brand" href="/">
+            <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
+        </a>
+    </nav>
+    <section class="container text-center">
 
-<section class="container text-center">
+        <h3 th:if="msg" style="color: #e74c3c;"><u>[[${msg}]]</u></h3>
 
-    <h3 th:if="msg" style="color: #e74c3c;"><u>[[${msg}]]</u></h3>
-
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Find forum posts</h4>
-            <form th:action="@{/findForumPosts}" method="post">
-                <input class="form-control" required th:name="post_name" type="text" placeholder="Post title" />
-                <br/>
-                <input class="btn btn-outline-primary btn-pill" type="submit" value="Find" />
-            </form>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Find forum posts</h4>
+                <form th:action="@{/findForumPosts}" method="post">
+                    <input class="form-control" required th:name="post_name" type="text" placeholder="Post title" />
+                    <br/>
+                    <input class="btn btn-outline-primary btn-pill" type="submit" value="Find" />
+                </form>
+            </div>
         </div>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Find user by username</h4>
-                    <form th:action="@{/findUser}" method="post">
-                        <input class="form-control" required th:name="user_name" type="text" placeholder="Username" />
-                        <br/>
-                        <input class="btn btn-outline-primary btn-pill" type="submit" value="Find" />
-                    </form>
+        <br/>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Find user by username</h4>
+                        <form th:action="@{/findUser}" method="post">
+                            <input class="form-control" required th:name="user_name" type="text" placeholder="Username" />
+                            <br/>
+                            <input class="btn btn-outline-primary btn-pill" type="submit" value="Find" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Find project by project name</h4>
+                        <form th:action="@{/findProject}" method="post">
+                            <input class="form-control" required th:name="project_name" type="text" placeholder="Project name" />
+                            <br/>
+                            <input class="btn btn-outline-primary btn-pill" type="submit" value="Find" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Find project by project name</h4>
-                    <form th:action="@{/findProject}" method="post">
-                        <input class="form-control" required th:name="project_name" type="text" placeholder="Project name" />
-                        <br/>
-                        <input class="btn btn-outline-primary btn-pill" type="submit" value="Find" />
-                    </form>
+
+        <br/>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Find users that know specific skills</h4>
+                        <form th:action="@{/findUsersBySkills}" method="post">
+                            <div id="userSkills">
+                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 1"/>
+                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 2"/>
+                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 3"/>
+                            </div>
+                            <a href="#/" onclick="addUserSkill();">Add another</a>
+                            <input type="submit" class="btn btn-outline-primary btn-pill" style="margin: 15px;" value="Find" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Find projects by requirements</h4>
+
+                        <form th:action="@{/sortProjects}" method="post">
+                            <div id="projectTechs">
+                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
+                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 2"/>
+                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 3"/>
+                            </div>
+                            <a href="#/" onclick="addProjectTech();">Add another</a>
+                            <input type="submit" class="btn btn-outline-primary btn-pill" style="margin: 15px;" value="Find" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <br/>
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Find users that know specific skills</h4>
+    <script>
+        var i = 4;
+        var ii = 4;
 
-                    <form th:action="@{/findUsersBySkills}" method="post">
-                        <div class="table-striped table-responsive-md mt">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Skill name</th>
-                                    <th>Possession</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="tech: ${techs}">
-                                    <td class="fw-600">[[${tech.key}]]</td>
-                                    <td>
-                                        <div class="pretty p-default p-curve p-thick">
-                                            <input type="checkbox" th:name="skills" th:value="${tech.key}" th:checked="${tech.value}"/>
-                                            <div class="state p-success-o">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <input type="submit" class="btn btn-outline-primary btn-pill" style="margin: 15px;" value="Find" />
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Find projects by requirements</h4>
+        addUserSkill = () => {
+            var skill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill ${i++}"/>`;
+            document.getElementById('userSkills').insertAdjacentHTML('beforeend', skill);
+        }
 
-                    <form th:action="@{/sortProjects}" method="post">
-                        <div class="table-striped table-responsive-md mt">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Skill name</th>
-                                    <th>Possession</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="tech: ${techs}">
-                                    <td class="fw-600">[[${tech.key}]]</td>
-                                    <td>
-                                        <div class="pretty p-default p-curve p-thick">
-                                            <input type="checkbox" th:name="requirement" th:value="${tech.key}" th:checked="${tech.value}"/>
-                                            <div class="state p-success-o">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <input type="submit" class="btn btn-outline-primary btn-pill" style="margin: 15px;" value="Find" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        addProjectTech = () => {
+            var tech = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology ${ii++}"/>`;
+            document.getElementById('projectTechs').insertAdjacentHTML('beforeend', tech);
+        }
+    </script>
 </body>
 </html>

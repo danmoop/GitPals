@@ -79,7 +79,6 @@ public class ProjectController {
 
         skills = skills.stream()
                 .filter(skill -> !skill.trim().equals(""))
-                .map(String::toLowerCase)
                 .collect(Collectors.toList());
 
         if (skills.size() == 0 || roles.size() == 0) {

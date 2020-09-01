@@ -12,7 +12,7 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/sockjs.min.js"></script>
     <script src="/js/stomp.umd.min.js"></script>
-    <title>GitPals - [[${recipientName}]]</title>
+    <title>GitPals - dialog with [[${recipientName}]]</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[[${recipientName}]]</a>
+                    <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dialog - [[${recipientName}]]</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
                         <a class="dropdown-item" href="/dashboard">
                             <i class="fa fa-user-circle"></i> Dashboard
@@ -46,7 +46,7 @@
             <p th:if="${#lists.size(messages) == 0}" class="fw-600">No messages before this point!</p>
             <li th:each="message: ${messages}" style="font-weight: 500; list-style: none;">
                 <div th:class="${message.author == senderName ? 'alert alert-light' : 'alert alert-primary'}" role="alert">
-                    [[${message.author}]] | [[${message.content}]]
+                    [[${message.author}]]: [[${message.content}]]
                 </div>
             </li>
         </ul>

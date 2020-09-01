@@ -7,6 +7,7 @@ import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,9 @@ public class MessageController {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    private SimpUserRegistry userRegistry;
 
     /**
      * This request is handled when user wants to see their messages
@@ -84,13 +88,19 @@ public class MessageController {
             return "redirect:/";
         }
 
-        if(userService.findByUsername(name) == null) {
+        if (userService.findByUsername(name) == null) {
             return "redirect:/users/" + name;
         }
 
         User user = userService.findByUsername(auth.getName());
 
         List<Message> messages = user.getDialogs().getOrDefault(name, new ArrayList<>());
+
+        for (Message message : messages) {
+            message.setRead(true);
+        }
+
+        userService.save(user);
 
         model.addAttribute("messages", messages);
         model.addAttribute("senderName", user.getUsername());
@@ -104,17 +114,23 @@ public class MessageController {
      * This function is responsible for a sending messages in realtime
      *
      * @param message is a message a user wants to send to someone
-     * @param auth    is a sender's user authentication
      * @return a message object and send it to to the recipient
      */
     @MessageMapping("/messageTransmit")
-    public Message message(Message message, Principal auth) {
+    public Message message(Message message) {
 
         User sender = userService.findByUsername(message.getAuthor());
         User recipient = userService.findByUsername(message.getRecipient());
 
         String senderDestination = "/topic/messages/" + keyStorage.findByUsername(sender.getUsername()).getKey();
         String recipientDestination = "/topic/messages/" + keyStorage.findByUsername(recipient.getUsername()).getKey();
+
+        boolean isRecipientPresent = userRegistry.findSubscriptions(simpSubscription -> simpSubscription
+                .getDestination().equals(recipientDestination)).size() != 0;
+
+        if (isRecipientPresent) {
+            message.setRead(true);
+        }
 
         messagingTemplate.convertAndSend(senderDestination, message);
         messagingTemplate.convertAndSend(recipientDestination, message);

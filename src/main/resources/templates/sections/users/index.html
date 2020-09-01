@@ -78,7 +78,7 @@
                     <li class="nav-item" th:if="${userDB != null}">
                         <a class="nav-link" href="/messages">
                             <button type="button" class="btn neoButton btn-sm fw-600">
-                                <i class="fa fa-envelope-square"></i> Dialogs <span class="fw-600 badge badge-primary">[[${#maps.size(userDB.dialogs)}]]</span>
+                                <i class="fa fa-envelope-square"></i> Messages <span class="fw-600 badge badge-primary">[[${unreadMessages}]]</span>
                             </button>
                         </a>
                     </li>
@@ -171,39 +171,5 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
         </script>
         <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
-
-        <script th:inline="javascript">
-            var stompClient = null;
-
-            function connect() {
-                var socket = new SockJS('/gitpals-messages');
-                stompClient = Stomp.over(socket);
-                stompClient.connect({}, function (frame) {
-                    console.log('Connected: ' + frame);
-                    stompClient.subscribe('/topic/messages/' + [[${key}]], function (greeting) {
-                        console.log(JSON.parse(greeting.body));
-                        showMessages(JSON.parse(greeting.body));
-                    });
-                });
-            }
-
-            function showMessages(body) {
-                showSnackbar(body);
-            }
-
-            $(function () {
-                connect();
-            });
-
-            function showSnackbar(message) {
-              var x = document.getElementById("snackbar");
-              document.getElementById('snackbar-text').innerText = `A message from ${message.author}: ${message.content}`;
-              document.getElementById('snackbar-link').href = `/dialogs/${message.author}`;
-
-              x.className = "show";
-
-              setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
-            }
-        </script>
     </body>
 </html>

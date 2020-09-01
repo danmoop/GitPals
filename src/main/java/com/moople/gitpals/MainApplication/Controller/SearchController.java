@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -114,7 +115,7 @@ public class SearchController {
      * @return page where all the users are displayed
      */
     @PostMapping("/findUsersBySkills")
-    public String usersBySkills(@RequestParam(name = "skills", required = false) List<String> skills, Model model, Principal user, RedirectAttributes redirectAttributes) {
+    public String usersBySkills(@RequestParam(name = "skill", required = false) List<String> skills, Model model, Principal user, RedirectAttributes redirectAttributes) {
         if (user != null) {
             User userDB = userService.findByUsername(user.getName());
 
@@ -123,10 +124,14 @@ public class SearchController {
             }
         }
 
-        if (skills == null) {
+        if (skills == null || skills.size() == 0) {
             redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
             return "redirect:/search";
         }
+
+        skills = skills.stream()
+                .filter(s -> !s.trim().equals(""))
+                .collect(Collectors.toList());
 
         Set<String> users = userService.findBySkillList(skills);
 
@@ -139,12 +144,11 @@ public class SearchController {
      * This request is handled when user wants to sort projects by language
      * They will be sorted and displayed
      *
-     * @param data     is a list of technologies checkboxes user select manually
-     * @param isUnique is a condition whether there are any other techs EXCEPT what users choose (null if checkbox is not selected, "off" if selected)
+     * @param data is a list of technologies checkboxes user select manually
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam(name = "requirement", required = false) List<String> data, @RequestParam(required = false, name = "isUnique") boolean isUnique, Model model, Principal user, RedirectAttributes redirectAttributes) {
+    public String projectsSorted(@RequestParam(name = "skill", required = false) List<String> data, Model model, Principal user, RedirectAttributes redirectAttributes) {
         if (user != null) {
             User userDB = userService.findByUsername(user.getName());
 
@@ -158,27 +162,21 @@ public class SearchController {
             return "redirect:/search";
         }
 
+        data = data.stream()
+                .filter(s -> !s.trim().equals(""))
+                .collect(Collectors.toList());
+
         List<Project> allProjects = projectInterface.findAll();
+        List<String> matchProjects = new ArrayList<>();
 
-        List<String> matchProjects;
+        for (Project p : allProjects) {
+            List<String> projectRequirements = p.getRequirements().stream().map(String::toLowerCase).collect(Collectors.toList());
 
-        /** @param isUnique does the following:
-         * if there is a project with some requirements and we mark a checkbox then
-         * it will find a project with chosen requirements ONLY
-         *
-         * if checkbox is not selected it will find the same project by ONE of the requirements
-         */
-        if (isUnique) { // true - if checkbox IS selected
-            matchProjects = allProjects.stream()
-                    .filter(project -> project.getRequirements().equals(data))
-                    .map(Project::getTitle)
-                    .collect(Collectors.toList());
-        } else { // false - checkbox IS NOT selected
-            matchProjects = allProjects.stream()
-                    .filter(project -> data.stream()
-                            .anyMatch(req -> project.getRequirements().contains(req)))
-                    .map(Project::getTitle)
-                    .collect(Collectors.toList());
+            for (String requirement : data) {
+                if (projectRequirements.contains(requirement.toLowerCase())) {
+                    matchProjects.add(p.getTitle());
+                }
+            }
         }
 
         model.addAttribute("match_projects", matchProjects);

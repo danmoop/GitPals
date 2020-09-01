@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserServiceInterface {
@@ -24,9 +25,28 @@ public class UserService implements UserServiceInterface {
         return userInterface.findAll();
     }
 
+    /**
+     * This function finds users based on their skills
+     *
+     * @param skills is a list of skills a user should have in order to be found
+     * @return list of users who have skills enumerated in the list
+     */
     @Override
     public Set<String> findBySkillList(List<String> skills) {
         Set<String> users = new HashSet<>();
+
+        for (User user : userInterface.findAll()) {
+            Set<String> userSkills = user.getSkillList().stream()
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toSet());
+
+            for (String skill : skills) {
+                if (userSkills.contains(skill.toLowerCase())) {
+                    users.add(user.getUsername());
+                }
+            }
+        }
+
         return users;
     }
 

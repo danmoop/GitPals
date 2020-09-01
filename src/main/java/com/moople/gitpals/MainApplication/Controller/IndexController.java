@@ -1,9 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.GlobalMessage;
-import com.moople.gitpals.MainApplication.Model.KeyStorage;
-import com.moople.gitpals.MainApplication.Model.Project;
-import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Model.*;
 import com.moople.gitpals.MainApplication.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -15,11 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Controller
 public class IndexController {
@@ -40,6 +33,7 @@ public class IndexController {
     private GlobalMessageInterface globalMessageInterface;
 
     private final long ONE_DAY = 1000 * 86400;
+    private final int PROJECTS_PER_PAGE = 20;
 
     @GetMapping("/")
     public String index() {
@@ -55,9 +49,12 @@ public class IndexController {
     @GetMapping("/{page}")
     public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes, @PathVariable(value = "page", required = false) int page) {
 
-
-        int numberOfPages = projectInterface.findAll().size() / 50;
+        int numberOfPages = projectInterface.findAll().size() / PROJECTS_PER_PAGE;
         numberOfPages = numberOfPages == 0 ? 1 : numberOfPages;
+
+        if (projectInterface.findAll().size() - numberOfPages * PROJECTS_PER_PAGE > 0) {
+            numberOfPages += 1;
+        }
 
         // Check if the user is not trying to open a page, which doesn't exist
         if (page > numberOfPages) {
@@ -108,6 +105,7 @@ public class IndexController {
             checkIfDataHasChanged(userDB, properties);
 
             model.addAttribute("userDB", userDB);
+            model.addAttribute("unreadMessages", countUnreadMessages(userDB));
         }
 
         List<Project> allProjects = projectInterface.findAll();
@@ -115,12 +113,16 @@ public class IndexController {
 
         List<Project> projects;
 
-        if (projectsAmount <= 50) {
+        if (projectsAmount <= PROJECTS_PER_PAGE) {
             projects = allProjects;
         } else {
             projects = new ArrayList<>();
 
-            for (int i = projectsAmount - 1 - (50 * (page - 1)); i >= projectsAmount - (50 * page); i--) {
+            int start = projectsAmount - 1 - (PROJECTS_PER_PAGE * (page - 1));
+            int end = projectsAmount - (PROJECTS_PER_PAGE * page);
+            end = Math.max(end, 0);
+
+            for (int i = start; i >= end; i--) {
                 projects.add(allProjects.get(i));
             }
         }
@@ -205,7 +207,7 @@ public class IndexController {
     public String getAuthKey(Principal user, Model model) {
         if (user == null) {
             model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
-            
+
             return "sections/users/getAuthKey";
         } else {
             User userDB = userService.findByUsername(user.getName());
@@ -224,7 +226,7 @@ public class IndexController {
             }
 
             model.addAttribute("key", key);
-            
+
             return "sections/users/getAuthKey";
         }
     }
@@ -276,5 +278,23 @@ public class IndexController {
             userDB.setLastOnlineDate(currentTime);
             userService.save(userDB);
         }
+    }
+
+    private int countUnreadMessages(User user) {
+        int res = 0;
+
+        Map<String, List<Message>> dialogs = user.getDialogs();
+
+        for (Map.Entry<String, List<Message>> entry : dialogs.entrySet()) {
+            List<Message> messages = entry.getValue();
+
+            for (Message message : messages) {
+                if (!message.isRead() && !message.getAuthor().equals(user.getUsername())) {
+                    res++;
+                }
+            }
+        }
+
+        return res;
     }
 }

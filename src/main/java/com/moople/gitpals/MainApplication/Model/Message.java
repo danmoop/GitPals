@@ -16,6 +16,7 @@ public class Message {
     private String content;
     private String timeStamp;
     private String type;
+    private boolean isRead;
 
     public Message(String author, String recipient, String content, TYPE type) {
         this.author = author;
@@ -24,6 +25,7 @@ public class Message {
         this.type = type.toString();
 
         this.timeStamp = new Date().toString();
+        this.isRead = false;
     }
 
     public enum TYPE {
