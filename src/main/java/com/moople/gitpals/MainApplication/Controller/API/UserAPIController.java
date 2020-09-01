@@ -5,11 +5,14 @@ import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -25,14 +28,37 @@ public class UserAPIController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    /**
-     * This function changes the user's skill set
-     *
-     * @param data is an object, which contains user's current skill set and token
-     * @return status, which depends on the success of the user's object change
-     */
-    @PostMapping(value = "/setSkillList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response setSkillList(@RequestBody Map<Object, Object> data) {
+    @PostMapping("/addNewSkill")
+    public Response addNewSkill(@RequestBody Map<String, Object> data) {
+        String jwt = (String) data.get("jwt");
+        String skill = (String) data.get("skill");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+
+        if(user == null) {
+            return Response.USER_NOT_FOUND;
+        }
+
+        user.getSkillList().add(skill);
+        userService.save(user);
+
+        return Response.OK;
+    }
+
+    @PostMapping("/removeSkill")
+    public Response removeSkill(@RequestBody Map<String, Object> data) {
+        String jwt = (String) data.get("jwt");
+        String skill = (String) data.get("skill");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+
+        if(user == null) {
+            return Response.USER_NOT_FOUND;
+        }
+
+        user.getSkillList().remove(skill);
+        userService.save(user);
+
         return Response.OK;
     }
 }

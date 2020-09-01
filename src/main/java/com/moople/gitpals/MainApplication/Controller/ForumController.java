@@ -114,7 +114,7 @@ public class ForumController {
 
     /**
      * This request is handled when user sends their comments to a forum post
-     * A comment will be added and changed will be saved to database
+     * A comment will be added and changes will be saved to database
      *
      * @param user        is a user session, assigned automatically
      * @param commentText is a comment text, taken from html input field

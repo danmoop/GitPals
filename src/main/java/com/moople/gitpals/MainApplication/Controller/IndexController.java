@@ -54,14 +54,25 @@ public class IndexController {
      */
     @GetMapping("/{page}")
     public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes, @PathVariable(value = "page", required = false) int page) {
+
+
+        int numberOfPages = projectInterface.findAll().size() / 50;
+        numberOfPages = numberOfPages == 0 ? 1 : numberOfPages;
+
+        // Check if the user is not trying to open a page, which doesn't exist
+        if (page > numberOfPages) {
+            return "redirect:/" + numberOfPages;
+        } else if (page < 1) {
+            return "redirect:/1";
+        }
+
         // If we are logged in, display information about us on the index page
         if (user != null) {
             LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) user.getUserAuthentication().getDetails();
 
             model.addAttribute("GithubUser", user);
 
-            // If we are logged in but there is no our user object in database, save it
-            // Usually this function is executed once when we are register for the first time
+            // Extract information about the user from their GitHub account
             String email = properties.get("email") == null ? null : properties.get("email").toString();
             String country = properties.get("location") == null ? null : properties.get("location").toString();
             String bio = properties.get("bio") == null ? null : properties.get("bio").toString();
@@ -103,14 +114,6 @@ public class IndexController {
         int projectsAmount = allProjects.size();
 
         List<Project> projects;
-        int numberOfPages = projectInterface.findAll().size() / 50;
-        numberOfPages = numberOfPages == 0 ? 1 : numberOfPages;
-
-        if (page > numberOfPages) {
-            return "redirect:/" + (page - 1);
-        } else if (page < 1) {
-            return "redirect:/" + (page + 1);
-        }
 
         if (projectsAmount <= 50) {
             projects = allProjects;
@@ -164,11 +167,6 @@ public class IndexController {
             model.addAttribute("userObject", new User());
             model.addAttribute("GithubUser", user);
 
-            List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
-                    .stream()
-                    .map(projectName -> projectInterface.findByTitle(projectName))
-                    .collect(Collectors.toList());
-
             return "sections/users/dashboard";
         }
     }
@@ -207,6 +205,7 @@ public class IndexController {
     public String getAuthKey(Principal user, Model model) {
         if (user == null) {
             model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
+            
             return "sections/users/getAuthKey";
         } else {
             User userDB = userService.findByUsername(user.getName());
@@ -216,13 +215,16 @@ public class IndexController {
             }
 
             String key = keyStorageInterface.findByUsername(user.getName()).getKey();
+
             if (key == null) {
                 KeyStorage ks = new KeyStorage(user.getName());
                 keyStorageInterface.save(ks);
                 model.addAttribute("key", ks.getKey());
                 return "sections/users/getAuthKey";
             }
+
             model.addAttribute("key", key);
+            
             return "sections/users/getAuthKey";
         }
     }

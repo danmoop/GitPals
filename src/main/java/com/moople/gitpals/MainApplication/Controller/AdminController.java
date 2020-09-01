@@ -156,13 +156,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        for (Project p: projectService.findAll()) {
-            if(p.getAuthorName().equals(username)) {
-                projectService.delete(p);
-            }
-        }
-
-        /*User user = userService.findByUsername(username);
+        User user = userService.findByUsername(username);
 
         if (user == null) {
             redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "No such user");
@@ -180,7 +174,6 @@ public class AdminController {
         userService.save(user);
 
         redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "All projects by " + username + " were deleted");
-*/
         return "redirect:/admin";
     }
 
