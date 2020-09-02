@@ -3,44 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3035481b-9080-4443-a638-fdd260371679" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainApplication.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MainApplication.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Configuration/GitHubAuthConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Configuration/GitHubAuthConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/API/SearchAPIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/API/SearchAPIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/IndexController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/MessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/moople/gitpals/MainApplication/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/projectViewPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/sections/viewMessages.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Configuration/GitHubAuthConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Configuration/GitHubAuthConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/API/SearchAPIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/API/SearchAPIController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/IndexController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/MessageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/ProjectController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Comment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/ForumPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/ForumPost.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/Project.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/moople/gitpals/MainApplication/Model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/projectViewPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/projectViewPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/sections/viewMessages.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/sections/viewMessages.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,9 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -77,17 +40,24 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567151213268" />
-    <property name="last_opened_file_path" value="D:/Telegram downloads/SymbolBase.java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.moople.gitpals.MainApplication" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Apps\GitPals\src\main\resources\static\js" />
+      <recent name="D:\Apps\GitPals\src\main\resources\templates\sections\forum" />
+      <recent name="D:\Apps\GitPals\src\main\resources\templates\sections\users" />
+      <recent name="D:\Apps\GitPals\src\main\resources\templates\sections\projects" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -160,7 +130,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MainApplication$MainApplication.ic" NAME="MainApplication Coverage Results" MODIFIED="1574618266793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/MainApplication$MainApplication.ic" NAME="MainApplication Coverage Results" MODIFIED="1598936345196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.moople.gitpals.MainApplication.*</FILTER>
     </SUITE>
   </component>

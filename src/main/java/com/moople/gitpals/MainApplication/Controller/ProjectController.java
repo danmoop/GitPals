@@ -56,7 +56,7 @@ public class ProjectController {
      * Otherwise display an error message
      *
      * @param project is taken from html form with all the data (project name, description etc.)
-     * @param skills   is a checkbox list of technologies for a project that user selects
+     * @param skills  is a checkbox list of technologies for a project that user selects
      * @return create project and redirect to its page, otherwise show an error messaging about identical project name
      **/
     @PostMapping("/projectSubmitted")
@@ -331,7 +331,7 @@ public class ProjectController {
 
         Optional<Comment> comment = project.getComments()
                 .stream()
-                .filter(projectComment -> projectComment.getAuthor().equals(user.getName()) && projectComment.getText().equals(text) && projectComment.getTimeStamp().equals(ts))
+                .filter(projectComment -> projectComment.getAuthor().equals(user.getName()) && projectComment.getText().equals(text))
                 .findFirst();
 
         if (comment.isPresent() && comment.get().getAuthor().equals(user.getName())) {
@@ -378,5 +378,24 @@ public class ProjectController {
         });
 
         return "redirect:/projects/" + projectName;
+    }
+
+    @PostMapping("/editProjectInfo")
+    public String editProjectInfo(
+            @RequestParam("tech") List<String> techs,
+            @RequestParam("newTitle") String newTitle,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description) {
+
+        if (title.equals(newTitle) || projectInterface.findByTitle(newTitle) != null) {
+            Project project = projectInterface.findByTitle(title);
+
+            project.setTitle(newTitle);
+            project.setDescription(description);
+            project.setRequirements(techs);
+            projectInterface.save(project);
+        }
+
+        return "redirect:/projects/" + newTitle;
     }
 }
