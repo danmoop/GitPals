@@ -250,6 +250,14 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * This function bans user so they can't do anything anymore
+     *
+     * @param admin              is an admin's authentication
+     * @param username           is a user who will be banned
+     * @param redirectAttributes is where the information about the user is put
+     * @return to the admin page and inform if the user is banned now
+     */
     @PostMapping("/banUser")
     public String banUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
         if (!userService.findByUsername(admin.getName()).isAdmin()) {
@@ -270,6 +278,14 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * This function unbans user so they could access the app
+     *
+     * @param admin              is an admin's authentication
+     * @param username           is a user who will be unbanned
+     * @param redirectAttributes is where the information about the user is put
+     * @return to the admin page and inform if the user is unbanned now
+     */
     @PostMapping("/unbanUser")
     public String unbanUser(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
         if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
