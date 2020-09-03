@@ -47,13 +47,25 @@
                         <textarea required type="text" class="form-control" placeholder="Project description" th:name="description">[[${project.description}]]</textarea>
                         <br>
                         <u>Technologies: <a href="#/" onclick="addTech();">(Add)</a></u>
-
                         <ul style="padding: 0; margin: 0;" id="techs">
                             <li th:id="${req}" th:each="req: ${project.requirements}" style="list-style:none;">
                                 <div class="row">
                                     <div class="col" style="display: inline-flex;">
                                         <input th:name="tech" type="text" class="form-control" th:value="*{req}">
                                         <a onclick="remove(this);" th:id="${'remove_' + req}" href="#/" style="color: #e74c3c;">Remove</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <br/>
+                        <u>Roles: <a href="#/" onclick="addRole();">(Add)</a></u>
+                        <ul style="padding: 0; margin: 0;" id="roles">
+                            <li th:id="${role}" th:each="role: ${project.requiredRoles}" style="list-style:none;">
+                                <div class="row">
+                                    <div class="col" style="display: inline-flex;">
+                                        <input th:name="role" type="text" class="form-control" th:value="*{role}">
+                                        <a onclick="remove(this);" th:id="${'remove_' + role}" href="#/" style="color: #e74c3c;">Remove</a>
                                     </div>
                                 </div>
                             </li>
@@ -238,6 +250,23 @@
             `;
 
             document.getElementById('techs').insertAdjacentHTML('beforeend', tech);
+        }
+
+        function addRole() {
+            var id = Math.random();
+
+            var role = `
+                <li id="${id}" style="list-style:none;">
+                    <div class="row">
+                        <div class="col" style="display: inline-flex;">
+                            <input name="role" type="text" class="form-control" placeholder="Role">
+                            <a onclick="remove(this);" id="remove_${id}" href="#/" style="color: #e74c3c;">Remove</a>
+                        </div>
+                    </div>
+                </li>
+            `;
+
+            document.getElementById('roles').insertAdjacentHTML('beforeend', role);
         }
 
         function remove(element) {

@@ -380,19 +380,31 @@ public class ProjectController {
         return "redirect:/projects/" + projectName;
     }
 
+    /**
+     * This function edits information for a chosen project (like change description, roles, etc.)
+     *
+     * @param techs       is a new list of project's technologies
+     * @param roles       is a new list of project's roles
+     * @param newTitle    is a new title the user prompts (which can be the same as the old one)
+     * @param title       is an original project title
+     * @param description is a new description
+     * @return to the project page
+     */
     @PostMapping("/editProjectInfo")
     public String editProjectInfo(
             @RequestParam("tech") List<String> techs,
+            @RequestParam("role") List<String> roles,
             @RequestParam("newTitle") String newTitle,
             @RequestParam("title") String title,
             @RequestParam("description") String description) {
 
-        if (title.equals(newTitle) || projectInterface.findByTitle(newTitle) != null) {
+        if (title.equals(newTitle) || projectInterface.findByTitle(newTitle) == null) {
             Project project = projectInterface.findByTitle(title);
 
             project.setTitle(newTitle);
             project.setDescription(description);
             project.setRequirements(techs);
+            project.setRequiredRoles(roles);
             projectInterface.save(project);
         }
 

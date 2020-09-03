@@ -50,3 +50,5 @@ Temporary Items
 .mvn/
 out/
 node_modules/
+
+target/

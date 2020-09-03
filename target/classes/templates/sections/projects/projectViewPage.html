@@ -28,6 +28,57 @@
         </div>
     </nav>
 
+    <div id="editProjectInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editProjectInfoModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit [[${project.title}]] information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/editProjectInfo}" method="post">
+                    <div class="modal-body">
+                        <u>Title:</u>
+                        <input required type="text" class="form-control" placeholder="Project title" th:name="newTitle" th:value="*{project.title}" />
+                        <input th:name="title" type="hidden" th:value="*{project.title}">
+                        <br>
+                        <u>Description:</u>
+                        <textarea required type="text" class="form-control" placeholder="Project description" th:name="description">[[${project.description}]]</textarea>
+                        <br>
+                        <u>Technologies: <a href="#/" onclick="addTech();">(Add)</a></u>
+                        <ul style="padding: 0; margin: 0;" id="techs">
+                            <li th:id="${req}" th:each="req: ${project.requirements}" style="list-style:none;">
+                                <div class="row">
+                                    <div class="col" style="display: inline-flex;">
+                                        <input th:name="tech" type="text" class="form-control" th:value="*{req}">
+                                        <a onclick="remove(this);" th:id="${'remove_' + req}" href="#/" style="color: #e74c3c;">Remove</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <br/>
+                        <u>Roles: <a href="#/" onclick="addRole();">(Add)</a></u>
+                        <ul style="padding: 0; margin: 0;" id="roles">
+                            <li th:id="${role}" th:each="role: ${project.requiredRoles}" style="list-style:none;">
+                                <div class="row">
+                                    <div class="col" style="display: inline-flex;">
+                                        <input th:name="role" type="text" class="form-control" th:value="*{role}">
+                                        <a onclick="remove(this);" th:id="${'remove_' + role}" href="#/" style="color: #e74c3c;">Remove</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-outline-primary fw-600" value="Save" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="mt">
             <div class="card">
@@ -41,6 +92,9 @@
                                 <input type="submit" class="btn btn-outline-danger btn-pill btn-sm fw-600" value="Delete Project" onclick="return confirm('Are you sure?')"/>
                                 <input type="hidden" th:name="projectName" th:value="${project.title}"/>
                             </form>
+                            <button th:if="${userDB != null && userDB.username == project.authorName}" type="button" class="btn btn-outline-primary btn-pill btn-sm fw-600" data-toggle="modal" data-target="#editProjectInfoModal" style="float:right;">
+                                Edit Project Info
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -179,6 +233,46 @@
     <script>
         function changeDisplay(key) {
             document.getElementById('editField_' + key).style.display = document.getElementById('editField_' + key).style.display == 'none' ? 'block' : 'none';
+        }
+
+        function addTech() {
+            var id = Math.random();
+
+            var tech = `
+            <li id="${id}" style="list-style:none;">
+                <div class="row">
+                    <div class="col" style="display: inline-flex;">
+                        <input name="tech" type="text" class="form-control" placeholder="Technology">
+                        <a onclick="remove(this);" id="remove_${id}" href="#/" style="color: #e74c3c;">Remove</a>
+                    </div>
+                </div>
+            </li>
+            `;
+
+            document.getElementById('techs').insertAdjacentHTML('beforeend', tech);
+        }
+
+        function addRole() {
+            var id = Math.random();
+
+            var role = `
+                <li id="${id}" style="list-style:none;">
+                    <div class="row">
+                        <div class="col" style="display: inline-flex;">
+                            <input name="role" type="text" class="form-control" placeholder="Role">
+                            <a onclick="remove(this);" id="remove_${id}" href="#/" style="color: #e74c3c;">Remove</a>
+                        </div>
+                    </div>
+                </li>
+            `;
+
+            document.getElementById('roles').insertAdjacentHTML('beforeend', role);
+        }
+
+        function remove(element) {
+            var id = element.id.split("_")[1];
+
+            document.getElementById(id).parentElement.removeChild(document.getElementById(id));
         }
     </script>
 
