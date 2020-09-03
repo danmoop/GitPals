@@ -68,13 +68,13 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <!--<li class="nav-item">
-                        <a class="nav-link" href="/messages">
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/danmoop/GitPals">
                             <button type="button" class="btn neoButton btn-sm fw-600">
                                 <i class="fa fa-code" aria-hidden="true"></i> Support
                             </button>
                         </a>
-                    </li>-->
+                    </li>
                     <li class="nav-item" th:if="${userDB != null}">
                         <a class="nav-link" href="/messages">
                             <button type="button" class="btn neoButton btn-sm fw-600">
@@ -102,10 +102,10 @@
         <section>
 
             <div class="container text-center">
-                <div th:if="${globalMessage != null && (userDB == null || (userDB != null && !userDB.hasSeenGlobalMessage))}" class="alert alert-info alert-dismissible fade show" role="alert">
+                <div th:if="${globalMessage != null && (userDB == null || (userDB != null && !userDB.hasSeenGlobalMessage))}" class="alert alert-light" role="alert">
                     [[${globalMessage.content}]]
                     <form th:action="@{/setGlobalMessageAsSeen}" method="post">
-                        <input class="btn btn-light btn-sm fw-600" type="submit" value="Close" />
+                        <input class="btn btn-outline-primary btn-pill btn-sm fw-600" type="submit" value="Close" />
                     </form>
                 </div>
 

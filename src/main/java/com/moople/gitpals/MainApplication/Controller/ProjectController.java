@@ -392,20 +392,31 @@ public class ProjectController {
      */
     @PostMapping("/editProjectInfo")
     public String editProjectInfo(
-            @RequestParam("tech") List<String> techs,
-            @RequestParam("role") List<String> roles,
+            @RequestParam(value = "tech", required = false) List<String> techs,
+            @RequestParam(value = "role", required = false) List<String> roles,
             @RequestParam("newTitle") String newTitle,
             @RequestParam("title") String title,
-            @RequestParam("description") String description) {
+            @RequestParam("repoLink") String repoLink,
+            @RequestParam("description") String description,
+            RedirectAttributes redirectAttributes) {
+
+        if (techs.size() == 0 || roles.size() == 0) {
+            redirectAttributes.addFlashAttribute("msg", "Information about technologies or roles can't be empty!");
+            return "redirect:/projects/" + title;
+        }
 
         if (title.equals(newTitle) || projectInterface.findByTitle(newTitle) == null) {
             Project project = projectInterface.findByTitle(title);
 
             project.setTitle(newTitle);
+            project.setGithubProjectLink(repoLink);
             project.setDescription(description);
             project.setRequirements(techs);
             project.setRequiredRoles(roles);
             projectInterface.save(project);
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "A project with your new title already exists!");
+            return "redirect:/projects/" + title;
         }
 
         return "redirect:/projects/" + newTitle;

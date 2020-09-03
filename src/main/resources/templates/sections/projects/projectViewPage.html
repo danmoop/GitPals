@@ -43,6 +43,9 @@
                         <input required type="text" class="form-control" placeholder="Project title" th:name="newTitle" th:value="*{project.title}" />
                         <input th:name="title" type="hidden" th:value="*{project.title}">
                         <br>
+                        <u>Repository Link:</u>
+                        <input required type="text" class="form-control" placeholder="Repository link" th:name="repoLink" th:value="*{project.githubProjectLink}" />
+                        <br>
                         <u>Description:</u>
                         <textarea required type="text" class="form-control" placeholder="Project description" th:name="description">[[${project.description}]]</textarea>
                         <br>
@@ -81,6 +84,9 @@
 
     <div class="container">
         <div class="mt">
+            <div th:if="${msg}" class="alert alert-danger" role="alert">
+                [[${msg}]]
+            </div>
             <div class="card">
                 <div class="card-header fw-600">
                     <div class="row">

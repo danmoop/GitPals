@@ -40,13 +40,11 @@
     </nav>
 
     <div class="container text-center">
-        <div th:if="${message}">
-            <h3 th:if="${message}" style="color: #16a085;">[[${message}]]</h3>
-            <hr/>
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            [[${message}]]
         </div>
-        <div th:if="${error}">
-            <h3 th:if="${error}" style="color: #e74c3c;">[[${error}]]</h3>
-            <hr/>
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            [[${error}]]
         </div>
         <div>
             <div class="card text-center">
