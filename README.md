@@ -33,7 +33,7 @@ The rest of images
 Thank you for deciding to contribute! Download GitPals to your PC. You need to have MongoDB installed on your pc.
 Open project in any IDE (I use Intellij IDEA). Then open Console Prompt and type in: mongod --dbpath=path_to_db (for example: mongod --dbpath=C:\GitPals\DB). 
 
-[Video Guide](https://youtu.be/JbvxJyXmOEM)
+[A Complete Guide to compiling the project](https://github.com/danmoop/GitPals/wiki/How-to-compile-this-project-on-your-computer%3F)
 
 **address - localhost:1337**
 
