@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,36 +76,50 @@ public class ProjectAPIController {
     }
 
     /**
-     * This function submits a new project if there are no duplicates (same name)
+     * This function lets user either become applied to a project, or un-applied, if they were applied earlier
      *
-     * @param data contains all the info about the user who submits and the new project
-     * @return response, which depends on the existence of the project with the same name (duplicate)
+     * @param data is an information about user (jwt & project's name, in which they want to apply/unapply)
+     * @return a response, which is OK if project and user exist in the database
      */
-    @PostMapping(value = "/submitProject", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response submitProject(@RequestBody Map<String, Object> data) {
-        try {
-            if (projectInterface.findByTitle((String) data.get("title")) != null) {
-                return Response.PROJECT_EXISTS;
-            }
+    @PostMapping(value = "/changeApplicationToAProject", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response changeApplicationToAProject(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String projectName = data.get("projectName");
 
-            Project project = new Project(
-                    (String) data.get("title"),
-                    (String) data.get("description"),
-                    (String) data.get("githubProjectLink"),
-                    jwtUtil.extractUsername((String) data.get("token")),
-                    (List<String>) data.get("requirements"),
-                    new ArrayList<>()
-            );
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        Project project = projectInterface.findByTitle(projectName);
 
-            projectInterface.save(project);
-
-            User user = userService.findByUsername(jwtUtil.extractUsername((String) data.get("token")));
-            user.getProjects().add(project.getTitle());
-            userService.save(user);
-
-            return Response.OK;
-        } catch (Exception e) {
+        if (user == null || project == null) {
             return Response.FAILED;
         }
+
+        if (project.getUsersSubmitted().contains(user.getUsername())) {
+            project.getUsersSubmitted().remove(user.getUsername());
+            user.getProjectsAppliedTo().remove(projectName);
+        } else {
+            project.getUsersSubmitted().add(user.getUsername());
+            user.getProjectsAppliedTo().add(projectName);
+        }
+
+        projectInterface.save(project);
+        userService.save(user);
+
+        return Response.OK;
+    }
+
+    /**
+     * This function submits a user's project
+     *
+     * @param project is a project, which is sent from the user's phone
+     * @return response if project with user's chosen title doesn't exist
+     */
+    @PostMapping(value = "/submitProject", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response submitProject(@RequestBody Project project) {
+        if (projectInterface.findByTitle(project.getTitle()) == null) {
+            projectInterface.save(project);
+            return Response.OK;
+        }
+
+        return Response.PROJECT_EXISTS;
     }
 }

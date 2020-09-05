@@ -3,7 +3,6 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Comment;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,7 +41,6 @@ public class ProjectController {
             }
 
             model.addAttribute("UserObject", user);
-            model.addAttribute("techs", Data.technologiesMap);
             model.addAttribute("projectObject", new Project());
 
             return "sections/projects/projectSubmitForm";
@@ -63,8 +62,8 @@ public class ProjectController {
     public String projectSubmitted(
             Principal user,
             @ModelAttribute Project project,
-            @RequestParam(name = "role", required = false) List<String> roles,
-            @RequestParam(name = "skill", required = false) List<String> skills,
+            @RequestParam(name = "role", required = false) Set<String> roles,
+            @RequestParam(name = "skill", required = false) Set<String> skills,
             RedirectAttributes redirectAttributes) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
@@ -75,11 +74,11 @@ public class ProjectController {
         // roles and skills may contain empty text fields, so they are removed
         roles = roles.stream()
                 .filter(role -> !role.trim().equals(""))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         skills = skills.stream()
                 .filter(skill -> !skill.trim().equals(""))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         if (skills.size() == 0 || roles.size() == 0) {
             redirectAttributes.addFlashAttribute("warning", "Your project should have all the requirements filled!");
@@ -392,8 +391,8 @@ public class ProjectController {
      */
     @PostMapping("/editProjectInfo")
     public String editProjectInfo(
-            @RequestParam(value = "tech", required = false) List<String> techs,
-            @RequestParam(value = "role", required = false) List<String> roles,
+            @RequestParam(value = "tech", required = false) Set<String> techs,
+            @RequestParam(value = "role", required = false) Set<String> roles,
             @RequestParam("newTitle") String newTitle,
             @RequestParam("title") String title,
             @RequestParam("repoLink") String repoLink,

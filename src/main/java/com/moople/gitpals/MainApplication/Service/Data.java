@@ -1,24 +1,14 @@
 package com.moople.gitpals.MainApplication.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.moople.gitpals.MainApplication.Model.Project;
+import com.moople.gitpals.MainApplication.Model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Data {
+    public static List<Project> EMPTY_PROJECT_LIST = new ArrayList<>();
+    public static List<User> EMPTY_USER_LIST = new ArrayList<>();
 
-    // This data is imported in IndexController & ProjectController
-    private static final String[] TECHS = {"Web design", "Mobile design", "Java", "C++",
-            "Python", "Machine learning", "Deep learning", "Ionic",
-            "Photoshop", "React", "JavaScript", "Angular", "Analytics", "Ruby",
-            "NodeJS", "Unreal Engine", "Unity", "Game development", "Computer architecture",
-            "C", "GLSL", "OpenGL", "HTML5", "C#", "Swift", "Big Data", "CSS",
-            "Game modding", "Other"
-    };
-
-    public static Map<String, Boolean> technologiesMap = new HashMap<>();
-
-    public static void initTechnologiesMap() {
-        for (String tech : TECHS) {
-            technologiesMap.put(tech, false);
-        }
-    }
+    public static User EMPTY_USER = new User();
 }

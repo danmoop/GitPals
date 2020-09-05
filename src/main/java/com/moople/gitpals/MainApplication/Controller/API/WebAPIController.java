@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,9 @@ public class WebAPIController {
      */
     @GetMapping(value = "/principal", produces = MediaType.APPLICATION_JSON_VALUE)
     public Principal getPrincipal(Principal user) {
-        if (user != null)
+        if (user != null) {
             return user;
+        }
 
         return () -> "Unauthorized";
     }
@@ -36,9 +38,10 @@ public class WebAPIController {
      */
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser(Principal user) {
-        if (user != null)
+        if (user != null) {
             return userInterface.findByUsername(user.getName());
+        }
 
-        return new User();
+        return Data.EMPTY_USER;
     }
 }

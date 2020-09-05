@@ -6,7 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -20,22 +22,22 @@ public class Project {
     private String description;
     private String githubProjectLink;
     private String authorName;
-    private List<String> requirements;
-    private List<String> usersSubmitted;
+    private Set<String> requirements;
+    private Set<String> usersSubmitted;
     private List<Comment> comments;
-    private List<String> requiredRoles;
+    private Set<String> requiredRoles;
     private boolean isPromoted;
 
     /**
      * @param usersSubmitted is a list of objects (users' names), empty by default.
      */
-    public Project(String title, String description, String githubProjectLink, String authorName, List<String> requirements, List<String> requiredRoles) {
+    public Project(String title, String description, String githubProjectLink, String authorName, Set<String> requirements, Set<String> requiredRoles) {
         this.title = title;
         this.description = description;
         this.githubProjectLink = githubProjectLink;
         this.authorName = authorName;
         this.requirements = requirements;
-        this.usersSubmitted = new ArrayList<>();
+        this.usersSubmitted = new HashSet<>();
         this.requiredRoles = requiredRoles;
         this.comments = new ArrayList<>();
         this.isPromoted = false;

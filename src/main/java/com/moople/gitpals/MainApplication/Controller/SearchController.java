@@ -48,8 +48,6 @@ public class SearchController {
             }
         }
 
-        model.addAttribute("techs", Data.technologiesMap);
-
         return "sections/searchForm";
     }
 
