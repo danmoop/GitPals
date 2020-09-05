@@ -54,9 +54,9 @@
                     <div class="col">
                         <p>Select technologies, which are used in your project</p>
                         <div id="skills">
-                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement 1"/>
-                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement 2"/>
-                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement 3"/>
+                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
+                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 2"/>
+                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 3"/>
                         </div>
                         <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addSkill();">Add Another Requirement</button>
                     </div>
@@ -87,7 +87,7 @@
         }
 
         addSkill = () => {
-            var anotherSkill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Requirement ${s++}"/>`;
+            var anotherSkill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology ${s++}"/>`;
             document.getElementById('skills').insertAdjacentHTML('beforeend', anotherSkill);
         }
     </script>

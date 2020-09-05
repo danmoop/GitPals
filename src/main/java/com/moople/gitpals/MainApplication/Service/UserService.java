@@ -43,6 +43,7 @@ public class UserService implements UserServiceInterface {
             for (String skill : skills) {
                 if (userSkills.contains(skill.toLowerCase())) {
                     users.add(user.getUsername());
+                    break;
                 }
             }
         }
