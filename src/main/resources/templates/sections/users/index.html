@@ -78,7 +78,9 @@
                     <li class="nav-item" th:if="${userDB != null}">
                         <a class="nav-link" href="/messages">
                             <button type="button" class="btn neoButton btn-sm fw-600">
-                                <i class="fa fa-envelope-square"></i> Messages <span class="fw-600 badge badge-primary">[[${unreadMessages}]]</span>
+                                <i class="fa fa-envelope-square"></i>
+                                Messages
+                                <span th:if="${unreadMessages > 0}" class="badge badge-primary">[[${unreadMessages}]]</span>
                             </button>
                         </a>
                     </li>
@@ -99,8 +101,8 @@
                 </ul>
             </div>
         </nav>
-        <section>
 
+        <section>
             <div class="container text-center">
                 <div th:if="${globalMessage != null && (userDB == null || (userDB != null && !userDB.hasSeenGlobalMessage))}" class="alert alert-light" role="alert">
                     [[${globalMessage.content}]]
@@ -160,7 +162,6 @@
                 <span id="snackbar-text"></span>
                 <a id="snackbar-link" href="#/" class="btn btn-outline-primary fw-600 btn-sm">Open dialog</a>
             </div>
-
         </section>
         <script src="/js/sockjs.min.js"></script>
         <script src="/js/stomp.umd.min.js"></script>

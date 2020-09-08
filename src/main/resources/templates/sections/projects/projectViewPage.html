@@ -55,7 +55,7 @@
                                 <div class="row">
                                     <div class="col" style="display: inline-flex;">
                                         <input th:name="tech" type="text" class="form-control" th:value="*{req}">
-                                        <a onclick="remove(this);" th:id="${'remove_' + req}" href="#/" style="color: #e74c3c;">Remove</a>
+                                        <a onclick="remove(this);" th:id="${'remove_' + req}" href="#/" class="btn btn-outline-danger fw-600 btn-sm">Remove</a>
                                     </div>
                                 </div>
                             </li>
@@ -68,7 +68,7 @@
                                 <div class="row">
                                     <div class="col" style="display: inline-flex;">
                                         <input th:name="role" type="text" class="form-control" th:value="*{role}">
-                                        <a onclick="remove(this);" th:id="${'remove_' + role}" href="#/" style="color: #e74c3c;">Remove</a>
+                                        <a onclick="remove(this);" th:id="${'remove_' + role}" href="#/" class="btn btn-outline-danger fw-600 btn-sm">Remove</a>
                                     </div>
                                 </div>
                             </li>
@@ -249,7 +249,7 @@
                 <div class="row">
                     <div class="col" style="display: inline-flex;">
                         <input name="tech" type="text" class="form-control" placeholder="Technology">
-                        <a onclick="remove(this);" id="remove_${id}" href="#/" style="color: #e74c3c;">Remove</a>
+                        <a onclick="remove(this);" id="remove_${id}" href="#/" class="btn btn-outline-danger fw-600 btn-sm">Remove</a>
                     </div>
                 </div>
             </li>
@@ -266,7 +266,7 @@
                     <div class="row">
                         <div class="col" style="display: inline-flex;">
                             <input name="role" type="text" class="form-control" placeholder="Role">
-                            <a onclick="remove(this);" id="remove_${id}" href="#/" style="color: #e74c3c;">Remove</a>
+                            <a onclick="remove(this);" id="remove_${id}" href="#/" class="btn btn-outline-danger fw-600 btn-sm">Remove</a>
                         </div>
                     </div>
                 </li>
