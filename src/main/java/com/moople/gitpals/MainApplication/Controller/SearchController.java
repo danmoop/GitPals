@@ -3,7 +3,6 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
@@ -39,9 +38,9 @@ public class SearchController {
      * @return html page where users can find a project or a user by name
      */
     @GetMapping("/search")
-    public String searchPage(Model model, Principal user) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String searchPage(Model model, Principal auth) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -59,9 +58,9 @@ public class SearchController {
      * @return list of users whose nicknames contain user's input
      **/
     @PostMapping("/findUser")
-    public String foundUsers(@RequestParam("user_name") String username, Model model, Principal user) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String foundUsers(@RequestParam String username, Model model, Principal auth) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -85,9 +84,9 @@ public class SearchController {
      * @return list of projects whose titles contain user's input
      **/
     @PostMapping("/findProject")
-    public String foundProjects(@RequestParam("project_name") String projectName, Model model, Principal user) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String foundProjects(@RequestParam("project_name") String projectName, Model model, Principal auth) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -113,9 +112,9 @@ public class SearchController {
      * @return page where all the users are displayed
      */
     @PostMapping("/findUsersBySkills")
-    public String usersBySkills(@RequestParam(name = "skill", required = false) List<String> skills, Model model, Principal user, RedirectAttributes redirectAttributes) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String usersBySkills(@RequestParam(name = "skill", required = false) List<String> skills, Model model, Principal auth, RedirectAttributes redirectAttributes) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -146,9 +145,9 @@ public class SearchController {
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam(name = "skill", required = false) List<String> data, Model model, Principal user, RedirectAttributes redirectAttributes) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String projectsSorted(@RequestParam(name = "skill", required = false) List<String> data, Model model, Principal auth, RedirectAttributes redirectAttributes) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -168,7 +167,7 @@ public class SearchController {
         List<String> matchProjects = new ArrayList<>();
 
         for (Project p : allProjects) {
-            List<String> projectRequirements = p.getRequirements().stream().map(String::toLowerCase).collect(Collectors.toList());
+            List<String> projectRequirements = p.getTechnologies().stream().map(String::toLowerCase).collect(Collectors.toList());
 
             for (String requirement : data) {
                 if (projectRequirements.contains(requirement.toLowerCase())) {
@@ -190,9 +189,9 @@ public class SearchController {
      * @return list with posts to the result page
      */
     @PostMapping("/findForumPosts")
-    public String findForumPosts(@RequestParam("post_name") String postName, Model model, Principal user) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String findForumPosts(@RequestParam("post_name") String postName, Model model, Principal auth) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";

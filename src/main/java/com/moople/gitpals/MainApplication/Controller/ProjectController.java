@@ -32,15 +32,15 @@ public class ProjectController {
      * @return html page where users can submit their project
      */
     @GetMapping("/submitProject")
-    public String projectForm(Principal user, Model model) {
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+    public String projectForm(Principal auth, Model model) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
             }
 
-            model.addAttribute("UserObject", user);
+            model.addAttribute("UserObject", auth);
             model.addAttribute("projectObject", new Project());
 
             return "sections/projects/projectSubmitForm";
@@ -60,14 +60,14 @@ public class ProjectController {
      **/
     @PostMapping("/projectSubmitted")
     public String projectSubmitted(
-            Principal user,
+            Principal auth,
             @ModelAttribute Project project,
             @RequestParam(name = "role", required = false) Set<String> roles,
             @RequestParam(name = "skill", required = false) Set<String> skills,
             RedirectAttributes redirectAttributes) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if (user == null) {
+        if (auth == null) {
             return "redirect:/";
         }
 
@@ -85,7 +85,7 @@ public class ProjectController {
             return "redirect:/submitProject";
         }
 
-        User userDB = userService.findByUsername(user.getName());
+        User userDB = userService.findByUsername(auth.getName());
 
         if (userDB.isBanned()) {
             return "sections/users/banned";
@@ -99,7 +99,7 @@ public class ProjectController {
                     project.getTitle(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
-                    userService.findByUsername(user.getName()).getUsername(),
+                    userService.findByUsername(auth.getName()).getUsername(),
                     skills,
                     roles
             );
@@ -124,7 +124,7 @@ public class ProjectController {
      * @return html project page with it's title, author, description, technologies etc
      **/
     @GetMapping("/projects/{projectName}")
-    public String projectPage(@PathVariable String projectName, Model model, Principal user) {
+    public String projectPage(@PathVariable String projectName, Model model, Principal auth) {
 
         Project project = projectInterface.findByTitle(projectName);
 
@@ -133,8 +133,8 @@ public class ProjectController {
         } else {
             model.addAttribute("project", project);
 
-            if (user != null) {
-                User userDB = userService.findByUsername(user.getName());
+            if (auth != null) {
+                User userDB = userService.findByUsername(auth.getName());
 
                 if (userDB.isBanned()) {
                     return "sections/users/banned";
@@ -154,14 +154,14 @@ public class ProjectController {
      * @return redirect to the same project page
      **/
     @PostMapping("/applyForProject")
-    public String applyForProject(@RequestParam("linkInput") String link, Principal user) {
+    public String applyForProject(@RequestParam("linkInput") String link, Principal auth) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if (user == null) {
+        if (auth == null) {
             return "redirect:/";
         }
 
-        User userForApply = userService.findByUsername(user.getName());
+        User userForApply = userService.findByUsername(auth.getName());
 
         if (userForApply.isBanned()) {
             return "sections/users/banned";
@@ -170,7 +170,7 @@ public class ProjectController {
         Project project = projectInterface.findByTitle(link);
 
         // Users that already submitted can't submit another time, only once per project
-        if (!project.getUsersSubmitted().contains(user.getName())) {
+        if (!project.getUsersSubmitted().contains(auth.getName())) {
             project.getUsersSubmitted().add(userForApply.getUsername());
             userForApply.getProjectsAppliedTo().add(project.getTitle());
 
@@ -189,15 +189,15 @@ public class ProjectController {
      * @return redirect to the same project page
      **/
     @PostMapping("/unapplyForProject")
-    public String unapplyForProject(@RequestParam("linkInput") String link, Principal user) {
+    public String unapplyForProject(@RequestParam("linkInput") String link, Principal auth) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
-        if (user == null) {
+        if (auth == null) {
             return "redirect:/";
         }
 
         Project projectDB = projectInterface.findByTitle(link);
-        User userDB = userService.findByUsername(user.getName());
+        User userDB = userService.findByUsername(auth.getName());
 
         if (userDB.isBanned()) {
             return "sections/users/banned";
@@ -222,10 +222,10 @@ public class ProjectController {
      * @return redirect to the index page
      **/
     @PostMapping("/deleteProject")
-    public String projectDeleted(Principal user, @RequestParam("projectName") String projectName) {
+    public String projectDeleted(Principal auth, @RequestParam("projectName") String projectName) {
 
         Project project = projectInterface.findByTitle(projectName);
-        User userDB = userService.findByUsername(user.getName());
+        User userDB = userService.findByUsername(auth.getName());
 
         // If authenticated user is null (so there is no auth), redirect to main page
         if (userDB == null || project == null) {
@@ -275,11 +275,11 @@ public class ProjectController {
      *
      * @param projectName is taken from a hidden html text field
      * @param text        is taken from a html text field
-     * @param user        is assigned automatically using thymeleaf
+     * @param auth        is assigned automatically using thymeleaf
      * @return project comments page with new comment
      */
     @PostMapping("/sendComment")
-    public String sendComment(@RequestParam("projectName") String projectName, @RequestParam("text") String text, Principal user, RedirectAttributes redirectAttributes) {
+    public String sendComment(@RequestParam String projectName, @RequestParam String text, Principal auth, RedirectAttributes redirectAttributes) {
 
         if (text.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Your comment should have any text!");
@@ -288,15 +288,15 @@ public class ProjectController {
 
         Project project = projectInterface.findByTitle(projectName);
 
-        if (user != null && project != null) {
+        if (auth != null && project != null) {
 
-            User userDB = userService.findByUsername(user.getName());
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
             }
 
-            Comment comment = new Comment(user.getName(), text);
+            Comment comment = new Comment(auth.getName(), text);
 
             project.getComments().add(comment);
             projectInterface.save(project);
@@ -308,15 +308,15 @@ public class ProjectController {
     /**
      * This function removes a comment added below project description
      *
-     * @param user        is comment's author
+     * @param auth        is comment's author
      * @param projectName is a project name
      * @param text        is a comment text
      * @param ts          is a comment's timestamp (when comment was added)
      * @return project page
      */
     @PostMapping("/deleteComment")
-    public String deleteComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
-        User userDB = userService.findByUsername(user.getName());
+    public String deleteComment(Principal auth, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+        User userDB = userService.findByUsername(auth.getName());
 
         if (userDB.isBanned()) {
             return "sections/users/banned";
@@ -330,10 +330,10 @@ public class ProjectController {
 
         Optional<Comment> comment = project.getComments()
                 .stream()
-                .filter(projectComment -> projectComment.getAuthor().equals(user.getName()) && projectComment.getText().equals(text))
+                .filter(projectComment -> projectComment.getAuthor().equals(auth.getName()) && projectComment.getText().equals(text))
                 .findFirst();
 
-        if (comment.isPresent() && comment.get().getAuthor().equals(user.getName())) {
+        if (comment.isPresent() && comment.get().getAuthor().equals(auth.getName())) {
             project.getComments().remove(comment.get());
             projectInterface.save(project);
         } else {
@@ -347,29 +347,29 @@ public class ProjectController {
     /**
      * This function edits a comment in a project (changes comment's context & marks it as edited)
      *
-     * @param user        is an author's authentication
+     * @param auth        is an author's authentication
      * @param projectName is project's name required to find a forum post in the database
      * @param text        is a new text that will be set to a comment
      * @param commentKey  is a comment key required to find a comment in a list of comments added to a post
      * @return project page with edited comment contents
      */
     @PostMapping("/editProjectComment")
-    public String editComment(Principal user, @RequestParam("projectName") String projectName, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+    public String editComment(Principal auth, @RequestParam("projectName") String projectName, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
 
         Project project = projectInterface.findByTitle(projectName);
 
-        if (user == null || project == null) {
+        if (auth == null || project == null) {
             return "redirect:/";
         }
 
-        User userDB = userService.findByUsername(user.getName());
+        User userDB = userService.findByUsername(auth.getName());
 
         if (userDB.isBanned()) {
             return "sections/users/banned";
         }
 
         project.getComments().forEach(comment -> {
-            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(user.getName())) {
+            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(auth.getName())) {
                 comment.setText(text);
                 comment.setEdited(true);
                 projectInterface.save(project);
@@ -399,7 +399,7 @@ public class ProjectController {
             @RequestParam("description") String description,
             RedirectAttributes redirectAttributes) {
 
-        if (techs.size() == 0 || roles.size() == 0) {
+        if (techs == null || roles == null || techs.size() == 0 || roles.size() == 0) {
             redirectAttributes.addFlashAttribute("msg", "Information about technologies or roles can't be empty!");
             return "redirect:/projects/" + title;
         }
@@ -410,7 +410,7 @@ public class ProjectController {
             project.setTitle(newTitle);
             project.setGithubProjectLink(repoLink);
             project.setDescription(description);
-            project.setRequirements(techs);
+            project.setTechnologies(techs);
             project.setRequiredRoles(roles);
             projectInterface.save(project);
         } else {

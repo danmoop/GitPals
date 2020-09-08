@@ -74,7 +74,8 @@ public class IndexController {
             String country = properties.get("location") == null ? null : properties.get("location").toString();
             String bio = properties.get("bio") == null ? null : properties.get("bio").toString();
 
-            /** When authentication exists, however, there is no such user in the database,
+            /*
+             *  When authentication exists, however, there is no such user in the database,
              *  it means that this user has just logged in for the first time
              */
             if (userService.findByUsername(user.getName()) == null) {
@@ -137,10 +138,6 @@ public class IndexController {
         model.addAttribute("page", page);
         model.addAttribute("usersRegistered", userService.findAll().size());
 
-        if (user != null) {
-            model.addAttribute("key", keyStorageInterface.findByUsername(user.getName()).getKey());
-        }
-
         return "sections/users/index";
     }
 
@@ -151,15 +148,15 @@ public class IndexController {
      * @return html page with user's principal data (username, etc)
      */
     @GetMapping("/dashboard")
-    public String dashboardPage(Principal user, Model model) {
+    public String dashboardPage(Principal auth, Model model) {
         // if user is not logged in - redirect to index
-        if (user == null) {
+        if (auth == null) {
             return "redirect:/";
         }
 
         // user is logged in
         else {
-            User userDB = userService.findByUsername(user.getName());
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -167,7 +164,7 @@ public class IndexController {
 
             model.addAttribute("dbUser", userDB);
             model.addAttribute("userObject", new User());
-            model.addAttribute("GithubUser", user);
+            model.addAttribute("GithubUser", auth);
 
             return "sections/users/dashboard";
         }
@@ -186,40 +183,30 @@ public class IndexController {
     }
 
     /**
-     * This request is handled when user wants to submit a bug
-     *
-     * @return html page where users can report about a bug
-     */
-    @GetMapping("/bugReport")
-    public String bugReport() {
-        return "sections/bugReport";
-    }
-
-    /**
      * This request returns a page, which displays a user's auth key, which
      * is required for the authentication via the mobile app
      *
-     * @param user  is a current user's authentication
+     * @param auth  is a current user's authentication
      * @param model is where the key is added
      * @return with, which displays user's key
      */
     @GetMapping("/requestAuthKey")
-    public String getAuthKey(Principal user, Model model) {
-        if (user == null) {
+    public String getAuthKey(Principal auth, Model model) {
+        if (auth == null) {
             model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
 
             return "sections/users/getAuthKey";
         } else {
-            User userDB = userService.findByUsername(user.getName());
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
             }
 
-            String key = keyStorageInterface.findByUsername(user.getName()).getKey();
+            String key = keyStorageInterface.findByUsername(auth.getName()).getKey();
 
             if (key == null) {
-                KeyStorage ks = new KeyStorage(user.getName());
+                KeyStorage ks = new KeyStorage(auth.getName());
                 keyStorageInterface.save(ks);
                 model.addAttribute("key", ks.getKey());
                 return "sections/users/getAuthKey";
@@ -231,18 +218,26 @@ public class IndexController {
         }
     }
 
+    /**
+     * This function checks if data in user's GitHub profile has changed
+     * If so, data will also change in the user's GitPals profile
+     *
+     * @param userDB     is a user object from the database
+     * @param properties is information extracted from GitHub profile
+     */
     private void checkIfDataHasChanged(User userDB, LinkedHashMap<String, Object> properties) {
+        boolean shouldSaveChanges = false;
 
         // Email
         if (properties.get("email") == null) {
             if (userDB.getEmail() != null) {
                 userDB.setEmail(null);
-                userService.save(userDB);
+                shouldSaveChanges = true;
             }
         } else {
             if (userDB.getEmail() == null || !userDB.getEmail().equals(properties.get("email").toString())) {
                 userDB.setEmail(properties.get("email").toString());
-                userService.save(userDB);
+                shouldSaveChanges = true;
             }
         }
 
@@ -250,12 +245,12 @@ public class IndexController {
         if (properties.get("location") == null) {
             if (userDB.getCountry() != null) {
                 userDB.setCountry(null);
-                userService.save(userDB);
+                shouldSaveChanges = true;
             }
         } else {
             if (userDB.getCountry() == null || !userDB.getCountry().equals(properties.get("location").toString())) {
                 userDB.setCountry(properties.get("location").toString());
-                userService.save(userDB);
+                shouldSaveChanges = true;
             }
         }
 
@@ -263,12 +258,12 @@ public class IndexController {
         if (properties.get("bio") == null) {
             if (userDB.getBio() != null) {
                 userDB.setBio(null);
-                userService.save(userDB);
+                shouldSaveChanges = true;
             }
         } else {
             if (userDB.getBio() == null || !userDB.getBio().equals(properties.get("bio").toString())) {
                 userDB.setBio(properties.get("bio").toString());
-                userService.save(userDB);
+                shouldSaveChanges = true;
             }
         }
 
@@ -276,12 +271,22 @@ public class IndexController {
         long currentTime = new Date().getTime();
         if (currentTime - userDB.getLastOnlineDate() >= ONE_DAY) {
             userDB.setLastOnlineDate(currentTime);
+            shouldSaveChanges = true;
+        }
+
+        if (shouldSaveChanges) {
             userService.save(userDB);
         }
     }
 
+    /**
+     * This function counts a number of new unread messages received by another users
+     *
+     * @param user is a user object in the database
+     * @return number of messages that are unread
+     */
     private int countUnreadMessages(User user) {
-        int res = 0;
+        int unreadMessages = 0;
 
         Map<String, List<Message>> dialogs = user.getDialogs();
 
@@ -290,11 +295,11 @@ public class IndexController {
 
             for (Message message : messages) {
                 if (!message.isRead() && !message.getAuthor().equals(user.getUsername())) {
-                    res++;
+                    unreadMessages++;
                 }
             }
         }
 
-        return res;
+        return unreadMessages;
     }
 }

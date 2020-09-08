@@ -114,7 +114,7 @@
                         <div class="div-center">
                             <h2>Become a better developer with <span class="font-weight-bold">GitPals</span></h2>
                             <h6>We are connecting you with other developers, whose projects match your skills. Choose any
-                                project that matches your requirements and start your path in cooperative development</h6>
+                                project that matches your skills and start your path in cooperative development</h6>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -139,7 +139,7 @@
                             <p style="margin: 0;">by <a th:href="${'/users/' + projects[i].authorName}">[[${projects[i].authorName}]]</a></p>
                         </div>
                         <div class="card-body">
-                            <p class="card-text font-weight-bold">[[${projects[i].requirements}]]</p>
+                            <p class="card-text font-weight-bold">[[${projects[i].technologies}]]</p>
 
                             <div style="margin-bottom: 25px;" th:if="${#lists.size(projects[i].requiredRoles) != 0}">
                                 Wanted:

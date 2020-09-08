@@ -98,7 +98,7 @@ public class SearchAPIController {
     public List<Project> getSortedProjects(@RequestBody List<String> requirements) {
         return projectInterface.findAll().stream()
                 .filter(project -> requirements.stream()
-                        .anyMatch(req -> project.getRequirements().contains(req.toLowerCase())))
+                        .anyMatch(req -> project.getTechnologies().contains(req.toLowerCase())))
                 .collect(Collectors.toList());
     }
 

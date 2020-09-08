@@ -51,7 +51,7 @@
                         <br>
                         <u>Technologies: <a href="#/" onclick="addTech();">(Add)</a></u>
                         <ul style="padding: 0; margin: 0;" id="techs">
-                            <li th:id="${req}" th:each="req: ${project.requirements}" style="list-style:none;">
+                            <li th:id="${req}" th:each="req: ${project.technologies}" style="list-style:none;">
                                 <div class="row">
                                     <div class="col" style="display: inline-flex;">
                                         <input th:name="tech" type="text" class="form-control" th:value="*{req}">
@@ -120,7 +120,7 @@
                     <div class="fw-600">
                         The project uses:
                     </div>
-                    <span>[[${project.requirements}]]</span>
+                    <span>[[${project.technologies}]]</span>
                     <br/><br/>
 
                     <div class="fw-600">

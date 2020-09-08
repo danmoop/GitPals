@@ -45,11 +45,6 @@ public class AdminAPI {
             return Response.FAILED;
         }
 
-        userService.findAll().forEach(user -> {
-            user.setAdmin(false);
-            userService.save(user);
-        });
-
         return Response.OK;
     }
 

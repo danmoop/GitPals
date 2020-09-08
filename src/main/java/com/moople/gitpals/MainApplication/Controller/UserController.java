@@ -35,11 +35,11 @@ public class UserController {
      * @return user's dashboard html page with all the data about the user
      **/
     @GetMapping("/users/{username}")
-    public String findUser(@PathVariable String username, Model model, Principal user) {
+    public String findUser(@PathVariable String username, Model model, Principal auth) {
         User userDB = userService.findByUsername(username);
 
-        if (user != null) {
-            User loggedUser = userService.findByUsername(user.getName());
+        if (auth != null) {
+            User loggedUser = userService.findByUsername(auth.getName());
 
             if (loggedUser.isBanned()) {
                 return "sections/users/banned";
@@ -53,7 +53,7 @@ public class UserController {
                     .collect(Collectors.toList());
 
             try {
-                model.addAttribute("LoggedUser", user.getName());
+                model.addAttribute("LoggedUser", auth.getName());
             } catch (NullPointerException e) {
                 model.addAttribute("LoggedUser", null);
             }
@@ -78,7 +78,7 @@ public class UserController {
     public String updateTechs(Principal auth, @RequestParam(value = "skill", required = false) Set<String> skills, RedirectAttributes redirectAttributes) {
         User user = userService.findByUsername(auth.getName());
 
-        if (skills == null) {
+        if (skills == null || skills.size() == 0) {
             redirectAttributes.addFlashAttribute("error", "You should have at least one skill!");
             return "redirect:/dashboard";
         }
@@ -87,10 +87,17 @@ public class UserController {
                 .filter(s -> !s.trim().equals(""))
                 .collect(Collectors.toSet());
 
+        if (skills.size() == 0) {
+            redirectAttributes.addFlashAttribute("error", "You should have at least one skill!");
+            return "redirect:/dashboard";
+        }
+
         if (user != null) {
             user.setSkillList(skills);
             userService.save(user);
         }
+
+        redirectAttributes.addFlashAttribute("message", "Saved!");
 
         return "redirect:/dashboard";
     }
@@ -98,16 +105,16 @@ public class UserController {
     /**
      * This function removes a global message from a user's home page
      *
-     * @param user is a user's authentication
+     * @param auth is a user's authentication
      * @return to the home page
      */
     @PostMapping("/setGlobalMessageAsSeen")
-    public String setGlobalMessageAsSeen(Principal user) {
-        if (user == null) {
+    public String setGlobalMessageAsSeen(Principal auth) {
+        if (auth == null) {
             return "redirect:/";
         }
 
-        User userDB = userService.findByUsername(user.getName());
+        User userDB = userService.findByUsername(auth.getName());
         userDB.setHasSeenGlobalMessage(true);
         userService.save(userDB);
 

@@ -42,20 +42,19 @@ public class MessageController {
      * @return html page with users' messages
      */
     @GetMapping("/messages")
-    public String messages(Principal user, Model model) {
+    public String messages(Principal auth, Model model) {
 
         // if users are not logged in - they can't see any messages -> redirect them to index page
-        if (user != null) {
-            User userDB = userService.findByUsername(user.getName());
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
             }
 
-            Map<String, List<Message>> messages = userDB.getDialogs();
+            Map<String, List<Message>> dialogs = userDB.getDialogs();
 
-            // When reversed, add this message list to html page and then display it
-            model.addAttribute("userMessages", messages);
+            model.addAttribute("userMessages", dialogs);
 
             return "sections/users/viewMessages";
         }
@@ -122,9 +121,12 @@ public class MessageController {
         User sender = userService.findByUsername(message.getAuthor());
         User recipient = userService.findByUsername(message.getRecipient());
 
+        // Message destination includes the user's personal key, so the message goes to the right person
         String senderDestination = "/topic/messages/" + keyStorage.findByUsername(sender.getUsername()).getKey();
         String recipientDestination = "/topic/messages/" + keyStorage.findByUsername(recipient.getUsername()).getKey();
 
+        // If recipient has a dialog page opened, it means they instantly read the new message (marked as 'read')
+        // If recipient is not online or on the dialog page right now, the message will be marked as 'unread'
         boolean isRecipientPresent = userRegistry.findSubscriptions(simpSubscription -> simpSubscription
                 .getDestination().equals(recipientDestination)).size() != 0;
 
@@ -132,9 +134,11 @@ public class MessageController {
             message.setRead(true);
         }
 
+        // Send message to both sender & recipient
         messagingTemplate.convertAndSend(senderDestination, message);
         messagingTemplate.convertAndSend(recipientDestination, message);
 
+        // Extract messages and add the new message, put this list to both users' objects and save changed to db
         List<Message> messages = sender.getDialogs().getOrDefault(recipient.getUsername(), new ArrayList<>());
         messages.add(message);
 

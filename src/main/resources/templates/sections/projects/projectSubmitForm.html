@@ -38,7 +38,9 @@
             <p>Give some information about your project. What is this project? What technologies does it use? Describe your
                 knowledge and mention what you expect to get from the audience.</p>
 
-            <h5 th:if="${warning}" class="danger font-weight-bold">[[${warning}]]!</h5>
+            <div th:if="${warning}" class="alert alert-danger" role="alert">
+                [[${warning}]]
+            </div>
 
             <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
                 <input type="text" required th:field="*{title}" class="form-control" placeholder="Project title"
