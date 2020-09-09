@@ -57,17 +57,13 @@
                         <p>Select technologies, which are used in your project</p>
                         <div id="skills">
                             <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
-                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 2"/>
-                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 3"/>
                         </div>
-                        <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addSkill();">Add Another Requirement</button>
+                        <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addSkill();">Add Another Technology</button>
                     </div>
                     <div class="col">
                         <p>Select required roles for your project (e.g - Designer/Programmer)</p>
                         <div id="roles">
                             <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 1"/>
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 2"/>
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 3"/>
                         </div>
                         <button type="button" class="btn btn-light btn-pill" style="margin-top: 10px;" onclick="addRole();">Add Another Role</button>
                     </div>
@@ -80,8 +76,8 @@
     </section>
 
     <script>
-        var i = 4;
-        var s = 4;
+        var i = 2;
+        var s = 2;
 
         addRole = () => {
             var anotherRole = `<input type="text" name="role" class="form-control" style="margin-top: 10px;" placeholder="Role ${i++}"/>`;

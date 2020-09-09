@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -164,14 +165,18 @@ public class SearchController {
                 .collect(Collectors.toList());
 
         List<Project> allProjects = projectInterface.findAll();
-        List<String> matchProjects = new ArrayList<>();
+        Set<String> matchProjects = new HashSet<>();
 
         for (Project p : allProjects) {
-            List<String> projectRequirements = p.getTechnologies().stream().map(String::toLowerCase).collect(Collectors.toList());
+            boolean isProjectAdded = false;
 
-            for (String requirement : data) {
-                if (projectRequirements.contains(requirement.toLowerCase())) {
-                    matchProjects.add(p.getTitle());
+            for (int i = 0; i < data.size() && !isProjectAdded; i++) {
+                for (String projectTechnology : p.getTechnologies()) {
+                    if (projectTechnology.toLowerCase().contains(data.get(i).toLowerCase())) {
+                        matchProjects.add(p.getTitle());
+                        isProjectAdded = true;
+                        break;
+                    }
                 }
             }
         }

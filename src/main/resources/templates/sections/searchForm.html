@@ -68,8 +68,6 @@
                         <form th:action="@{/findUsersBySkills}" method="post">
                             <div id="userSkills">
                                 <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 1"/>
-                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 2"/>
-                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 3"/>
                             </div>
                             <a href="#/" onclick="addUserSkill();">Add another</a>
                             <input type="submit" class="btn btn-outline-primary btn-pill" style="margin: 15px;" value="Find" />
@@ -85,8 +83,6 @@
                         <form th:action="@{/sortProjects}" method="post">
                             <div id="projectTechs">
                                 <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
-                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 2"/>
-                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 3"/>
                             </div>
                             <a href="#/" onclick="addProjectTech();">Add another</a>
                             <input type="submit" class="btn btn-outline-primary btn-pill" style="margin: 15px;" value="Find" />
@@ -98,8 +94,8 @@
     </section>
 
     <script>
-        var i = 4;
-        var ii = 4;
+        var i = 2;
+        var ii = 2;
 
         addUserSkill = () => {
             var skill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill ${i++}"/>`;
