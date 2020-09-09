@@ -125,28 +125,31 @@ public class MessageController {
         String senderDestination = "/topic/messages/" + keyStorage.findByUsername(sender.getUsername()).getKey();
         String recipientDestination = "/topic/messages/" + keyStorage.findByUsername(recipient.getUsername()).getKey();
 
+        // Send message to both sender & recipient
+        messagingTemplate.convertAndSend(recipientDestination, message);
+        messagingTemplate.convertAndSend(senderDestination, message);
+
         // If recipient has a dialog page opened, it means they instantly read the new message (marked as 'read')
         // If recipient is not online or on the dialog page right now, the message will be marked as 'unread'
         boolean isRecipientPresent = userRegistry.findSubscriptions(simpSubscription -> simpSubscription
                 .getDestination().equals(recipientDestination)).size() != 0;
 
-        if (isRecipientPresent) {
-            message.setRead(true);
-        }
-
-        // Send message to both sender & recipient
-        messagingTemplate.convertAndSend(senderDestination, message);
-        messagingTemplate.convertAndSend(recipientDestination, message);
-
-        // Extract messages and add the new message, put this list to both users' objects and save changed to db
         List<Message> messages = sender.getDialogs().getOrDefault(recipient.getUsername(), new ArrayList<>());
+        message.setRead(true);
         messages.add(message);
-
         sender.getDialogs().put(recipient.getUsername(), messages);
-        recipient.getDialogs().put(sender.getUsername(), messages);
-
         userService.save(sender);
-        userService.save(recipient);
+
+        if (isRecipientPresent) {
+            recipient.getDialogs().put(sender.getUsername(), messages);
+            userService.save(recipient);
+        } else {
+            message.setRead(false);
+            messages = recipient.getDialogs().getOrDefault(sender.getUsername(), new ArrayList<>());
+            messages.add(message);
+            recipient.getDialogs().put(sender.getUsername(), messages);
+            userService.save(recipient);
+        }
 
         return message;
     }
