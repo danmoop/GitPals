@@ -126,6 +126,13 @@ svg:not(:hover) * {
     box-shadow: 6px 6px 16px 0 rgba(240, 82, 82, 0.71), -6px -6px 26px 0 rgba(255,255,255,0.83);
 }
 
+.brief-description {
+    display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+}
+
 #snackbar {
   visibility: hidden; /* Hidden by default. Visible on click */
   min-width: 250px; /* Set a default minimum width */
