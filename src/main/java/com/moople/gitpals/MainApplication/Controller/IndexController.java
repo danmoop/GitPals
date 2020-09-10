@@ -116,6 +116,7 @@ public class IndexController {
 
         if (projectsAmount <= PROJECTS_PER_PAGE) {
             projects = allProjects;
+            Collections.reverse(projects);
         } else {
             projects = new ArrayList<>();
 
