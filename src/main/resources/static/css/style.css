@@ -73,11 +73,6 @@ h1,h2,h3,h4,h5,h6,p {
     color: white;
 }
 
-
-.fw-600 {
-    font-weight: 600;
-}
-
 .inline-center {
     display: inline-flex;
     max-width: 60%;
@@ -114,13 +109,11 @@ svg:not(:hover) * {
 
 .neoButton {
     border: 1px solid rgba(255,255,255, 0.2);
-    border-radius: 12px;
     box-shadow: 6px 6px 16px 0 rgba(217, 210, 200, 0.71), -6px -6px 26px 0 rgba(255,255,255,0.83);
 }
 
 .neoButton:hover {
 	border: 1px solid rgba(255,255,255, 0.2);
-	border-radius: 12px;
 	box-shadow: inset 6px 6px 16px 0 rgba(217, 210, 200, 0.71), inset -6px -6px 26px 0 rgba(255,255,255,0.83);
 }
 

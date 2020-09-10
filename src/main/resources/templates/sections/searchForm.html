@@ -19,49 +19,12 @@
     </nav>
     <section class="container text-center">
 
-        <h3 th:if="msg" style="color: #e74c3c;"><u>[[${msg}]]</u></h3>
-
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Find forum posts</h4>
-                <form th:action="@{/findForumPosts}" method="post">
-                    <input class="form-control" required th:name="post_name" type="text" placeholder="Post title" />
-                    <br/>
-                    <input class="btn btn-primary btn-pill" type="submit" value="Find" />
-                </form>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Find user by username</h4>
-                        <form th:action="@{/findUser}" method="post">
-                            <input class="form-control" required th:name="username" type="text" placeholder="Username" />
-                            <br/>
-                            <input class="btn btn-primary btn-pill" type="submit" value="Find" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Find project by project name</h4>
-                        <form th:action="@{/findProject}" method="post">
-                            <input class="form-control" required th:name="project_name" type="text" placeholder="Project name" />
-                            <br/>
-                            <input class="btn btn-primary btn-pill" type="submit" value="Find" />
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div th:if="${msg}" class="alert alert-danger" role="alert">
+            [[${msg}]]
         </div>
 
-        <br/>
         <div class="row">
-            <div class="col">
+            <div class="col mt">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Find users that know specific skills</h4>
@@ -75,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col mt">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Find projects by their technologies</h4>
@@ -89,6 +52,44 @@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mt">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Find user by username</h4>
+                        <form th:action="@{/findUser}" method="post">
+                            <input class="form-control" required th:name="username" type="text" placeholder="Username" />
+                            <br/>
+                            <input class="btn btn-primary btn-pill" type="submit" value="Find" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col mt">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Find project by project name</h4>
+                        <form th:action="@{/findProject}" method="post">
+                            <input class="form-control" required th:name="project_name" type="text" placeholder="Project name" />
+                            <br/>
+                            <input class="btn btn-primary btn-pill" type="submit" value="Find" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt">
+            <div class="card-body">
+                <h4 class="card-title">Find forum posts</h4>
+                <form th:action="@{/findForumPosts}" method="post">
+                    <input class="form-control" required th:name="post_name" type="text" placeholder="Post title" />
+                    <br/>
+                    <input class="btn btn-primary btn-pill" type="submit" value="Find" />
+                </form>
             </div>
         </div>
     </section>

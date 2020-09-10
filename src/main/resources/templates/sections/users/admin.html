@@ -192,7 +192,7 @@
                     </form>
 
                     <ul th:if="${activeWeeklyUsers != null}" style="list-style: none; padding-left: 0;">
-                        Active Users Per Day ([[${#lists.size(activeWeeklyUsers)}]])
+                        Active Users Per Week ([[${#lists.size(activeWeeklyUsers)}]])
                         <li th:each="user: ${activeWeeklyUsers}">
                             <span class="fw-600">[[${user}]]</span>
                         </li>
