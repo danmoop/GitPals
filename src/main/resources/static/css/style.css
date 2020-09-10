@@ -24,6 +24,10 @@
     display: inline-grid;
 }
 
+projectItem .card-header { 
+    border-top: solid 2px #fff; 
+}
+
 .row-column {
     width: 100%;
 }
