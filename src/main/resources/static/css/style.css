@@ -24,7 +24,7 @@
     display: inline-grid;
 }
 
-projectItem .card-header { 
+.projectItem .card-header {
     border-top: solid 2px #fff; 
 }
 

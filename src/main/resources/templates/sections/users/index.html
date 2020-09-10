@@ -134,23 +134,23 @@
             </div>
 
             <ul class="projectUl animated fadeIn">
-                <li class="projectItem" th:each="i : ${#numbers.sequence(projects.size() - 1, 0, -1)}">
+                <li class="projectItem" th:each="project: ${projects}">
                     <div class="card text-center">
                         <div class="card-header">
-                            <h5 class="font-weight-bold">[[${projects[i].title}]]</h5>
-                            <p style="margin: 0;">by <a th:href="${'/users/' + projects[i].authorName}">[[${projects[i].authorName}]]</a></p>
+                            <h5 class="font-weight-bold">[[${project.title}]]</h5>
+                            <p style="margin: 0;">by <a th:href="${'/users/' + project.authorName}">[[${project.authorName}]]</a></p>
                         </div>
                         <div class="card-body">
-                            <p class="card-text font-weight-bold">[[${projects[i].technologies}]]</p>
+                            <p class="card-text font-weight-bold">[[${project.technologies}]]</p>
 
-                            <div style="margin-bottom: 25px;" th:if="${#lists.size(projects[i].requiredRoles) != 0}">
+                            <div style="margin-bottom: 25px;" th:if="${#lists.size(project.requiredRoles) != 0}">
                                 Wanted:
-                                <span class="badge badge-light" th:each="role: ${projects[i].requiredRoles}" style="margin-left: 2px; margin-right: 2px;">
+                                <span class="badge badge-light" th:each="role: ${project.requiredRoles}" style="margin-left: 2px; margin-right: 2px;">
                                     [[${role}]]
                                 </span>
                             </div>
-                            <p class="brief-description">[[${projects[i].description}]]</p>
-                            <a th:href="${'/projects/' + projects[i].title}">
+                            <p class="brief-description">[[${project.description}]]</p>
+                            <a th:href="${'/projects/' + project.title}">
                                 <button type="button" class="btn btn-primary btn-pill">Explore</button>
                             </a>
                         </div>
