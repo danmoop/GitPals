@@ -134,12 +134,16 @@ public class MessageController {
         boolean isRecipientPresent = userRegistry.findSubscriptions(simpSubscription -> simpSubscription
                 .getDestination().equals(recipientDestination)).size() != 0;
 
+
+        // The user who sends the message has it always marked as 'read', since it is outcoming
         List<Message> messages = sender.getDialogs().getOrDefault(recipient.getUsername(), new ArrayList<>());
         message.setRead(true);
         messages.add(message);
         sender.getDialogs().put(recipient.getUsername(), messages);
         userService.save(sender);
 
+        // If recipient has the dialog page opened, the message is marked as 'read' instantly
+        // If recipient is not on a dialog page, the message is marked as 'unread'
         if (isRecipientPresent) {
             recipient.getDialogs().put(sender.getUsername(), messages);
             userService.save(recipient);

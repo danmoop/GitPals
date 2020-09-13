@@ -104,7 +104,7 @@ public class ProjectController {
                     roles
             );
 
-            userDB.getProjects().add(userProject.getTitle());
+            userDB.getSubmittedProjects().add(userProject.getTitle());
 
             userService.save(userDB);
             projectInterface.save(userProject);
@@ -170,8 +170,8 @@ public class ProjectController {
         Project project = projectInterface.findByTitle(link);
 
         // Users that already submitted can't submit another time, only once per project
-        if (!project.getUsersSubmitted().contains(auth.getName())) {
-            project.getUsersSubmitted().add(userForApply.getUsername());
+        if (!project.getAppliedUsers().contains(auth.getName())) {
+            project.getAppliedUsers().add(userForApply.getUsername());
             userForApply.getProjectsAppliedTo().add(project.getTitle());
 
             projectInterface.save(project);
@@ -203,8 +203,8 @@ public class ProjectController {
             return "sections/users/banned";
         }
 
-        if (projectDB.getUsersSubmitted().contains(userDB.getUsername())) {
-            projectDB.getUsersSubmitted().remove(userDB.getUsername());
+        if (projectDB.getAppliedUsers().contains(userDB.getUsername())) {
+            projectDB.getAppliedUsers().remove(userDB.getUsername());
             userDB.getProjectsAppliedTo().remove(projectDB.getTitle());
 
             projectInterface.save(projectDB);
@@ -240,15 +240,15 @@ public class ProjectController {
         if (userDB.getUsername().equals(project.getAuthorName())) {
             projectInterface.delete(project);
 
-            if (userDB.getProjects().contains(project.getTitle())) {
-                userDB.getProjects().remove(project.getTitle());
+            if (userDB.getSubmittedProjects().contains(project.getTitle())) {
+                userDB.getSubmittedProjects().remove(project.getTitle());
 
                 userService.save(userDB);
             }
 
             // Remove project from everyone who applied to this project
             // First we stream, it returns list of Strings, map them to User object
-            List<User> allUsers = project.getUsersSubmitted().stream()
+            List<User> allUsers = project.getAppliedUsers().stream()
                     .map(submittedUser -> userService.findByUsername(submittedUser))
                     .collect(Collectors.toList());
 

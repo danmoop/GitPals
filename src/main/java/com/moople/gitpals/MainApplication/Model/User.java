@@ -22,12 +22,12 @@ public class User {
     private String email;
     private String country;
     private String bio;
-    private String GithubAccountLink;
+    private String githubAccountLink;
     private String avatarURL;
     private String timezone;
     private Set<String> skillList;
     private Map<String, List<Message>> dialogs;
-    private List<String> projects;
+    private List<String> submittedProjects;
     private List<String> projectsAppliedTo;
     private long lastOnlineDate;
     private boolean notificationsEnabled;
@@ -36,19 +36,18 @@ public class User {
     private boolean isAdmin;
 
     /**
-     * @param country   & info are taken from GitHub account
-     * @param projects, projectsAppliedTo & messages are lists of objects, empty by default.
+     * @param country & info are taken from GitHub account
      */
     public User(String username, String githubAccountLink, String email, String country, String bio) {
         this.username = username;
-        this.GithubAccountLink = githubAccountLink;
+        this.githubAccountLink = githubAccountLink;
         this.skillList = new HashSet<>();
         this.email = email;
         this.country = country;
         this.bio = bio;
 
         this.dialogs = new HashMap<>();
-        this.projects = new ArrayList<>();
+        this.submittedProjects = new ArrayList<>();
         this.projectsAppliedTo = new ArrayList<>();
 
         this.notificationsEnabled = true;

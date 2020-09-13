@@ -163,14 +163,13 @@ public class AdminController {
             return "redirect:/admin";
         }
 
-        user.getProjects().stream()
+        user.getSubmittedProjects().stream()
                 .map(project -> projectService.findByTitle(project))
                 .forEach(project -> {
-                    //notifyAppliedUsers(project);
                     projectService.delete(project);
                 });
 
-        user.getProjects().clear();
+        user.getSubmittedProjects().clear();
         userService.save(user);
 
         redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "All projects by " + username + " were deleted");

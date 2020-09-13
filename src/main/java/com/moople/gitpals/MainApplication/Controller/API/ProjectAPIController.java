@@ -93,11 +93,11 @@ public class ProjectAPIController {
             return Response.FAILED;
         }
 
-        if (project.getUsersSubmitted().contains(user.getUsername())) {
-            project.getUsersSubmitted().remove(user.getUsername());
+        if (project.getAppliedUsers().contains(user.getUsername())) {
+            project.getAppliedUsers().remove(user.getUsername());
             user.getProjectsAppliedTo().remove(projectName);
         } else {
-            project.getUsersSubmitted().add(user.getUsername());
+            project.getAppliedUsers().add(user.getUsername());
             user.getProjectsAppliedTo().add(projectName);
         }
 
