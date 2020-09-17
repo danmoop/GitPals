@@ -26,11 +26,10 @@ public class User {
     private String avatarURL;
     private String timezone;
     private Set<String> skillList;
-    private Map<String, List<Message>> dialogs;
+    private Map<String, DialogPair<Integer, List<Message>>> dialogs;
     private List<String> submittedProjects;
     private List<String> projectsAppliedTo;
     private long lastOnlineDate;
-    private boolean notificationsEnabled;
     private boolean banned;
     private boolean hasSeenGlobalMessage;
     private boolean isAdmin;
@@ -50,7 +49,6 @@ public class User {
         this.submittedProjects = new ArrayList<>();
         this.projectsAppliedTo = new ArrayList<>();
 
-        this.notificationsEnabled = true;
         this.hasSeenGlobalMessage = false;
         this.banned = false;
         this.isAdmin = false;

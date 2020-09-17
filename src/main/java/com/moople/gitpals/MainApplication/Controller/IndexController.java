@@ -289,16 +289,8 @@ public class IndexController {
     private int countUnreadMessages(User user) {
         int unreadMessages = 0;
 
-        Map<String, List<Message>> dialogs = user.getDialogs();
-
-        for (Map.Entry<String, List<Message>> entry : dialogs.entrySet()) {
-            List<Message> messages = entry.getValue();
-
-            for (Message message : messages) {
-                if (!message.isRead() && !message.getAuthor().equals(user.getUsername())) {
-                    unreadMessages++;
-                }
-            }
+        for(Map.Entry<String, DialogPair<Integer, List<Message>>> entry: user.getDialogs().entrySet()) {
+            unreadMessages += entry.getValue().getUnreadMessages();
         }
 
         return unreadMessages;

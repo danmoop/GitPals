@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.DialogPair;
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
@@ -52,7 +53,7 @@ public class MessageController {
                 return "sections/users/banned";
             }
 
-            Map<String, List<Message>> dialogs = userDB.getDialogs();
+            Map<String, DialogPair<Integer, List<Message>>> dialogs = userDB.getDialogs();
 
             model.addAttribute("userMessages", dialogs);
 
@@ -93,15 +94,14 @@ public class MessageController {
 
         User user = userService.findByUsername(auth.getName());
 
-        List<Message> messages = user.getDialogs().getOrDefault(name, new ArrayList<>());
+        DialogPair<Integer, List<Message>> pair = user.getDialogs()
+                .getOrDefault(name, new DialogPair<>(0, new ArrayList<>()));
 
-        for (Message message : messages) {
-            message.setRead(true);
-        }
+        pair.setUnreadMessages(0);
 
         userService.save(user);
 
-        model.addAttribute("messages", messages);
+        model.addAttribute("messages", pair.getMessages());
         model.addAttribute("senderName", user.getUsername());
         model.addAttribute("recipientName", name);
         model.addAttribute("key", keyStorage.findByUsername(auth.getName()).getKey());
@@ -136,22 +136,25 @@ public class MessageController {
 
 
         // The user who sends the message has it always marked as 'read', since it is outcoming
-        List<Message> messages = sender.getDialogs().getOrDefault(recipient.getUsername(), new ArrayList<>());
-        message.setRead(true);
-        messages.add(message);
-        sender.getDialogs().put(recipient.getUsername(), messages);
+        DialogPair<Integer, List<Message>> pair = sender.getDialogs()
+                .getOrDefault(recipient.getUsername(), new DialogPair<>(0, new ArrayList<>()));
+
+        pair.getMessages().add(message);
+        sender.getDialogs().put(recipient.getUsername(), pair);
         userService.save(sender);
 
         // If recipient has the dialog page opened, the message is marked as 'read' instantly
         // If recipient is not on a dialog page, the message is marked as 'unread'
         if (isRecipientPresent) {
-            recipient.getDialogs().put(sender.getUsername(), messages);
+            recipient.getDialogs().put(sender.getUsername(), pair);
             userService.save(recipient);
         } else {
-            message.setRead(false);
-            messages = recipient.getDialogs().getOrDefault(sender.getUsername(), new ArrayList<>());
-            messages.add(message);
-            recipient.getDialogs().put(sender.getUsername(), messages);
+            DialogPair<Integer, List<Message>> pair2 = recipient.getDialogs()
+                    .getOrDefault(sender.getUsername(), new DialogPair<>(0, new ArrayList<>()));
+
+            pair2.getMessages().add(message);
+            pair2.setUnreadMessages(pair2.getUnreadMessages() + 1);
+            recipient.getDialogs().put(sender.getUsername(), pair2);
             userService.save(recipient);
         }
 

@@ -26,7 +26,6 @@ public class Project {
     private Set<String> appliedUsers;
     private List<Comment> comments;
     private Set<String> requiredRoles;
-    private boolean isPromoted;
 
     public Project(String title, String description, String githubProjectLink, String authorName, Set<String> technologies, Set<String> requiredRoles) {
         this.title = title;
@@ -37,6 +36,5 @@ public class Project {
         this.appliedUsers = new HashSet<>();
         this.requiredRoles = requiredRoles;
         this.comments = new ArrayList<>();
-        this.isPromoted = false;
     }
 }
