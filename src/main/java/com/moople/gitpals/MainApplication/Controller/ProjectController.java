@@ -96,9 +96,9 @@ public class ProjectController {
 
         if (projectDB == null) {
             Project userProject = new Project(
-                    project.getTitle(),
-                    project.getDescription(),
-                    project.getGithubProjectLink(),
+                    project.getTitle().trim(),
+                    project.getDescription().trim(),
+                    project.getGithubProjectLink().trim(),
                     userService.findByUsername(auth.getName()).getUsername(),
                     skills,
                     roles
@@ -252,12 +252,8 @@ public class ProjectController {
                     .map(submittedUser -> userService.findByUsername(submittedUser))
                     .collect(Collectors.toList());
 
-            // Every applied user will receive a message about project deletion
-            //Message notification = new Message(project.getAuthorName(), "Project " + projectName + " you were applied to has been deleted", Message.TYPE.REGULAR_MESSAGE);
-
             for (User _user : allUsers) {
                 _user.getProjectsAppliedTo().remove(project.getTitle());
-                //_user.getMessages().add(notification);
 
                 userService.save(_user);
             }

@@ -6,6 +6,7 @@ import com.moople.gitpals.MainApplication.Model.AuthRequest;
 import com.moople.gitpals.MainApplication.Model.AuthResponse;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,7 @@ public class AuthAPIController {
             String token = map.get("token");
             return userInterface.findByUsername(jwtUtil.extractUsername(token));
         } catch (Exception e) {
-            return new User();
+            return Data.EMPTY_USER;
         }
     }
 }
