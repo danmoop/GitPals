@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.Configuration;
 
+import com.moople.gitpals.MainApplication.Service.Data;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,7 +15,7 @@ import java.util.function.Function;
 @Service
 public class JWTUtil {
 
-    private final String SECRET_KEY = "secret";
+    private final String SECRET_KEY = Data.ENCRYPTION_KEY;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

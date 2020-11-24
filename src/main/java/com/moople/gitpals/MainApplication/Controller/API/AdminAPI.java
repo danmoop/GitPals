@@ -1,10 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Model.*;
-import com.moople.gitpals.MainApplication.Service.ForumInterface;
-import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
-import com.moople.gitpals.MainApplication.Service.ProjectInterface;
-import com.moople.gitpals.MainApplication.Service.UserService;
+import com.moople.gitpals.MainApplication.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

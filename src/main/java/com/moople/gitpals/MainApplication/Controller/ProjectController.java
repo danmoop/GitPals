@@ -91,14 +91,13 @@ public class ProjectController {
             return "sections/users/banned";
         }
 
-        System.out.println(roles);
         Project projectDB = projectInterface.findByTitle(project.getTitle());
 
         if (projectDB == null) {
             Project userProject = new Project(
-                    project.getTitle().trim(),
-                    project.getDescription().trim(),
-                    project.getGithubProjectLink().trim(),
+                    project.getTitle(),
+                    project.getDescription(),
+                    project.getGithubProjectLink(),
                     userService.findByUsername(auth.getName()).getUsername(),
                     skills,
                     roles

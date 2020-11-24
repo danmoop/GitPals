@@ -26,7 +26,7 @@ public class User {
     private String avatarURL;
     private String timezone;
     private Set<String> skillList;
-    private Map<String, DialogPair<Integer, List<Message>>> dialogs;
+    private Map<String, DialogPair> dialogs;
     private List<String> submittedProjects;
     private List<String> projectsAppliedTo;
     private long lastOnlineDate;

@@ -28,9 +28,9 @@ public class Project {
     private Set<String> requiredRoles;
 
     public Project(String title, String description, String githubProjectLink, String authorName, Set<String> technologies, Set<String> requiredRoles) {
-        this.title = title;
-        this.description = description;
-        this.githubProjectLink = githubProjectLink;
+        this.title = title.trim();
+        this.description = description.trim();
+        this.githubProjectLink = githubProjectLink.trim();
         this.authorName = authorName;
         this.technologies = technologies;
         this.appliedUsers = new HashSet<>();

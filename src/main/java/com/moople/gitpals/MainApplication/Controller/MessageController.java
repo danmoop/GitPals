@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.DialogPair;
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Encrypt;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class MessageController {
@@ -53,7 +54,7 @@ public class MessageController {
                 return "sections/users/banned";
             }
 
-            Map<String, DialogPair<Integer, List<Message>>> dialogs = userDB.getDialogs();
+            Map<String, DialogPair> dialogs = userDB.getDialogs();
 
             model.addAttribute("userMessages", dialogs);
 
@@ -94,14 +95,19 @@ public class MessageController {
 
         User user = userService.findByUsername(auth.getName());
 
-        DialogPair<Integer, List<Message>> pair = user.getDialogs()
-                .getOrDefault(name, new DialogPair<>(0, new ArrayList<>()));
+        DialogPair pair = user.getDialogs()
+                .getOrDefault(name, new DialogPair(0, new ArrayList<>()));
 
         pair.setUnreadMessages(0);
 
         userService.save(user);
 
-        model.addAttribute("messages", pair.getMessages());
+        // Before user gets messages, they should be decrypted, sending a key personally to a user is unsafe
+        model.addAttribute("messages", pair.getMessages()
+                .stream()
+                .peek(message -> message.setContent(Encrypt.fromAES(message.getContent())))
+                .collect(Collectors.toList()));
+
         model.addAttribute("senderName", user.getUsername());
         model.addAttribute("recipientName", name);
         model.addAttribute("key", keyStorage.findByUsername(auth.getName()).getKey());
@@ -131,16 +137,17 @@ public class MessageController {
 
         // If recipient has a dialog page opened, it means they instantly read the new message (marked as 'read')
         // If recipient is not online or on the dialog page right now, the message will be marked as 'unread'
-        boolean isRecipientPresent = userRegistry.findSubscriptions(simpSubscription -> simpSubscription
+        boolean isRecipientPresent = userRegistry.findSubscriptions(subscription -> subscription
                 .getDestination().equals(recipientDestination)).size() != 0;
 
+        // The user who sends the message has it always marked as 'read', since it is outgoing
+        DialogPair pair = sender.getDialogs()
+                .getOrDefault(recipient.getUsername(), new DialogPair(0, new ArrayList<>()));
 
-        // The user who sends the message has it always marked as 'read', since it is outcoming
-        DialogPair<Integer, List<Message>> pair = sender.getDialogs()
-                .getOrDefault(recipient.getUsername(), new DialogPair<>(0, new ArrayList<>()));
-
+        message.setContent(Encrypt.toAES(message.getContent()));
         pair.getMessages().add(message);
         sender.getDialogs().put(recipient.getUsername(), pair);
+
         userService.save(sender);
 
         // If recipient has the dialog page opened, the message is marked as 'read' instantly
@@ -149,8 +156,8 @@ public class MessageController {
             recipient.getDialogs().put(sender.getUsername(), pair);
             userService.save(recipient);
         } else {
-            DialogPair<Integer, List<Message>> pair2 = recipient.getDialogs()
-                    .getOrDefault(sender.getUsername(), new DialogPair<>(0, new ArrayList<>()));
+            DialogPair pair2 = recipient.getDialogs()
+                    .getOrDefault(sender.getUsername(), new DialogPair(0, new ArrayList<>()));
 
             pair2.getMessages().add(message);
             pair2.setUnreadMessages(pair2.getUnreadMessages() + 1);
