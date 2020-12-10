@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -42,9 +43,14 @@ public class AdminAPI {
             return Response.FAILED;
         }
 
+        userService.findAll()
+                .forEach(user -> {
+                    user.setNotifications(new Pair<>(0, new HashMap<>()));
+                    userService.save(user);
+                });
+
         return Response.OK;
     }
-
 
     /**
      * This function serves as a backup for projects

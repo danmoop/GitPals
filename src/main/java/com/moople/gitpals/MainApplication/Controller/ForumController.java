@@ -76,12 +76,7 @@ public class ForumController {
             forumInterface.save(post);
         }
 
-        try {
-            model.addAttribute("userDB", userService.findByUsername(auth.getName()));
-        } catch (NullPointerException e) {
-            model.addAttribute("userDB", null);
-        }
-
+        model.addAttribute("userDB", userService.findByUsername(auth != null ? auth.getName() : null));
         model.addAttribute("post", post);
 
         return "sections/forum/viewForumPost";

@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Comment;
+import com.moople.gitpals.MainApplication.Model.Notification;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
@@ -149,68 +150,45 @@ public class ProjectController {
     /**
      * This request is handled when user wants to apply to a project
      *
-     * @param link is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
+     * @param title is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
      * @return redirect to the same project page
      **/
-    @PostMapping("/applyForProject")
-    public String applyForProject(@RequestParam("linkInput") String link, Principal auth) {
+    @PostMapping("/toggleApplication")
+    public String applyForProject(@RequestParam("linkInput") String title, Principal auth) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
         if (auth == null) {
             return "redirect:/";
         }
 
-        User userForApply = userService.findByUsername(auth.getName());
+        User applyingUser = userService.findByUsername(auth.getName());
 
-        if (userForApply.isBanned()) {
+        if (applyingUser.isBanned()) {
             return "sections/users/banned";
         }
 
-        Project project = projectInterface.findByTitle(link);
+        Project project = projectInterface.findByTitle(title);
 
         // Users that already submitted can't submit another time, only once per project
         if (!project.getAppliedUsers().contains(auth.getName())) {
-            project.getAppliedUsers().add(userForApply.getUsername());
-            userForApply.getProjectsAppliedTo().add(project.getTitle());
+            project.getAppliedUsers().add(applyingUser.getUsername());
+            applyingUser.getProjectsAppliedTo().add(project.getTitle());
 
-            projectInterface.save(project);
-            userService.save(userForApply);
+            User projectAuthor = userService.findByUsername(project.getAuthorName());
+            Notification notification = new Notification(auth.getName() + " applied to your project " + project.getTitle());
+
+            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+            userService.save(projectAuthor);
+        } else {
+            project.getAppliedUsers().remove(applyingUser.getUsername());
+            applyingUser.getProjectsAppliedTo().remove(project.getTitle());
         }
 
-        return "redirect:/projects/" + link;
-    }
+        projectInterface.save(project);
+        userService.save(applyingUser);
 
-    /**
-     * This request is handled when user wants to un-apply from a project
-     * They will be removed from applied list
-     *
-     * @param link is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
-     * @return redirect to the same project page
-     **/
-    @PostMapping("/unapplyForProject")
-    public String unapplyForProject(@RequestParam("linkInput") String link, Principal auth) {
-
-        // If authenticated user is null (so there is no auth), redirect to main page
-        if (auth == null) {
-            return "redirect:/";
-        }
-
-        Project projectDB = projectInterface.findByTitle(link);
-        User userDB = userService.findByUsername(auth.getName());
-
-        if (userDB.isBanned()) {
-            return "sections/users/banned";
-        }
-
-        if (projectDB.getAppliedUsers().contains(userDB.getUsername())) {
-            projectDB.getAppliedUsers().remove(userDB.getUsername());
-            userDB.getProjectsAppliedTo().remove(projectDB.getTitle());
-
-            projectInterface.save(projectDB);
-            userService.save(userDB);
-        }
-
-        return "redirect:/projects/" + link;
+        return "redirect:/projects/" + title;
     }
 
     /**
@@ -292,6 +270,14 @@ public class ProjectController {
             }
 
             Comment comment = new Comment(auth.getName(), text);
+
+            // Let the project author know someone has left a comment in a comment section for their project
+            User projectAuthor = userService.findByUsername(project.getAuthorName());
+            Notification notification = new Notification(auth.getName() + " has left a comment on your project " + projectName + ": " + comment.getText());
+
+            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+            userService.save(projectAuthor);
 
             project.getComments().add(comment);
             projectInterface.save(project);
@@ -380,7 +366,7 @@ public class ProjectController {
      * @param techs       is a new list of project's technologies
      * @param roles       is a new list of project's roles
      * @param newTitle    is a new title the user prompts (which can be the same as the old one)
-     * @param title       is an original project title
+     * @param currentTitle       is an original project title
      * @param description is a new description
      * @return to the project page
      */
@@ -389,18 +375,18 @@ public class ProjectController {
             @RequestParam(value = "tech", required = false) Set<String> techs,
             @RequestParam(value = "role", required = false) Set<String> roles,
             @RequestParam("newTitle") String newTitle,
-            @RequestParam("title") String title,
+            @RequestParam("title") String currentTitle,
             @RequestParam("repoLink") String repoLink,
             @RequestParam("description") String description,
             RedirectAttributes redirectAttributes) {
 
         if (techs == null || roles == null || techs.size() == 0 || roles.size() == 0) {
             redirectAttributes.addFlashAttribute("msg", "Information about technologies or roles can't be empty!");
-            return "redirect:/projects/" + title;
+            return "redirect:/projects/" + currentTitle;
         }
 
-        if (title.equals(newTitle) || projectInterface.findByTitle(newTitle) == null) {
-            Project project = projectInterface.findByTitle(title);
+        if (currentTitle.equals(newTitle) || projectInterface.findByTitle(newTitle) == null) {
+            Project project = projectInterface.findByTitle(currentTitle);
 
             project.setTitle(newTitle);
             project.setGithubProjectLink(repoLink);
@@ -410,7 +396,7 @@ public class ProjectController {
             projectInterface.save(project);
         } else {
             redirectAttributes.addFlashAttribute("msg", "A project with your new title already exists!");
-            return "redirect:/projects/" + title;
+            return "redirect:/projects/" + currentTitle;
         }
 
         return "redirect:/projects/" + newTitle;

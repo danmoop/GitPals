@@ -28,6 +28,36 @@ public class UserController {
     private ProjectInterface projectInterface;
 
     /**
+     * This request is handled when user opens their dashboard page
+     * Add attributes about user and later display them on the page
+     *
+     * @return html page with user's principal data (username, etc)
+     */
+    @GetMapping("/dashboard")
+    public String dashboardPage(Principal auth, Model model) {
+
+        // if user is not logged in - redirect to home page
+        if (auth == null) {
+            return "redirect:/";
+        }
+
+        // user is logged in
+        else {
+            User userDB = userService.findByUsername(auth.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+
+            model.addAttribute("dbUser", userDB);
+            model.addAttribute("userObject", new User());
+            model.addAttribute("GithubUser", auth);
+
+            return "sections/users/dashboard";
+        }
+    }
+
+    /**
      * This request is handled when user wants to open another user's dashboard
      *
      * @param username is taken from an address field - like "/users/danmoop"
@@ -52,12 +82,7 @@ public class UserController {
                     .map(projectName -> projectInterface.findByTitle(projectName))
                     .collect(Collectors.toList());
 
-            try {
-                model.addAttribute("LoggedUser", auth.getName());
-            } catch (NullPointerException e) {
-                model.addAttribute("LoggedUser", null);
-            }
-
+            model.addAttribute("LoggedUser", auth != null ? auth.getName() : null);
             model.addAttribute("UserObject", userService.findByUsername(username));
 
             return "sections/users/userDashboard";
@@ -65,6 +90,49 @@ public class UserController {
             model.addAttribute("user_name", username);
             return "error/userNotFound";
         }
+    }
+
+    /**
+     * This request redirect user to their notification page where they can see all the notifications
+     *
+     * @param auth  is a user's authentication object
+     * @param model is where the notification list is put so it would be displayed on the user's page
+     * @return notification page
+     */
+    @GetMapping("/notifications")
+    public String openNotificationsPage(Principal auth, Model model) {
+
+        User userDB = userService.findByUsername(auth.getName());
+
+        if (userDB == null) {
+            return "redirect:/";
+        } else if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
+
+        userDB.getNotifications().setKey(0);
+        userService.save(userDB);
+
+        model.addAttribute("notifications", userDB.getNotifications().getValue());
+
+        return "sections/users/notifications";
+    }
+
+    /**
+     * This request removes a notification
+     *
+     * @param auth            is a user's authentication object
+     * @param notificationKey is a unique key so we could find the notification in O(1)
+     * @return notification page with changes made
+     */
+    @PostMapping("/removeNotification")
+    public String removeNotification(Principal auth, @RequestParam String notificationKey) {
+        User userDB = userService.findByUsername(auth.getName());
+
+        userDB.getNotifications().getValue().remove(notificationKey);
+        userService.save(userDB);
+
+        return "redirect:/notifications";
     }
 
     /**

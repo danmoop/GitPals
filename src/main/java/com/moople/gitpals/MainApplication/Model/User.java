@@ -23,31 +23,28 @@ public class User {
     private String country;
     private String bio;
     private String githubAccountLink;
-    private String avatarURL;
-    private String timezone;
     private Set<String> skillList;
-    private Map<String, DialogPair> dialogs;
+    private Map<String, Pair<Integer, List<Message>>> dialogs;
     private List<String> submittedProjects;
     private List<String> projectsAppliedTo;
+    private Pair<Integer, Map<String, Notification>> notifications;
     private long lastOnlineDate;
     private boolean banned;
     private boolean hasSeenGlobalMessage;
     private boolean isAdmin;
 
-    /**
-     * @param country & info are taken from GitHub account
-     */
     public User(String username, String githubAccountLink, String email, String country, String bio) {
-        this.username = username;
-        this.githubAccountLink = githubAccountLink;
+        this.username = username.trim();
+        this.githubAccountLink = githubAccountLink.trim();
         this.skillList = new HashSet<>();
-        this.email = email;
-        this.country = country;
-        this.bio = bio;
+        this.email = email.trim();
+        this.country = country.trim();
+        this.bio = bio.trim();
 
         this.dialogs = new HashMap<>();
         this.submittedProjects = new ArrayList<>();
         this.projectsAppliedTo = new ArrayList<>();
+        this.notifications = new Pair<>(0, new HashMap<>());
 
         this.hasSeenGlobalMessage = false;
         this.banned = false;

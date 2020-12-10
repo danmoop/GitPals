@@ -37,7 +37,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "redirect:/1";
+        return "redirect:/page/1";
     }
 
     /**
@@ -46,7 +46,7 @@ public class IndexController {
      *
      * @return html index page with a list of projects and TECHS
      */
-    @GetMapping("/{page}")
+    @GetMapping("/page/{page}")
     public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes, @PathVariable(value = "page", required = false) int page) {
 
         int numberOfPages = projectInterface.findAll().size() / PROJECTS_PER_PAGE;
@@ -58,9 +58,9 @@ public class IndexController {
 
         // Check if the user is not trying to open a page, which doesn't exist
         if (page > numberOfPages) {
-            return "redirect:/" + numberOfPages;
+            return "redirect:/page/" + numberOfPages;
         } else if (page < 1) {
-            return "redirect:/1";
+            return "redirect:/page/1";
         }
 
         // If we are logged in, display information about us on the index page
@@ -79,15 +79,9 @@ public class IndexController {
              *  it means that this user has just logged in for the first time
              */
             if (userService.findByUsername(user.getName()) == null) {
-                userService.save(
-                        new User(
-                                user.getName(),
-                                "https://github.com/" + user.getName(),
-                                email,
-                                country,
-                                bio
-                        )
-                );
+                User newRegisteredUser = new User(user.getName(), "https://github.com/" + user.getName(), email, country, bio);
+
+                userService.save(newRegisteredUser);
                 keyStorageInterface.save(new KeyStorage(user.getName()));
 
                 redirectAttributes.addFlashAttribute("message", "You have just registered! Fill in the information about yourself - choose skills you know on this page!");
@@ -140,35 +134,6 @@ public class IndexController {
         model.addAttribute("usersRegistered", userService.findAll().size());
 
         return "sections/users/index";
-    }
-
-    /**
-     * This request is handled when user opens their dashboard page
-     * Add attributes about user and later display them on the page
-     *
-     * @return html page with user's principal data (username, etc)
-     */
-    @GetMapping("/dashboard")
-    public String dashboardPage(Principal auth, Model model) {
-        // if user is not logged in - redirect to index
-        if (auth == null) {
-            return "redirect:/";
-        }
-
-        // user is logged in
-        else {
-            User userDB = userService.findByUsername(auth.getName());
-
-            if (userDB.isBanned()) {
-                return "sections/users/banned";
-            }
-
-            model.addAttribute("dbUser", userDB);
-            model.addAttribute("userObject", new User());
-            model.addAttribute("GithubUser", auth);
-
-            return "sections/users/dashboard";
-        }
     }
 
     /**
@@ -289,8 +254,8 @@ public class IndexController {
     private int countUnreadMessages(User user) {
         int unreadMessages = 0;
 
-        for(Map.Entry<String, DialogPair> entry: user.getDialogs().entrySet()) {
-            unreadMessages += entry.getValue().getUnreadMessages();
+        for (Map.Entry<String, Pair<Integer, List<Message>>> entry : user.getDialogs().entrySet()) {
+            unreadMessages += entry.getValue().getKey();
         }
 
         return unreadMessages;

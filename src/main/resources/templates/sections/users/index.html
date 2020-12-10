@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="./../css/style.css">
         <title>GitPals - Find a team or team members for open-source development</title>
     </head>
 
@@ -37,7 +37,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
             <a class="navbar-brand" href="/">
-                <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
+                <img src="./../images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
             </button>
@@ -76,11 +76,20 @@
                         </a>
                     </li>
                     <li class="nav-item" th:if="${userDB != null}">
+                        <a class="nav-link" href="/notifications">
+                            <button type="button" class="btn neoButton btn-sm fw-600">
+                                <i class="fa fa-bell"></i>
+                                Notifications
+                                <span th:if="${userDB.notifications.key != 0}" class="badge badge-primary fw-600">[[${userDB.notifications.key}]]</span>
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item" th:if="${userDB != null}">
                         <a class="nav-link" href="/messages">
                             <button type="button" class="btn neoButton btn-sm fw-600">
                                 <i class="fa fa-envelope-square"></i>
                                 Messages
-                                <span th:if="${unreadMessages > 0}" class="badge badge-primary">[[${unreadMessages}]]</span>
+                                <span th:if="${unreadMessages > 0}" class="badge badge-primary fw-600">[[${unreadMessages}]]</span>
                             </button>
                         </a>
                     </li>
@@ -92,7 +101,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/search">
+                                                <a class="nav-link" href="/search">
                             <button type="button" class="btn neoButton btn-sm fw-600">
                                 <i class="fa fa-search"></i> Search
                             </button>

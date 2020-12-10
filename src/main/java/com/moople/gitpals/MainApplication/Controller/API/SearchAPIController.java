@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Controller.API;
 import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
@@ -33,16 +34,17 @@ public class SearchAPIController {
      * @param username is a user's username
      * @return user
      */
-    @GetMapping(value = "/findByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/findUserByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUserByUsername(@PathVariable String username) {
         User user = userService.findByUsername(username);
 
         if (user == null) {
-            return null;
+            return Data.EMPTY_USER;
         }
 
-        // It is not safe to send user's messages to anyone, so remove them
+        // It is not safe to send user's messages/notifications messages to anyone, so remove them
         user.setDialogs(null);
+        user.setNotifications(null);
 
         return user;
     }
@@ -53,9 +55,15 @@ public class SearchAPIController {
      * @param title is a project title
      * @return project
      */
-    @GetMapping(value = "/findByTitle/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/findProjectByTitle/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Project getProjectByTitle(@PathVariable String title) {
-        return projectInterface.findByTitle(title);
+        Project project = projectInterface.findByTitle(title);
+
+        if (project != null) {
+            return project;
+        }
+
+        return Data.EMPTY_PROJECT;
     }
 
     /**
@@ -64,13 +72,14 @@ public class SearchAPIController {
      * @param userName is a username we pass in path
      * @return list of users whose username match the one we pass
      */
-    @GetMapping(value = "/matchByUsername/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/matchUsersByUsername/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> foundUsers(@PathVariable String userName) {
         return userService.findAll()
                 .stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(userName.toLowerCase()))
                 .peek(user -> {
                     user.setDialogs(null);
+                    user.setNotifications(null);
                 })
                 .collect(Collectors.toList());
     }
@@ -81,7 +90,7 @@ public class SearchAPIController {
      * @param projectName is a project name we pass in path
      * @return list of projects whose title match the one we pass
      */
-    @GetMapping(value = "/matchByProjectName/{projectName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/matchProjectsByProjectName/{projectName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> foundProjects(@PathVariable String projectName) {
         return projectInterface.findAll().stream()
                 .filter(project -> project.getTitle().toLowerCase().contains(projectName.toLowerCase()))
@@ -91,13 +100,13 @@ public class SearchAPIController {
     /**
      * This function returns a list of project with requirements (skills) requested by a user
      *
-     * @param requirements is a list of requirements project should contain
+     * @param technologies is a list of technologies project should contain
      * @return list of projects whose requirements match the user's choice
      */
-    @GetMapping(value = "/matchProjectsByRequirements", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Project> getSortedProjects(@RequestBody List<String> requirements) {
+    @GetMapping(value = "/matchByTechnologies", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Project> getSortedProjects(@RequestBody List<String> technologies) {
         return projectInterface.findAll().stream()
-                .filter(project -> requirements.stream()
+                .filter(project -> technologies.stream()
                         .anyMatch(req -> project.getTechnologies().contains(req.toLowerCase())))
                 .collect(Collectors.toList());
     }

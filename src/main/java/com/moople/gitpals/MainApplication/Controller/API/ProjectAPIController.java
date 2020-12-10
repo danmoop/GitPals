@@ -4,6 +4,7 @@ import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
 import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ProjectAPIController {
             return project;
         }
 
-        return new Project();
+        return Data.EMPTY_PROJECT;
     }
 
     /**
@@ -58,7 +59,7 @@ public class ProjectAPIController {
     @GetMapping(value = "/getNumberOfProjects", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Integer> getNumberOfProjects() {
         Map<String, Integer> map = new HashMap<>();
-        map.put("totalNumberOfProjects", projectInterface.findAll().size());
+        map.put("numberOfProjects", projectInterface.findAll().size());
 
         return map;
     }
@@ -81,7 +82,7 @@ public class ProjectAPIController {
      * @param data is an information about user (jwt & project's name, in which they want to apply/unapply)
      * @return a response, which is OK if project and user exist in the database
      */
-    @PostMapping(value = "/changeApplicationToAProject", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/toggleApplicationToAProject", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response changeApplicationToAProject(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
         String projectName = data.get("projectName");

@@ -1,7 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.DialogPair;
 import com.moople.gitpals.MainApplication.Model.Message;
+import com.moople.gitpals.MainApplication.Model.Pair;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Encrypt;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,7 @@ public class MessageController {
                 return "sections/users/banned";
             }
 
-            Map<String, DialogPair> dialogs = userDB.getDialogs();
+            Map<String, Pair<Integer, List<Message>>> dialogs = userDB.getDialogs();
 
             model.addAttribute("userMessages", dialogs);
 
@@ -85,8 +86,15 @@ public class MessageController {
      */
     @GetMapping("/dialogs/{name}")
     public String dialogPage(@PathVariable String name, Principal auth, Model model) {
+
         if (auth == null) {
             return "redirect:/";
+        } else {
+            User userDB = userService.findByUsername(auth.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
         }
 
         if (userService.findByUsername(name) == null) {
@@ -95,15 +103,15 @@ public class MessageController {
 
         User user = userService.findByUsername(auth.getName());
 
-        DialogPair pair = user.getDialogs()
-                .getOrDefault(name, new DialogPair(0, new ArrayList<>()));
+        Pair<Integer, List<Message>> pair = user.getDialogs()
+                .getOrDefault(name, new Pair<>(0, new ArrayList<>()));
 
-        pair.setUnreadMessages(0);
+        pair.setKey(0);
 
         userService.save(user);
 
         // Before user gets messages, they should be decrypted, sending a key personally to a user is unsafe
-        model.addAttribute("messages", pair.getMessages()
+        model.addAttribute("messages", pair.getValue()
                 .stream()
                 .peek(message -> message.setContent(Encrypt.fromAES(message.getContent())))
                 .collect(Collectors.toList()));
@@ -141,11 +149,11 @@ public class MessageController {
                 .getDestination().equals(recipientDestination)).size() != 0;
 
         // The user who sends the message has it always marked as 'read', since it is outgoing
-        DialogPair pair = sender.getDialogs()
-                .getOrDefault(recipient.getUsername(), new DialogPair(0, new ArrayList<>()));
+        Pair<Integer, List<Message>> pair = sender.getDialogs()
+                .getOrDefault(recipient.getUsername(), new Pair<>(0, new ArrayList<>()));
 
         message.setContent(Encrypt.toAES(message.getContent()));
-        pair.getMessages().add(message);
+        pair.getValue().add(message);
         sender.getDialogs().put(recipient.getUsername(), pair);
 
         userService.save(sender);
@@ -156,11 +164,11 @@ public class MessageController {
             recipient.getDialogs().put(sender.getUsername(), pair);
             userService.save(recipient);
         } else {
-            DialogPair pair2 = recipient.getDialogs()
-                    .getOrDefault(sender.getUsername(), new DialogPair(0, new ArrayList<>()));
+            Pair<Integer, List<Message>> pair2 = recipient.getDialogs()
+                    .getOrDefault(sender.getUsername(), new Pair<>(0, new ArrayList<>()));
 
-            pair2.getMessages().add(message);
-            pair2.setUnreadMessages(pair2.getUnreadMessages() + 1);
+            pair2.getValue().add(message);
+            pair2.setKey(pair2.getKey() + 1);
             recipient.getDialogs().put(sender.getUsername(), pair2);
             userService.save(recipient);
         }

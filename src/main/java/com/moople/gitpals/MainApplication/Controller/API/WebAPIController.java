@@ -15,6 +15,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api")
 public class WebAPIController {
+
     @Autowired
     private UserInterface userInterface;
 
