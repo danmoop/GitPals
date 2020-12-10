@@ -44,9 +44,20 @@
 
     <h4 th:if="${#lists.size(posts) == 0}">No posts added yet</h4>
 
-    <a class="btn btn-light" id="card-block-toggler" th:if="${user != null}">Add Forum Post</a>
+    <a class="btn btn-light btn-sm fw-600" id="card-block-toggler" th:if="${user != null}">Add Forum Post</a>
 
     <p th:if="${user == null}">You need to <a href="/login">sign in</a> in order to add posts</p>
+
+    <div class="card mt">
+        <div class="card-body">
+            <form th:action="@{/findForumPosts}" method="post">
+                <div style="display: inline-flex; width: 100%;">
+                    <input class="form-control" required th:name="post_name" type="text" placeholder="Find post by title" />
+                    <input class="btn btn-sm btn-primary fw-600" type="submit" value="Find" />
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div class="card mt" id="card-block" th:if="${user != null}" style="display: none;">
         <div class="card-body">
@@ -80,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-outline-primary btn-pill" th:href="${'/forum/post/' + posts[i].key}">Open</a>
+            <a class="btn btn-primary btn-sm fw-600" th:href="${'/forum/post/' + posts[i].key}">Open</a>
         </div>
     </div>
 </div>

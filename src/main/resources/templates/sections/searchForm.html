@@ -33,7 +33,7 @@
                                 <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill 1"/>
                             </div>
                             <a href="#/" onclick="addUserSkill();">Add another</a>
-                            <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Find" />
+                            <input type="submit" class="btn btn-sm fw-600 btn-primary" style="margin: 15px;" value="Find" />
                         </form>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
                             </div>
                             <a href="#/" onclick="addProjectTech();">Add another</a>
-                            <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Find" />
+                            <input type="submit" class="btn btn-sm fw-600 btn-primary" style="margin: 15px;" value="Find" />
                         </form>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         <form th:action="@{/findUser}" method="post">
                             <input class="form-control" required th:name="username" type="text" placeholder="Username" />
                             <br/>
-                            <input class="btn btn-primary btn-pill" type="submit" value="Find" />
+                            <input class="btn btn-primary btn-sm fw-600" type="submit" value="Find" />
                         </form>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                         <form th:action="@{/findProject}" method="post">
                             <input class="form-control" required th:name="project_name" type="text" placeholder="Project name" />
                             <br/>
-                            <input class="btn btn-primary btn-pill" type="submit" value="Find" />
+                            <input class="btn btn-primary btn-sm fw-600" type="submit" value="Find" />
                         </form>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                 <form th:action="@{/findForumPosts}" method="post">
                     <input class="form-control" required th:name="post_name" type="text" placeholder="Post title" />
                     <br/>
-                    <input class="btn btn-primary btn-pill" type="submit" value="Find" />
+                    <input class="btn btn-primary btn-sm fw-600" type="submit" value="Find" />
                 </form>
             </div>
         </div>

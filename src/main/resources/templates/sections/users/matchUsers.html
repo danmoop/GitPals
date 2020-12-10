@@ -28,7 +28,7 @@
                         <a href="/search">Try search one more time</a>
                     </div>
 
-                    <ol style="padding-left: 0;">
+                    <ol>
                         <li th:each="user: ${match_users}">
                             <a th:href="${'/users/' + user}">[[${user}]]</a>
                         </li>

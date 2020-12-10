@@ -46,10 +46,7 @@
                     </form>
 
                     <ul th:if="${users != null}" style="list-style: none; padding-left: 0;">
-                        Users registered: ([[${#lists.size(users)}]])
-                        <li th:each="user: ${users}">
-                            <a target="_blank" th:href="${'/users/' + user.username}">[[${user.username}]]</a>
-                        </li>
+                        Users registered: ([[${numberOfUsers}]])
                     </ul>
                 </div>
                 <div class="col">
@@ -75,10 +72,7 @@
                     </form>
 
                     <ul th:if="${projects != null}" style="list-style: none; padding-left: 0;">
-                        Projects created: ([[${#lists.size(projects)}]])
-                        <li th:each="project: ${projects}">
-                            <a target="_blank" th:href="${'/projects/' + project.title}">[[${project.title}]]</a>
-                        </li>
+                        Projects created: ([[${numberOfProjects}]])
                     </ul>
                 </div>
                 <div class="col">

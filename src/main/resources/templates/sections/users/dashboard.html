@@ -98,13 +98,13 @@
                 <div class="mt">
                     <div th:each="skill: ${dbUser.skillList}" th:id="${skill}" class="col mt" style="display: inline-flex;">
                         <input required type="text" th:name="skill" class="form-control" th:value=*{skill} placeholder="Skill" />
-                        <a href="#/" th:id="${'del_' + skill}" onclick="removeSkill(this);" class="btn btn-outline-danger btn-sm fw-600">Remove</a>
+                        <a href="#/" th:id="${'del_' + skill}" onclick="removeSkill(this);" class="btn btn-danger btn-sm fw-600">Remove</a>
                     </div>
                 </div>
             </div>
 
-            <a href="#/" class="btn btn-light btn-pill" onclick="addSkill();">Add Skill</a>
-            <input type="submit" class="btn btn-primary btn-pill" style="margin: 15px;" value="Save changes" />
+            <a href="#/" class="btn btn-light btn-sm fw-600" onclick="addSkill();">Add Skill</a>
+            <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Save changes" />
         </form>
     </div>
 
@@ -115,7 +115,7 @@
             var skill = `
                 <div class="col mt" id="${random}" style="display: inline-flex;">
                     <input required type="text" name="skill" class="form-control" placeholder="Skill" />
-                    <a href="#/" id="del_${random}" onclick="removeSkill(this);" class="btn btn-outline-danger btn-sm fw-600">Remove</a>
+                    <a href="#/" id="del_${random}" onclick="removeSkill(this);" class="btn btn-danger btn-sm fw-600">Remove</a>
                 </div>
             `;
             document.getElementById('skills').insertAdjacentHTML('beforeend', skill);

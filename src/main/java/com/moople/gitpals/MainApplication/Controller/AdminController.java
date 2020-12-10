@@ -67,7 +67,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("numberOfUsers", userService.findAll().size());
 
         return "sections/users/admin";
     }
@@ -111,7 +111,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("numberOfProjects", projectService.findAll().size());
 
         return "sections/users/admin";
     }
