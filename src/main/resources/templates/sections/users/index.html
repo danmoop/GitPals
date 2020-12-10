@@ -150,9 +150,11 @@
                             <p style="margin: 0;">by <a th:href="${'/users/' + project.authorName}">[[${project.authorName}]]</a></p>
                         </div>
                         <div class="card-body">
-                            <p class="card-text font-weight-bold">[[${project.technologies}]]</p>
+                            Technologies: <span th:each="tech: ${project.technologies}" class="badge badge-light">
+                                [[${tech}]]
+                            </span>
 
-                            <div style="margin-bottom: 25px;" th:if="${#lists.size(project.requiredRoles) != 0}">
+                            <div style="margin-bottom: 25px; margin-top: 25px;" th:if="${#lists.size(project.requiredRoles) != 0}">
                                 Wanted:
                                 <span class="badge badge-light" th:each="role: ${project.requiredRoles}" style="margin-left: 2px; margin-right: 2px;">
                                     [[${role}]]

@@ -120,7 +120,9 @@
                     <div class="fw-600">
                         The project uses:
                     </div>
-                    <span>[[${project.technologies}]]</span>
+                    <span class="badge badge-light" th:each="tech: ${project.technologies}">
+                        [[${tech}]]
+                    </span>
                     <br/><br/>
 
                     <div class="fw-600">
