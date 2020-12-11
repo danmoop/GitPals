@@ -56,7 +56,7 @@ public class ForumController {
      * @return post page
      */
     @GetMapping("/forum/post/{key}")
-    public String getForumPost(@PathVariable("key") String key, Principal auth, Model model) {
+    public String getForumPost(@PathVariable String key, Principal auth, Model model) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
@@ -90,7 +90,7 @@ public class ForumController {
      * @return forum post page
      */
     @PostMapping("/addForumPost")
-    public String addForumPost(Principal auth, @RequestParam("title") String title, @RequestParam("content") String content) {
+    public String addForumPost(Principal auth, @RequestParam String title, @RequestParam String content) {
         if (auth == null) {
             return "redirect:/";
         } else {
@@ -117,7 +117,7 @@ public class ForumController {
      * @return forum post page
      */
     @PostMapping("/addCommentToPost")
-    public String addCommentToPost(Principal auth, @RequestParam("commentText") String commentText, @RequestParam("postKey") String postKey) {
+    public String addCommentToPost(Principal auth, @RequestParam String commentText, @RequestParam String postKey) {
         if (auth == null) {
             return "redirect:/";
         } else {
@@ -144,7 +144,7 @@ public class ForumController {
      * @return home page
      */
     @PostMapping("/deleteForumPost")
-    public String deleteForumPost(Principal auth, @RequestParam("key") String key) {
+    public String deleteForumPost(Principal auth, @RequestParam String key) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
@@ -199,14 +199,14 @@ public class ForumController {
     /**
      * This function edits a comment in a forum post (changes comment's context & marks it as edited)
      *
-     * @param auth       is an author's authentication
-     * @param postKey    is forum post's key required to find a forum post in the database
-     * @param text       is a new text that will be set to a comment
-     * @param commentKey is a comment key required to find a comment in a list of comments added to a post
+     * @param auth         is an author's authentication
+     * @param forumPostKey is forum post's key required to find a forum post in the database
+     * @param text         is a new text that will be set to a comment
+     * @param commentKey   is a comment key required to find a comment in a list of comments added to a post
      * @return forum post page with edited comment contents
      */
     @PostMapping("/editForumPostComment")
-    public String editComment(Principal auth, @RequestParam("forumPostKey") String postKey, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+    public String editComment(Principal auth, @RequestParam String forumPostKey, @RequestParam String text, @RequestParam String commentKey) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
@@ -215,7 +215,7 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumInterface.findByKey(postKey);
+        ForumPost post = forumInterface.findByKey(forumPostKey);
 
         if (auth == null || post == null) {
             return "redirect:/";
@@ -229,6 +229,6 @@ public class ForumController {
             }
         });
 
-        return "redirect:/forum/post/" + postKey;
+        return "redirect:/forum/post/" + forumPostKey;
     }
 }

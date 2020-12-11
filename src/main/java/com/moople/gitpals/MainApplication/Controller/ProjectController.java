@@ -150,11 +150,11 @@ public class ProjectController {
     /**
      * This request is handled when user wants to apply to a project
      *
-     * @param title is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
+     * @param projectTitle is project's title which is taken from a hidden html text field (value assigned automatically with thymeleaf)
      * @return redirect to the same project page
      **/
     @PostMapping("/toggleApplication")
-    public String applyForProject(@RequestParam("linkInput") String title, Principal auth) {
+    public String applyForProject(@RequestParam String projectTitle, Principal auth) {
 
         // If authenticated user is null (so there is no auth), redirect to main page
         if (auth == null) {
@@ -167,7 +167,7 @@ public class ProjectController {
             return "sections/users/banned";
         }
 
-        Project project = projectInterface.findByTitle(title);
+        Project project = projectInterface.findByTitle(projectTitle);
 
         // Users that already submitted can't submit another time, only once per project
         if (!project.getAppliedUsers().contains(auth.getName())) {
@@ -188,7 +188,7 @@ public class ProjectController {
         projectInterface.save(project);
         userService.save(applyingUser);
 
-        return "redirect:/projects/" + title;
+        return "redirect:/projects/" + projectTitle;
     }
 
     /**
@@ -199,7 +199,7 @@ public class ProjectController {
      * @return redirect to the index page
      **/
     @PostMapping("/deleteProject")
-    public String projectDeleted(Principal auth, @RequestParam("projectName") String projectName) {
+    public String projectDeleted(Principal auth, @RequestParam String projectName) {
 
         Project project = projectInterface.findByTitle(projectName);
         User userDB = userService.findByUsername(auth.getName());
@@ -296,7 +296,7 @@ public class ProjectController {
      * @return project page
      */
     @PostMapping("/deleteComment")
-    public String deleteComment(Principal auth, @RequestParam("projectName") String projectName, @RequestParam("text") String text, @RequestParam("ts") String ts) {
+    public String deleteComment(Principal auth, @RequestParam String projectName, @RequestParam String text, @RequestParam String ts) {
         User userDB = userService.findByUsername(auth.getName());
 
         if (userDB.isBanned()) {
@@ -335,7 +335,7 @@ public class ProjectController {
      * @return project page with edited comment contents
      */
     @PostMapping("/editProjectComment")
-    public String editComment(Principal auth, @RequestParam("projectName") String projectName, @RequestParam("editedText") String text, @RequestParam("commentKey") String commentKey) {
+    public String editComment(Principal auth, @RequestParam String projectName, @RequestParam String text, @RequestParam String commentKey) {
 
         Project project = projectInterface.findByTitle(projectName);
 
@@ -363,21 +363,21 @@ public class ProjectController {
     /**
      * This function edits information for a chosen project (like change description, roles, etc.)
      *
-     * @param techs       is a new list of project's technologies
-     * @param roles       is a new list of project's roles
-     * @param newTitle    is a new title the user prompts (which can be the same as the old one)
-     * @param currentTitle       is an original project title
-     * @param description is a new description
+     * @param techs        is a new list of project's technologies
+     * @param roles        is a new list of project's roles
+     * @param newTitle     is a new title the user prompts (which can be the same as the old one)
+     * @param currentTitle is an original project title
+     * @param description  is a new description
      * @return to the project page
      */
     @PostMapping("/editProjectInfo")
     public String editProjectInfo(
             @RequestParam(value = "tech", required = false) Set<String> techs,
             @RequestParam(value = "role", required = false) Set<String> roles,
-            @RequestParam("newTitle") String newTitle,
-            @RequestParam("title") String currentTitle,
-            @RequestParam("repoLink") String repoLink,
-            @RequestParam("description") String description,
+            @RequestParam String newTitle,
+            @RequestParam String currentTitle,
+            @RequestParam String repoLink,
+            @RequestParam String description,
             RedirectAttributes redirectAttributes) {
 
         if (techs == null || roles == null || techs.size() == 0 || roles.size() == 0) {

@@ -84,7 +84,7 @@ public class SearchController {
      * @return list of projects whose titles contain user's input
      **/
     @PostMapping("/findProject")
-    public String foundProjects(@RequestParam("project_name") String projectName, Model model, Principal auth) {
+    public String foundProjects(@RequestParam String projectName, Model model, Principal auth) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
@@ -193,7 +193,7 @@ public class SearchController {
      * @return list with posts to the result page
      */
     @PostMapping("/findForumPosts")
-    public String findForumPosts(@RequestParam("post_name") String postName, Model model, Principal auth) {
+    public String findForumPosts(@RequestParam String postName, Model model, Principal auth) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 

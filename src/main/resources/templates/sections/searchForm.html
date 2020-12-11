@@ -73,7 +73,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Find project by project name</h4>
                         <form th:action="@{/findProject}" method="post">
-                            <input class="form-control" required th:name="project_name" type="text" placeholder="Project name" />
+                            <input class="form-control" required th:name="projectName" type="text" placeholder="Project name" />
                             <br/>
                             <input class="btn btn-primary btn-sm fw-600" type="submit" value="Find" />
                         </form>
@@ -86,7 +86,7 @@
             <div class="card-body">
                 <h4 class="card-title">Find forum posts</h4>
                 <form th:action="@{/findForumPosts}" method="post">
-                    <input class="form-control" required th:name="post_name" type="text" placeholder="Post title" />
+                    <input class="form-control" required th:name="postName" type="text" placeholder="Post title" />
                     <br/>
                     <input class="btn btn-primary btn-sm fw-600" type="submit" value="Find" />
                 </form>

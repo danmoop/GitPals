@@ -162,26 +162,26 @@ public class IndexController {
             model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
 
             return "sections/users/getAuthKey";
-        } else {
-            User userDB = userService.findByUsername(auth.getName());
+        }
 
-            if (userDB.isBanned()) {
-                return "sections/users/banned";
-            }
+        User userDB = userService.findByUsername(auth.getName());
 
-            String key = keyStorageInterface.findByUsername(auth.getName()).getKey();
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
 
-            if (key == null) {
-                KeyStorage ks = new KeyStorage(auth.getName());
-                keyStorageInterface.save(ks);
-                model.addAttribute("key", ks.getKey());
-                return "sections/users/getAuthKey";
-            }
+        String key = keyStorageInterface.findByUsername(auth.getName()).getKey();
 
-            model.addAttribute("key", key);
-
+        if (key == null) {
+            KeyStorage ks = new KeyStorage(auth.getName());
+            keyStorageInterface.save(ks);
+            model.addAttribute("key", ks.getKey());
             return "sections/users/getAuthKey";
         }
+
+        model.addAttribute("key", key);
+
+        return "sections/users/getAuthKey";
     }
 
     /**

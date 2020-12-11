@@ -31,10 +31,12 @@ public class Project {
         this.title = title.trim();
         this.description = description.trim();
         this.githubProjectLink = githubProjectLink.trim();
+
         this.authorName = authorName;
         this.technologies = technologies;
-        this.appliedUsers = new HashSet<>();
         this.requiredRoles = requiredRoles;
+
         this.comments = new ArrayList<>();
+        this.appliedUsers = new HashSet<>();
     }
 }
