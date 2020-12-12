@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Controller.API;
 import com.moople.gitpals.MainApplication.Model.ForumPost;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class ForumAPIController {
      * @param key is a unique forum post's key
      * @return a forum post object
      */
-    @GetMapping("/getForumPostById/{key}")
+    @GetMapping(value = "/getForumPostById/{key}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ForumPost getForumPostById(@PathVariable String key) {
         return forumInterface.findByKey(key);
     }

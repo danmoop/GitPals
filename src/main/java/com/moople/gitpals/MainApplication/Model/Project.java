@@ -24,8 +24,8 @@ public class Project {
     private String authorName;
     private Set<String> technologies;
     private Set<String> appliedUsers;
-    private List<Comment> comments;
     private Set<String> requiredRoles;
+    private List<Comment> comments;
 
     public Project(String title, String description, String githubProjectLink, String authorName, Set<String> technologies, Set<String> requiredRoles) {
         this.title = title.trim();

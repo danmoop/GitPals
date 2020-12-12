@@ -1,9 +1,8 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
-import com.moople.gitpals.MainApplication.Model.Project;
-import com.moople.gitpals.MainApplication.Model.Response;
-import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Model.*;
 import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +29,8 @@ public class ProjectAPIController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     /**
      * @param projectName is a project name we pass in path
@@ -100,6 +102,13 @@ public class ProjectAPIController {
         } else {
             project.getAppliedUsers().add(user.getUsername());
             user.getProjectsAppliedTo().add(projectName);
+
+            User projectAuthor = userService.findByUsername(project.getAuthorName());
+            Notification notification = new Notification(user.getUsername() + " applied to your project " + project.getTitle());
+
+            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+            userService.save(projectAuthor);
         }
 
         projectInterface.save(project);
@@ -111,16 +120,57 @@ public class ProjectAPIController {
     /**
      * This function submits a user's project
      *
-     * @param project is a project, which is sent from the user's phone
      * @return response if project with user's chosen title doesn't exist
      */
     @PostMapping(value = "/submitProject", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response submitProject(@RequestBody Project project) {
-        if (projectInterface.findByTitle(project.getTitle()) == null) {
+    public Response submitProject(@RequestBody Map<String, Object> data) throws IOException {
+
+        String jwt = (String) data.get("jwt");
+        Project project = mapper.convertValue(data.get("project"), Project.class);
+
+        if (projectInterface.findByTitle(project.getTitle()) != null) {
+            return Response.PROJECT_EXISTS;
+        }
+
+        if (jwtUtil.extractUsername(jwt).equals(project.getAuthorName())) {
             projectInterface.save(project);
+
             return Response.OK;
         }
 
-        return Response.PROJECT_EXISTS;
+        return Response.FAILED;
+    }
+
+    @PostMapping("/sendComment")
+    public Response sendComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String author = data.get("author");
+        String text = data.get("text");
+        String projectName = data.get("projectName");
+
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (project == null) {
+            return Response.PROJECT_NOT_FOUND;
+        }
+
+        if (jwtUtil.extractUsername(jwt).equals(author)) {
+            Comment comment = new Comment(author, text);
+
+            // Let the project author know someone has left a comment in a comment section for their project
+            User projectAuthor = userService.findByUsername(project.getAuthorName());
+            Notification notification = new Notification(author + " has left a comment on your project " + projectName + ": " + comment.getText());
+
+            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+            userService.save(projectAuthor);
+
+            project.getComments().add(comment);
+            projectInterface.save(project);
+
+            return Response.OK;
+        }
+
+        return Response.FAILED;
     }
 }

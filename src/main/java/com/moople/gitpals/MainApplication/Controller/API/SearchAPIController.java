@@ -34,7 +34,7 @@ public class SearchAPIController {
      * @param username is a user's username
      * @return user
      */
-    @GetMapping(value = "/findUserByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getUserByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUserByUsername(@PathVariable String username) {
         User user = userService.findByUsername(username);
 
@@ -55,7 +55,7 @@ public class SearchAPIController {
      * @param title is a project title
      * @return project
      */
-    @GetMapping(value = "/findProjectByTitle/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getProjectByTitle/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Project getProjectByTitle(@PathVariable String title) {
         Project project = projectInterface.findByTitle(title);
 
@@ -103,7 +103,7 @@ public class SearchAPIController {
      * @param technologies is a list of technologies project should contain
      * @return list of projects whose requirements match the user's choice
      */
-    @GetMapping(value = "/matchByTechnologies", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/matchProjectsByTechnologies", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Project> getSortedProjects(@RequestBody List<String> technologies) {
         return projectInterface.findAll().stream()
                 .filter(project -> technologies.stream()
@@ -121,16 +121,6 @@ public class SearchAPIController {
         return forumInterface.findAll().stream()
                 .filter(post -> post.getTitle().toLowerCase().contains(title.toLowerCase()))
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * This function returns one particular forum post, which is found by its id
-     *
-     * @return a forum post with an id prompted by the user
-     */
-    @GetMapping(value = "/findForumPostById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ForumPost getPostById(@PathVariable String id) {
-        return forumInterface.findByKey(id);
     }
 
     /**
