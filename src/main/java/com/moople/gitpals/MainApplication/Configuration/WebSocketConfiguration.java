@@ -18,6 +18,8 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gitpals-messages").withSockJS();
+        registry.addEndpoint("/gitpals-messages")
+                .setAllowedOrigins("*")
+                .withSockJS();
     }
 }

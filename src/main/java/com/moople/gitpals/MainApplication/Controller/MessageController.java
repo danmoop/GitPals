@@ -3,7 +3,6 @@ package com.moople.gitpals.MainApplication.Controller;
 import com.moople.gitpals.MainApplication.Model.Message;
 import com.moople.gitpals.MainApplication.Model.Pair;
 import com.moople.gitpals.MainApplication.Model.User;
-import com.moople.gitpals.MainApplication.Service.Encrypt;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class MessageController {
@@ -111,10 +109,7 @@ public class MessageController {
         userService.save(user);
 
         // Before user gets messages, they should be decrypted, sending a key personally to a user is unsafe
-        model.addAttribute("messages", pair.getValue()
-                .stream()
-                .peek(message -> message.setContent(Encrypt.fromAES(message.getContent())))
-                .collect(Collectors.toList()));
+        model.addAttribute("messages", pair.getValue());
 
         model.addAttribute("senderName", user.getUsername());
         model.addAttribute("recipientName", name);
@@ -152,7 +147,6 @@ public class MessageController {
         Pair<Integer, List<Message>> pair = sender.getDialogs()
                 .getOrDefault(recipient.getUsername(), new Pair<>(0, new ArrayList<>()));
 
-        message.setContent(Encrypt.toAES(message.getContent()));
         pair.getValue().add(message);
         sender.getDialogs().put(recipient.getUsername(), pair);
 

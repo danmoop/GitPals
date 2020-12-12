@@ -37,9 +37,24 @@ public class User {
         this.username = username.trim();
         this.githubAccountLink = githubAccountLink.trim();
         this.skillList = new HashSet<>();
-        this.email = email.trim();
-        this.country = country.trim();
-        this.bio = bio.trim();
+
+        if (email == null) {
+            this.email = null;
+        } else {
+            this.email = email.trim();
+        }
+
+        if (country == null) {
+            this.country = null;
+        } else {
+            this.country = country.trim();
+        }
+
+        if (bio == null) {
+            this.bio = null;
+        } else {
+            this.bio = bio.trim();
+        }
 
         this.dialogs = new HashMap<>();
         this.submittedProjects = new ArrayList<>();
