@@ -1,6 +1,5 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.Project;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -77,13 +75,11 @@ public class UserController {
         }
 
         if (userDB != null) {
-            List<Project> appliedToProjects = userDB.getProjectsAppliedTo()
-                    .stream()
-                    .map(projectName -> projectInterface.findByTitle(projectName))
-                    .collect(Collectors.toList());
+            userDB.setNotifications(null);
+            userDB.setDialogs(null);
 
             model.addAttribute("LoggedUser", auth != null ? auth.getName() : null);
-            model.addAttribute("UserObject", userService.findByUsername(username));
+            model.addAttribute("UserObject", userDB);
 
             return "sections/users/userDashboard";
         } else {

@@ -96,6 +96,10 @@ public class ProjectAPIController {
             return Response.FAILED;
         }
 
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
         if (project.getAppliedUsers().contains(user.getUsername())) {
             project.getAppliedUsers().remove(user.getUsername());
             user.getProjectsAppliedTo().remove(projectName);
@@ -126,7 +130,13 @@ public class ProjectAPIController {
     public Response submitProject(@RequestBody Map<String, Object> data) {
 
         String jwt = (String) data.get("jwt");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = mapper.convertValue(data.get("project"), Project.class);
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
 
         if (projectInterface.findByTitle(project.getTitle()) != null) {
             return Response.PROJECT_EXISTS;
@@ -148,25 +158,29 @@ public class ProjectAPIController {
      * @param data is information sent from the user, which contains user's jwt and information about the project
      * @return a response, which is OK if user is the author of the project
      */
-    @PostMapping("/deleteProject")
+    @PostMapping(value = "/deleteProject", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response deleteProject(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
         String projectName = data.get("projectName");
 
-        User projectAuthor = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = projectInterface.findByTitle(projectName);
 
-        if (projectAuthor == null || project == null) {
+        if (user == null || project == null) {
             return Response.FAILED;
         }
 
-        if (projectAuthor.getUsername().equals(project.getAuthorName())) {
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        if (user.getUsername().equals(project.getAuthorName())) {
             projectInterface.delete(project);
 
-            if (projectAuthor.getSubmittedProjects().contains(project.getTitle())) {
-                projectAuthor.getSubmittedProjects().remove(project.getTitle());
+            if (user.getSubmittedProjects().contains(project.getTitle())) {
+                user.getSubmittedProjects().remove(project.getTitle());
 
-                userService.save(projectAuthor);
+                userService.save(user);
             }
 
             // Remove project from everyone who applied to this project
@@ -195,17 +209,22 @@ public class ProjectAPIController {
      * @param data is information sent from the user, which contains user's jwt and information about the project
      * @return a response, which is OK if a comment has been added successfully
      */
-    @PostMapping("/sendComment")
+    @PostMapping(value = "/sendComment", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response sendComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
         String author = data.get("author");
         String text = data.get("text");
         String projectName = data.get("projectName");
 
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = projectInterface.findByTitle(projectName);
 
-        if (project == null) {
-            return Response.PROJECT_NOT_FOUND;
+        if (project == null || user == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
         }
 
         if (jwtUtil.extractUsername(jwt).equals(author)) {
@@ -228,27 +247,64 @@ public class ProjectAPIController {
         return Response.FAILED;
     }
 
+    @PostMapping(value = "/editProjectComment", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response editProjectComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String projectName = data.get("projectName");
+        String text = data.get("text");
+        String commentKey = data.get("commentKey");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (user == null || project == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        project.getComments().forEach(comment -> {
+            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(user.getUsername())) {
+                comment.setText(text);
+                comment.setEdited(true);
+                projectInterface.save(project);
+            }
+        });
+
+        return Response.OK;
+    }
+
     /**
      * This request is handled when user wants to remove their comment
      *
      * @param data is information sent from the user, which contains user's jwt and information about the project
      * @return a response, which is OK if a comment has been removed successfully
      */
-    @PostMapping("/removeComment")
+    @PostMapping(value = "/removeComment", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response removeComment(@RequestBody Map<String, Object> data) {
         String jwt = (String) data.get("jwt");
         String projectName = (String) data.get("projectName");
         String commentText = (String) data.get("commentText");
 
-        User sender = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = projectInterface.findByTitle(projectName);
+
+        if (user == null || project == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
 
         Optional<Comment> comment = project.getComments()
                 .stream()
-                .filter(projectComment -> projectComment.getAuthor().equals(sender.getUsername()) && projectComment.getText().equals(commentText))
+                .filter(projectComment -> projectComment.getAuthor().equals(user.getUsername()) && projectComment.getText().equals(commentText))
                 .findFirst();
 
-        if (comment.isPresent() && comment.get().getAuthor().equals(sender.getUsername())) {
+        if (comment.isPresent() && comment.get().getAuthor().equals(user.getUsername())) {
             project.getComments().remove(comment.get());
             projectInterface.save(project);
 

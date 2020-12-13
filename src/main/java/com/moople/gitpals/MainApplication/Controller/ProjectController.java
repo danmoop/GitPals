@@ -27,6 +27,38 @@ public class ProjectController {
     @Autowired
     private ProjectInterface projectInterface;
 
+
+    /**
+     * This request is handled when user wants to see a project's page
+     * All the data (project name, applied users, author etc.) will be added & displayed
+     *
+     * @param projectName is taken from an address field - like "/project/UnrealEngine"
+     * @return html project page with it's title, author, description, technologies etc
+     **/
+    @GetMapping("/projects/{projectName}")
+    public String projectPage(@PathVariable String projectName, Model model, Principal auth) {
+
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (project == null) {
+            return "error/projectDeleted";
+        } else {
+            model.addAttribute("project", project);
+
+            if (auth != null) {
+                User userDB = userService.findByUsername(auth.getName());
+
+                if (userDB.isBanned()) {
+                    return "sections/users/banned";
+                }
+
+                model.addAttribute("userDB", userDB);
+            }
+
+            return "sections/projects/projectViewPage";
+        }
+    }
+
     /**
      * This request is handled when user wants to see a page where they can create a project
      *
@@ -113,37 +145,6 @@ public class ProjectController {
         } else {
             redirectAttributes.addFlashAttribute("warning", "Project with this name already exists");
             return "redirect:/submitProject";
-        }
-    }
-
-    /**
-     * This request is handled when user wants to see a project's page
-     * All the data (project name, applied users, author etc.) will be added & displayed
-     *
-     * @param projectName is taken from an address field - like "/project/UnrealEngine"
-     * @return html project page with it's title, author, description, technologies etc
-     **/
-    @GetMapping("/projects/{projectName}")
-    public String projectPage(@PathVariable String projectName, Model model, Principal auth) {
-
-        Project project = projectInterface.findByTitle(projectName);
-
-        if (project == null) {
-            return "error/projectDeleted";
-        } else {
-            model.addAttribute("project", project);
-
-            if (auth != null) {
-                User userDB = userService.findByUsername(auth.getName());
-
-                if (userDB.isBanned()) {
-                    return "sections/users/banned";
-                }
-
-                model.addAttribute("userDB", userDB);
-            }
-
-            return "sections/projects/projectViewPage";
         }
     }
 
@@ -290,6 +291,41 @@ public class ProjectController {
     }
 
     /**
+     * This function edits a comment in a project (changes comment's context & marks it as edited)
+     *
+     * @param auth        is an author's authentication
+     * @param projectName is project's name required to find a forum post in the database
+     * @param text        is a new text that will be set to a comment
+     * @param commentKey  is a comment key required to find a comment in a list of comments added to a post
+     * @return project page with edited comment contents
+     */
+    @PostMapping("/editProjectComment")
+    public String editComment(Principal auth, @RequestParam String projectName, @RequestParam String text, @RequestParam String commentKey) {
+
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (auth == null || project == null) {
+            return "redirect:/";
+        }
+
+        User userDB = userService.findByUsername(auth.getName());
+
+        if (userDB.isBanned()) {
+            return "sections/users/banned";
+        }
+
+        project.getComments().forEach(comment -> {
+            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(auth.getName())) {
+                comment.setText(text);
+                comment.setEdited(true);
+                projectInterface.save(project);
+            }
+        });
+
+        return "redirect:/projects/" + projectName;
+    }
+
+    /**
      * This function removes a comment added below project description
      *
      * @param auth        is comment's author
@@ -323,42 +359,6 @@ public class ProjectController {
         } else {
             return "redirect:/";
         }
-
-        return "redirect:/projects/" + projectName;
-    }
-
-
-    /**
-     * This function edits a comment in a project (changes comment's context & marks it as edited)
-     *
-     * @param auth        is an author's authentication
-     * @param projectName is project's name required to find a forum post in the database
-     * @param text        is a new text that will be set to a comment
-     * @param commentKey  is a comment key required to find a comment in a list of comments added to a post
-     * @return project page with edited comment contents
-     */
-    @PostMapping("/editProjectComment")
-    public String editComment(Principal auth, @RequestParam String projectName, @RequestParam String text, @RequestParam String commentKey) {
-
-        Project project = projectInterface.findByTitle(projectName);
-
-        if (auth == null || project == null) {
-            return "redirect:/";
-        }
-
-        User userDB = userService.findByUsername(auth.getName());
-
-        if (userDB.isBanned()) {
-            return "sections/users/banned";
-        }
-
-        project.getComments().forEach(comment -> {
-            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(auth.getName())) {
-                comment.setText(text);
-                comment.setEdited(true);
-                projectInterface.save(project);
-            }
-        });
 
         return "redirect:/projects/" + projectName;
     }
