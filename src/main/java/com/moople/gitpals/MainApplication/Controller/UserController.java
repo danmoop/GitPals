@@ -1,5 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller;
 
+import com.moople.gitpals.MainApplication.Model.Notification;
+import com.moople.gitpals.MainApplication.Model.Pair;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -126,6 +129,23 @@ public class UserController {
         User userDB = userService.findByUsername(auth.getName());
 
         userDB.getNotifications().getValue().remove(notificationKey);
+        userService.save(userDB);
+
+        return "redirect:/notifications";
+    }
+
+
+    /**
+     * This request removes all user's notification
+     *
+     * @param auth is a user's authentication object
+     * @return notification page with all the notifications removed
+     */
+    @PostMapping("/removeAllNotifications")
+    public String removeAllNotifications(Principal auth) {
+        User userDB = userService.findByUsername(auth.getName());
+
+        userDB.setNotifications(new Pair<>(0, new HashMap<>()));
         userService.save(userDB);
 
         return "redirect:/notifications";

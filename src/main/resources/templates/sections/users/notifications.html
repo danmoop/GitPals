@@ -59,6 +59,10 @@
         <h4>Notifications <span class="badge badge-primary">[[${#maps.size(notifications)}]]</span></h4>
         <p th:if="${#maps.size(notifications) == 0}">No notifications yet</p>
 
+        <form th:if="${#maps.size(notifications) != 0}" th:action="@{/removeAllNotifications}" method="post">
+            <input type="submit" class="btn btn-sm fw-600 btn-danger" value="Remove All">
+        </form>
+
         <ul style="padding: 0;">
             <li th:each="notification: ${notifications}" style="list-style: none;">
                 <div class="alert alert-light" role="alert">
