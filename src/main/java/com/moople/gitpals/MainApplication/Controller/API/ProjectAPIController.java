@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -123,7 +123,7 @@ public class ProjectAPIController {
      * @return response if project with user's chosen title doesn't exist
      */
     @PostMapping(value = "/submitProject", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response submitProject(@RequestBody Map<String, Object> data) throws IOException {
+    public Response submitProject(@RequestBody Map<String, Object> data) {
 
         String jwt = (String) data.get("jwt");
         Project project = mapper.convertValue(data.get("project"), Project.class);
@@ -141,6 +141,60 @@ public class ProjectAPIController {
         return Response.FAILED;
     }
 
+    /**
+     * This request is handled when user wants to delete project
+     * It will be deleted and applied users will be notified about that
+     *
+     * @param data is information sent from the user, which contains user's jwt and information about the project
+     * @return a response, which is OK if user is the author of the project
+     */
+    @PostMapping("/deleteProject")
+    public Response deleteProject(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String projectName = data.get("projectName");
+
+        User projectAuthor = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        Project project = projectInterface.findByTitle(projectName);
+
+        if (projectAuthor == null || project == null) {
+            return Response.FAILED;
+        }
+
+        if (projectAuthor.getUsername().equals(project.getAuthorName())) {
+            projectInterface.delete(project);
+
+            if (projectAuthor.getSubmittedProjects().contains(project.getTitle())) {
+                projectAuthor.getSubmittedProjects().remove(project.getTitle());
+
+                userService.save(projectAuthor);
+            }
+
+            // Remove project from everyone who applied to this project
+            // First we stream, it returns list of Strings, map them to User object
+            List<User> allUsers = project.getAppliedUsers().stream()
+                    .map(submittedUser -> userService.findByUsername(submittedUser))
+                    .collect(Collectors.toList());
+
+            for (User _user : allUsers) {
+                Notification notification = new Notification("A project " + projectName + " you were applied to has been deleted by the project author");
+                _user.getProjectsAppliedTo().remove(project.getTitle());
+                _user.getNotifications().setKey(_user.getNotifications().getKey() + 1);
+                _user.getNotifications().getValue().put(notification.getKey(), notification);
+
+                userService.save(_user);
+            }
+        }
+
+        return Response.OK;
+    }
+
+    /**
+     * This request is handled when user submits their comment
+     * It will be added to comments list and saved
+     *
+     * @param data is information sent from the user, which contains user's jwt and information about the project
+     * @return a response, which is OK if a comment has been added successfully
+     */
     @PostMapping("/sendComment")
     public Response sendComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
@@ -166,6 +220,36 @@ public class ProjectAPIController {
             userService.save(projectAuthor);
 
             project.getComments().add(comment);
+            projectInterface.save(project);
+
+            return Response.OK;
+        }
+
+        return Response.FAILED;
+    }
+
+    /**
+     * This request is handled when user wants to remove their comment
+     *
+     * @param data is information sent from the user, which contains user's jwt and information about the project
+     * @return a response, which is OK if a comment has been removed successfully
+     */
+    @PostMapping("/removeComment")
+    public Response removeComment(@RequestBody Map<String, Object> data) {
+        String jwt = (String) data.get("jwt");
+        String projectName = (String) data.get("projectName");
+        String commentText = (String) data.get("commentText");
+
+        User sender = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        Project project = projectInterface.findByTitle(projectName);
+
+        Optional<Comment> comment = project.getComments()
+                .stream()
+                .filter(projectComment -> projectComment.getAuthor().equals(sender.getUsername()) && projectComment.getText().equals(commentText))
+                .findFirst();
+
+        if (comment.isPresent() && comment.get().getAuthor().equals(sender.getUsername())) {
+            project.getComments().remove(comment.get());
             projectInterface.save(project);
 
             return Response.OK;

@@ -230,7 +230,10 @@ public class ProjectController {
                     .collect(Collectors.toList());
 
             for (User _user : allUsers) {
+                Notification notification = new Notification("A project " + projectName + " you were applied to has been deleted by the project author");
                 _user.getProjectsAppliedTo().remove(project.getTitle());
+                _user.getNotifications().setKey(_user.getNotifications().getKey() + 1);
+                _user.getNotifications().getValue().put(notification.getKey(), notification);
 
                 userService.save(_user);
             }
