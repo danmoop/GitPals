@@ -16,9 +16,6 @@ public class GitPalsUserDetails implements UserDetailsService {
     @Autowired
     private UserInterface userInterface;
 
-    @Autowired
-    private KeyStorageInterface keyStorageInterface;
-
     /**
      * @param s is a username of a user that is trying to authenticate
      * @return user's credentials if the username is present in a database
@@ -32,7 +29,6 @@ public class GitPalsUserDetails implements UserDetailsService {
             throw new UsernameNotFoundException("No user with username " + s);
         }
 
-        String key = keyStorageInterface.findByUsername(s).getKey();
-        return new User(user.getUsername(), key, new ArrayList<>());
+        return new User(user.getUsername(), user.getMobileAuthPassword(), new ArrayList<>());
     }
 }

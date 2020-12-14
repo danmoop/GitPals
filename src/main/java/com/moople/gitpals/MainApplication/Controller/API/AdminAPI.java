@@ -1,6 +1,5 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
-import com.moople.gitpals.MainApplication.Model.Pair;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -46,7 +44,7 @@ public class AdminAPI {
 
         userService.findAll()
                 .forEach(user -> {
-                    user.setNotifications(new Pair<>(0, new HashMap<>()));
+                    user.setMobileAuthPassword("");
                     userService.save(user);
                 });
 

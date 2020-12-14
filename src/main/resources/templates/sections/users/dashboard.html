@@ -49,38 +49,38 @@
         <div>
             <div class="card text-center">
                 <div class="card-header">
-                    <h5 class="font-weight-bold">[[${dbUser.username}]]</h5>
+                    <h5 class="font-weight-bold">[[${userDB.username}]]</h5>
                 </div>
                 <div class="card-body">
 
-                    <p class="card-text" th:if="${dbUser.email}">Email - [[${dbUser.email}]]</p>
-                    <p class="card-text" th:if="${dbUser.country}">Location - [[${dbUser.country}]]</p>
-                    <p class="card-text" th:if="${dbUser.bio}">Bio - [[${dbUser.bio}]]</p>
+                    <p class="card-text" th:if="${userDB.email}">Email - [[${userDB.email}]]</p>
+                    <p class="card-text" th:if="${userDB.country}">Location - [[${userDB.country}]]</p>
+                    <p class="card-text" th:if="${userDB.bio}">Bio - [[${userDB.bio}]]</p>
                     <hr/>
                     <div class="row">
                         <div class="col">
-                            Applied to <h4>[[${#lists.size(dbUser.projectsAppliedTo)}]]</h4> projects
+                            Applied to <span class="badge badge-primary fw-600">[[${#lists.size(userDB.projectsAppliedTo)}]]</span> projects
                         </div>
                         <div class="col">
-                            Submitted <h4>[[${#lists.size(dbUser.submittedProjects)}]]</h4> projects
+                            Submitted <span class="badge badge-primary fw-600">[[${#lists.size(userDB.submittedProjects)}]]</span> projects
                         </div>
                     </div>
                     <hr/>
                     <div class="row">
                         <div class="col">
                             <h5>Projects applied to:</h5>
-                            <p th:if="${#lists.size(dbUser.projectsAppliedTo) == 0}">None</p>
-                            <ol th:if="${#lists.size(dbUser.projectsAppliedTo) != 0}" style="padding: 0;">
-                                <li th:each="project: ${dbUser.projectsAppliedTo}" style="list-style: none;">
+                            <p th:if="${#lists.size(userDB.projectsAppliedTo) == 0}">None</p>
+                            <ol th:if="${#lists.size(userDB.projectsAppliedTo) != 0}" style="padding: 0;">
+                                <li th:each="project: ${userDB.projectsAppliedTo}" style="list-style: none;">
                                     <a th:href="${'/projects/' + project}">[[${project}]]</a>
                                 </li>
                             </ol>
                         </div>
                         <div class="col">
                             <h5>Submitted projects:</h5>
-                            <p th:if="${#lists.size(dbUser.submittedProjects) == 0}">None</p>
-                            <ol th:if="${#lists.size(dbUser.submittedProjects) != 0}" style="padding: 0;">
-                                <li th:each="project: ${dbUser.submittedProjects}" style="list-style: none;">
+                            <p th:if="${#lists.size(userDB.submittedProjects) == 0}">None</p>
+                            <ol th:if="${#lists.size(userDB.submittedProjects) != 0}" style="padding: 0;">
+                                <li th:each="project: ${userDB.submittedProjects}" style="list-style: none;">
                                     <a th:href="${'/projects/' + project}">[[${project}]]</a>
                                 </li>
                             </ol>
@@ -92,20 +92,42 @@
 
         <hr />
 
-        <h5>Technologies you know: ([[${#sets.size(dbUser.skillList)}]])</h5>
-        <form th:action="@{/updateUser}" method="post">
-            <div id="skills">
-                <div class="mt">
-                    <div th:each="skill: ${dbUser.skillList}" th:id="${skill}" class="col mt" style="display: inline-flex;">
-                        <input required type="text" th:name="skill" class="form-control" th:value=*{skill} placeholder="Skill" />
-                        <a href="#/" th:id="${'del_' + skill}" onclick="removeSkill(this);" class="btn btn-danger btn-sm fw-600">Remove</a>
-                    </div>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h5>Set up mobile app auth password <span class="badge badge-danger">Optional for now</span></h5>
+                <p>This password is required if you want to use mobile version of GitPals <u>(in progress)</u> <br>If you already set it up, you can replace it with a new one using this form</p>
             </div>
 
-            <a href="#/" class="btn btn-light btn-sm fw-600" onclick="addSkill();">Add Skill</a>
-            <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Save changes" />
-        </form>
+            <div class="card-body">
+                <form th:action="@{/setMobileAuthPassword}" method="post" class="mt">
+                    <input required type="password" th:name="password" class="form-control" placeholder="Password" />
+                    <input type="submit" class="btn btn-primary btn-sm fw-600 mt" value="Save Password" />
+                </form>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="card" style="margin-bottom: 65px;">
+            <div class="card-header">
+                <h5>Technologies you know:  <span class="badge badge-primary">[[${#sets.size(userDB.skillList)}]]</span></h5>
+            </div>
+            <div class="card body">
+                <form th:action="@{/updateUser}" method="post">
+                    <div id="skills">
+                        <div class="mt">
+                            <div th:each="skill: ${userDB.skillList}" th:id="${skill}" class="col mt" style="display: inline-flex;">
+                                <input required type="text" th:name="skill" class="form-control" th:value=*{skill} placeholder="Skill" />
+                                <a href="#/" th:id="${'del_' + skill}" onclick="removeSkill(this);" class="btn btn-danger btn-sm fw-600">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#/" class="btn btn-light btn-sm fw-600" onclick="addSkill();">Add Skill</a>
+                    <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Save Changes" />
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>

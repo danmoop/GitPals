@@ -1,8 +1,8 @@
 package com.moople.gitpals.MainApplication.Controller;
 
-import com.moople.gitpals.MainApplication.Model.Notification;
 import com.moople.gitpals.MainApplication.Model.Pair;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Encrypt;
 import com.moople.gitpals.MainApplication.Service.ProjectInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +50,7 @@ public class UserController {
                 return "sections/users/banned";
             }
 
-            model.addAttribute("dbUser", userDB);
-            model.addAttribute("userObject", new User());
-            model.addAttribute("GithubUser", auth);
+            model.addAttribute("userDB", userDB);
 
             return "sections/users/dashboard";
         }
@@ -183,6 +181,26 @@ public class UserController {
 
         redirectAttributes.addFlashAttribute("message", "Saved!");
 
+        return "redirect:/dashboard";
+    }
+
+    /**
+     * This function sets a mobile app auth password for the user
+     * They can use the password to sign in using mobile app
+     * Password is stored in md5 format
+     *
+     * @param auth     is user's authentication object
+     * @param password is a password which will be set instead of the old one (if exists)
+     * @return dashboard page
+     */
+    @PostMapping("/setMobileAuthPassword")
+    public String setMobileAuthPassword(Principal auth, @RequestParam String password, RedirectAttributes redirectAttributes) {
+        User user = userService.findByUsername(auth.getName());
+
+        user.setMobileAuthPassword(Encrypt.MD5(password));
+        userService.save(user);
+
+        redirectAttributes.addFlashAttribute("message", "Saved!");
         return "redirect:/dashboard";
     }
 

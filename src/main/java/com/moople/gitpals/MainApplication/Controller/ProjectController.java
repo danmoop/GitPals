@@ -275,13 +275,15 @@ public class ProjectController {
 
             Comment comment = new Comment(auth.getName(), text);
 
-            // Let the project author know someone has left a comment in a comment section for their project
-            User projectAuthor = userService.findByUsername(project.getAuthorName());
-            Notification notification = new Notification(auth.getName() + " has left a comment on your project " + projectName + ": " + comment.getText());
+            if (!comment.getAuthor().equals(project.getAuthorName())) {
+                // Let the project author know someone has left a comment in a comment section for their project
+                User projectAuthor = userService.findByUsername(project.getAuthorName());
+                Notification notification = new Notification(auth.getName() + " has left a comment on your project " + projectName + ": " + comment.getText());
 
-            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
-            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
-            userService.save(projectAuthor);
+                projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+                projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+                userService.save(projectAuthor);
+            }
 
             project.getComments().add(comment);
             projectInterface.save(project);

@@ -96,6 +96,12 @@ public class IndexController {
                 redirectAttributes.addFlashAttribute("error", "You should have at least one skill!");
                 return "redirect:/dashboard";
             }
+            /*
+            // TODO: uncomment when mobile version of GitPals is finished
+            else if (userDB.getMobileAuthPassword().equals("")) {
+                redirectAttributes.addFlashAttribute("error", "You should set up your mobile app auth password!");
+                return "redirect:/dashboard";
+            }*/
 
             checkIfDataHasChanged(userDB, properties);
 
@@ -146,42 +152,6 @@ public class IndexController {
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
-    }
-
-    /**
-     * This request returns a page, which displays a user's auth key, which
-     * is required for the authentication via the mobile app
-     *
-     * @param auth  is a current user's authentication
-     * @param model is where the key is added
-     * @return with, which displays user's key
-     */
-    @GetMapping("/requestAuthKey")
-    public String getAuthKey(Principal auth, Model model) {
-        if (auth == null) {
-            model.addAttribute("key", "You are not logged in. Please sign in to obtain your key");
-
-            return "sections/users/getAuthKey";
-        }
-
-        User userDB = userService.findByUsername(auth.getName());
-
-        if (userDB.isBanned()) {
-            return "sections/users/banned";
-        }
-
-        String key = keyStorageInterface.findByUsername(auth.getName()).getKey();
-
-        if (key == null) {
-            KeyStorage ks = new KeyStorage(auth.getName());
-            keyStorageInterface.save(ks);
-            model.addAttribute("key", ks.getKey());
-            return "sections/users/getAuthKey";
-        }
-
-        model.addAttribute("key", key);
-
-        return "sections/users/getAuthKey";
     }
 
     /**

@@ -23,6 +23,7 @@ public class User {
     private String country;
     private String bio;
     private String githubAccountLink;
+    private String mobileAuthPassword;
     private Set<String> skillList;
     private Map<String, Pair<Integer, List<Message>>> dialogs;
     private List<String> submittedProjects;
@@ -38,23 +39,9 @@ public class User {
         this.githubAccountLink = githubAccountLink.trim();
         this.skillList = new HashSet<>();
 
-        if (email == null) {
-            this.email = null;
-        } else {
-            this.email = email.trim();
-        }
-
-        if (country == null) {
-            this.country = null;
-        } else {
-            this.country = country.trim();
-        }
-
-        if (bio == null) {
-            this.bio = null;
-        } else {
-            this.bio = bio.trim();
-        }
+        this.email = email == null ? null : email.trim();
+        this.country = country == null ? null : country.trim();
+        this.bio = bio == null ? null : bio.trim();
 
         this.dialogs = new HashMap<>();
         this.submittedProjects = new ArrayList<>();
@@ -65,6 +52,7 @@ public class User {
         this.banned = false;
         this.isAdmin = false;
 
+        this.mobileAuthPassword = "";
         this.lastOnlineDate = new Date().getTime();
     }
 }

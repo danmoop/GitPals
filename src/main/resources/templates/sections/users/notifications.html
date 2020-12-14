@@ -63,7 +63,7 @@
             <input type="submit" class="btn btn-sm fw-600 btn-danger" value="Remove All">
         </form>
 
-        <ul style="padding: 0;">
+        <ul style="margin-top: 25px; padding: 0;">
             <li th:each="notification: ${notifications}" style="list-style: none;">
                 <div class="alert alert-light" role="alert">
                     [[${notification.value.text}]]
