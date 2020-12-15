@@ -230,13 +230,15 @@ public class ProjectAPIController {
         if (jwtUtil.extractUsername(jwt).equals(author)) {
             Comment comment = new Comment(author, text);
 
-            // Let the project author know someone has left a comment in a comment section for their project
-            User projectAuthor = userService.findByUsername(project.getAuthorName());
-            Notification notification = new Notification(author + " has left a comment on your project " + projectName + ": " + comment.getText());
+            if (!project.getAuthorName().equals(author)) {
+                // Let the project author know someone has left a comment in a comment section for their project
+                User projectAuthor = userService.findByUsername(project.getAuthorName());
+                Notification notification = new Notification(author + " has left a comment on your project " + projectName + ": " + comment.getText());
 
-            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
-            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
-            userService.save(projectAuthor);
+                projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+                projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+                userService.save(projectAuthor);
+            }
 
             project.getComments().add(comment);
             projectInterface.save(project);
