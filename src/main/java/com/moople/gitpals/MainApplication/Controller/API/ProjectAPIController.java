@@ -33,6 +33,8 @@ public class ProjectAPIController {
     private ObjectMapper mapper = new ObjectMapper();
 
     /**
+     * This function returns an object fetched from the database by its title
+     *
      * @param projectName is a project name we pass in path
      * @return project json object
      */
@@ -45,6 +47,17 @@ public class ProjectAPIController {
         }
 
         return Data.EMPTY_PROJECT;
+    }
+
+    /**
+     * This function returns an object fetched from the database by its unique id
+     *
+     * @param id is project's unique id number, which we use to find it in the database
+     * @return project json object or empty project if such id is not found
+     */
+    @GetMapping(value = "/getById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Project getProjectById(@PathVariable String id) {
+        return projectInterface.findById(id).orElse(Data.EMPTY_PROJECT);
     }
 
     /**
@@ -310,6 +323,34 @@ public class ProjectAPIController {
             project.getComments().remove(comment.get());
             projectInterface.save(project);
 
+            return Response.OK;
+        }
+
+        return Response.FAILED;
+    }
+
+    /**
+     * This function edits information about the project
+     *
+     * @param data is data sent from the user, which contain new information about the project
+     * @return response if the user is the project's author and information has been changed
+     */
+    @PostMapping(value = "/editProject", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response editProject(@RequestBody Map<String, Object> data) {
+        String jwt = (String) data.get("jwt");
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+
+        Project project = mapper.convertValue(data.get("project"), Project.class);
+        Project projectDB = projectInterface.findByTitle(project.getTitle());
+
+        if (projectDB.getAuthorName().equals(user.getUsername())) {
+            projectDB.setTitle(project.getTitle());
+            projectDB.setDescription(project.getDescription());
+            projectDB.setGithubProjectLink(project.getGithubProjectLink());
+            projectDB.setTechnologies(project.getTechnologies());
+            projectDB.setRequiredRoles(project.getRequiredRoles());
+
+            projectInterface.save(projectDB);
             return Response.OK;
         }
 

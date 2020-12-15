@@ -1,11 +1,15 @@
 package com.moople.gitpals.MainApplication.Model;
 
 import com.moople.gitpals.MainApplication.Service.Encrypt;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
 
     private String author;

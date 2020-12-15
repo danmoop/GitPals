@@ -41,7 +41,7 @@
                     <div class="modal-body">
                         <u>Title:</u>
                         <input required type="text" class="form-control" placeholder="Project title" th:name="newTitle" th:value="*{project.title}" />
-                        <input th:name="title" type="hidden" th:value="*{project.title}">
+                        <input th:name="currentTitle" type="hidden" th:value="*{project.title}">
                         <br>
                         <u>Repository Link:</u>
                         <input required type="text" class="form-control" placeholder="Repository link" th:name="repoLink" th:value="*{project.githubProjectLink}" />
