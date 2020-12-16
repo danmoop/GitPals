@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -47,7 +46,7 @@ public class IndexController {
      * @return html index page with a list of projects and TECHS
      */
     @GetMapping("/page/{page}")
-    public String indexPage(OAuth2Authentication user, Model model, RedirectAttributes redirectAttributes, @PathVariable(value = "page", required = false) int page) {
+    public String indexPage(OAuth2Authentication auth, Model model, RedirectAttributes redirectAttributes, @PathVariable(value = "page", required = false) int page) {
 
         int numberOfPages = projectInterface.findAll().size() / PROJECTS_PER_PAGE;
         numberOfPages = numberOfPages == 0 ? 1 : numberOfPages;
@@ -64,10 +63,8 @@ public class IndexController {
         }
 
         // If we are logged in, display information about us on the index page
-        if (user != null) {
-            LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) user.getUserAuthentication().getDetails();
-
-            model.addAttribute("GithubUser", user);
+        if (auth != null) {
+            LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) auth.getUserAuthentication().getDetails();
 
             // Extract information about the user from their GitHub account
             String email = properties.get("email") == null ? null : properties.get("email").toString();
@@ -78,17 +75,17 @@ public class IndexController {
              *  When authentication exists, however, there is no such user in the database,
              *  it means that this user has just logged in for the first time
              */
-            if (userService.findByUsername(user.getName()) == null) {
-                User newRegisteredUser = new User(user.getName(), "https://github.com/" + user.getName(), email, country, bio);
+            if (userService.findByUsername(auth.getName()) == null) {
+                User newRegisteredUser = new User(auth.getName(), "https://github.com/" + auth.getName(), email, country, bio);
 
                 userService.save(newRegisteredUser);
-                keyStorageInterface.save(new KeyStorage(user.getName()));
+                keyStorageInterface.save(new KeyStorage(auth.getName()));
 
                 redirectAttributes.addFlashAttribute("message", "You have just registered! Fill in the information about yourself - choose skills you know on this page!");
                 return "redirect:/dashboard";
             }
 
-            User userDB = userService.findByUsername(user.getName());
+            User userDB = userService.findByUsername(auth.getName());
 
             if (userDB.isBanned()) {
                 return "sections/users/banned";
@@ -137,7 +134,6 @@ public class IndexController {
         model.addAttribute("projects", projects);
         model.addAttribute("pagesLength", numberOfPages);
         model.addAttribute("page", page);
-        model.addAttribute("usersRegistered", userService.findAll().size());
 
         return "sections/users/index";
     }

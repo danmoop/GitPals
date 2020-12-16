@@ -3,6 +3,7 @@ package com.moople.gitpals.MainApplication.Controller.API;
 import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
+import com.moople.gitpals.MainApplication.Service.Data;
 import com.moople.gitpals.MainApplication.Service.KeyStorageInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,27 @@ public class UserAPIController {
     private JWTUtil jwtUtil;
 
     /**
+     * This function returns a user by username
+     *
+     * @param username is a user's username
+     * @return user object
+     */
+    @GetMapping("/get/{username}")
+    public User getUser(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+
+        if (user == null) {
+            return Data.EMPTY_USER;
+        }
+
+        // It is not safe to send user's messages/notifications messages to anyone, so remove them
+        user.setNotifications(null);
+        user.setDialogs(null);
+
+        return user;
+    }
+
+    /**
      * This function adds a skill to a user's skill list
      *
      * @param data is a json object, which contains a user's jwt & a skill, which will be added
@@ -41,6 +63,10 @@ public class UserAPIController {
 
         if (user == null) {
             return Response.USER_NOT_FOUND;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
         }
 
         user.getSkillList().add(skill);
@@ -64,6 +90,10 @@ public class UserAPIController {
 
         if (user == null) {
             return Response.USER_NOT_FOUND;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
         }
 
         user.getSkillList().remove(skill);
@@ -157,7 +187,7 @@ public class UserAPIController {
     /**
      * This function return a user's unique key, which is used for websocket chat communication
      * This key acts as a destination (so message goes to the right person, destination is based on this key)
-     * 
+     *
      * @param jwt is user's jwt token
      * @return user's message key
      */
@@ -166,7 +196,10 @@ public class UserAPIController {
         Map<String, String> data = new HashMap<>();
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-        if (user == null) return data;
+
+        if (user == null) {
+            return data;
+        }
 
         data.put("key", keyStorageInterface.findByUsername(user.getUsername()).getKey());
 

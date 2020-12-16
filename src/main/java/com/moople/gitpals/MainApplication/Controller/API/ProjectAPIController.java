@@ -262,6 +262,13 @@ public class ProjectAPIController {
         return Response.FAILED;
     }
 
+    /**
+     * This function edits a comment in a project (changes comment's context & marks it as edited)
+     *
+     * @param data is information sent by the user, which contains information about the comment & project
+     *             This information helps to easily find the comment by its key and modify it
+     * @return project page with edited comment contents
+     */
     @PostMapping(value = "/editProjectComment", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response editProjectComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
@@ -339,6 +346,10 @@ public class ProjectAPIController {
     public Response editProject(@RequestBody Map<String, Object> data) {
         String jwt = (String) data.get("jwt");
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+
+        if(user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
 
         Project project = mapper.convertValue(data.get("project"), Project.class);
         Project projectDB = projectInterface.findByTitle(project.getTitle());
