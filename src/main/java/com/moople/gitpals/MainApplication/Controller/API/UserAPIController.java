@@ -1,6 +1,7 @@
 package com.moople.gitpals.MainApplication.Controller.API;
 
 import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
+import com.moople.gitpals.MainApplication.Model.Pair;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
@@ -179,6 +180,28 @@ public class UserAPIController {
         }
 
         user.getNotifications().getValue().remove(notificationKey);
+        userService.save(user);
+
+        return Response.OK;
+    }
+
+    /**
+     * This request removes all user's notifications
+     *
+     * @param data is information sent from the user, which contains user's jwt token
+     * @return response if all notifications have been deleted successfully
+     */
+    @PostMapping("/removeAllNotifications")
+    public Response removeAllNotifications(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+
+        if (user == null) {
+            return Response.FAILED;
+        }
+
+        user.setNotifications(new Pair<>(0, new HashMap<>()));
         userService.save(user);
 
         return Response.OK;

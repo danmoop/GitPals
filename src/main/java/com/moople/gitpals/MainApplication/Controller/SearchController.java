@@ -193,7 +193,8 @@ public class SearchController {
      * @return list with posts to the result page
      */
     @PostMapping("/findForumPosts")
-    public String findForumPosts(@RequestParam String postName, Model model, Principal auth) {
+    public String findForumPosts(@RequestParam String postName, Model model, Principal auth, RedirectAttributes redirectAttributes) {
+
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
