@@ -154,19 +154,36 @@ public class MessageController {
 
         // If recipient has the dialog page opened, the message is marked as 'read' instantly
         // If recipient is not on a dialog page, the message is marked as 'unread'
-        if (isRecipientPresent) {
-            recipient.getDialogs().put(sender.getUsername(), pair);
-            userService.save(recipient);
-        } else {
-            Pair<Integer, List<Message>> pair2 = recipient.getDialogs()
-                    .getOrDefault(sender.getUsername(), new Pair<>(0, new ArrayList<>()));
 
-            pair2.getValue().add(message);
+        Pair<Integer, List<Message>> pair2 = recipient.getDialogs()
+                .getOrDefault(sender.getUsername(), new Pair<>(0, new ArrayList<>()));
+        pair2.getValue().add(message);
+
+        if (!isRecipientPresent) {
             pair2.setKey(pair2.getKey() + 1);
-            recipient.getDialogs().put(sender.getUsername(), pair2);
-            userService.save(recipient);
         }
 
+        recipient.getDialogs().put(sender.getUsername(), pair2);
+        userService.save(recipient);
+
         return message;
+    }
+
+    /**
+     * ONLY FOR TESTING PURPOSES
+     * TODO: Remove Later
+     */
+    @GetMapping("/removeAllMessages/{dialogName}")
+    public String removeAllMessages(Principal auth, @PathVariable String dialogName) {
+        User sender = userService.findByUsername(auth.getName());
+        sender.getDialogs().remove(dialogName);
+
+        User recipient = userService.findByUsername(dialogName);
+        recipient.getDialogs().remove(auth.getName());
+
+        userService.save(sender);
+        userService.save(recipient);
+
+        return "redirect:/dialogs/" + dialogName;
     }
 }

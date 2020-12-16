@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -151,5 +152,24 @@ public class UserAPIController {
         userService.save(user);
 
         return Response.OK;
+    }
+
+    /**
+     * This function return a user's unique key, which is used for websocket chat communication
+     * This key acts as a destination (so message goes to the right person, destination is based on this key)
+     * 
+     * @param jwt is user's jwt token
+     * @return user's message key
+     */
+    @GetMapping("/getMessageKey/{jwt}")
+    public Map<String, String> getMessageKey(@PathVariable String jwt) {
+        Map<String, String> data = new HashMap<>();
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        if (user == null) return data;
+
+        data.put("key", keyStorageInterface.findByUsername(user.getUsername()).getKey());
+
+        return data;
     }
 }
