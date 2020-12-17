@@ -7,6 +7,7 @@ import com.moople.gitpals.MainApplication.Model.AuthResponse;
 import com.moople.gitpals.MainApplication.Model.Response;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Data;
+import com.moople.gitpals.MainApplication.Service.Encrypt;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class AuthAPIController {
     public ResponseEntity createToken(@RequestBody AuthRequest request) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), Encrypt.MD5(request.getPassword()))
             );
         } catch (Exception e) {
             return ResponseEntity.ok(Response.FAILED);
