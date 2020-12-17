@@ -5,6 +5,7 @@ import com.moople.gitpals.MainApplication.Configuration.JWTUtil;
 import com.moople.gitpals.MainApplication.Model.AuthRequest;
 import com.moople.gitpals.MainApplication.Model.AuthResponse;
 import com.moople.gitpals.MainApplication.Model.Response;
+import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.Encrypt;
 import com.moople.gitpals.MainApplication.Service.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,16 @@ public class AuthAPIController {
         final String jwt = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponse(jwt));
+    }
+
+    /**
+     * This function returns a user by their jwt token
+     *
+     * @param jwt is a user's auth token
+     * @return user
+     */
+    @GetMapping("/getUserByJwt/{jwt}")
+    public User getUserByJwt(@PathVariable String jwt) {
+        return userInterface.findByUsername(jwtUtil.extractUsername(jwt));
     }
 }
