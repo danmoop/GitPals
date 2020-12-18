@@ -156,6 +156,12 @@ public class ProjectAPIController {
         }
 
         if (jwtUtil.extractUsername(jwt).equals(project.getAuthorName())) {
+            Project dummy = new Project(); // This is used to obtain ObjectId, which is set to the one user submits
+            project.setId(dummy.getId());
+
+            user.getSubmittedProjects().add(project.getTitle());
+
+            userService.save(user);
             projectInterface.save(project);
 
             return Response.OK;
