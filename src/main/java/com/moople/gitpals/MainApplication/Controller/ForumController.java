@@ -144,6 +144,8 @@ public class ForumController {
             Notification notification = new Notification(auth.getName() + " has left a comment on your forum post (" + post.getTitle() + ") -- " + commentText);
             postAuthor.getNotifications().setKey(postAuthor.getNotifications().getKey() + 1);
             postAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+
+            userService.save(postAuthor);
         }
 
         return "redirect:/forum/post/" + postKey;
