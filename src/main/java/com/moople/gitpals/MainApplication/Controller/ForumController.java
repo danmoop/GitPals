@@ -2,6 +2,7 @@ package com.moople.gitpals.MainApplication.Controller;
 
 import com.moople.gitpals.MainApplication.Model.Comment;
 import com.moople.gitpals.MainApplication.Model.ForumPost;
+import com.moople.gitpals.MainApplication.Model.Notification;
 import com.moople.gitpals.MainApplication.Model.User;
 import com.moople.gitpals.MainApplication.Service.ForumInterface;
 import com.moople.gitpals.MainApplication.Service.UserService;
@@ -130,8 +131,20 @@ public class ForumController {
 
         ForumPost post = forumInterface.findByKey(postKey);
 
+        if (post == null) {
+            return "redirect:/forum";
+        }
+
+        User postAuthor = userService.findByUsername(post.getAuthor());
+
         post.getComments().add(new Comment(auth.getName(), commentText));
         forumInterface.save(post);
+
+        if (!auth.getName().equals(postAuthor.getUsername())) {
+            Notification notification = new Notification(auth.getName() + " has left a comment on your forum post (" + post.getTitle() + ") -- " + commentText);
+            postAuthor.getNotifications().setKey(postAuthor.getNotifications().getKey() + 1);
+            postAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+        }
 
         return "redirect:/forum/post/" + postKey;
     }

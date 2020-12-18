@@ -59,7 +59,7 @@ public class SearchAPIController {
     }
 
     /**
-     * This function returns a list of projetcs with technologies specified by a user
+     * This function returns a list of projects with technologies specified by a user
      *
      * @param technologies is a list of technologies project should contain
      * @return list of projects whose technologies match the user's input
