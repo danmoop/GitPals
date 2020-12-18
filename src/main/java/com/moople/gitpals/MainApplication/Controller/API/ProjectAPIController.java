@@ -35,12 +35,12 @@ public class ProjectAPIController {
     /**
      * This function returns an object fetched from the database by its title
      *
-     * @param projectName is a project name we pass in path
+     * @param title is a project title we pass in path
      * @return project json object
      */
-    @GetMapping(value = "/get/{project}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Project getProject(@PathVariable("project") String projectName) {
-        Project project = projectInterface.findByTitle(projectName);
+    @GetMapping(value = "/getByTitle/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Project getProject(@PathVariable String title) {
+        Project project = projectInterface.findByTitle(title);
 
         if (project != null) {
             return project;
@@ -158,6 +158,38 @@ public class ProjectAPIController {
         if (jwtUtil.extractUsername(jwt).equals(project.getAuthorName())) {
             projectInterface.save(project);
 
+            return Response.OK;
+        }
+
+        return Response.FAILED;
+    }
+
+    /**
+     * This function edits information about the project
+     *
+     * @param data is data sent from the user, which contain new information about the project
+     * @return response if the user is the project's author and information has been changed
+     */
+    @PostMapping(value = "/editProject", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response editProject(@RequestBody Map<String, Object> data) {
+        String jwt = (String) data.get("jwt");
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        Project project = mapper.convertValue(data.get("project"), Project.class);
+        Project projectDB = projectInterface.findById(project.getId()).get();
+
+        if (projectDB.getAuthorName().equals(user.getUsername())) {
+            projectDB.setTitle(project.getTitle());
+            projectDB.setDescription(project.getDescription());
+            projectDB.setGithubProjectLink(project.getGithubProjectLink());
+            projectDB.setTechnologies(project.getTechnologies());
+            projectDB.setRequiredRoles(project.getRequiredRoles());
+
+            projectInterface.save(projectDB);
             return Response.OK;
         }
 
@@ -330,38 +362,6 @@ public class ProjectAPIController {
             project.getComments().remove(comment.get());
             projectInterface.save(project);
 
-            return Response.OK;
-        }
-
-        return Response.FAILED;
-    }
-
-    /**
-     * This function edits information about the project
-     *
-     * @param data is data sent from the user, which contain new information about the project
-     * @return response if the user is the project's author and information has been changed
-     */
-    @PostMapping(value = "/editProject", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response editProject(@RequestBody Map<String, Object> data) {
-        String jwt = (String) data.get("jwt");
-        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-
-        if(user.isBanned()) {
-            return Response.YOU_ARE_BANNED;
-        }
-
-        Project project = mapper.convertValue(data.get("project"), Project.class);
-        Project projectDB = projectInterface.findByTitle(project.getTitle());
-
-        if (projectDB.getAuthorName().equals(user.getUsername())) {
-            projectDB.setTitle(project.getTitle());
-            projectDB.setDescription(project.getDescription());
-            projectDB.setGithubProjectLink(project.getGithubProjectLink());
-            projectDB.setTechnologies(project.getTechnologies());
-            projectDB.setRequiredRoles(project.getRequiredRoles());
-
-            projectInterface.save(projectDB);
             return Response.OK;
         }
 
