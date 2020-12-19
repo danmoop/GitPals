@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
 
 @RestController
 @CrossOrigin
@@ -38,7 +39,7 @@ public class AuthAPIController {
      * @param request contains username and password (key) so the system can identify the user
      * @return jwt token
      */
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createToken(@RequestBody AuthRequest request) {
         try {
             authenticationManager.authenticate(
@@ -62,7 +63,7 @@ public class AuthAPIController {
      * @param jwt is a user's auth token
      * @return user
      */
-    @GetMapping("/getUserByJwt/{jwt}")
+    @GetMapping(value = "/getUserByJwt/{jwt}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUserByJwt(@PathVariable String jwt) {
         return userInterface.findByUsername(jwtUtil.extractUsername(jwt));
     }

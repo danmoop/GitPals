@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
 
 @RestController
 @CrossOrigin
@@ -16,7 +17,7 @@ public class IndexAPI {
      *
      * @return OK Response
      */
-    @GetMapping("/test")
+    @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response response() {
         return Response.OK;
     }

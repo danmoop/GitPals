@@ -27,6 +27,14 @@ public class ForumAPIController {
     private JWTUtil jwtUtil;
 
     /**
+     * @return all forum posts fetched from the database
+     */
+    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ForumPost> getAll() {
+	return forumInterface.findAll();
+    }
+
+    /**
      * This function returns a forum post object obtained by its key
      *
      * @param key is a unique forum post's key
@@ -94,7 +102,37 @@ public class ForumAPIController {
         return Response.OK;
     }
 
-    //TODO: deleteForumPost
+    /**
+     * This function removes the forum post from the forum
+     *
+     * @param data contains information sent by the user (contains forum post key & jwt)
+     * @return response if post has been deleted successfully
+     */
+    @PostMapping(value = "/deleteForumPost", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response deleteForumPost(@RequestBody Map<String, String> data) {
+	String jwt = data.get("jwt");
+	String postKey = data.get("postKey");
+
+	User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+	Post post = forumInterface.findByKey(postKey);
+
+	if (user == null || post == null) {
+	    return Response.FAILED;
+	}
+
+	if (user.isBanned()) {
+	    return Response.YOU_ARE_BANNED;
+	}
+
+	if (user.getUsername().equals(post.getAuthor()) {
+	    forumInterface.delete(post);
+
+	    return Response.OK;
+	}
+
+	return Response.FAILED;
+    }
+
     //TODO: deleteForumPostComment
     //TODO: editForumPostComment
 }

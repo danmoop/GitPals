@@ -29,12 +29,20 @@ public class UserAPIController {
     private JWTUtil jwtUtil;
 
     /**
+     * @return list, which contains all users registered
+     */
+    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getAll() {
+	return userService.findAll();
+    }
+
+    /**
      * This function returns a user by username
      *
      * @param username is a user's username
      * @return user object
      */
-    @GetMapping("/get/{username}")
+    @GetMapping(value = "/get/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser(@PathVariable String username) {
         User user = userService.findByUsername(username);
 
@@ -56,13 +64,13 @@ public class UserAPIController {
      * @param jwt is user's jwt token
      * @return user's message key
      */
-    @GetMapping("/getMessageKey/{jwt}")
+    @GetMapping(value = "/getMessageKey/{jwt}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> getMessageKey(@PathVariable String jwt) {
         Map<String, String> data = new HashMap<>();
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
 
-        if (user == null) {
+        if (user == null || user.isBanned()) {
             return data;
         }
 
@@ -78,9 +86,9 @@ public class UserAPIController {
      * @return a response if all went ok
      */
     @PostMapping(value = "/addNewSkill", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response addNewSkill(@RequestBody Map<String, Object> data) {
-        String jwt = (String) data.get("jwt");
-        String skill = (String) data.get("skill");
+    public Response addNewSkill(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String skill = data.get("skill");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
 
@@ -105,9 +113,9 @@ public class UserAPIController {
      * @return a response if all went ok
      */
     @PostMapping(value = "/removeSkill", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response removeSkill(@RequestBody Map<String, Object> data) {
-        String jwt = (String) data.get("jwt");
-        String skill = (String) data.get("skill");
+    public Response removeSkill(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String skill = data.get("skill");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
 
@@ -222,6 +230,10 @@ public class UserAPIController {
         if (user == null) {
             return Response.FAILED;
         }
+
+	if (user.isBanned()) {
+	    return Response.YOU_ARE_BANNED;
+	}
 
         user.setNotifications(new Pair<>(0, new HashMap<>()));
         userService.save(user);

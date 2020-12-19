@@ -181,6 +181,10 @@ public class ProjectAPIController {
         String jwt = (String) data.get("jwt");
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
 
+	if (user == null) {
+	    return Response.FAILED;
+	}
+
         if (user.isBanned()) {
             return Response.YOU_ARE_BANNED;
         }
