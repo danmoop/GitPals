@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,7 +34,7 @@ public class UserAPIController {
      */
     @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
-	return userService.findAll();
+        return userService.findAll();
     }
 
     /**
@@ -231,9 +232,9 @@ public class UserAPIController {
             return Response.FAILED;
         }
 
-	if (user.isBanned()) {
-	    return Response.YOU_ARE_BANNED;
-	}
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
 
         user.setNotifications(new Pair<>(0, new HashMap<>()));
         userService.save(user);

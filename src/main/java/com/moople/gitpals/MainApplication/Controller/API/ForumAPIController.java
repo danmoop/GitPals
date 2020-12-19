@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,7 +32,7 @@ public class ForumAPIController {
      */
     @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> getAll() {
-	return forumInterface.findAll();
+        return forumInterface.findAll();
     }
 
     /**
@@ -110,27 +111,27 @@ public class ForumAPIController {
      */
     @PostMapping(value = "/deleteForumPost", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response deleteForumPost(@RequestBody Map<String, String> data) {
-	String jwt = data.get("jwt");
-	String postKey = data.get("postKey");
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
 
-	User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-	Post post = forumInterface.findByKey(postKey);
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumInterface.findByKey(postKey);
 
-	if (user == null || post == null) {
-	    return Response.FAILED;
-	}
+        if (user == null || post == null) {
+            return Response.FAILED;
+        }
 
-	if (user.isBanned()) {
-	    return Response.YOU_ARE_BANNED;
-	}
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
 
-	if (user.getUsername().equals(post.getAuthor()) {
-	    forumInterface.delete(post);
+        if (user.getUsername().equals(post.getAuthor())) {
+            forumInterface.delete(post);
 
-	    return Response.OK;
-	}
+            return Response.OK;
+        }
 
-	return Response.FAILED;
+        return Response.FAILED;
     }
 
     //TODO: deleteForumPostComment
