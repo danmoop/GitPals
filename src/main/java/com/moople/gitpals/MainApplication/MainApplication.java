@@ -1,6 +1,5 @@
 package com.moople.gitpals.MainApplication;
 
-import com.moople.gitpals.MainApplication.Service.Data;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
