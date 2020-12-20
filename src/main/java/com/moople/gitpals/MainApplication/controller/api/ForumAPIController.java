@@ -132,6 +132,12 @@ public class ForumAPIController {
         return Response.FAILED;
     }
 
+    /**
+     * This function deletes a comment added on forum post
+     *
+     * @param data contains information sent by a user about user (jwt), post and comment
+     * @return response if comment has been removed successfully
+     */
     @PostMapping(value = "/deleteForumPostComment", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response deleteForumPostComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
@@ -156,6 +162,12 @@ public class ForumAPIController {
         return Response.FAILED;
     }
 
+    /**
+     * This function edits a comment in a forum post (changes comment's context & marks it as edited)
+     *
+     * @param data contains information sent by a user about user (jwt), post and comment
+     * @return response if comment has been edited successfully
+     */
     @PostMapping(value = "/editForumPostComment", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response editForumPostComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");

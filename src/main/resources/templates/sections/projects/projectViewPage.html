@@ -199,7 +199,10 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col">
-                                                <span class="fw-600">[[${comment.author}]]</span> <br />
+                                                <span class="fw-600">
+                                                    [[${comment.author}]]
+                                                    <span class="badge badge-primary" th:if="${comment.edited}">Edited</span>
+                                                </span> <br />
                                                 <span th:text="${#dates.format(comment.timeStamp, 'dd MMM yyyy, HH:MM:ss')}"></span>
                                             </div>
                                             <div class="col">
@@ -212,16 +215,12 @@
                                                 <button th:id="${'edit_' + comment.key}" th:if="${userDB != null && userDB.username == comment.author}" class="btn btn-outline-primary btn-sm fw-600" style="float:right; margin-right: 10px;" th:onclick="changeDisplay([[${comment.key}]])">Edit</button>
                                             </div>
                                         </div>
-                                        <div th:if="${comment.edited}">
-                                            <br/>
-                                            <span style="color: #212529;">(Edited)</span>
-                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <span>[[${comment.text}]]</span>
                                         <div class="row mt" th:if="${userDB != null && userDB.username == comment.author}" th:id="${'editField_' + comment.key}" style="display: none;">
                                             <form class="col" th:action="@{/editProjectComment}" method="post" style="display: inline-flex;">
-                                                <input required type="text" th:name="editedText" class="form-control" placeholder="New comment" th:value="*{comment.text}" />
+                                                <input required type="text" th:name="text" class="form-control" placeholder="New comment" th:value="*{comment.text}" />
                                                 <input hidden th:name="commentKey" th:value="*{comment.key}" />
                                                 <input hidden th:name="projectName" th:value="*{project.title}" />
                                                 <input type="submit" class="btn btn-outline-primary btn-sm fw-600" value="Save" />

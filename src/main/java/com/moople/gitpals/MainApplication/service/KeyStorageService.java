@@ -23,5 +23,10 @@ public class KeyStorageService implements KeyStorageInterface {
     public List<KeyStorage> findAll() {
         return keyStorageRepository.findAll();
     }
+
+    @Override
+    public void save(KeyStorage keyStorage) {
+        keyStorageRepository.save(keyStorage);
+    }
 }
 

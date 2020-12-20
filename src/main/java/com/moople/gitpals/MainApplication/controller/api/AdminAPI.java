@@ -1,9 +1,9 @@
 package com.moople.gitpals.MainApplication.controller.api;
 
 import com.moople.gitpals.MainApplication.model.Response;
-import com.moople.gitpals.MainApplication.repository.ForumRepository;
 import com.moople.gitpals.MainApplication.repository.KeyStorageRepository;
-import com.moople.gitpals.MainApplication.repository.ProjectRepository;
+import com.moople.gitpals.MainApplication.service.ForumService;
+import com.moople.gitpals.MainApplication.service.KeyStorageService;
 import com.moople.gitpals.MainApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +20,13 @@ public class AdminAPI {
     private UserService userService;
 
     @Autowired
-    private ForumRepository forumRepository;
+    private ForumService forumService;
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private ForumService projectService;
 
     @Autowired
-    private KeyStorageRepository keyStorageRepository;
+    private KeyStorageService keyStorageService;
 
     /**
      * This function is only for admin
@@ -41,12 +41,6 @@ public class AdminAPI {
         if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return Response.FAILED;
         }
-
-        userService.findAll()
-                .forEach(user -> {
-                    user.setMobileAuthPassword("");
-                    userService.save(user);
-                });
 
         return Response.OK;
     }

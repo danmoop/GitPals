@@ -8,4 +8,6 @@ public interface KeyStorageInterface {
     KeyStorage findByUsername(String username);
 
     List<KeyStorage> findAll();
+
+    void save(KeyStorage keyStorage);
 }

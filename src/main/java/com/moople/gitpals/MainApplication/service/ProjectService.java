@@ -73,12 +73,12 @@ public class ProjectService implements ProjectInterface {
     }
 
     @Override
-    public void editProjectInfo(Project project, String title, String description, String repoLink, Set<String> technologies, Set<String> roles) {
-        project.setTitle(project.getTitle());
-        project.setDescription(project.getDescription());
-        project.setGithubProjectLink(project.getGithubProjectLink());
-        project.setTechnologies(project.getTechnologies());
-        project.setRequiredRoles(project.getRequiredRoles());
+    public void editProjectInfo(Project project, String newTitle, String description, String repoLink, Set<String> technologies, Set<String> roles) {
+        project.setTitle(newTitle);
+        project.setDescription(description);
+        project.setGithubProjectLink(repoLink);
+        project.setTechnologies(technologies);
+        project.setRequiredRoles(roles);
 
         save(project);
     }

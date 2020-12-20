@@ -45,7 +45,7 @@
                         <input class="btn btn-primary btn-sm fw-600" type="submit" value="Get" />
                     </form>
 
-                    <ul style="list-style: none; padding-left: 0;">
+                    <ul th:if="${numberOfUsers != null}" style="list-style: none; padding-left: 0;">
                         Users registered: ([[${numberOfUsers}]])
                     </ul>
                 </div>
@@ -71,7 +71,7 @@
                         <input class="btn btn-primary btn-sm fw-600" type="submit" value="Get" />
                     </form>
 
-                    <ul style="list-style: none; padding-left: 0;">
+                    <ul th:if="${numberOfProjects != null}" style="list-style: none; padding-left: 0;">
                         Projects created: ([[${numberOfProjects}]])
                     </ul>
                 </div>

@@ -164,7 +164,7 @@ public class ForumController {
     }
 
     /**
-     * This function deleted comment added on forum post
+     * This function deletes a comment added on forum post
      *
      * @param auth       is comment's author
      * @param postKey    is a forum post's key

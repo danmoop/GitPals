@@ -22,7 +22,7 @@ public interface ProjectInterface {
 
     List<Project> matchProjectsByRoles(List<String> roles);
 
-    void editProjectInfo(Project project, String title, String description, String repoLink, Set<String> technologies, Set<String> roles);
+    void editProjectInfo(Project project, String newTitle, String description, String repoLink, Set<String> technologies, Set<String> roles);
 
     void sendComment(Project project, Comment comment, User user);
 
