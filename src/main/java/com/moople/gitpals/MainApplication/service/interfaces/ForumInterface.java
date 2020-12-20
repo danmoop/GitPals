@@ -13,6 +13,12 @@ public interface ForumInterface {
 
     ForumPost findByKey(String key);
 
+    void addComment(ForumPost post, String username, String commentText);
+
+    boolean deleteComment(ForumPost post, String username, String commentKey);
+
+    void editComment(ForumPost post, String username, String commentKey, String commentText);
+
     void save(ForumPost forumPost);
 
     void delete(ForumPost forumPost);

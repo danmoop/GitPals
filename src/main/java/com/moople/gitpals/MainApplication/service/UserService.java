@@ -1,11 +1,13 @@
 package com.moople.gitpals.MainApplication.service;
 
+import com.moople.gitpals.MainApplication.model.Pair;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.repository.UserRepository;
 import com.moople.gitpals.MainApplication.service.interfaces.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,6 +73,22 @@ public class UserService implements UserInterface {
         }
 
         return users;
+    }
+
+    @Override
+    public void removeNotification(String username, String notificationKey) {
+        User userDB = findByUsername(username);
+
+        userDB.getNotifications().getValue().remove(notificationKey);
+        save(userDB);
+    }
+
+    @Override
+    public void removeAllNotifications(String username) {
+        User userDB = findByUsername(username);
+
+        userDB.setNotifications(new Pair<>(0, new HashMap<>()));
+        save(userDB);
     }
 
     /**

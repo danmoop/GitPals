@@ -14,6 +14,10 @@ public interface UserInterface {
 
     Set<String> findBySkillList(List<String> skills);
 
+    void removeNotification(String username, String notificationKey);
+
+    void removeAllNotifications(String username);
+
     void save(User user);
 
     void delete(User user);

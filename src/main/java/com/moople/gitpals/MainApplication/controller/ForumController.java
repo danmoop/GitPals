@@ -1,10 +1,8 @@
 package com.moople.gitpals.MainApplication.controller;
 
-import com.moople.gitpals.MainApplication.model.Comment;
 import com.moople.gitpals.MainApplication.model.ForumPost;
-import com.moople.gitpals.MainApplication.model.Notification;
 import com.moople.gitpals.MainApplication.model.User;
-import com.moople.gitpals.MainApplication.repository.ForumRepository;
+import com.moople.gitpals.MainApplication.service.ForumService;
 import com.moople.gitpals.MainApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ForumController {
 
     @Autowired
-    private ForumRepository forumRepository;
+    private ForumService forumService;
 
     @Autowired
     private UserService userService;
@@ -42,7 +39,7 @@ public class ForumController {
             }
         }
 
-        List<ForumPost> posts = forumRepository.findAll();
+        List<ForumPost> posts = forumService.findAll();
 
         model.addAttribute("posts", posts);
         model.addAttribute("user", auth);
@@ -66,7 +63,7 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumRepository.findByKey(key);
+        ForumPost post = forumService.findByKey(key);
 
         if (post == null) {
             return "redirect:/forum";
@@ -74,7 +71,7 @@ public class ForumController {
 
         if (auth != null && !post.getViewSet().contains(auth.getName())) {
             post.getViewSet().add(auth.getName());
-            forumRepository.save(post);
+            forumService.save(post);
         }
 
         model.addAttribute("userDB", userService.findByUsername(auth != null ? auth.getName() : null));
@@ -103,7 +100,7 @@ public class ForumController {
         }
 
         ForumPost post = new ForumPost(auth.getName(), title, content);
-        forumRepository.save(post);
+        forumService.save(post);
 
         return "redirect:/forum/post/" + post.getKey();
     }
@@ -129,24 +126,13 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumRepository.findByKey(postKey);
+        ForumPost post = forumService.findByKey(postKey);
 
         if (post == null) {
             return "redirect:/forum";
         }
 
-        User postAuthor = userService.findByUsername(post.getAuthor());
-
-        post.getComments().add(new Comment(auth.getName(), commentText));
-        forumRepository.save(post);
-
-        if (!auth.getName().equals(postAuthor.getUsername())) {
-            Notification notification = new Notification(auth.getName() + " has left a comment on your forum post (" + post.getTitle() + ") -- " + commentText);
-            postAuthor.getNotifications().setKey(postAuthor.getNotifications().getKey() + 1);
-            postAuthor.getNotifications().getValue().put(notification.getKey(), notification);
-
-            userService.save(postAuthor);
-        }
+        forumService.addComment(post, auth.getName(), commentText);
 
         return "redirect:/forum/post/" + postKey;
     }
@@ -168,10 +154,10 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumRepository.findByKey(key);
+        ForumPost post = forumService.findByKey(key);
 
         if (auth != null && post != null && auth.getName().equals(post.getAuthor())) {
-            forumRepository.delete(post);
+            forumService.delete(post);
         }
 
         return "redirect:/forum";
@@ -195,20 +181,16 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumRepository.findByKey(postKey);
+        ForumPost post = forumService.findByKey(postKey);
         if (post == null || auth == null) {
             return "redirect:/";
         }
 
-        Optional<Comment> optionalComment = post.getComments().stream().filter(comm -> comm.getKey().equals(commentKey)).findFirst();
-
-        if (optionalComment.isPresent() && post.getAuthor().equals(auth.getName())) {
-            post.getComments().remove(optionalComment.get());
-            forumRepository.save(post);
+        if (forumService.deleteComment(post, auth.getName(), commentKey)) {
             return "redirect:/forum/post/" + postKey;
-        } else {
-            return "redirect:/";
         }
+
+        return "redirect:/";
     }
 
     /**
@@ -230,19 +212,13 @@ public class ForumController {
             }
         }
 
-        ForumPost post = forumRepository.findByKey(forumPostKey);
+        ForumPost post = forumService.findByKey(forumPostKey);
 
         if (auth == null || post == null) {
             return "redirect:/";
         }
 
-        post.getComments().forEach(comment -> {
-            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(auth.getName())) {
-                comment.setText(text);
-                comment.setEdited(true);
-                forumRepository.save(post);
-            }
-        });
+        forumService.editComment(post, auth.getName(), commentKey, text);
 
         return "redirect:/forum/post/" + forumPostKey;
     }

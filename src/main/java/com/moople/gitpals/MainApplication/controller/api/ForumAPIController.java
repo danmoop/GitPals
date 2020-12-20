@@ -1,11 +1,10 @@
 package com.moople.gitpals.MainApplication.controller.api;
 
 import com.moople.gitpals.MainApplication.configuration.JWTUtil;
-import com.moople.gitpals.MainApplication.model.Comment;
 import com.moople.gitpals.MainApplication.model.ForumPost;
 import com.moople.gitpals.MainApplication.model.Response;
 import com.moople.gitpals.MainApplication.model.User;
-import com.moople.gitpals.MainApplication.repository.ForumRepository;
+import com.moople.gitpals.MainApplication.service.ForumService;
 import com.moople.gitpals.MainApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class ForumAPIController {
 
     @Autowired
-    private ForumRepository forumRepository;
+    private ForumService forumService;
 
     @Autowired
     private UserService userService;
@@ -32,7 +31,7 @@ public class ForumAPIController {
      */
     @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> getAll() {
-        return forumRepository.findAll();
+        return forumService.findAll();
     }
 
     /**
@@ -43,7 +42,7 @@ public class ForumAPIController {
      */
     @GetMapping(value = "/getForumPostById/{key}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ForumPost getForumPostById(@PathVariable String key) {
-        return forumRepository.findByKey(key);
+        return forumService.findByKey(key);
     }
 
     /**
@@ -68,7 +67,7 @@ public class ForumAPIController {
         }
 
         ForumPost post = new ForumPost(user.getUsername(), title, description);
-        forumRepository.save(post);
+        forumService.save(post);
 
         return Response.OK;
     }
@@ -87,7 +86,7 @@ public class ForumAPIController {
         String postKey = data.get("postKey");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-        ForumPost post = forumRepository.findByKey(postKey);
+        ForumPost post = forumService.findByKey(postKey);
 
         if (user == null) {
             return Response.FAILED;
@@ -97,8 +96,7 @@ public class ForumAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        post.getComments().add(new Comment(user.getUsername(), commentText));
-        forumRepository.save(post);
+        forumService.addComment(post, user.getUsername(), commentText);
 
         return Response.OK;
     }
@@ -115,7 +113,7 @@ public class ForumAPIController {
         String postKey = data.get("postKey");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-        ForumPost post = forumRepository.findByKey(postKey);
+        ForumPost post = forumService.findByKey(postKey);
 
         if (user == null || post == null) {
             return Response.FAILED;
@@ -126,7 +124,7 @@ public class ForumAPIController {
         }
 
         if (user.getUsername().equals(post.getAuthor())) {
-            forumRepository.delete(post);
+            forumService.delete(post);
 
             return Response.OK;
         }
@@ -134,6 +132,50 @@ public class ForumAPIController {
         return Response.FAILED;
     }
 
-    //TODO: deleteForumPostComment
-    //TODO: editForumPostComment
+    @PostMapping(value = "/deleteForumPostComment", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response deleteForumPostComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
+        String commentKey = data.get("commentKey");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumService.findByKey(postKey);
+
+        if (user == null || post == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        if (forumService.deleteComment(post, user.getUsername(), commentKey)) {
+            return Response.OK;
+        }
+
+        return Response.FAILED;
+    }
+
+    @PostMapping(value = "/editForumPostComment", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response editForumPostComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
+        String commentKey = data.get("commentKey");
+        String commentText = data.get("commentText");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumService.findByKey(postKey);
+
+        if (user == null || post == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        forumService.editComment(post, user.getUsername(), commentKey, commentText);
+
+        return Response.OK;
+    }
 }

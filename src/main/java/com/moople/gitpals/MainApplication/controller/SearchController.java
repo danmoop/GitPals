@@ -138,14 +138,14 @@ public class SearchController {
     }
 
     /**
-     * This request is handled when user wants to sort projects by language
+     * This request is handled when user wants to sort projects by technologies
      * They will be sorted and displayed
      *
-     * @param data is a list of technologies checkboxes user select manually
+     * @param skills is a list of technologies checkboxes user select manually
      * @return a list of projects according to user's preference
      **/
     @PostMapping("/sortProjects")
-    public String projectsSorted(@RequestParam(name = "skill", required = false) List<String> data, Model model, Principal auth, RedirectAttributes redirectAttributes) {
+    public String sortProjectsByTechnologies(@RequestParam(name = "skill", required = false) List<String> skills, Model model, Principal auth, RedirectAttributes redirectAttributes) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
@@ -154,31 +154,16 @@ public class SearchController {
             }
         }
 
-        if (data == null) {
+        if (skills == null) {
             redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
             return "redirect:/search";
         }
 
-        data = data.stream()
+        skills = skills.stream()
                 .filter(s -> !s.trim().equals(""))
                 .collect(Collectors.toList());
 
-        List<Project> allProjects = projectService.findAll();
-        Set<String> matchProjects = new HashSet<>();
-
-        for (Project p : allProjects) {
-            boolean isProjectAdded = false;
-
-            for (int i = 0; i < data.size() && !isProjectAdded; i++) {
-                for (String projectTechnology : p.getTechnologies()) {
-                    if (projectTechnology.toLowerCase().contains(data.get(i).toLowerCase())) {
-                        matchProjects.add(p.getTitle());
-                        isProjectAdded = true;
-                        break;
-                    }
-                }
-            }
-        }
+        Set<Project> matchProjects = new HashSet<>(projectService.matchProjectsByTechnologies(skills));
 
         model.addAttribute("match_projects", matchProjects);
 
@@ -203,9 +188,7 @@ public class SearchController {
             }
         }
 
-        List<ForumPost> posts = forumService.findAll().stream()
-                .filter(post -> post.getTitle().toLowerCase().contains(postName.toLowerCase()))
-                .collect(Collectors.toList());
+        List<ForumPost> posts = forumService.matchForumPostsByTitle(postName);
 
         model.addAttribute("match_posts", posts);
 

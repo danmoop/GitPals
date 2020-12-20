@@ -28,11 +28,13 @@ public interface ProjectInterface {
 
     void editComment(Project project, String text, String commentKey, String username);
 
+    boolean removeComment(Project project, String username, String commentText);
+
+    void changeApplicationToAProject(Project project, User user);
+
     void deleteProject(Project project, User user);
 
     void save(Project project);
 
     void delete(Project project);
-
-    boolean removeComment(Project project, String username, String commentText);
 }

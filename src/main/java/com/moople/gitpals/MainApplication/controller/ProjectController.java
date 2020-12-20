@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.controller;
 
 import com.moople.gitpals.MainApplication.model.Comment;
-import com.moople.gitpals.MainApplication.model.Notification;
 import com.moople.gitpals.MainApplication.model.Project;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.service.ProjectService;
@@ -167,24 +166,7 @@ public class ProjectController {
 
         Project project = projectService.findByTitle(projectTitle);
 
-        // Users that already submitted can't submit another time, only once per project
-        if (!project.getAppliedUsers().contains(auth.getName())) {
-            project.getAppliedUsers().add(applyingUser.getUsername());
-            applyingUser.getProjectsAppliedTo().add(project.getTitle());
-
-            User projectAuthor = userService.findByUsername(project.getAuthorName());
-            Notification notification = new Notification(auth.getName() + " applied to your project " + project.getTitle());
-
-            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
-            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
-            userService.save(projectAuthor);
-        } else {
-            project.getAppliedUsers().remove(applyingUser.getUsername());
-            applyingUser.getProjectsAppliedTo().remove(project.getTitle());
-        }
-
-        projectService.save(project);
-        userService.save(applyingUser);
+        projectService.changeApplicationToAProject(project, applyingUser);
 
         return "redirect:/projects/" + projectTitle;
     }

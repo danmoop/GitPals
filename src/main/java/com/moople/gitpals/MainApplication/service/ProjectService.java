@@ -86,6 +86,7 @@ public class ProjectService implements ProjectInterface {
     @Override
     public void sendComment(Project project, Comment comment, User user) {
         if (!comment.getAuthor().equals(project.getAuthorName())) {
+
             // Let the project author know someone has left a comment in a comment section for their project
             User projectAuthor = userService.findByUsername(project.getAuthorName());
             Notification notification = new Notification(user.getUsername() + " has left a comment on your project " + project.getTitle() + ": " + comment.getText());
@@ -161,5 +162,28 @@ public class ProjectService implements ProjectInterface {
         }
 
         return false;
+    }
+
+    @Override
+    public void changeApplicationToAProject(Project project, User user) {
+
+        // Users that already submitted can't submit another time, only once per project
+        if (!project.getAppliedUsers().contains(user.getUsername())) {
+            project.getAppliedUsers().add(user.getUsername());
+            user.getProjectsAppliedTo().add(project.getTitle());
+
+            User projectAuthor = userService.findByUsername(project.getAuthorName());
+            Notification notification = new Notification(user.getUsername() + " applied to your project " + project.getTitle());
+
+            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
+            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
+            userService.save(projectAuthor);
+        } else {
+            project.getAppliedUsers().remove(user.getUsername());
+            user.getProjectsAppliedTo().remove(project.getTitle());
+        }
+
+        save(project);
+        userService.save(user);
     }
 }

@@ -107,8 +107,10 @@ public class UserController {
             return "sections/users/banned";
         }
 
-        userDB.getNotifications().setKey(0);
-        userService.save(userDB);
+        if(userDB.getNotifications().getKey() != 0) {
+            userDB.getNotifications().setKey(0);
+            userService.save(userDB);
+        }
 
         model.addAttribute("notifications", userDB.getNotifications().getValue());
 
@@ -124,10 +126,7 @@ public class UserController {
      */
     @PostMapping("/removeNotification")
     public String removeNotification(Principal auth, @RequestParam String notificationKey) {
-        User userDB = userService.findByUsername(auth.getName());
-
-        userDB.getNotifications().getValue().remove(notificationKey);
-        userService.save(userDB);
+        userService.removeNotification(auth.getName(), notificationKey);
 
         return "redirect:/notifications";
     }
@@ -141,10 +140,7 @@ public class UserController {
      */
     @PostMapping("/removeAllNotifications")
     public String removeAllNotifications(Principal auth) {
-        User userDB = userService.findByUsername(auth.getName());
-
-        userDB.setNotifications(new Pair<>(0, new HashMap<>()));
-        userService.save(userDB);
+        userService.removeAllNotifications(auth.getName());
 
         return "redirect:/notifications";
     }

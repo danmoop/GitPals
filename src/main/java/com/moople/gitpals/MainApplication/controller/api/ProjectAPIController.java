@@ -108,23 +108,7 @@ public class ProjectAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        if (project.getAppliedUsers().contains(user.getUsername())) {
-            project.getAppliedUsers().remove(user.getUsername());
-            user.getProjectsAppliedTo().remove(projectName);
-        } else {
-            project.getAppliedUsers().add(user.getUsername());
-            user.getProjectsAppliedTo().add(projectName);
-
-            User projectAuthor = userService.findByUsername(project.getAuthorName());
-            Notification notification = new Notification(user.getUsername() + " applied to your project " + project.getTitle());
-
-            projectAuthor.getNotifications().getValue().put(notification.getKey(), notification);
-            projectAuthor.getNotifications().setKey(projectAuthor.getNotifications().getKey() + 1);
-            userService.save(projectAuthor);
-        }
-
-        projectService.save(project);
-        userService.save(user);
+        projectService.changeApplicationToAProject(project, user);
 
         return Response.OK;
     }
