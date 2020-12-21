@@ -10,7 +10,7 @@ public interface UserInterface {
 
     List<User> findAll();
 
-    List<User> matchUsersByUsername(String userName);
+    List<User> matchUsersByUsername(String username);
 
     Set<String> findBySkillList(List<String> skills);
 

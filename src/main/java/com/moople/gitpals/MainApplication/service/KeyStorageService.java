@@ -29,4 +29,3 @@ public class KeyStorageService implements KeyStorageInterface {
         keyStorageRepository.save(keyStorage);
     }
 }
-

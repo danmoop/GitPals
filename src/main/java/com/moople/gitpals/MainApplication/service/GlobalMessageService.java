@@ -30,4 +30,3 @@ public class GlobalMessageService implements GlobalMessageInterface {
         globalMessageRepository.delete(globalMessage);
     }
 }
-

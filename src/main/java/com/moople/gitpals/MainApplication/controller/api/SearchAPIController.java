@@ -83,7 +83,7 @@ public class SearchAPIController {
     /**
      * This function returns all the posts from a particular user
      *
-     * @return all the posts who the user
+     * @return all the posts from the user specified
      */
     @GetMapping(value = "/matchForumPostsByAuthor/{author}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> matchForumPostsByAuthor(@PathVariable String author) {

@@ -22,16 +22,31 @@ public class ForumService implements ForumInterface {
     @Autowired
     private UserService userService;
 
+    /**
+     * This function returns all forum posts posted to forum
+     *
+     * @return all forum posts
+     */
     @Override
     public List<ForumPost> findAll() {
         return forumRepository.findAll();
     }
 
+    /**
+     * This function returns all the posts from a particular user
+     *
+     * @return all the posts from the user specified
+     */
     @Override
     public List<ForumPost> findByAuthor(String author) {
         return forumRepository.findByAuthor(author);
     }
 
+    /**
+     * This request finds all the forum posts whose titles match target value
+     *
+     * @return list of posts, whose titles match the target value sent by the user
+     */
     @Override
     public List<ForumPost> matchForumPostsByTitle(String title) {
         return forumRepository.findAll().stream()
@@ -39,11 +54,25 @@ public class ForumService implements ForumInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * This function returns a forum post object obtained by its key
+     *
+     * @param key is a unique forum post's key
+     * @return a forum post object
+     */
     @Override
     public ForumPost findByKey(String key) {
         return forumRepository.findByKey(key);
     }
 
+    /**
+     * This request is handled when user sends their comments to a forum post
+     * A comment will be added and changes will be saved to database
+     *
+     * @param post        is a forum post object
+     * @param username    is a username of a user who sends a comment
+     * @param commentText is a comment text
+     */
     @Override
     public void addComment(ForumPost post, String username, String commentText) {
         User postAuthor = userService.findByUsername(post.getAuthor());
@@ -60,6 +89,14 @@ public class ForumService implements ForumInterface {
         }
     }
 
+    /**
+     * This function deletes a comment added on forum post
+     *
+     * @param post       is a forum post object
+     * @param username   is a username of a user who sends a comment
+     * @param commentKey is a comment key
+     * @return if comment is present and user who sent the comment is its author
+     */
     @Override
     public boolean deleteComment(ForumPost post, String username, String commentKey) {
         Optional<Comment> optionalComment = post.getComments().stream().filter(comm -> comm.getKey().equals(commentKey)).findFirst();
@@ -74,6 +111,14 @@ public class ForumService implements ForumInterface {
         return false;
     }
 
+    /**
+     * This function edits a comment in a forum post (changes comment's context & marks it as edited)
+     *
+     * @param post        is a forum post object
+     * @param username    is a username of a user who sends a comment
+     * @param commentKey  is a comment key
+     * @param commentText is a comment text
+     */
     @Override
     public void editComment(ForumPost post, String username, String commentKey, String commentText) {
         post.getComments().forEach(comment -> {
@@ -85,14 +130,23 @@ public class ForumService implements ForumInterface {
         });
     }
 
+    /**
+     * This function saves a forum post to the database
+     *
+     * @param forumPost is a forum post object
+     */
     @Override
     public void save(ForumPost forumPost) {
         forumRepository.save(forumPost);
     }
 
+    /**
+     * This function deletes a forum post from the database
+     *
+     * @param forumPost is a forum post object
+     */
     @Override
     public void delete(ForumPost forumPost) {
         forumRepository.delete(forumPost);
     }
 }
-

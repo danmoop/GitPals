@@ -24,21 +24,40 @@ public class ProjectService implements ProjectInterface {
     @Autowired
     private UserService userService;
 
-    @Override
-    public Project findByTitle(String title) {
-        return projectRepository.findByTitle(title);
-    }
-
-    @Override
-    public Project findById(String id) {
-        return projectRepository.findById(id).orElse(Data.EMPTY_PROJECT);
-    }
-
+    /**
+     * @return list of all projects created from the database
+     */
     @Override
     public List<Project> findAll() {
         return projectRepository.findAll();
     }
 
+    /**
+     * This function returns an object fetched from the database by its title
+     *
+     * @param title is a project title we pass in path
+     * @return project json object
+     */
+    @Override
+    public Project findByTitle(String title) {
+        return projectRepository.findByTitle(title);
+    }
+
+    /**
+     * This function returns an object fetched from the database by its unique id
+     *
+     * @param id is project's unique id number, which we use to find it in the database
+     * @return project json object or empty project if such id is not found
+     */
+    @Override
+    public Project findById(String id) {
+        return projectRepository.findById(id).orElse(Data.EMPTY_PROJECT);
+    }
+
+    /**
+     * @param amount is an amount of projects we want to get from the huge list
+     * @return list of project which length == amount, so we get fixed list
+     */
     @Override
     public List<Project> getFixedNumberOfProjects(int amount) {
         return projectRepository.findAll()
@@ -47,6 +66,12 @@ public class ProjectService implements ProjectInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * This function returns a list of project which title matches the input
+     *
+     * @param title is a project name we pass in path
+     * @return list of projects whose title match the one we pass
+     */
     @Override
     public List<Project> matchProjectsByProjectTitle(String title) {
         return projectRepository.findAll().stream()
@@ -54,6 +79,12 @@ public class ProjectService implements ProjectInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * This function returns a list of projects with technologies specified by a user
+     *
+     * @param technologies is a list of technologies project should contain
+     * @return list of projects whose technologies match the user's input
+     */
     @Override
     public List<Project> matchProjectsByTechnologies(List<String> technologies) {
         return projectRepository.findAll().stream()
@@ -63,6 +94,12 @@ public class ProjectService implements ProjectInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * This function returns a list of projects with roles specified by a user
+     *
+     * @param roles is a list of required roles project should contain
+     * @return list of projects whose required roles match the user's input
+     */
     @Override
     public List<Project> matchProjectsByRoles(List<String> roles) {
         return projectRepository.findAll()
@@ -72,6 +109,15 @@ public class ProjectService implements ProjectInterface {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * This function edits information for a chosen project (like change description, roles, etc.)
+     *
+     * @param technologies is a new list of project's technologies
+     * @param roles        is a new list of project's roles
+     * @param newTitle     is a new title the user prompts (which can be the same as the old one)
+     * @param description  is a new description
+     */
     @Override
     public void editProjectInfo(Project project, String newTitle, String description, String repoLink, Set<String> technologies, Set<String> roles) {
         project.setTitle(newTitle);
@@ -83,6 +129,14 @@ public class ProjectService implements ProjectInterface {
         save(project);
     }
 
+    /**
+     * This request is handled when user submits their comment
+     * It will be added to comments list and saved
+     *
+     * @param project is a project, which will have a comment added
+     * @param comment is a comment object, which will be added to a project
+     * @param user    is a user, who sends a comment to a project
+     */
     @Override
     public void sendComment(Project project, Comment comment, User user) {
         if (!comment.getAuthor().equals(project.getAuthorName())) {
@@ -100,6 +154,14 @@ public class ProjectService implements ProjectInterface {
         save(project);
     }
 
+    /**
+     * This function edits a comment in a project (changes comment's context & marks it as edited)
+     *
+     * @param project    is a project, which will have a comment added
+     * @param text       is a new comment text
+     * @param commentKey is a comment key, so we could find the comment among others
+     * @param username   is a username of a user, who edits the comment
+     */
     @Override
     public void editComment(Project project, String text, String commentKey, String username) {
         project.getComments().forEach(comment -> {
@@ -111,6 +173,13 @@ public class ProjectService implements ProjectInterface {
         });
     }
 
+    /**
+     * This request is handled when user wants to delete project
+     * It will be deleted and applied users will be notified about that
+     *
+     * @param project is a project, which will be removed
+     * @param user    is a user, who wants to remove a project
+     */
     @Override
     public void deleteProject(Project project, User user) {
         delete(project);
@@ -137,16 +206,34 @@ public class ProjectService implements ProjectInterface {
         }
     }
 
+    /**
+     * This functions saves a project to the database
+     *
+     * @param project is a project, which will be added
+     */
     @Override
     public void save(Project project) {
         projectRepository.save(project);
     }
 
+    /**
+     * This functions deletes a project from the database
+     *
+     * @param project is a project, which will be added
+     */
     @Override
     public void delete(Project project) {
         projectRepository.delete(project);
     }
 
+    /**
+     * This function is handled when user wants to remove their comment
+     *
+     * @param project     is a project, which will have a comment added
+     * @param username    is a username of a user, who edits the comment
+     * @param commentText is a comment text
+     * @return true if comment is present and user is the author of a comment
+     */
     @Override
     public boolean removeComment(Project project, String username, String commentText) {
         Optional<Comment> comment = project.getComments()
@@ -164,6 +251,12 @@ public class ProjectService implements ProjectInterface {
         return false;
     }
 
+    /**
+     * This function lets user either become applied to a project, or un-applied, if they were applied earlier
+     *
+     * @param project is a project, which application of a user will be changed
+     * @param user    is a user, who wants to change their application to a project
+     */
     @Override
     public void changeApplicationToAProject(Project project, User user) {
 

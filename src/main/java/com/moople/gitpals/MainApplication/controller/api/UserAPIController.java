@@ -210,8 +210,7 @@ public class UserAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        user.getNotifications().getValue().remove(notificationKey);
-        userService.save(user);
+        userService.removeNotification(user.getUsername(), notificationKey);
 
         return Response.OK;
     }
@@ -236,8 +235,7 @@ public class UserAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        user.setNotifications(new Pair<>(0, new HashMap<>()));
-        userService.save(user);
+        userService.removeAllNotifications(user.getUsername());
 
         return Response.OK;
     }

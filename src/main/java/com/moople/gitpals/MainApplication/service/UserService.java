@@ -40,11 +40,17 @@ public class UserService implements UserInterface {
         return userRepository.findAll();
     }
 
+    /**
+     * This function returns a list of users whose username matches the input
+     *
+     * @param username is a username we pass in path
+     * @return list of users whose username match the one we pass
+     */
     @Override
-    public List<User> matchUsersByUsername(String userName) {
+    public List<User> matchUsersByUsername(String username) {
         return userRepository.findAll()
                 .stream()
-                .filter(user -> user.getUsername().toLowerCase().contains(userName.toLowerCase()))
+                .filter(user -> user.getUsername().toLowerCase().contains(username.toLowerCase()))
                 .peek(user -> {
                     user.setDialogs(null);
                     user.setNotifications(null);
@@ -75,6 +81,12 @@ public class UserService implements UserInterface {
         return users;
     }
 
+    /**
+     * This request removes all user's notifications
+     *
+     * @param username        is a user's name, whose notification will be removed
+     * @param notificationKey is a unique key so we could find it in the database
+     */
     @Override
     public void removeNotification(String username, String notificationKey) {
         User userDB = findByUsername(username);
@@ -83,6 +95,11 @@ public class UserService implements UserInterface {
         save(userDB);
     }
 
+    /**
+     * This request removes all user's notifications
+     *
+     * @param username is a user's name, whose notifications will be removed
+     */
     @Override
     public void removeAllNotifications(String username) {
         User userDB = findByUsername(username);
@@ -103,9 +120,13 @@ public class UserService implements UserInterface {
         userRepository.save(user);
     }
 
+    /**
+     * This function removes a user from the database
+     *
+     * @param user is a user who will be removed from the database
+     */
     @Override
     public void delete(User user) {
         userRepository.delete(user);
     }
 }
-
