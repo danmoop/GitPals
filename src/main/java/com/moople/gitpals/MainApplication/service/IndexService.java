@@ -6,9 +6,11 @@ import com.moople.gitpals.MainApplication.model.Project;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.service.interfaces.IndexInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class IndexService implements IndexInterface {
 
     @Autowired
