@@ -196,8 +196,10 @@ public class ProjectService implements ProjectInterface {
                 .map(submittedUser -> userService.findByUsername(submittedUser))
                 .collect(Collectors.toList());
 
+        Notification notification = new Notification("A project " + project.getTitle() + " you were applied to has been deleted by the project author");
         for (User _user : allUsers) {
-            Notification notification = new Notification("A project " + project.getTitle() + " you were applied to has been deleted by the project author");
+            if (_user.getUsername().equals(project.getAuthorName())) continue;
+
             _user.getProjectsAppliedTo().remove(project.getTitle());
             _user.getNotifications().setKey(_user.getNotifications().getKey() + 1);
             _user.getNotifications().getValue().put(notification.getKey(), notification);

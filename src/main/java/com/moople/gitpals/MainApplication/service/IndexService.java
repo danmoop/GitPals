@@ -31,6 +31,11 @@ public class IndexService implements IndexInterface {
     private final long ONE_DAY = 1000 * 86400;
     private final int PROJECTS_PER_PAGE = 20;
 
+    /**
+     * every page has a fixed number of projects displayed
+     *
+     * @return total number of pages that will be displayed on index page
+     */
     @Override
     public int getNumberOfPages() {
 
@@ -61,6 +66,13 @@ public class IndexService implements IndexInterface {
         return unreadMessages;
     }
 
+    /**
+     * This function return a list of projects displayed on specific page
+     * Each page has different projects
+     *
+     * @param page is a page number specified by a user
+     * @return list of projects displayed on page specified by a user
+     */
     @Override
     public List<Project> getProjectsOnPage(int page) {
         List<Project> allProjects = projectService.findAll();
