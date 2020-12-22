@@ -10,4 +10,6 @@ public interface GlobalMessageInterface {
     void save(GlobalMessage globalMessage);
 
     void delete(GlobalMessage globalMessage);
+
+    void deleteAll();
 }

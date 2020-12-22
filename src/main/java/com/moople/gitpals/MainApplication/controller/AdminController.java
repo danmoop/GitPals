@@ -4,10 +4,7 @@ import com.moople.gitpals.MainApplication.model.ForumPost;
 import com.moople.gitpals.MainApplication.model.GlobalMessage;
 import com.moople.gitpals.MainApplication.model.Project;
 import com.moople.gitpals.MainApplication.model.User;
-import com.moople.gitpals.MainApplication.repository.ForumRepository;
-import com.moople.gitpals.MainApplication.repository.GlobalMessageRepository;
-import com.moople.gitpals.MainApplication.repository.ProjectRepository;
-import com.moople.gitpals.MainApplication.service.UserService;
+import com.moople.gitpals.MainApplication.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +25,16 @@ public class AdminController {
     private UserService userService;
 
     @Autowired
-    private ProjectRepository projectService;
+    private ProjectService projectService;
 
     @Autowired
-    private ForumRepository forumRepository;
+    private ForumService forumService;
 
     @Autowired
-    private GlobalMessageRepository globalMessageRepository;
+    private GlobalMessageService globalMessageService;
 
-    private final long ONE_DAY = 84600 * 1000;
-    private final long ONE_WEEK = ONE_DAY * 7;
+    @Autowired
+    private AdminService adminService;
 
     /**
      * This function returns admin page if you are an admin
@@ -151,26 +148,15 @@ public class AdminController {
      * @return admin page
      */
     @PostMapping("/clearAllUserProjects")
-    public String clearAllUserProjects(Principal admin, @RequestParam("username") String username, RedirectAttributes redirectAttributes) {
+    public String clearAllUserProjects(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
         if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
-        User user = userService.findByUsername(username);
-
-        if (user == null) {
+        if (!adminService.removeAllUserProjects(username)) {
             redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "No such user");
             return "redirect:/admin";
         }
-
-        user.getSubmittedProjects().stream()
-                .map(project -> projectService.findByTitle(project))
-                .forEach(project -> {
-                    projectService.delete(project);
-                });
-
-        user.getSubmittedProjects().clear();
-        userService.save(user);
 
         redirectAttributes.addFlashAttribute("userProjectsDeletedMessage", "All projects by " + username + " were deleted");
         return "redirect:/admin";
@@ -189,7 +175,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        ForumPost post = forumRepository.findByKey(id);
+        ForumPost post = forumService.findByKey(id);
 
         if (post == null) {
             attributes.addFlashAttribute("forumPost", "No such post with id " + id);
@@ -212,12 +198,12 @@ public class AdminController {
             return "redirect:/";
         }
 
-        ForumPost post = forumRepository.findByKey(id);
+        ForumPost post = forumService.findByKey(id);
 
         if (post == null) {
             attributes.addFlashAttribute("forumPostDeletionStatus", "No such post");
         } else {
-            forumRepository.delete(post);
+            forumService.delete(post);
 
             attributes.addFlashAttribute("forumPostDeletionStatus", "Success!");
         }
@@ -238,9 +224,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        forumRepository.findAll().stream()
-                .filter(post -> post.getAuthor().equals(username))
-                .forEach(post -> forumRepository.delete(post));
+        adminService.deleteAllForumPostsByUser(username);
 
         attributes.addFlashAttribute("forumPostsDeletionForUser", "Success!");
 
@@ -316,12 +300,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        long currentTime = new Date().getTime();
-
-        List<String> activeUsers = userService.findAll()
-                .stream().filter(user -> currentTime - user.getLastOnlineDate() <= ONE_DAY)
-                .map(User::getUsername)
-                .collect(Collectors.toList());
+        List<String> activeUsers = adminService.getActiveDailyUsers();
 
         redirectAttributes.addFlashAttribute("activeDailyUsers", activeUsers);
         return "redirect:/admin";
@@ -340,12 +319,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        long currentTime = new Date().getTime();
-
-        List<String> activeUsers = userService.findAll()
-                .stream().filter(user -> currentTime - user.getLastOnlineDate() <= ONE_WEEK)
-                .map(User::getUsername)
-                .collect(Collectors.toList());
+        List<String> activeUsers = adminService.getActiveWeeklyUsers();
 
         redirectAttributes.addFlashAttribute("activeWeeklyUsers", activeUsers);
         return "redirect:/admin";
@@ -364,21 +338,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        List<GlobalMessage> globalMessages = globalMessageRepository.findAll();
-
-        GlobalMessage globalMessage;
-        if (globalMessages.size() == 0) {
-            globalMessage = new GlobalMessage(text);
-        } else {
-            globalMessage = globalMessages.get(0);
-            globalMessage.setContent(text);
-        }
-        globalMessageRepository.save(globalMessage);
-
-        userService.findAll().forEach(user -> {
-            user.setHasSeenGlobalMessage(false);
-            userService.save(user);
-        });
+        adminService.modifyGlobalAlert(text);
 
         return "redirect:/admin";
     }
@@ -395,7 +355,7 @@ public class AdminController {
             return "redirect:/";
         }
 
-        globalMessageRepository.deleteAll();
+        globalMessageService.deleteAll();
 
         return "redirect:/admin";
     }
@@ -409,26 +369,17 @@ public class AdminController {
      * @return the admin page with a message, which tells that a user has become either an admin or a user
      */
     @PostMapping("/makeAdmin")
-    public String makeAdmin(Principal admin, @RequestParam("username") String username, RedirectAttributes redirectAttributes) {
+    public String makeAdmin(Principal admin, @RequestParam String username, RedirectAttributes redirectAttributes) {
         if (admin == null || !userService.findByUsername(admin.getName()).isAdmin()) {
             return "redirect:/";
         }
 
-        User user = userService.findByUsername(username);
-
-        if (user == null) {
+        if (!adminService.makeUserAnAdmin(username)) {
             redirectAttributes.addFlashAttribute("makeAdminMsg", username + " is not registered");
             return "redirect:/admin";
         }
 
-        user.setAdmin(!user.isAdmin());
-        userService.save(user);
-
-        if (user.isAdmin()) {
-            redirectAttributes.addFlashAttribute("makeAdminMsg", username + " is now an admin");
-        } else {
-            redirectAttributes.addFlashAttribute("makeAdminMsg", username + " is no longer an admin");
-        }
+        redirectAttributes.addFlashAttribute("makeAdminMsg", "Done");
 
         return "redirect:/admin";
     }

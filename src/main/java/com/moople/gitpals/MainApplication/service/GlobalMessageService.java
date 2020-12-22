@@ -14,7 +14,6 @@ public class GlobalMessageService implements GlobalMessageInterface {
     @Autowired
     private GlobalMessageRepository globalMessageRepository;
 
-
     @Override
     public List<GlobalMessage> findAll() {
         return globalMessageRepository.findAll();
@@ -28,5 +27,10 @@ public class GlobalMessageService implements GlobalMessageInterface {
     @Override
     public void delete(GlobalMessage globalMessage) {
         globalMessageRepository.delete(globalMessage);
+    }
+
+    @Override
+    public void deleteAll() {
+        globalMessageRepository.deleteAll();
     }
 }
