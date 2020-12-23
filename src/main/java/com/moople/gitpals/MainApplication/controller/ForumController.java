@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.controller;
 
+import com.moople.gitpals.MainApplication.model.Comment;
 import com.moople.gitpals.MainApplication.model.ForumPost;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.service.ForumService;
@@ -132,7 +133,9 @@ public class ForumController {
             return "redirect:/forum";
         }
 
-        forumService.addComment(post, auth.getName(), commentText);
+        Comment comment = new Comment(auth.getName(), commentText);
+
+        forumService.addComment(post, auth.getName(), comment);
 
         return "redirect:/forum/post/" + postKey;
     }

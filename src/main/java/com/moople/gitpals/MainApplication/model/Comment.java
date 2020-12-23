@@ -21,6 +21,7 @@ public class Comment {
     public Comment(String author, String text) {
         this.author = author;
         this.text = text.trim();
+
         this.timeStamp = new Date();
         this.key = generateKey();
         this.edited = false;

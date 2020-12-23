@@ -25,10 +25,6 @@ public class ForumPost {
     private String key;
     private String timeStamp;
     private List<Comment> comments;
-
-    /**
-     * @param viewSet is a set of users who opened a post, like amount of views
-     **/
     private HashSet<String> viewSet;
 
     public ForumPost(String author, String title, String content) {

@@ -1,11 +1,13 @@
 package com.moople.gitpals.MainApplication.controller.api;
 
 import com.moople.gitpals.MainApplication.configuration.JWTUtil;
+import com.moople.gitpals.MainApplication.model.Comment;
 import com.moople.gitpals.MainApplication.model.ForumPost;
 import com.moople.gitpals.MainApplication.model.Response;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.service.ForumService;
 import com.moople.gitpals.MainApplication.service.UserService;
+import com.moople.gitpals.MainApplication.tools.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -80,16 +82,47 @@ public class ForumAPIController {
      * @param data is information sent by a user (contains comment text and post's key so server could find it)
      * @return response if comment has been added successfully
      */
-    @PostMapping(value = "/addCommentToPost", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response addCommentToPost(@RequestBody Map<String, String> data) {
+    @PostMapping(value = "/addComment", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Comment addComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
-        String commentText = data.get("commentText");
+        String commentText = data.get("text");
         String postKey = data.get("postKey");
+        String author = data.get("author");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         ForumPost post = forumService.findByKey(postKey);
 
-        if (user == null) {
+        if (user == null || user.isBanned()) {
+            return Data.EMPTY_COMMENT;
+        }
+
+        if (user.getUsername().equals(author)) {
+            Comment comment = new Comment(author, commentText);
+            forumService.addComment(post, user.getUsername(), comment);
+
+            return comment;
+        }
+
+        return Data.EMPTY_COMMENT;
+    }
+
+    /**
+     * This function edits a comment in a forum post (changes comment's context & marks it as edited)
+     *
+     * @param data contains information sent by a user about user (jwt), post and comment
+     * @return response if comment has been edited successfully
+     */
+    @PostMapping(value = "/editComment", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response editForumPostComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
+        String commentKey = data.get("commentKey");
+        String commentText = data.get("commentText");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumService.findByKey(postKey);
+
+        if (user == null || post == null) {
             return Response.FAILED;
         }
 
@@ -97,9 +130,39 @@ public class ForumAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        forumService.addComment(post, user.getUsername(), commentText);
+        forumService.editComment(post, user.getUsername(), commentKey, commentText);
 
         return Response.OK;
+    }
+
+    /**
+     * This function deletes a comment added on forum post
+     *
+     * @param data contains information sent by a user about user (jwt), post and comment
+     * @return response if comment has been removed successfully
+     */
+    @PostMapping(value = "/deleteComment", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response deleteForumPostComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
+        String commentKey = data.get("commentKey");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumService.findByKey(postKey);
+
+        if (user == null || post == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        if (forumService.deleteComment(post, user.getUsername(), commentKey)) {
+            return Response.OK;
+        }
+
+        return Response.FAILED;
     }
 
     /**
@@ -131,64 +194,5 @@ public class ForumAPIController {
         }
 
         return Response.FAILED;
-    }
-
-    /**
-     * This function deletes a comment added on forum post
-     *
-     * @param data contains information sent by a user about user (jwt), post and comment
-     * @return response if comment has been removed successfully
-     */
-    @PostMapping(value = "/deleteForumPostComment", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response deleteForumPostComment(@RequestBody Map<String, String> data) {
-        String jwt = data.get("jwt");
-        String postKey = data.get("postKey");
-        String commentKey = data.get("commentKey");
-
-        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-        ForumPost post = forumService.findByKey(postKey);
-
-        if (user == null || post == null) {
-            return Response.FAILED;
-        }
-
-        if (user.isBanned()) {
-            return Response.YOU_ARE_BANNED;
-        }
-
-        if (forumService.deleteComment(post, user.getUsername(), commentKey)) {
-            return Response.OK;
-        }
-
-        return Response.FAILED;
-    }
-
-    /**
-     * This function edits a comment in a forum post (changes comment's context & marks it as edited)
-     *
-     * @param data contains information sent by a user about user (jwt), post and comment
-     * @return response if comment has been edited successfully
-     */
-    @PostMapping(value = "/editForumPostComment", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response editForumPostComment(@RequestBody Map<String, String> data) {
-        String jwt = data.get("jwt");
-        String postKey = data.get("postKey");
-        String commentKey = data.get("commentKey");
-        String commentText = data.get("commentText");
-
-        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-        ForumPost post = forumService.findByKey(postKey);
-
-        if (user == null || post == null) {
-            return Response.FAILED;
-        }
-
-        if (user.isBanned()) {
-            return Response.YOU_ARE_BANNED;
-        }
-
-        forumService.editComment(post, user.getUsername(), commentKey, commentText);
-
-        return Response.OK;
     }
 }

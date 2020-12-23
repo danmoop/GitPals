@@ -2,7 +2,10 @@ package com.moople.gitpals.MainApplication.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moople.gitpals.MainApplication.configuration.JWTUtil;
-import com.moople.gitpals.MainApplication.model.*;
+import com.moople.gitpals.MainApplication.model.Comment;
+import com.moople.gitpals.MainApplication.model.Project;
+import com.moople.gitpals.MainApplication.model.Response;
+import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.service.ProjectService;
 import com.moople.gitpals.MainApplication.service.UserService;
 import com.moople.gitpals.MainApplication.tools.Data;
@@ -231,7 +234,7 @@ public class ProjectAPIController {
      * @return a response, which is OK if a comment has been added successfully
      */
     @PostMapping(value = "/sendComment", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response sendComment(@RequestBody Map<String, String> data) {
+    public Comment sendComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
         String author = data.get("author");
         String text = data.get("text");
@@ -240,23 +243,17 @@ public class ProjectAPIController {
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = projectService.findByTitle(projectName);
 
-        if (project == null || user == null) {
-            return Response.FAILED;
+        if (project == null || user == null || user.isBanned()) {
+            return Data.EMPTY_COMMENT;
         }
-
-        if (user.isBanned()) {
-            return Response.YOU_ARE_BANNED;
-        }
-
         if (jwtUtil.extractUsername(jwt).equals(author)) {
             Comment comment = new Comment(author, text);
 
             projectService.sendComment(project, comment, user);
 
-            return Response.OK;
+            return comment;
         }
-
-        return Response.FAILED;
+        return Data.EMPTY_COMMENT;
     }
 
     /**

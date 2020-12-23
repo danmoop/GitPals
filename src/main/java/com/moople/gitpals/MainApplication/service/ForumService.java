@@ -74,14 +74,14 @@ public class ForumService implements ForumInterface {
      * @param commentText is a comment text
      */
     @Override
-    public void addComment(ForumPost post, String username, String commentText) {
+    public void addComment(ForumPost post, String username, Comment comment) {
         User postAuthor = userService.findByUsername(post.getAuthor());
 
-        post.getComments().add(new Comment(username, commentText));
+        post.getComments().add(comment);
         forumRepository.save(post);
 
         if (!username.equals(postAuthor.getUsername())) {
-            Notification notification = new Notification(username + " has left a comment on your forum post (" + post.getTitle() + ") -- " + commentText);
+            Notification notification = new Notification(username + " has left a comment on your forum post (" + post.getTitle() + ") -- " + comment.getText());
             postAuthor.getNotifications().setKey(postAuthor.getNotifications().getKey() + 1);
             postAuthor.getNotifications().getValue().put(notification.getKey(), notification);
 

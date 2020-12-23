@@ -168,22 +168,4 @@ public class MessageController {
 
         return message;
     }
-
-    /**
-     * ONLY FOR TESTING PURPOSES
-     * TODO: Remove Later
-     */
-    @GetMapping("/removeAllMessages/{dialogName}")
-    public String removeAllMessages(Principal auth, @PathVariable String dialogName) {
-        User sender = userService.findByUsername(auth.getName());
-        sender.getDialogs().remove(dialogName);
-
-        User recipient = userService.findByUsername(dialogName);
-        recipient.getDialogs().remove(auth.getName());
-
-        userService.save(sender);
-        userService.save(recipient);
-
-        return "redirect:/dialogs/" + dialogName;
-    }
 }

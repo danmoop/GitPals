@@ -1,5 +1,6 @@
 package com.moople.gitpals.MainApplication.service.interfaces;
 
+import com.moople.gitpals.MainApplication.model.Comment;
 import com.moople.gitpals.MainApplication.model.ForumPost;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface ForumInterface {
 
     ForumPost findByKey(String key);
 
-    void addComment(ForumPost post, String username, String commentText);
+    void addComment(ForumPost post, String username, Comment comment);
 
     boolean deleteComment(ForumPost post, String username, String commentKey);
 
