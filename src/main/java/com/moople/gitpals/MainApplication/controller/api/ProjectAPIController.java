@@ -85,7 +85,7 @@ public class ProjectAPIController {
      * @return list of project which length == amount, so we get fixed list
      */
     @GetMapping(value = "/getAmount/{amount}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Project> getSomeProjects(@PathVariable("amount") int amount) {
+    public List<Project> getSomeProjects(@PathVariable int amount) {
         return projectService.getFixedNumberOfProjects(amount);
     }
 
@@ -293,10 +293,10 @@ public class ProjectAPIController {
      * @return a response, which is OK if a comment has been removed successfully
      */
     @PostMapping(value = "/removeComment", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response removeComment(@RequestBody Map<String, Object> data) {
-        String jwt = (String) data.get("jwt");
-        String projectName = (String) data.get("projectName");
-        String commentText = (String) data.get("commentText");
+    public Response removeComment(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String projectName = data.get("projectName");
+        String commentText = data.get("commentText");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = projectService.findByTitle(projectName);

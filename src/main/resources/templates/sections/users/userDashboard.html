@@ -30,7 +30,7 @@
                             <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
                         </div>
                         <div class="card-body">
-                            <img th:src="${UserObject.avatarURL}" width="200" style="border-radius: 30px;"><br>
+			  <img th:if="${UserObject.avatarURL != ''}" th:src="${UserObject.avatarURL}" width="200" style="border-radius: 30px;"><br>
 
                             <p class="card-text" th:if="${UserObject.email}">Email - [[${UserObject.email}]]</p>
                             <p class="card-text" th:if="${UserObject.country}">Location - [[${UserObject.country}]]</p>

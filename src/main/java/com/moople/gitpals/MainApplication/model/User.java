@@ -37,7 +37,7 @@ public class User {
 
     public User(String username, String githubAccountLink, String email, String country, String bio, String avatarURL) {
         this.username = username.trim();
-        this.avatarURL = avatarURL;
+        this.avatarURL = avatarURL.trim();
         this.githubAccountLink = githubAccountLink.trim();
         this.skillList = new HashSet<>();
 
