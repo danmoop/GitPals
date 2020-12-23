@@ -149,6 +149,11 @@ public class IndexService implements IndexInterface {
             }
         }
 
+        if (!properties.get("avatar_url").toString().equals(userDB.getAvatarURL())) {
+            userDB.setAvatarURL(properties.get("avatar_url").toString());
+            shouldSaveChanges = true;
+        }
+
         // Last Online Date (update if there is 1day difference to avoid multiple database updates on the same day)
         long currentTime = new Date().getTime();
         if (currentTime - userDB.getLastOnlineDate() >= ONE_DAY) {

@@ -216,7 +216,7 @@ public class ProjectController {
     @PostMapping("/sendComment")
     public String sendComment(@RequestParam String projectName, @RequestParam String text, Principal auth, RedirectAttributes redirectAttributes) {
 
-        if (text.isEmpty()) {
+        if (text.trim().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Your comment should have any text!");
             return "redirect:/projects/" + projectName;
         }

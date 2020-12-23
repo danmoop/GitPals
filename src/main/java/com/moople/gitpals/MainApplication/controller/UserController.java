@@ -51,6 +51,7 @@ public class UserController {
             }
 
             model.addAttribute("userDB", userDB);
+            model.addAttribute("auth", auth);
 
             return "sections/users/dashboard";
         }

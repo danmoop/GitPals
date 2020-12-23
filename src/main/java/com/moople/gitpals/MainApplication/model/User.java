@@ -23,6 +23,7 @@ public class User {
     private String country;
     private String bio;
     private String githubAccountLink;
+    private String avatarURL;
     private String mobileAuthPassword;
     private Set<String> skillList;
     private Map<String, Pair<Integer, List<Message>>> dialogs;
@@ -34,8 +35,9 @@ public class User {
     private boolean hasSeenGlobalMessage;
     private boolean isAdmin;
 
-    public User(String username, String githubAccountLink, String email, String country, String bio) {
+    public User(String username, String githubAccountLink, String email, String country, String bio, String avatarURL) {
         this.username = username.trim();
+        this.avatarURL = avatarURL;
         this.githubAccountLink = githubAccountLink.trim();
         this.skillList = new HashSet<>();
 

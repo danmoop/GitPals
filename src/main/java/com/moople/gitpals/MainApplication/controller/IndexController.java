@@ -69,13 +69,14 @@ public class IndexController {
             String email = properties.get("email") == null ? null : properties.get("email").toString();
             String country = properties.get("location") == null ? null : properties.get("location").toString();
             String bio = properties.get("bio") == null ? null : properties.get("bio").toString();
+            String avatarURL = properties.get("avatar_url").toString();
 
             /*
              *  When authentication exists, however, there is no such user in the database,
              *  it means that this user has just logged in for the first time
              */
             if (userService.findByUsername(auth.getName()) == null) {
-                User newRegisteredUser = new User(auth.getName(), "https://github.com/" + auth.getName(), email, country, bio);
+                User newRegisteredUser = new User(auth.getName(), "https://github.com/" + auth.getName(), email, country, bio, avatarURL);
 
                 userService.save(newRegisteredUser);
                 keyStorageService.save(new KeyStorage(auth.getName()));

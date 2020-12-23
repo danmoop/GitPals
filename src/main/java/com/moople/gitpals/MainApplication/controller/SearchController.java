@@ -122,7 +122,7 @@ public class SearchController {
         }
 
         if (skills == null || skills.size() == 0) {
-            redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
+            redirectAttributes.addFlashAttribute("msg", "You should choose some options!");
             return "redirect:/search";
         }
 
@@ -154,8 +154,8 @@ public class SearchController {
             }
         }
 
-        if (skills == null) {
-            redirectAttributes.addFlashAttribute("msg", "You should choose some options from the list!");
+        if (skills == null || skills.size() == 0) {
+            redirectAttributes.addFlashAttribute("msg", "You should choose some options!");
             return "redirect:/search";
         }
 

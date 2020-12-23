@@ -42,6 +42,11 @@ public class AdminAPI {
             return Response.FAILED;
         }
 
+        userService.findAll().forEach(user -> {
+            user.setAvatarURL("");
+            userService.save(user);
+        });
+
         return Response.OK;
     }
 }

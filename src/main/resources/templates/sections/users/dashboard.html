@@ -53,6 +53,8 @@
                 </div>
                 <div class="card-body">
 
+                    <img th:src="${userDB.avatarURL}" width="200" style="border-radius: 30px;">
+
                     <p class="card-text" th:if="${userDB.email}">Email - [[${userDB.email}]]</p>
                     <p class="card-text" th:if="${userDB.country}">Location - [[${userDB.country}]]</p>
                     <p class="card-text" th:if="${userDB.bio}">Bio - [[${userDB.bio}]]</p>
