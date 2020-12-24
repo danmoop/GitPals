@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.controller.api;
 
 import com.moople.gitpals.MainApplication.model.Response;
-import com.moople.gitpals.MainApplication.repository.KeyStorageRepository;
 import com.moople.gitpals.MainApplication.service.ForumService;
 import com.moople.gitpals.MainApplication.service.KeyStorageService;
 import com.moople.gitpals.MainApplication.service.UserService;

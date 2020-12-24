@@ -1,12 +1,11 @@
 package com.moople.gitpals.MainApplication.controller.api;
 
-import com.moople.gitpals.MainApplication.tools.Data;
 import com.moople.gitpals.MainApplication.configuration.JWTUtil;
-import com.moople.gitpals.MainApplication.model.Pair;
 import com.moople.gitpals.MainApplication.model.Response;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.repository.KeyStorageRepository;
 import com.moople.gitpals.MainApplication.service.UserService;
+import com.moople.gitpals.MainApplication.tools.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

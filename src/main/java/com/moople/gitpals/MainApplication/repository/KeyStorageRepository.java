@@ -9,5 +9,6 @@ import java.util.List;
 @Service
 public interface KeyStorageRepository extends MongoRepository<KeyStorage, String> {
     KeyStorage findByUsername(String username);
+
     List<KeyStorage> findAll();
 }

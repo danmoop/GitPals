@@ -1,7 +1,6 @@
 package com.moople.gitpals.MainApplication.controller;
 
 import com.moople.gitpals.MainApplication.model.ForumPost;
-import com.moople.gitpals.MainApplication.model.GlobalMessage;
 import com.moople.gitpals.MainApplication.model.Project;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.service.*;
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {

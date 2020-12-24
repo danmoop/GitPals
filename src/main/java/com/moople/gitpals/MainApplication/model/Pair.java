@@ -3,7 +3,7 @@ package com.moople.gitpals.MainApplication.model;
 import lombok.Data;
 
 @Data
-public class Pair<T,V> {
+public class Pair<T, V> {
     private T key;
     private V value;
 
