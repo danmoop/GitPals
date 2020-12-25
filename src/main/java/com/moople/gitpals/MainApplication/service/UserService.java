@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -66,19 +65,16 @@ public class UserService implements UserInterface {
      */
     @Override
     public Set<String> findBySkillList(List<String> skills) {
-        Set<String> users = new HashSet<>();
-
-        for (User user : userRepository.findAll()) {
-            for (String skill : skills) {
-                user.getSkillList().forEach(userSkill -> {
-                    if (userSkill.toLowerCase().contains(skill.toLowerCase())) {
-                        users.add(user.getUsername());
-                    }
-                });
-            }
-        }
-
-        return users;
+        return userRepository.findAll().stream()
+                .filter(user -> skills
+                        .stream()
+                        .anyMatch(skill -> user.getSkillList()
+                                .stream()
+                                .map(String::toLowerCase)
+                                .collect(Collectors.toList())
+                                .contains(skill.toLowerCase())))
+                .map(User::getUsername)
+                .collect(Collectors.toSet());
     }
 
     /**
