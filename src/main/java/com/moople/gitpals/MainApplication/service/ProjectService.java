@@ -90,7 +90,11 @@ public class ProjectService implements ProjectInterface {
         return projectRepository.findAll().stream()
                 .filter(project -> technologies
                         .stream()
-                        .anyMatch(tech -> project.getTechnologies().contains(tech.toLowerCase())))
+                        .anyMatch(tech -> project.getTechnologies()
+                                .stream()
+                                .map(String::toLowerCase)
+                                .collect(Collectors.toList())
+                                .contains(tech.toLowerCase())))
                 .collect(Collectors.toList());
     }
 

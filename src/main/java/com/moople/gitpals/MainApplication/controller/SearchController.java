@@ -163,7 +163,9 @@ public class SearchController {
                 .filter(s -> !s.trim().equals(""))
                 .collect(Collectors.toList());
 
-        Set<Project> matchProjects = new HashSet<>(projectService.matchProjectsByTechnologies(skills));
+        Set<String> matchProjects = projectService.matchProjectsByTechnologies(skills)
+                .stream()
+                .map(Project::getTitle).collect(Collectors.toSet());
 
         model.addAttribute("match_projects", matchProjects);
 
