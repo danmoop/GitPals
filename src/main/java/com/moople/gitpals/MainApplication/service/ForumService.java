@@ -69,9 +69,9 @@ public class ForumService implements ForumInterface {
      * This request is handled when user sends their comments to a forum post
      * A comment will be added and changes will be saved to database
      *
-     * @param post        is a forum post object
-     * @param username    is a username of a user who sends a comment
-     * @param commentText is a comment text
+     * @param post     is a forum post object
+     * @param username is a username of a user who sends a comment
+     * @param comment  is a comment object
      */
     @Override
     public void addComment(ForumPost post, String username, Comment comment) {

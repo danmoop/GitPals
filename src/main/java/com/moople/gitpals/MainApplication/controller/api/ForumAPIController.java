@@ -49,6 +49,30 @@ public class ForumAPIController {
     }
 
     /**
+     * This function adds a user to a forum post's view set if user has not yet seen the post
+     *
+     * @param data contains information about the user (jwt) and forum post key
+     * @return response if user has been added to a view set successfully
+     */
+    @PostMapping(value = "/addUserToViewSet", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response addUserToViewSet(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumService.findByKey(postKey);
+
+        if (user == null || post == null) {
+            return Response.FAILED;
+        }
+
+        post.getViewSet().add(user.getUsername());
+        forumService.save(post);
+
+        return Response.OK;
+    }
+
+    /**
      * This request is handled when user submits their forum post and it is added to forum
      *
      * @param data is information sent by a user (contains post's title & description)
@@ -70,6 +94,37 @@ public class ForumAPIController {
         forumService.save(post);
 
         return post;
+    }
+
+    /**
+     * This function removes the forum post from the forum
+     *
+     * @param data contains information sent by the user (contains forum post key & jwt)
+     * @return response if post has been deleted successfully
+     */
+    @PostMapping(value = "/deleteForumPost", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response deleteForumPost(@RequestBody Map<String, String> data) {
+        String jwt = data.get("jwt");
+        String postKey = data.get("postKey");
+
+        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
+        ForumPost post = forumService.findByKey(postKey);
+
+        if (user == null || post == null) {
+            return Response.FAILED;
+        }
+
+        if (user.isBanned()) {
+            return Response.YOU_ARE_BANNED;
+        }
+
+        if (user.getUsername().equals(post.getAuthor())) {
+            forumService.delete(post);
+
+            return Response.OK;
+        }
+
+        return Response.FAILED;
     }
 
     /**
@@ -156,37 +211,6 @@ public class ForumAPIController {
         }
 
         if (forumService.deleteComment(post, user.getUsername(), commentKey)) {
-            return Response.OK;
-        }
-
-        return Response.FAILED;
-    }
-
-    /**
-     * This function removes the forum post from the forum
-     *
-     * @param data contains information sent by the user (contains forum post key & jwt)
-     * @return response if post has been deleted successfully
-     */
-    @PostMapping(value = "/deleteForumPost", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response deleteForumPost(@RequestBody Map<String, String> data) {
-        String jwt = data.get("jwt");
-        String postKey = data.get("postKey");
-
-        User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
-        ForumPost post = forumService.findByKey(postKey);
-
-        if (user == null || post == null) {
-            return Response.FAILED;
-        }
-
-        if (user.isBanned()) {
-            return Response.YOU_ARE_BANNED;
-        }
-
-        if (user.getUsername().equals(post.getAuthor())) {
-            forumService.delete(post);
-
             return Response.OK;
         }
 
