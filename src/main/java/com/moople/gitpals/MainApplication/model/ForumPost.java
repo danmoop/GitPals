@@ -2,6 +2,7 @@ package com.moople.gitpals.MainApplication.model;
 
 import com.moople.gitpals.MainApplication.tools.Encrypt;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Data
 @ToString
+@NoArgsConstructor
 @Document(collection = "forumPosts")
 public class ForumPost {
 

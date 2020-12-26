@@ -55,24 +55,21 @@ public class ForumAPIController {
      * @return response if post has been added successfully
      */
     @PostMapping(value = "/addForumPost", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response addForumPost(@RequestBody Map<String, String> data) {
+    public ForumPost addForumPost(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
         String title = data.get("title");
         String description = data.get("description");
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
 
-        if (user == null) {
-            return Response.FAILED;
-        }
-
-        if (user.isBanned()) {
-            return Response.YOU_ARE_BANNED;
+        if (title.trim().equals("") || description.trim().equals("") || user == null || user.isBanned()) {
+            return Data.EMPTY_FORUM_POST;
         }
 
         ForumPost post = new ForumPost(user.getUsername(), title, description);
+        post.getViewSet().add(user.getUsername());
         forumService.save(post);
 
-        return Response.OK;
+        return post;
     }
 
     /**
