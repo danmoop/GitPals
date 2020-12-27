@@ -49,28 +49,6 @@ public class SearchAPIController {
     }
 
     /**
-     * This function returns a list of projects with technologies specified by a user
-     *
-     * @param technologies is a list of technologies project should contain
-     * @return list of projects whose technologies match the user's input
-     */
-    @GetMapping(value = "/matchProjectsByTechnologies", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Project> matchProjectsByTechnologies(@RequestBody List<String> technologies) {
-        return projectService.matchProjectsByTechnologies(technologies);
-    }
-
-    /**
-     * This function returns a list of projects with roles specified by a user
-     *
-     * @param roles is a list of required roles project should contain
-     * @return list of projects whose required roles match the user's input
-     */
-    @GetMapping(value = "/matchProjectsByRoles", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Project> matchProjectsByRoles(@RequestBody List<String> roles) {
-        return projectService.matchProjectsByRoles(roles);
-    }
-
-    /**
      * This request finds all the forum posts whose titles match target value
      *
      * @return list of posts, whose titles match the target value sent by the user
@@ -88,5 +66,27 @@ public class SearchAPIController {
     @GetMapping(value = "/matchForumPostsByAuthor/{author}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ForumPost> matchForumPostsByAuthor(@PathVariable String author) {
         return forumService.findByAuthor(author);
+    }
+
+    /**
+     * This function returns a list of projects with technologies specified by a user
+     *
+     * @param technologies is a list of technologies project should contain
+     * @return list of projects whose technologies match the user's input
+     */
+    @PostMapping(value = "/matchProjectsByTechnologies", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Project> matchProjectsByTechnologies(@RequestBody List<String> technologies) {
+        return projectService.matchProjectsByTechnologies(technologies);
+    }
+
+    /**
+     * This function returns a list of projects with roles specified by a user
+     *
+     * @param roles is a list of required roles project should contain
+     * @return list of projects whose required roles match the user's input
+     */
+    @PostMapping(value = "/matchProjectsByRoles", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Project> matchProjectsByRoles(@RequestBody List<String> roles) {
+        return projectService.matchProjectsByRoles(roles);
     }
 }

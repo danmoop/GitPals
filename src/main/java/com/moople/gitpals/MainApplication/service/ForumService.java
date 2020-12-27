@@ -101,7 +101,7 @@ public class ForumService implements ForumInterface {
     public boolean deleteComment(ForumPost post, String username, String commentKey) {
         Optional<Comment> optionalComment = post.getComments().stream().filter(comm -> comm.getKey().equals(commentKey)).findFirst();
 
-        if (optionalComment.isPresent() && post.getAuthor().equals(username)) {
+        if (optionalComment.isPresent() && optionalComment.get().getAuthor().equals(username)) {
             post.getComments().remove(optionalComment.get());
             save(post);
 
