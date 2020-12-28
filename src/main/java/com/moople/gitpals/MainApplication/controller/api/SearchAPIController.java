@@ -9,8 +9,9 @@ import com.moople.gitpals.MainApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import java.util.stream.Collectors;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -99,8 +100,8 @@ public class SearchAPIController {
     @PostMapping(value = "/matchUsersBySkills", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> matchUsersBySkills(@RequestBody List<String> skills) {
         return userService.findBySkillList(skills)
-          .stream()
-          .map(username -> userService.findByUsername(username))
-          .collect(Collectors.toList());
+                .stream()
+                .map(username -> userService.findByUsername(username))
+                .collect(Collectors.toList());
     }
 }

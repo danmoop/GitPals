@@ -88,8 +88,7 @@ public class ProjectService implements ProjectInterface {
     @Override
     public List<Project> matchProjectsByTechnologies(List<String> technologies) {
         return projectRepository.findAll().stream()
-                .filter(project -> technologies
-                        .stream()
+                .filter(project -> technologies.stream()
                         .anyMatch(tech -> project.getTechnologies()
                                 .stream()
                                 .map(String::toLowerCase)
@@ -106,10 +105,13 @@ public class ProjectService implements ProjectInterface {
      */
     @Override
     public List<Project> matchProjectsByRoles(List<String> roles) {
-        return projectRepository.findAll()
-                .stream()
+        return projectRepository.findAll().stream()
                 .filter(project -> roles.stream()
-                        .anyMatch(role -> project.getRequiredRoles().contains(role.toLowerCase())))
+                        .anyMatch(role -> project.getRequiredRoles()
+                                .stream()
+                                .map(String::toLowerCase)
+                                .collect(Collectors.toList())
+                                .contains(role.toLowerCase())))
                 .collect(Collectors.toList());
     }
 

@@ -7,6 +7,7 @@ import com.moople.gitpals.MainApplication.service.ForumService;
 import com.moople.gitpals.MainApplication.service.ProjectService;
 import com.moople.gitpals.MainApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -140,11 +141,19 @@ public class SearchController {
      * This request is handled when user wants to sort projects by technologies
      * They will be sorted and displayed
      *
-     * @param skills is a list of technologies checkboxes user select manually
+     * @param techs              is a list of technologies checkboxes user select manually
+     * @param model              will contains results of the search
+     * @param auth               is user's authentication object
+     * @param redirectAttributes is responsible for redirecting user back if no technologies are given
      * @return a list of projects according to user's preference
      **/
-    @PostMapping("/sortProjects")
-    public String sortProjectsByTechnologies(@RequestParam(name = "skill", required = false) List<String> skills, Model model, Principal auth, RedirectAttributes redirectAttributes) {
+    @PostMapping("/matchProjectsByTechnologies")
+    public String sortProjectsByTechnologies(
+            @RequestParam(name = "tech", required = false) List<String> techs,
+            Model model,
+            Principal auth,
+            RedirectAttributes redirectAttributes
+    ) {
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
@@ -153,16 +162,58 @@ public class SearchController {
             }
         }
 
-        if (skills == null || skills.size() == 0) {
+        if (techs == null || techs.size() == 0) {
             redirectAttributes.addFlashAttribute("msg", "You should choose some options!");
             return "redirect:/search";
         }
 
-        skills = skills.stream()
+        techs = techs.stream()
                 .filter(s -> !s.trim().equals(""))
                 .collect(Collectors.toList());
 
-        Set<String> matchProjects = projectService.matchProjectsByTechnologies(skills)
+        Set<String> matchProjects = projectService.matchProjectsByTechnologies(techs)
+                .stream()
+                .map(Project::getTitle).collect(Collectors.toSet());
+
+        model.addAttribute("match_projects", matchProjects);
+
+        return "sections/projects/matchProjects";
+    }
+
+    /**
+     * This function returns a list of projects with roles specified by a user
+     *
+     * @param roles              is a list of roles specified by a user
+     * @param model              will contains results of the search
+     * @param auth               is user's authentication object
+     * @param redirectAttributes is responsible for redirecting user back if no technologies are given
+     * @return a page, which contains results of the search
+     */
+    @PostMapping(value = "/matchProjectsByRoles", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String matchProjectsByRoles(
+            @RequestParam(name = "role", required = false) List<String> roles,
+            Model model,
+            Principal auth,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (auth != null) {
+            User userDB = userService.findByUsername(auth.getName());
+
+            if (userDB.isBanned()) {
+                return "sections/users/banned";
+            }
+        }
+
+        if (roles == null || roles.size() == 0) {
+            redirectAttributes.addFlashAttribute("msg", "You should choose some options!");
+            return "redirect:/search";
+        }
+
+        roles = roles.stream()
+                .filter(s -> !s.trim().equals(""))
+                .collect(Collectors.toList());
+
+        Set<String> matchProjects = projectService.matchProjectsByRoles(roles)
                 .stream()
                 .map(Project::getTitle).collect(Collectors.toSet());
 

@@ -43,9 +43,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Find projects by their technologies</h4>
 
-                        <form th:action="@{/sortProjects}" method="post">
+                        <form th:action="@{/matchProjectsByTechnologies}" method="post">
                             <div id="projectTechs">
-                                <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
+                                <input type="text" th:name="tech" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
                             </div>
                             <a href="#/" onclick="addProjectTech();">Add another</a>
                             <input type="submit" class="btn btn-sm fw-600 btn-primary" style="margin: 15px;" value="Find" />
@@ -54,7 +54,19 @@
                 </div>
             </div>
         </div>
-
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Find projects that have specific roles</h4>
+                <form th:action="@{/matchProjectsByRoles}" method="post">
+                    <div id="projectRoles">
+                        <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 1"/>
+                    </div>
+                    <a href="#/" onclick="addRole();">Add another</a>
+                    <input type="submit" class="btn btn-sm fw-600 btn-primary" style="margin: 15px;" value="Find" />
+                </form>
+            </div>
+        </div>
         <div class="row">
             <div class="col mt">
                 <div class="card">
@@ -95,17 +107,23 @@
     </section>
 
     <script>
-        var i = 2;
-        var ii = 2;
+        var skillsNum = 2;
+        var techNum = 2;
+        var roleNum = 2;
 
         addUserSkill = () => {
-            var skill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill ${i++}"/>`;
+            var skill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Skill ${skillsNum++}"/>`;
             document.getElementById('userSkills').insertAdjacentHTML('beforeend', skill);
         }
 
         addProjectTech = () => {
-            var tech = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology ${ii++}"/>`;
+            var tech = `<input type="text" name="tech" class="form-control" style="margin-top: 10px;" placeholder="Technology ${techNum++}"/>`;
             document.getElementById('projectTechs').insertAdjacentHTML('beforeend', tech);
+        }
+
+        addRole = () => {
+            var role = `<input type="text" name="role" class="form-control" style="margin-top: 10px;" placeholder="Role ${roleNum++}"/>`;
+            document.getElementById('projectRoles').insertAdjacentHTML('beforeend', role);
         }
     </script>
 </body>
