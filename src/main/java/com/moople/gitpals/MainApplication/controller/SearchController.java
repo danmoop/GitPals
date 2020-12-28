@@ -189,7 +189,7 @@ public class SearchController {
      * @param redirectAttributes is responsible for redirecting user back if no technologies are given
      * @return a page, which contains results of the search
      */
-    @PostMapping(value = "/matchProjectsByRoles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/matchProjectsByRoles")
     public String matchProjectsByRoles(
             @RequestParam(name = "role", required = false) List<String> roles,
             Model model,
