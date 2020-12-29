@@ -116,7 +116,7 @@
                 <div th:if="${globalMessage != null && (userDB == null || (userDB != null && !userDB.hasSeenGlobalMessage))}" class="alert alert-light" role="alert">
                     [[${globalMessage.content}]]
                     <form th:action="@{/setGlobalMessageAsSeen}" method="post">
-                        <input class="btn btn-outline-primary btn-pill btn-sm fw-600" type="submit" value="Close" />
+                        <input class="btn btn-primary btn-sm fw-600" type="submit" value="Close" />
                     </form>
                 </div>
 

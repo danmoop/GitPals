@@ -220,7 +220,7 @@ public class UserAPIController {
      * @param data is information sent from the user, which contains user's jwt token
      * @return response if all notifications have been deleted successfully
      */
-    @PostMapping("/removeAllNotifications")
+    @PostMapping(value = "/removeAllNotifications", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response removeAllNotifications(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
 
