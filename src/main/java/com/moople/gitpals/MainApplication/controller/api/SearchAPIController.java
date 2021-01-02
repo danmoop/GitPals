@@ -102,6 +102,10 @@ public class SearchAPIController {
         return userService.findBySkillList(skills)
                 .stream()
                 .map(username -> userService.findByUsername(username))
+                .peek(user -> {
+                    user.setDialogs(null);
+                    user.setNotifications(null);
+                })
                 .collect(Collectors.toList());
     }
 }
