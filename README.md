@@ -20,7 +20,7 @@ Check-list
 - [x] Bootstrap Design (Shards UI KIT)
 - [x] Realtime messaging among users
 - [x] REST API
-- [ ] Mobile App **[(IN PROGRESS: Ionic)](https://github.com/danmoop/GitPalsMobile)**
+- [x] [Mobile App](https://github.com/danmoop/GitPalsMobile)
 
 The rest of images
 ![image](gallery/1.png)
