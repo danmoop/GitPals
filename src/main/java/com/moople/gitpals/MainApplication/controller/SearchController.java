@@ -7,7 +7,6 @@ import com.moople.gitpals.MainApplication.service.ForumService;
 import com.moople.gitpals.MainApplication.service.ProjectService;
 import com.moople.gitpals.MainApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -231,7 +230,6 @@ public class SearchController {
      */
     @PostMapping("/findForumPosts")
     public String findForumPosts(@RequestParam String postName, Model model, Principal auth) {
-
         if (auth != null) {
             User userDB = userService.findByUsername(auth.getName());
 
