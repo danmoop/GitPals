@@ -27,8 +27,8 @@ public class User {
     private String mobileAuthPassword;
     private Set<String> skillList;
     private Map<String, Pair<Integer, List<Message>>> dialogs;
-    private List<String> submittedProjects;
-    private List<String> projectsAppliedTo;
+    private Set<String> submittedProjects;
+    private Set<String> projectsAppliedTo;
     private Pair<Integer, Map<String, Notification>> notifications;
     private long lastOnlineDate;
     private boolean banned;
@@ -46,8 +46,8 @@ public class User {
         this.bio = bio == null ? null : bio.trim();
 
         this.dialogs = new HashMap<>();
-        this.submittedProjects = new ArrayList<>();
-        this.projectsAppliedTo = new ArrayList<>();
+        this.submittedProjects = new HashSet<>();
+        this.projectsAppliedTo = new HashSet<>();
         this.notifications = new Pair<>(0, new HashMap<>());
 
         this.hasSeenGlobalMessage = false;

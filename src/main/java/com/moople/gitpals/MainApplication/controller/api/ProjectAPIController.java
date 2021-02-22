@@ -182,6 +182,7 @@ public class ProjectAPIController {
             projectService.editProjectInfo(
                     projectDB,
                     project.getTitle(),
+                    user.getUsername(),
                     project.getDescription(),
                     project.getGithubProjectLink(),
                     project.getTechnologies(),

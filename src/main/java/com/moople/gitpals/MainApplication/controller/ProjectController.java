@@ -330,7 +330,7 @@ public class ProjectController {
         }
 
         if (currentTitle.equals(newTitle) || projectService.findByTitle(newTitle) == null) {
-            projectService.editProjectInfo(project, newTitle, description, repoLink, techs, roles);
+            projectService.editProjectInfo(project, newTitle, auth.getName(), description, repoLink, techs, roles);
         } else {
             redirectAttributes.addFlashAttribute("msg", "A project with your new title already exists!");
             return "redirect:/projects/" + currentTitle;

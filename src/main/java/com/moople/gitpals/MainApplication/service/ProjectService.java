@@ -125,7 +125,15 @@ public class ProjectService implements ProjectInterface {
      * @param description  is a new description
      */
     @Override
-    public void editProjectInfo(Project project, String newTitle, String description, String repoLink, Set<String> technologies, Set<String> roles) {
+    public void editProjectInfo(Project project, String newTitle, String author, String description, String repoLink, Set<String> technologies, Set<String> roles) {
+
+        if (!project.getTitle().equals(newTitle)) {
+            User user = userService.findByUsername(author);
+            user.getSubmittedProjects().remove(project.getTitle());
+            user.getSubmittedProjects().add(newTitle);
+            userService.save(user);
+        }
+
         project.setTitle(newTitle);
         project.setDescription(description);
         project.setGithubProjectLink(repoLink);
