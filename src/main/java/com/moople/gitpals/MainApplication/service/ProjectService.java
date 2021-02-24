@@ -132,6 +132,14 @@ public class ProjectService implements ProjectInterface {
             user.getSubmittedProjects().remove(project.getTitle());
             user.getSubmittedProjects().add(newTitle);
             userService.save(user);
+
+            project.getAppliedUsers()
+                    .forEach(appliedUser -> {
+                        User _appliedUser = userService.findByUsername(appliedUser);
+                        _appliedUser.getProjectsAppliedTo().remove(project.getTitle());
+                        _appliedUser.getProjectsAppliedTo().add(newTitle);
+                        userService.save(_appliedUser);
+                    });
         }
 
         project.setTitle(newTitle);
