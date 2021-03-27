@@ -208,7 +208,6 @@ public class ProjectService implements ProjectInterface {
 
         if (user.getSubmittedProjects().contains(project.getTitle())) {
             user.getSubmittedProjects().remove(project.getTitle());
-
             userService.save(user);
         }
 
@@ -220,9 +219,11 @@ public class ProjectService implements ProjectInterface {
 
         Notification notification = new Notification("A project " + project.getTitle() + " you were applied to has been deleted by the project author");
         for (User _user : allUsers) {
-            if (_user.getUsername().equals(project.getAuthorName())) continue;
-
             _user.getProjectsAppliedTo().remove(project.getTitle());
+
+            if (_user.getUsername().equals(user.getUsername()))
+                continue; // Project author doesn't need to get a notification
+
             _user.getNotifications().setKey(_user.getNotifications().getKey() + 1);
             _user.getNotifications().getValue().put(notification.getKey(), notification);
 
