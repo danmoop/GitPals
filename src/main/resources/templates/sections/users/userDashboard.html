@@ -28,6 +28,7 @@
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
+                            <span class="badge badge-danger" th:if="${UserObject.banned}">Banned</span>
                         </div>
                         <div class="card-body">
 			  <img th:if="${UserObject.avatarURL != ''}" th:src="${UserObject.avatarURL}" width="200" style="border-radius: 30px;"><br>
