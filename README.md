@@ -22,6 +22,9 @@ Check-list
 - [x] REST API
 - [x] [Mobile App](https://github.com/danmoop/GitPalsMobile)
 
+# Scheme
+<img width="400" src="./scheme.jpg">
+
 The rest of images
 ![image](gallery/1.png)
 ![image](gallery/2.png)
