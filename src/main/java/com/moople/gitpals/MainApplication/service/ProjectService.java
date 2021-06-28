@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -172,7 +171,7 @@ public class ProjectService implements ProjectInterface {
             userService.save(projectAuthor);
         }
 
-        project.getComments().add(comment);
+        project.getComments().put(comment.getKey(), comment);
         save(project);
     }
 
@@ -186,13 +185,34 @@ public class ProjectService implements ProjectInterface {
      */
     @Override
     public void editComment(Project project, String text, String commentKey, String username) {
-        project.getComments().forEach(comment -> {
-            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(username)) {
-                comment.setText(text);
-                comment.setEdited(true);
-                save(project);
-            }
-        });
+        if (project.getComments().containsKey(commentKey)) {
+            Comment comment = project.getComments().get(commentKey);
+            comment.setText(text);
+            comment.setEdited(true);
+
+            project.getComments().put(commentKey, comment);
+            save(project);
+        }
+    }
+
+    /**
+     * This function is handled when user wants to remove their comment
+     *
+     * @param project    is a project, which will have a comment added
+     * @param username   is a username of a user, who edits the comment
+     * @param commentKey is a comment key
+     * @return true if comment is present and user is the author of a comment
+     */
+    @Override
+    public boolean removeComment(Project project, String username, String commentKey) {
+        if (project.getComments().containsKey(commentKey)) {
+            project.getComments().remove(commentKey);
+            save(project);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -221,8 +241,9 @@ public class ProjectService implements ProjectInterface {
         for (User _user : allUsers) {
             _user.getProjectsAppliedTo().remove(project.getTitle());
 
-            if (_user.getUsername().equals(user.getUsername()))
+            if (_user.getUsername().equals(user.getUsername())) {
                 continue; // Project author doesn't need to get a notification
+            }
 
             _user.getNotifications().setKey(_user.getNotifications().getKey() + 1);
             _user.getNotifications().getValue().put(notification.getKey(), notification);
@@ -249,31 +270,6 @@ public class ProjectService implements ProjectInterface {
     @Override
     public void delete(Project project) {
         projectRepository.delete(project);
-    }
-
-    /**
-     * This function is handled when user wants to remove their comment
-     *
-     * @param project     is a project, which will have a comment added
-     * @param username    is a username of a user, who edits the comment
-     * @param commentText is a comment text
-     * @return true if comment is present and user is the author of a comment
-     */
-    @Override
-    public boolean removeComment(Project project, String username, String commentText) {
-        Optional<Comment> comment = project.getComments()
-                .stream()
-                .filter(projectComment -> projectComment.getAuthor().equals(username) && projectComment.getText().equals(commentText))
-                .findFirst();
-
-        if (comment.isPresent() && comment.get().getAuthor().equals(username)) {
-            project.getComments().remove(comment.get());
-            save(project);
-
-            return true;
-        }
-
-        return false;
     }
 
     /**

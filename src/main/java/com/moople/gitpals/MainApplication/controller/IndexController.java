@@ -92,6 +92,9 @@ public class IndexController {
             } else if (userDB.getSkillList().size() == 0) {
                 redirectAttributes.addFlashAttribute("error", "You should have at least one skill!");
                 return "redirect:/dashboard";
+            } else if (userDB.getMobileAuthPassword().trim().equals("")) {
+                redirectAttributes.addFlashAttribute("error", "You should setup your mobile auth password!");
+                return "redirect:/dashboard";
             }
 
             /*

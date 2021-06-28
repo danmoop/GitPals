@@ -273,11 +273,11 @@ public class ProjectController {
      *
      * @param auth        is comment's author
      * @param projectName is a project name
-     * @param text        is a comment text
+     * @param key         is a comment key
      * @return project page
      */
     @PostMapping("/deleteComment")
-    public String deleteComment(Principal auth, @RequestParam String projectName, @RequestParam String text) {
+    public String deleteComment(Principal auth, @RequestParam String projectName, @RequestParam String key) {
         User userDB = userService.findByUsername(auth.getName());
 
         if (userDB.isBanned()) {
@@ -290,7 +290,7 @@ public class ProjectController {
             return "redirect:/";
         }
 
-        if (projectService.removeComment(project, auth.getName(), text)) {
+        if (projectService.removeComment(project, auth.getName(), key)) {
             return "redirect:/projects/" + projectName;
         }
 
