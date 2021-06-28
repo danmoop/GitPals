@@ -185,7 +185,7 @@ public class ProjectService implements ProjectInterface {
      */
     @Override
     public void editComment(Project project, String text, String commentKey, String username) {
-        if (project.getComments().containsKey(commentKey)) {
+        if (project.getComments().containsKey(commentKey) && project.getComments().get(commentKey).getAuthor().equals(username)) {
             Comment comment = project.getComments().get(commentKey);
             comment.setText(text);
             comment.setEdited(true);
@@ -205,7 +205,7 @@ public class ProjectService implements ProjectInterface {
      */
     @Override
     public boolean removeComment(Project project, String username, String commentKey) {
-        if (project.getComments().containsKey(commentKey)) {
+        if (project.getComments().containsKey(commentKey) && project.getComments().get(commentKey).getAuthor().equals(username)) {
             project.getComments().remove(commentKey);
             save(project);
 

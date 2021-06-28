@@ -7,10 +7,10 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 
 @Data
 @ToString
@@ -26,7 +26,7 @@ public class ForumPost {
     private String content;
     private String key;
     private String timeStamp;
-    private List<Comment> comments;
+    private Map<String, Comment> comments;
     private HashSet<String> viewSet;
 
     public ForumPost(String author, String title, String content) {
@@ -37,7 +37,7 @@ public class ForumPost {
         this.timeStamp = new Date().toString();
 
         this.viewSet = new HashSet<>();
-        this.comments = new ArrayList<>();
+        this.comments = new HashMap<>();
     }
 
     private String generateKey() {

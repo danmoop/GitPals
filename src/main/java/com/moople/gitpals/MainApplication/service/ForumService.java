@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,7 +76,7 @@ public class ForumService implements ForumInterface {
     public void addComment(ForumPost post, String username, Comment comment) {
         User postAuthor = userService.findByUsername(post.getAuthor());
 
-        post.getComments().add(comment);
+        post.getComments().put(comment.getKey(), comment);
         forumRepository.save(post);
 
         if (!username.equals(postAuthor.getUsername())) {
@@ -99,10 +98,8 @@ public class ForumService implements ForumInterface {
      */
     @Override
     public boolean deleteComment(ForumPost post, String username, String commentKey) {
-        Optional<Comment> optionalComment = post.getComments().stream().filter(comm -> comm.getKey().equals(commentKey)).findFirst();
-
-        if (optionalComment.isPresent() && optionalComment.get().getAuthor().equals(username)) {
-            post.getComments().remove(optionalComment.get());
+        if (post.getComments().containsKey(commentKey) && post.getComments().get(commentKey).getAuthor().equals(username)) {
+            post.getComments().remove(commentKey);
             save(post);
 
             return true;
@@ -121,13 +118,15 @@ public class ForumService implements ForumInterface {
      */
     @Override
     public void editComment(ForumPost post, String username, String commentKey, String commentText) {
-        post.getComments().forEach(comment -> {
-            if (comment.getKey().equals(commentKey) && comment.getAuthor().equals(username)) {
-                comment.setText(commentText);
-                comment.setEdited(true);
-                save(post);
-            }
-        });
+        if (post.getComments().containsKey(commentKey) && post.getComments().get(commentKey).getAuthor().equals(username)) {
+            Comment comment = post.getComments().get(commentKey);
+
+            comment.setText(commentText);
+            comment.setEdited(true);
+            post.getComments().put(commentKey, comment);
+
+            save(post);
+        }
     }
 
     /**
