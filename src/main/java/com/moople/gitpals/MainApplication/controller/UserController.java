@@ -125,9 +125,11 @@ public class UserController {
      */
     @PostMapping("/removeNotification")
     public String removeNotification(Principal auth, @RequestParam String notificationKey) {
-        userService.removeNotification(auth.getName(), notificationKey);
+        if (userService.removeNotification(auth.getName(), notificationKey)) {
+            return "redirect:/notifications";
+        }
 
-        return "redirect:/notifications";
+        return "redirect:/";
     }
 
 
@@ -139,9 +141,11 @@ public class UserController {
      */
     @PostMapping("/removeAllNotifications")
     public String removeAllNotifications(Principal auth) {
-        userService.removeAllNotifications(auth.getName());
+        if (userService.removeAllNotifications(auth.getName())) {
+            return "redirect:/notifications";
+        }
 
-        return "redirect:/notifications";
+        return "redirect:/";
     }
 
     /**

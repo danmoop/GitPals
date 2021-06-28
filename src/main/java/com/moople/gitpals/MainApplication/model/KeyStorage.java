@@ -22,7 +22,7 @@ public class KeyStorage {
         this.key = generateKey();
     }
 
-    public String generateKey() {
+    private String generateKey() {
         return Encrypt.MD5(username + UUID.randomUUID().toString() + Math.random());
     }
 }

@@ -215,9 +215,11 @@ public class UserAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        userService.removeNotification(user.getUsername(), notificationKey);
+        if (userService.removeNotification(user.getUsername(), notificationKey)) {
+            return Response.OK;
+        }
 
-        return Response.OK;
+        return Response.USER_NOT_FOUND;
     }
 
     /**
@@ -240,8 +242,10 @@ public class UserAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        userService.removeAllNotifications(user.getUsername());
+        if (userService.removeAllNotifications(user.getUsername())) {
+            return Response.OK;
+        }
 
-        return Response.OK;
+        return Response.USER_NOT_FOUND;
     }
 }

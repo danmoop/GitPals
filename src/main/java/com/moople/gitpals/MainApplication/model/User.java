@@ -26,9 +26,9 @@ public class User {
     private String avatarURL;
     private String mobileAuthPassword;
     private Set<String> skillList;
-    private Map<String, Pair<Integer, List<Message>>> dialogs;
     private Set<String> submittedProjects;
     private Set<String> projectsAppliedTo;
+    private Map<String, Pair<Integer, List<Message>>> dialogs;
     private Pair<Integer, Map<String, Notification>> notifications;
     private long lastOnlineDate;
     private boolean banned;
@@ -39,16 +39,16 @@ public class User {
         this.username = username.trim();
         this.avatarURL = avatarURL.trim();
         this.githubAccountLink = githubAccountLink.trim();
-        this.skillList = new HashSet<>();
 
         this.email = email == null ? null : email.trim();
         this.country = country == null ? null : country.trim();
         this.bio = bio == null ? null : bio.trim();
 
-        this.dialogs = new HashMap<>();
+        this.skillList = new HashSet<>();
         this.submittedProjects = new HashSet<>();
         this.projectsAppliedTo = new HashSet<>();
         this.notifications = new Pair<>(0, new HashMap<>());
+        this.dialogs = new HashMap<>();
 
         this.hasSeenGlobalMessage = false;
         this.banned = false;

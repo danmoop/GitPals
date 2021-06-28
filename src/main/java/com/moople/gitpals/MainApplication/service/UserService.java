@@ -84,11 +84,17 @@ public class UserService implements UserInterface {
      * @param notificationKey is a unique key so we could find it in the database
      */
     @Override
-    public void removeNotification(String username, String notificationKey) {
+    public boolean removeNotification(String username, String notificationKey) {
         User userDB = findByUsername(username);
 
-        userDB.getNotifications().getValue().remove(notificationKey);
-        save(userDB);
+        if (userDB != null) {
+            userDB.getNotifications().getValue().remove(notificationKey);
+            save(userDB);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -97,11 +103,17 @@ public class UserService implements UserInterface {
      * @param username is a user's name, whose notifications will be removed
      */
     @Override
-    public void removeAllNotifications(String username) {
+    public boolean removeAllNotifications(String username) {
         User userDB = findByUsername(username);
 
-        userDB.setNotifications(new Pair<>(0, new HashMap<>()));
-        save(userDB);
+        if (userDB != null) {
+            userDB.setNotifications(new Pair<>(0, new HashMap<>()));
+            save(userDB);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
