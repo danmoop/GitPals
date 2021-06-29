@@ -68,7 +68,7 @@
 
                 <br/><hr/>
                 <div class="fw-600">
-                    Comment section ([[${#lists.size(post.comments)}]] comments)
+                    Comment section ([[${#maps.size(post.comments)}]] comments)
                 </div>
 
                 <div class="alert alert-danger" th:if="${error}">
@@ -94,28 +94,28 @@
                                     <div class="row">
                                         <div class="col">
                                             <span class="fw-600">
-                                                [[${comment.author}]]
-                                                <span class="badge badge-primary" th:if="${comment.edited}">Edited</span>
+                                                [[${comment.value.author}]]
+                                                <span class="badge badge-primary" th:if="${comment.value.edited}">Edited</span>
                                             </span> <br />
-                                            <span>[[${comment.timeStamp}]]</span>
+                                            <span>[[${comment.value.timeStamp}]]</span>
                                         </div>
                                         <div class="col">
-                                            <form th:action="@{/deleteForumPostComment}" method="post" th:if="${userDB != null && userDB.username == comment.author}" style="float:right; margin-right: 10px;">
+                                            <form th:action="@{/deleteForumPostComment}" method="post" th:if="${userDB != null && userDB.username == comment.value.author}" style="float:right; margin-right: 10px;">
                                                 <input type="hidden" th:name="postKey" th:value="*{post.key}" />
-                                                <input type="hidden" th:name="commentKey" th:value="*{comment.key}">
+                                                <input type="hidden" th:name="commentKey" th:value="*{comment.value.key}">
                                                 <input type="submit" class="btn btn-danger btn-sm fw-600" value="Delete" onclick="return confirm('Are you sure?')"/>
                                             </form>
-                                            <button th:id="${'edit_' + comment.key}" th:if="${userDB != null && userDB.username == comment.author}" class="btn btn-primary btn-sm fw-600" style="float:right; margin-right: 10px;" th:onclick="changeDisplay([[${comment.key}]])">Edit</button>
+                                            <button th:id="${'edit_' + comment.value.key}" th:if="${userDB != null && userDB.username == comment.value.author}" class="btn btn-primary btn-sm fw-600" style="float:right; margin-right: 10px;" th:onclick="changeDisplay([[${comment.key}]])">Edit</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <span>[[${comment.text}]]</span>
-                                    <div class="row mt" th:if="${userDB != null && userDB.username == comment.author}" th:id="${'editField_' + comment.key}" style="display: none;">
+                                    <span>[[${comment.value.text}]]</span>
+                                    <div class="row mt" th:if="${userDB != null && userDB.username == comment.value.author}" th:id="${'editField_' + comment.value.key}" style="display: none;">
                                         <form class="col" th:action="@{/editForumPostComment}" method="post" style="display: inline-flex;">
-                                            <input required type="text" th:name="text" class="form-control" placeholder="New comment" th:value="*{comment.text}" />
+                                            <input required type="text" th:name="text" class="form-control" placeholder="New comment" th:value="*{comment.value.text}" />
                                             <input hidden th:name="forumPostKey" th:value="*{post.key}" />
-                                            <input hidden th:name="commentKey" th:value="*{comment.key}" />
+                                            <input hidden th:name="commentKey" th:value="*{comment.value.key}" />
                                             <input type="submit" class="btn btn-primary btn-sm fw-600" value="Save" />
                                         </form>
                                     </div>
