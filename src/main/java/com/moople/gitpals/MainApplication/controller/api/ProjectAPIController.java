@@ -297,7 +297,7 @@ public class ProjectAPIController {
     public Response removeComment(@RequestBody Map<String, String> data) {
         String jwt = data.get("jwt");
         String projectName = data.get("projectName");
-        String commentText = data.get("commentText");
+        String commentKey = data.get("commentKey");
 
         User user = userService.findByUsername(jwtUtil.extractUsername(jwt));
         Project project = projectService.findByTitle(projectName);
@@ -310,7 +310,7 @@ public class ProjectAPIController {
             return Response.YOU_ARE_BANNED;
         }
 
-        if (projectService.removeComment(project, user.getUsername(), commentText)) {
+        if (projectService.removeComment(project, user.getUsername(), commentKey)) {
             return Response.OK;
         }
 
