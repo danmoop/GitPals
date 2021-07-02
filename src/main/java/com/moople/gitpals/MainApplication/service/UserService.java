@@ -78,7 +78,7 @@ public class UserService implements UserInterface {
     }
 
     /**
-     * This request removes all user's notifications
+     * This request removes a specific user's notification
      *
      * @param username        is a user's name, whose notification will be removed
      * @param notificationKey is a unique key so we could find it in the database
@@ -87,7 +87,7 @@ public class UserService implements UserInterface {
     public boolean removeNotification(String username, String notificationKey) {
         User userDB = findByUsername(username);
 
-        if (userDB != null) {
+        if (userDB != null && userDB.getNotifications().getValue().containsKey(notificationKey)) {
             userDB.getNotifications().getValue().remove(notificationKey);
             save(userDB);
 
