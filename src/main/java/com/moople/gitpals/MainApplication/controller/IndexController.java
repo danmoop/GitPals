@@ -97,12 +97,10 @@ public class IndexController {
                 return "redirect:/dashboard";
             }
 
-            /*
-            // TODO: uncomment when mobile version of GitPals is finished
             else if (userDB.getMobileAuthPassword().equals("")) {
                 redirectAttributes.addFlashAttribute("error", "You should set up your mobile app auth password!");
                 return "redirect:/dashboard";
-            }*/
+            }
 
             indexService.checkIfDataHasChanged(userDB, properties);
 

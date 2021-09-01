@@ -1,96 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
-        <title>GitPals - Dialogs</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <title>GitPals - Dialogs</title>
+</head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-            <a class="navbar-brand" href="/">
-                <img src="./images/logo.png" class="mr-2" height="30">GitPals 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Messages</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
-                            <a class="dropdown-item" href="/dashboard">
-                                <i class="fa fa-user-circle"></i> Dashboard
-                            </a>
-                            <a class="dropdown-item" href="/submitProject">
-                                <i class="fa fa-wrench"></i> Submit a project
-                            </a>
-                            <a href="/signout" class="dropdown-item">
-                                <i class="fa fa-sign-out"></i> Log Out
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/forum">
-                            <button type="button" class="btn neoButton btn-sm fw-600">
-                                <i class="fa fa-wpforms"></i> Forum
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search">
-                            <button type="button" class="btn neoButton btn-sm fw-600">
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                        </a>
-                    </li>
-                </ul>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
+            aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Messages</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                    <a class="dropdown-item" href="/dashboard">
+                        <i class="fa fa-user-circle"></i> Dashboard
+                    </a>
+                    <a class="dropdown-item" href="/submitProject">
+                        <i class="fa fa-wrench"></i> Submit a project
+                    </a>
+                    <a href="/signout" class="dropdown-item">
+                        <i class="fa fa-sign-out"></i> Log Out
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/forum">
+                    <button type="button" class="btn neoButton btn-sm fw-600">
+                        <i class="fa fa-wpforms"></i> Forum
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">
+                    <button type="button" class="btn neoButton btn-sm fw-600">
+                        <i class="fa fa-search"></i> Search
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <h5>Create a new dialog</h5>
+
+    <div class="row">
+        <form th:action="@{/openDialog}" class="col" style="display: inline-flex;" method="post">
+            <input type="text" required th:name="dialogLink" class="form-control"
+                   placeholder="User you want to start a dialog with"/>
+            <input type="submit" class="btn btn-primary btn-sm fw-600" value="Start"/>
+        </form>
+    </div>
+    <hr/>
+
+    <h4>Your Dialogs <span class="badge badge-primary">[[${#maps.size(userMessages)}]]</span></h4>
+
+    <p th:if="${#maps.size(userMessages) == 0}">You have no dialogs yet. Create one if you want using the form above</p>
+
+    <ul>
+        <li th:each="name: ${userMessages.keySet()}" style="list-style: none;">
+            <div th:if="${userMessages.get(name).key == 0}" class="alert alert-light" role="alert">
+                [[${name}]] ([[${#lists.size(userMessages.get(name).value)}]] messages in total)
+                <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-primary btn-pill btn-sm">Open</a>
             </div>
-        </nav>
 
-        <div class="container text-center">
-            <h5>Create a new dialog</h5>
-
-            <div class="row">
-                <form th:action="@{/openDialog}" class="col" style="display: inline-flex;" method="post">
-                    <input type="text" required th:name="dialogLink" class="form-control" placeholder="User you want to start a dialog with" />
-                    <input type="submit" class="btn btn-primary btn-sm fw-600" value="Start" />
-                </form>
+            <div th:if="${userMessages.get(name).key > 0}" class="alert alert-primary" role="alert">
+                [[${userMessages.get(name).key}]] New Messages - [[${name}]]
+                ([[${#lists.size(userMessages.get(name).value)}]] messages in total)
+                <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-light btn-pill btn-sm">Open</a>
             </div>
-            <hr/>
+        </li>
+    </ul>
+    <hr/>
+</div>
 
-            <h4>Your Dialogs <span class="badge badge-primary">[[${#maps.size(userMessages)}]]</span></h4>
-
-            <p th:if="${#maps.size(userMessages) == 0}">You have no dialogs yet. Create one if you want using the form above</p>
-
-            <ul>
-                <li th:each="name: ${userMessages.keySet()}" style="list-style: none;">
-                    <div th:if="${userMessages.get(name).key == 0}" class="alert alert-light" role="alert">
-                        [[${name}]] ([[${#lists.size(userMessages.get(name).value)}]] messages in total)
-                        <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-primary btn-pill btn-sm">Open</a>
-                    </div>
-
-                    <div th:if="${userMessages.get(name).key > 0}" class="alert alert-primary" role="alert">
-                        [[${userMessages.get(name).key}]] New Messages - [[${name}]] ([[${#lists.size(userMessages.get(name).value)}]] messages in total)
-                        <a th:href="${'/dialogs/' + name}" type="button" class="btn btn-light btn-pill btn-sm">Open</a>
-                    </div>
-                </li>
-            </ul>
-            <hr/>
-        </div>
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-        </script>
-        <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
-    </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+</body>
 </html>

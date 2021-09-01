@@ -5,134 +5,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <title>GitPals - Dashboard</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a class="navbar-brand" href="/">
-            <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dashboard</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
-                        <a class="dropdown-item" href="/submitProject">
-                            <i class="fa fa-wrench"></i> Submit a project
-                        </a>
-                        <a class="dropdown-item" href="/messages">
-                            <i class="fa fa-envelope-square"></i> Messages
-                        </a>
-                        <a class="dropdown-item" href="/signout">
-                            <i class="fa fa-sign-out"></i> Log Out
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container text-center">
-        <div th:if="${message}" class="alert alert-success" role="alert">
-            [[${message}]]
-        </div>
-        <div th:if="${error}" class="alert alert-danger" role="alert">
-            [[${error}]]
-        </div>
-        <div>
-            <div class="card text-center">
-                <div class="card-header">
-                    <h5 class="font-weight-bold">[[${userDB.username}]]</h5>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals <span class="badge badge-primary">Beta</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
+            aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle font-weight-bold"
+                                             id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true"
+                                             aria-expanded="false">Dashboard</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
+                    <a class="dropdown-item" href="/submitProject">
+                        <i class="fa fa-wrench"></i> Submit a project
+                    </a>
+                    <a class="dropdown-item" href="/messages">
+                        <i class="fa fa-envelope-square"></i> Messages
+                    </a>
+                    <a class="dropdown-item" href="/signout">
+                        <i class="fa fa-sign-out"></i> Log Out
+                    </a>
                 </div>
-                <div class="card-body">
+            </li>
+        </ul>
+    </div>
+</nav>
 
-		  <img th:if="${userDB.avatarURL != ''}" th:src="${userDB.avatarURL}" width="200" style="border-radius: 30px;">
-
-                    <p class="card-text" th:if="${userDB.email}">Email - [[${userDB.email}]]</p>
-                    <p class="card-text" th:if="${userDB.country}">Location - [[${userDB.country}]]</p>
-                    <p class="card-text" th:if="${userDB.bio}">Bio - [[${userDB.bio}]]</p>
-                    <hr/>
-                    <div class="row">
-                        <div class="col">
-                            Applied to <span class="badge badge-primary fw-600">[[${#lists.size(userDB.projectsAppliedTo)}]]</span> projects
-                        </div>
-                        <div class="col">
-                            Submitted <span class="badge badge-primary fw-600">[[${#lists.size(userDB.submittedProjects)}]]</span> projects
-                        </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                        <div class="col">
-                            <h5>Projects applied to:</h5>
-                            <p th:if="${#lists.size(userDB.projectsAppliedTo) == 0}">None</p>
-                            <ol th:if="${#lists.size(userDB.projectsAppliedTo) != 0}" style="padding: 0;">
-                                <li th:each="project: ${userDB.projectsAppliedTo}" style="list-style: none;">
-                                    <a th:href="${'/projects/' + project}">[[${project}]]</a>
-                                </li>
-                            </ol>
-                        </div>
-                        <div class="col">
-                            <h5>Submitted projects:</h5>
-                            <p th:if="${#lists.size(userDB.submittedProjects) == 0}">None</p>
-                            <ol th:if="${#lists.size(userDB.submittedProjects) != 0}" style="padding: 0;">
-                                <li th:each="project: ${userDB.submittedProjects}" style="list-style: none;">
-                                    <a th:href="${'/projects/' + project}">[[${project}]]</a>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="card">
+<div class="container text-center">
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        [[${message}]]
+    </div>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        [[${error}]]
+    </div>
+    <div>
+        <div class="card text-center">
             <div class="card-header">
-                <h5>Set up mobile app auth password <span class="badge badge-danger">Optional for now</span></h5>
-                <p>This password is required if you want to use mobile version of GitPals <u>(in progress)</u> <br>If you already set it up, you can replace it with a new one using this form</p>
+                <h5 class="font-weight-bold">[[${userDB.username}]]</h5>
             </div>
-
             <div class="card-body">
-                <form th:action="@{/setMobileAuthPassword}" method="post" class="mt">
-                    <input required type="password" th:name="password" class="form-control" placeholder="Password" />
-                    <input type="submit" class="btn btn-primary btn-sm fw-600 mt" value="Save Password" />
-                </form>
-            </div>
-        </div>
 
-        <hr />
+                <img th:if="${userDB.avatarURL != ''}" th:src="${userDB.avatarURL}" width="200"
+                     style="border-radius: 30px;">
 
-        <div class="card" style="margin-bottom: 65px;">
-            <div class="card-header">
-                <h5>Technologies you know:  <span class="badge badge-primary">[[${#sets.size(userDB.skillList)}]]</span></h5>
-            </div>
-            <div class="card body">
-                <form th:action="@{/updateUser}" method="post">
-                    <div id="skills">
-                        <div class="mt">
-                            <div th:each="skill: ${userDB.skillList}" th:id="${skill}" class="col mt" style="display: inline-flex;">
-                                <input required type="text" th:name="skill" class="form-control" th:value=*{skill} placeholder="Skill" />
-                                <a href="#/" th:id="${'del_' + skill}" onclick="removeSkill(this);" class="btn btn-danger btn-sm fw-600">Remove</a>
-                            </div>
-                        </div>
+                <p class="card-text" th:if="${userDB.email}">Email - [[${userDB.email}]]</p>
+                <p class="card-text" th:if="${userDB.country}">Location - [[${userDB.country}]]</p>
+                <p class="card-text" th:if="${userDB.bio}">Bio - [[${userDB.bio}]]</p>
+                <hr/>
+                <div class="row">
+                    <div class="col">
+                        Applied to <span
+                            class="badge badge-primary fw-600">[[${#lists.size(userDB.projectsAppliedTo)}]]</span>
+                        projects
                     </div>
-
-                    <a href="#/" class="btn btn-light btn-sm fw-600" onclick="addSkill();">Add Skill</a>
-                    <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Save Changes" />
-                </form>
+                    <div class="col">
+                        Submitted <span
+                            class="badge badge-primary fw-600">[[${#lists.size(userDB.submittedProjects)}]]</span>
+                        projects
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col">
+                        <h5>Projects applied to:</h5>
+                        <p th:if="${#lists.size(userDB.projectsAppliedTo) == 0}">None</p>
+                        <ol th:if="${#lists.size(userDB.projectsAppliedTo) != 0}" style="padding: 0;">
+                            <li th:each="project: ${userDB.projectsAppliedTo}" style="list-style: none;">
+                                <a th:href="${'/projects/' + project}">[[${project}]]</a>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col">
+                        <h5>Submitted projects:</h5>
+                        <p th:if="${#lists.size(userDB.submittedProjects) == 0}">None</p>
+                        <ol th:if="${#lists.size(userDB.submittedProjects) != 0}" style="padding: 0;">
+                            <li th:each="project: ${userDB.submittedProjects}" style="list-style: none;">
+                                <a th:href="${'/projects/' + project}">[[${project}]]</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
+    <hr/>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Set up mobile app auth password</h5>
+            <p>This password is required if you want to use mobile version of GitPals <u>(in progress)</u> <br>If you
+                already set it up, you can replace it with a new one using this form</p>
+        </div>
+
+        <div class="card-body">
+            <form th:action="@{/setMobileAuthPassword}" method="post" class="mt">
+                <input required type="password" th:name="password" class="form-control" placeholder="Password"/>
+                <input type="submit" class="btn btn-primary btn-sm fw-600 mt" value="Save Password"/>
+            </form>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="card" style="margin-bottom: 65px;">
+        <div class="card-header">
+            <h5>Technologies you know: <span class="badge badge-primary">[[${#sets.size(userDB.skillList)}]]</span></h5>
+        </div>
+        <div class="card body">
+            <form th:action="@{/updateUser}" method="post">
+                <div id="skills">
+                    <div class="mt">
+                        <div th:each="skill: ${userDB.skillList}" th:id="${skill}" class="col mt"
+                             style="display: inline-flex;">
+                            <input required type="text" th:name="skill" class="form-control" th:value=*{skill}
+                                   placeholder="Skill"/>
+                            <a href="#/" th:id="${'del_' + skill}" onclick="removeSkill(this);"
+                               class="btn btn-danger btn-sm fw-600">Remove</a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#/" class="btn btn-light btn-sm fw-600" onclick="addSkill();">Add Skill</a>
+                <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Save Changes"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
         addSkill = () => {
             var random = Math.random();
 
@@ -150,13 +165,17 @@
 
             document.getElementById(blockId).parentElement.removeChild(document.getElementById(blockId));
         }
-    </script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </body>

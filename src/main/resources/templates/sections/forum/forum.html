@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <title>GitPals - Forum</title>
 </head>
@@ -14,13 +16,17 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <a class="navbar-brand" href="/">
-        <img src="./images/logo.png" class="mr-2" height="30">GitPals 
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
+            aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle font-weight-bold" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle font-weight-bold"
+                                             id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true"
+                                             aria-expanded="false">Forum</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-7">
                     <a class="dropdown-item" href="/submitProject">
                         <i class="fa fa-wrench"></i> Submit a project
@@ -52,8 +58,9 @@
         <div class="card-body">
             <form th:action="@{/findForumPosts}" method="post">
                 <div style="display: inline-flex; width: 100%;">
-                    <input class="form-control" required th:name="postName" type="text" placeholder="Find post by title" />
-                    <input class="btn btn-sm btn-primary fw-600" type="submit" value="Find" />
+                    <input class="form-control" required th:name="postName" type="text"
+                           placeholder="Find post by title"/>
+                    <input class="btn btn-sm btn-primary fw-600" type="submit" value="Find"/>
                 </div>
             </form>
         </div>
@@ -66,7 +73,8 @@
 
             <form th:action="@{/addForumPost}" method="post">
                 <input type="text" required th:name="title" class="form-control mt" placeholder="Post title"/>
-                <textarea class="form-control mt" rows="8" required th:name="content" placeholder="Post content"></textarea>
+                <textarea class="form-control mt" rows="8" required th:name="content"
+                          placeholder="Post content"></textarea>
                 <input type="submit" class="btn btn-primary mt" value="Add">
             </form>
             <hr/>
@@ -75,7 +83,8 @@
 
     <div class="card mt" th:each="i : ${#numbers.sequence(posts.size() - 1, 0, -1)}">
         <div class="card-body">
-            <h5 class="card-title">[[${posts[i].title}]] by <a th:href="${'/users/' + posts[i].author}">[[${posts[i].author}]]</a></h5>
+            <h5 class="card-title">[[${posts[i].title}]] by <a th:href="${'/users/' + posts[i].author}">[[${posts[i].author}]]</a>
+            </h5>
             <hr/>
             <p>Published on [[${posts[i].timeStamp}]]</p>
             <div class="container">
@@ -83,7 +92,8 @@
                     <div class="col">
                         <p>
                             [[${#lists.size(posts[i].viewSet)}]] views
-                            <a href="#/" data-toggle="tooltip" data-placement="top" title="Only registered users' views count"><i class="fa fa-info-circle"></i></a>
+                            <a href="#/" data-toggle="tooltip" data-placement="top"
+                               title="Only registered users' views count"><i class="fa fa-info-circle"></i></a>
                         </p>
                     </div>
                     <div class="col">
@@ -99,11 +109,14 @@
 
 <script src="/js/index.js">
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
 </script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
 </script>
 <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </html>

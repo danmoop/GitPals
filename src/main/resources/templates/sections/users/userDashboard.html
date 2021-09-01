@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
     <link rel="stylesheet" href="/css/style.css">
@@ -13,66 +14,76 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a class="navbar-brand" href="/">
-            <img src="/images/logo.png" class="mr-2" height="30">GitPals 
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="/images/logo.png" class="mr-2" height="30">GitPals
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
+            aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span>
+    </button>
+</nav>
 
-    <div class="container text-center">
-        <div>
-            <div class="row">
-                <div class="col row-column mt">
-                    <div class="card text-center">
-                        <div class="card-header">
-                            <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
-                            <span class="badge badge-danger" th:if="${UserObject.banned}">Banned</span>
-                        </div>
-                        <div class="card-body">
-			  <img th:if="${UserObject.avatarURL != ''}" th:src="${UserObject.avatarURL}" width="200" style="border-radius: 30px;"><br>
+<div class="container text-center">
+    <div>
+        <div class="row">
+            <div class="col row-column mt">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5 class="font-weight-bold">[[${UserObject.username}]]'s profile</h5>
+                        <span class="badge badge-danger" th:if="${UserObject.banned}">Banned</span>
+                    </div>
+                    <div class="card-body">
+                        <img th:if="${UserObject.avatarURL != ''}" th:src="${UserObject.avatarURL}" width="200"
+                             style="border-radius: 30px;"><br>
 
-                            <p class="card-text" th:if="${UserObject.email}">Email - [[${UserObject.email}]]</p>
-                            <p class="card-text" th:if="${UserObject.country}">Location - [[${UserObject.country}]]</p>
-                            <p class="card-text" th:if="${UserObject.bio}">Bio - [[${UserObject.bio}]]</p>
-                            <a target="_blank" th:href="${'https://github.com/' + UserObject.username}">[[${UserObject.username}]]'s GitHub Profile</a>
+                        <p class="card-text" th:if="${UserObject.email}">Email - [[${UserObject.email}]]</p>
+                        <p class="card-text" th:if="${UserObject.country}">Location - [[${UserObject.country}]]</p>
+                        <p class="card-text" th:if="${UserObject.bio}">Bio - [[${UserObject.bio}]]</p>
+                        <a target="_blank" th:href="${'https://github.com/' + UserObject.username}">[[${UserObject.username}]]'s
+                            GitHub Profile</a>
 
-                            <p class="card-text" th:if="${UserObject.email == null && UserObject.country == null && UserObject.bio == null}">No info about [[${UserObject.username}]]</p>
-                        </div>
+                        <p class="card-text"
+                           th:if="${UserObject.email == null && UserObject.country == null && UserObject.bio == null}">
+                            No info about [[${UserObject.username}]]</p>
                     </div>
                 </div>
-                <div class="col row-column mt" th:if="${LoggedUser != null}">
-                    <div class="card text-center">
-                        <div class="card-header">
-                            <h5 class="font-weight-bold">Send [[${UserObject.username}]] a message</h5>
-                        </div>
-                        <div class="card-body">
-                            <a th:href="${'/dialogs/' + UserObject.username}">Open a dialog page with [[${UserObject.username}]]</a>
-                        </div>
+            </div>
+            <div class="col row-column mt" th:if="${LoggedUser != null}">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5 class="font-weight-bold">Send [[${UserObject.username}]] a message</h5>
+                    </div>
+                    <div class="card-body">
+                        <a th:href="${'/dialogs/' + UserObject.username}">Open a dialog page with
+                            [[${UserObject.username}]]</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <hr />
-
-        <h5>Technologies [[${UserObject.username}]] knows: ([[${#sets.size(UserObject.skillList)}]])</h5>
-
-        <div class="table-striped table-responsive-md mt">
-            <div th:each="skill: ${UserObject.skillList}" class="col mt">
-                <input readonly type="text" class="form-control" th:value="*{skill}"/>
-            </div>
-        </div>
-
-        <br>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
+    <hr/>
+
+    <h5>Technologies [[${UserObject.username}]] knows: ([[${#sets.size(UserObject.skillList)}]])</h5>
+
+    <div class="table-striped table-responsive-md mt">
+        <div th:each="skill: ${UserObject.skillList}" class="col mt">
+            <input readonly type="text" class="form-control" th:value="*{skill}"/>
+        </div>
+    </div>
+
+    <br>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
 </body>

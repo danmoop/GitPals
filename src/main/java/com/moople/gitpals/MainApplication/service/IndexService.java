@@ -29,7 +29,7 @@ public class IndexService implements IndexInterface {
     private GlobalMessageService globalMessageService;
 
     private final long ONE_DAY = 1000 * 86400;
-    private final int PROJECTS_PER_PAGE = 20;
+    private final int PROJECTS_PER_PAGE = 16;
 
     /**
      * every page has a fixed number of projects displayed

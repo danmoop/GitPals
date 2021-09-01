@@ -17,65 +17,71 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a class="navbar-brand" href="/">
-            <img src="./images/logo.png" class="mr-2" height="30">GitPals 
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
-                aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
-            <ul class="navbar-nav mr-auto">
-                Submit project
-            </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" href="/">
+        <img src="./images/logo.png" class="mr-2" height="30">GitPals
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
+            aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
+        <ul class="navbar-nav mr-auto">
+            Submit project
+        </ul>
+    </div>
+</nav>
+
+<section>
+    <div class="container text-center">
+        <h2>Submit your project</h2>
+        <p>Give some information about your project. What is this project? What technologies does it use? Describe your
+            knowledge and mention what you expect to get from the audience.</p>
+
+        <div th:if="${warning}" class="alert alert-danger" role="alert">
+            [[${warning}]]
         </div>
-    </nav>
 
-    <section>
-        <div class="container text-center">
-            <h2>Submit your project</h2>
-            <p>Give some information about your project. What is this project? What technologies does it use? Describe your
-                knowledge and mention what you expect to get from the audience.</p>
+        <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
+            <input type="text" required th:field="*{title}" class="form-control" placeholder="Project title"
+                   style="margin: 15px;">
 
-            <div th:if="${warning}" class="alert alert-danger" role="alert">
-                [[${warning}]]
+            <input type="text" required th:field="*{description}" class="form-control" placeholder="Project description"
+                   style="margin: 15px;">
+
+            <input type="text" required th:field="*{githubProjectLink}" class="form-control"
+                   placeholder="Project GitHub repository link" style="margin: 15px;">
+            <hr/>
+            <div class="row">
+                <div class="col">
+                    <p>Select technologies, which are used in your project (e.g. - C++ / Java)</p>
+                    <div id="skills">
+                        <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;"
+                               placeholder="Technology 1"/>
+                    </div>
+                    <button type="button" class="btn btn-light btn-sm fw-600" style="margin-top: 10px;"
+                            onclick="addSkill();">Add Another Technology
+                    </button>
+                </div>
+                <div class="col">
+                    <p>Select required roles for your project (e.g. - Designer/Programmer)</p>
+                    <div id="roles">
+                        <input type="text" th:name="role" class="form-control" style="margin-top: 10px;"
+                               placeholder="Role 1"/>
+                    </div>
+                    <button type="button" class="btn btn-light btn-sm fw-600" style="margin-top: 10px;"
+                            onclick="addRole();">Add Another Role
+                    </button>
+                </div>
             </div>
 
-            <form th:action="@{/projectSubmitted}" method="post" th:object="${projectObject}">
-                <input type="text" required th:field="*{title}" class="form-control" placeholder="Project title"
-                       style="margin: 15px;">
+            <br>
+            <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Submit"/>
+        </form>
+    </div>
+</section>
 
-                <input type="text" required th:field="*{description}" class="form-control" placeholder="Project description"
-                       style="margin: 15px;">
-
-                <input type="text" required th:field="*{githubProjectLink}" class="form-control"
-                       placeholder="Project GitHub repository link" style="margin: 15px;">
-                <hr/>
-                <div class="row">
-                    <div class="col">
-                        <p>Select technologies, which are used in your project (e.g. - C++ / Java)</p>
-                        <div id="skills">
-                            <input type="text" th:name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology 1"/>
-                        </div>
-                        <button type="button" class="btn btn-light btn-sm fw-600" style="margin-top: 10px;" onclick="addSkill();">Add Another Technology</button>
-                    </div>
-                    <div class="col">
-                        <p>Select required roles for your project (e.g. - Designer/Programmer)</p>
-                        <div id="roles">
-                            <input type="text" th:name="role" class="form-control" style="margin-top: 10px;" placeholder="Role 1"/>
-                        </div>
-                        <button type="button" class="btn btn-light btn-sm fw-600" style="margin-top: 10px;" onclick="addRole();">Add Another Role</button>
-                    </div>
-                </div>
-
-                <br>
-                <input type="submit" class="btn btn-primary btn-sm fw-600" style="margin: 15px;" value="Submit"/>
-            </form>
-        </div>
-    </section>
-
-    <script>
+<script>
         var i = 2;
         var s = 2;
 
@@ -88,5 +94,6 @@
             var anotherSkill = `<input type="text" name="skill" class="form-control" style="margin-top: 10px;" placeholder="Technology ${s++}"/>`;
             document.getElementById('skills').insertAdjacentHTML('beforeend', anotherSkill);
         }
-    </script>
+
+</script>
 </body>
