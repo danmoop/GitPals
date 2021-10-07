@@ -5,6 +5,7 @@ import com.moople.gitpals.MainApplication.model.Pair;
 import com.moople.gitpals.MainApplication.model.User;
 import com.moople.gitpals.MainApplication.repository.KeyStorageRepository;
 import com.moople.gitpals.MainApplication.service.UserService;
+import com.moople.gitpals.MainApplication.tools.Encrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -109,7 +110,10 @@ public class MessageController {
         userService.save(user);
 
         // Before user gets messages, they should be decrypted, sending a key personally to a user is unsafe
-        model.addAttribute("messages", pair.getValue());
+        List<Message> messages = pair.getValue();
+        messages.forEach(msg -> msg.setContent(Encrypt.simpleEncrypt(msg.getContent())));
+
+        model.addAttribute("messages", messages);
 
         model.addAttribute("senderName", user.getUsername());
         model.addAttribute("recipientName", name);
@@ -146,6 +150,10 @@ public class MessageController {
         // The user who sends the message has it always marked as 'read', since it is outgoing
         Pair<Integer, List<Message>> pair = sender.getDialogs()
                 .getOrDefault(recipient.getUsername(), new Pair<>(0, new ArrayList<>()));
+
+        // Encrypt message contents
+        String messageEncrypted = Encrypt.simpleEncrypt(message.getContent());
+        message.setContent(messageEncrypted);
 
         pair.getValue().add(message);
         sender.getDialogs().put(recipient.getUsername(), pair);

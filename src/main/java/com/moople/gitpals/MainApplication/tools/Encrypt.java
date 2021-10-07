@@ -10,6 +10,21 @@ import java.security.spec.KeySpec;
 import java.util.Base64;
 
 public class Encrypt {
+    public static String simpleEncrypt(String message) {
+        StringBuilder sb = new StringBuilder();
+        final String key = Data.MESSAGE_ENCRYPTION_KEY;
+
+        for (int i = 0; i < message.length(); i++) {
+            int mbytes = message.charAt(i);
+            int kbytes = key.charAt(i % key.length());
+            int result = mbytes ^ kbytes;
+
+            sb.append((char) result);
+        }
+
+        return sb.toString();
+    }
+
     public static String MD5(String md5) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
