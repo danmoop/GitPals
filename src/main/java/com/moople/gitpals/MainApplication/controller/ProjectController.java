@@ -338,4 +338,38 @@ public class ProjectController {
 
         return "redirect:/projects/" + newTitle;
     }
+
+    /**
+     * This function allows to like projects
+     *
+     * @param principal  is user's authorization
+     * @param title      is a project title user wants to like
+     * @param attributes is attributes for showing an error after redirecting
+     * @return index page
+     */
+    @PostMapping("/likeProject")
+    public String likeProject(Principal principal, @RequestParam String title, @RequestParam int page, RedirectAttributes attributes) {
+        if (principal == null) {
+            attributes.addFlashAttribute("error", "Please sign it to like this project.");
+            return "redirect:/page/" + page;
+        }
+
+        User user = userService.findByUsername(principal.getName());
+        Project project = projectService.findByTitle(title);
+
+        if (project == null) {
+            attributes.addFlashAttribute("error", title + " is not found.");
+            return "redirect:/page/" + page;
+        }
+
+        if (project.getLikes().contains(user.getUsername())) {
+            project.getLikes().remove(user.getUsername());
+        } else {
+            project.getLikes().add(user.getUsername());
+        }
+
+        projectService.save(project);
+
+        return "redirect:/";
+    }
 }

@@ -25,6 +25,7 @@ public class Project {
     private Set<String> technologies;
     private Set<String> appliedUsers;
     private Set<String> requiredRoles;
+    private Set<String> likes;
     private Map<String, Comment> comments;
 
     public Project(String title, String description, String githubProjectLink, String authorName, Set<String> technologies, Set<String> requiredRoles) {
@@ -38,5 +39,6 @@ public class Project {
 
         this.comments = new HashMap<>();
         this.appliedUsers = new HashSet<>();
+        this.likes = new HashSet<>();
     }
 }
