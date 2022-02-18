@@ -22,6 +22,9 @@ Check-list
 - [x] REST API
 - [x] [Mobile App](https://github.com/danmoop/GitPalsMobile)
 
+# UML Diagram
+<img src="GitPals.jpg">
+
 # Scheme
 <img width="400" src="./scheme.jpg">
 
