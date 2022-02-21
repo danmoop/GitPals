@@ -370,6 +370,6 @@ public class ProjectController {
 
         projectService.save(project);
 
-        return "redirect:/";
+        return "redirect:/page/" + page;
     }
 }
