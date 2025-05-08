@@ -2,8 +2,6 @@
 
 <img src="./icons/pinterest_profile_image.png" width="150" height="150">
 
-[Open GitPals app](https://www.gitpals.com/)
-
 This project uses:
 1. Java (Spring Framework, Thymeleaf for template rendering on a webiste, REST API used for a GitPals Mobile App)
 2. HTML / CSS (Shards UI Kit)
@@ -20,7 +18,6 @@ Check-list
 - [x] Bootstrap Design (Shards UI KIT)
 - [x] Realtime messaging among users
 - [x] REST API
-- [x] [Mobile App](https://github.com/danmoop/GitPalsMobile)
 
 # UML Diagram
 <img src="GitPals.jpg">
